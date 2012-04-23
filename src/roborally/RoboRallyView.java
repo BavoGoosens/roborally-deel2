@@ -1,6 +1,6 @@
 package roborally;
 
-import interfaces.IFacade;
+import roborally.interfaces.IFacade;
 
 import java.awt.Color;
 import java.awt.Graphics;

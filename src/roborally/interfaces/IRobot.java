@@ -1,6 +1,4 @@
-package interfaces;
-
-
+package roborally.interfaces;
 
 /**
  * Classes for representing robots should implement <code>IRobot</code>.

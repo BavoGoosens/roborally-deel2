@@ -1,4 +1,4 @@
-package interfaces;
+package roborally.interfaces;
 
 import java.util.Set;
 

@@ -2,7 +2,7 @@ package roborally;
 
 import static java.lang.System.out;
 
-import interfaces.IFacade;
+import roborally.interfaces.IFacade;
 
 import java.awt.Dimension;
 import java.io.BufferedReader;

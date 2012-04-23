@@ -1,6 +1,6 @@
 package roborally.model;
 
-import interfaces.IFacade;
+import roborally.interfaces.IFacade;
 
 import java.util.Set;
 

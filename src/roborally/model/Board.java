@@ -1,7 +1,7 @@
 package roborally.model;
 
-public class Board {
-	
+public class Board{
+	/*
 	private final long width;
 	private final long height;
 	
@@ -10,7 +10,7 @@ public class Board {
 	private final long UPPER_BOUND_HEIGTH = Long.MAX_VALUE;
 	private final long LOWER_BOUND_HEIGTH = 0;
 	
-	private Map <Position, > contains;
+	
 	
 	
 	
@@ -22,5 +22,5 @@ public class Board {
 	public boolean isValidWidth(long width){
 		return width > LOWER_BOUND_WIDTH && width <= UPPER_BOUND_WIDTH
 	}
-
+	*/
 }
