@@ -2,7 +2,8 @@ package test;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-import basics.Robot;
+
+import roborally.model.Robot;
 
 
 public class RobotTest {
