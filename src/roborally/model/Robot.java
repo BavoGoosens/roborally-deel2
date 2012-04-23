@@ -14,7 +14,7 @@ import be.kuleuven.cs.som.annotate.*;
  * @invar 	Een robot heeft altijd een geldige x- en y-positie (niet negatief).
  * 			|isValidPosition(new.getX(), new.getY())
  * 
- * @invar 	Een robot heeft altijd een geldige oriëntatie.
+ * @invar 	Een robot heeft altijd een geldige oriÃ«ntatie.
  * 			|isValidDirection(new.getDirection)
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
@@ -35,16 +35,16 @@ public class Robot implements IRobot{
 	 * Maakt een nieuwe Robot aan
 	 * 
 	 * @param 	x 
-	 * 			X-coördinaat van de robot.
+	 * 			X-coï¿½rdinaat van de robot.
 	 * 
 	 * @param 	y 
-	 * 			Y-coördinaat van de robot.
+	 * 			Y-coï¿½rdinaat van de robot.
 	 * 
 	 * @param 	direction
-	 * 			De oriëntatie van de robot: 0, 1, 2, 3 stellen respectievelijk boven, rechts, onder en links voor.
+	 * 			De oriï¿½ntatie van de robot: 0, 1, 2, 3 stellen respectievelijk boven, rechts, onder en links voor.
 	 * 
 	 * @param 	energy 
-	 * 			De hoeveelheid initiële energie in Ws.
+	 * 			De hoeveelheid initiï¿½le energie in Ws.
 	 * 
 	 * @post 	De positie van de nieuwe robot is gelijk aan de gegeven positie.
 	 * 			|new.getX() == x
@@ -53,7 +53,7 @@ public class Robot implements IRobot{
 	 * @post	De energie van de nieuwe robot is gelijk aan de gegeven energie .
 	 * 			|new.getEnergy() == energy
 	 * 
-	 * @post 	De oriëntatie van de nieuwe robot is gelijk aan de gegeven oriëntatie.
+	 * @post 	De oriï¿½ntatie van de nieuwe robot is gelijk aan de gegeven oriï¿½ntatie.
 	 * 			|new.getDirection() == direction
 	 * 
 	 */
@@ -64,10 +64,10 @@ public class Robot implements IRobot{
 	}
 	
 	/**
-	 * Methode om de oriëntatie van een robot te wijzigen.
+	 * Methode om de oriï¿½ntatie van een robot te wijzigen.
 	 *  
 	 * @param 	direction
-	 * 			De integer die de oriëntatie voorstelt die de robot moet krijgen.
+	 * 			De integer die de oriï¿½ntatie voorstelt die de robot moet krijgen.
 	 * 
 	 * @post	De direction van de robot is gelijk aan de gegeven parameter.
 	 * 			|new.getDirection() == direction
@@ -107,13 +107,13 @@ public class Robot implements IRobot{
 	 * Methode om de positie van een robot te wijzigen.
 	 * 
 	 * @param 	x
-	 * 			X-coördinaat van de nieuwe positie van de robot.
+	 * 			X-coï¿½rdinaat van de nieuwe positie van de robot.
 	 * 
 	 * @param 	y
-	 * 			Y-coördinaat van de nieuwe positie van de robot.
+	 * 			Y-coï¿½rdinaat van de nieuwe positie van de robot.
 	 * 
 	 * @throws 	IllegalArgumentException
-	 * 			De gegeven x- en y-coördinaten stellen geen geldige positie voor.
+	 * 			De gegeven x- en y-coï¿½rdinaten stellen geen geldige positie voor.
 	 * 			|!isValidPosition(x, y)
 	 * 
 	 * @post 	De positie van de robot verandert naar die gegeven als parameters.
@@ -128,10 +128,10 @@ public class Robot implements IRobot{
 	}
 	
 	/**
-	 * Methode om de x-coördinaat van de robot te verkrijgen.
+	 * Methode om de x-coï¿½rdinaat van de robot te verkrijgen.
 	 * 
 	 * @return 	long
-	 * 			X-coördinaat van de robot.
+	 * 			X-coï¿½rdinaat van de robot.
 	 */
 	@Basic
 	public long getX(){
@@ -139,10 +139,10 @@ public class Robot implements IRobot{
 	}
 	
 	/**
-	 * Methode om de y-coördinaat van de robot te verkrijgen.
+	 * Methode om de y-coï¿½rdinaat van de robot te verkrijgen.
 	 * 
 	 * @return 	long
-	 * 			Y-coördinaat van de robot.
+	 * 			Y-coï¿½rdinaat van de robot.
 	 */
 	@Basic
 	public long getY(){
@@ -150,10 +150,10 @@ public class Robot implements IRobot{
 	}
 	
 	/**
-	 * Methode om de oriëntatie van de robot te verkrijgen.
+	 * Methode om de oriï¿½ntatie van de robot te verkrijgen.
 	 * 
 	 * @return 	integer
-	 * 			De oriëntatie van de robot.
+	 * 			De oriï¿½ntatie van de robot.
 	 */
 	@Basic
 	public int getDirection(){
@@ -240,10 +240,10 @@ public class Robot implements IRobot{
 	 * Deze methode berekent de afstand van de robot tot een gegeven positie.
 	 * 
 	 * @param 	xpos
-	 * 			X-coördinaat van de gegeven positie.
+	 * 			X-coï¿½rdinaat van de gegeven positie.
 	 * 
 	 * @param 	ypos
-	 * 			Y-coördinaat van de gegeven positie.
+	 * 			Y-coï¿½rdinaat van de gegeven positie.
 	 * 
 	 * @return	long
 	 * 			Manhattan-afstand tussen de robot en de gegeven positie.
@@ -256,16 +256,16 @@ public class Robot implements IRobot{
 	 * Deze methode berekent de afstand van een gegeven positie tot een andere gegeven positie.
 	 * 
 	 * @param 	xpos1
-	 * 			X-coördinaat van de beginpositie.
+	 * 			X-coï¿½rdinaat van de beginpositie.
 	 * 
 	 * @param 	ypos1
-	 * 			Y-coördinaat van de beginpositie.
+	 * 			Y-coï¿½rdinaat van de beginpositie.
 	 * 
 	 * @param 	xpos2
-	 * 			X-coördinaat van de eindpositie.
+	 * 			X-coï¿½rdinaat van de eindpositie.
 	 * 
 	 * @param 	ypos2
-	 * 			Y-coördinaat van de eindpositie.
+	 * 			Y-coï¿½rdinaat van de eindpositie.
 	 * 
 	 * @return	long
 	 * 			Manhattan-afstand tussen de beginpositie en de eindpositie.
@@ -278,16 +278,16 @@ public class Robot implements IRobot{
 	 * Methode die berekent hoeveel draaien er gemaakt moeten worden om een positie te bereiken vertrekkende van een beginpositie en vertelt of de volgende draai in wijzerszin of tegenwijzerszin moet.
 	 * 
 	 * @param	xpos1
-	 * 			X-coördinaat van de startpositie.
+	 * 			X-coï¿½rdinaat van de startpositie.
 	 * 
 	 * @param	ypos1
-	 * 			Y-coördinaat van de startpositie.
+	 * 			Y-coï¿½rdinaat van de startpositie.
 	 * 
 	 * @param 	xpos2
-	 * 			X-coördinaat van de te bereiken positie.
+	 * 			X-coï¿½rdinaat van de te bereiken positie.
 	 * 
 	 * @param 	ypos2
-	 * 			Y-coördinaat van de te bereiken positie.
+	 * 			Y-coï¿½rdinaat van de te bereiken positie.
 	 * 
 	 * @param	direction
 	 * 			De richting van de robot die moet beginnen met bewegen.
@@ -420,10 +420,10 @@ public class Robot implements IRobot{
 	 * Methode die berekent hoeveel draaien er gemaakt moeten worden om een positie te bereiken en vertelt of de volgende draai in wijzerszin of tegenwijzerszin moet.
 	 * 
 	 * @param 	xpos
-	 * 			X-coördinaat van de te bereiken positie.
+	 * 			X-coï¿½rdinaat van de te bereiken positie.
 	 * 
 	 * @param 	ypos
-	 * 			Y-coördinaat van de te bereiken positie..
+	 * 			Y-coï¿½rdinaat van de te bereiken positie..
 	 * 
 	 * @return	int[]
 	 * 			Array van integers waarbij de eerste integer het aantal draaien voorstelt en de tweede integer gelijk is aan 0 voor wijzerszin en 1 voor tegenwijzerszin.
@@ -437,12 +437,12 @@ public class Robot implements IRobot{
 	}
 	
 	/**
-	 * Deze methode verplaatst een robot zo dicht mogelijk bij een andere robot op een zo efficiënt mogelijke manier.
+	 * Deze methode verplaatst een robot zo dicht mogelijk bij een andere robot op een zo efficiï¿½nt mogelijke manier.
 	 * 
 	 * @param	target
 	 * 			De robot waarnaar de huidige robot verplaatst moet worden.
 	 * 
-	 * @effect	De huidige robot staat zo dicht mogelijk bij de gegeven robot zonder een inefficiënte beweging te maken.
+	 * @effect	De huidige robot staat zo dicht mogelijk bij de gegeven robot zonder een inefficiï¿½nte beweging te maken.
 	 */
 	public void moveNextTo(Robot target){
 		if((this.getEnergy() >= 500 || target.getEnergy() >= 500)){
@@ -450,21 +450,21 @@ public class Robot implements IRobot{
 			
 			// Berekingen nodig voor de gevallenonderscheiding. ManhattanAlternatives zijn uitzonderingen waarbij het beter is om niet naar de andere robot te bewegen maar beide robots te laten bewegen.
 			long[] altpos = new long [2];
-			altpos = this.getCloseTargetCoördinate(target.getX(), target.getY());
+			altpos = this.getCloseTargetCoï¿½rdinate(target.getX(), target.getY());
 			double thisNeededEnergy = this.getEnergyBasedOnTurnsAndMoves(altpos[0], altpos[1]);
-			altpos = target.getCloseTargetCoördinate(this.getX(), this.getY());
+			altpos = target.getCloseTargetCoï¿½rdinate(this.getX(), this.getY());
 			double targetNeededEnergy = target.getEnergyBasedOnTurnsAndMoves(altpos[0], altpos[1]);
 			double ManhattanAlternative1a = this.getEnergyBasedOnTurnsAndMoves(target.getX(), this.getY());
-			altpos =  target.getCloseTargetCoördinate(target.getX(), this.getY());
+			altpos =  target.getCloseTargetCoï¿½rdinate(target.getX(), this.getY());
 			double ManhattanAlternative1b = target.getEnergyBasedOnTurnsAndMoves(altpos[0],altpos[1]);
 			double ManhattanAlternative2a = this.getEnergyBasedOnTurnsAndMoves(this.getX(), target.getY());
-			altpos = target.getCloseTargetCoördinate(this.getX(), target.getY());
+			altpos = target.getCloseTargetCoï¿½rdinate(this.getX(), target.getY());
 			double ManhattanAlternative2b = target.getEnergyBasedOnTurnsAndMoves(altpos[0], altpos[1]);
 			double ManhattanAlternative3b = target.getEnergyBasedOnTurnsAndMoves(target.getX(), this.getY());
-			altpos = this.getCloseTargetCoördinate(target.getX(), this.getY());
+			altpos = this.getCloseTargetCoï¿½rdinate(target.getX(), this.getY());
 			double ManhattanAlternative3a = this.getEnergyBasedOnTurnsAndMoves(altpos[0], altpos[1]);
 			double ManhattanAlternative4b = target.getEnergyBasedOnTurnsAndMoves(this.getX(), target.getY());
-			altpos = this.getCloseTargetCoördinate(this.getX(), target.getY());
+			altpos = this.getCloseTargetCoï¿½rdinate(this.getX(), target.getY());
 			double ManhattanAlternative4a = this.getEnergyBasedOnTurnsAndMoves(altpos[0], altpos[1]);			
 			double ManhattanAlternative1 = ManhattanAlternative1a + ManhattanAlternative1b;
 			double ManhattanAlternative2 = ManhattanAlternative2a + ManhattanAlternative2b;
@@ -549,25 +549,25 @@ public class Robot implements IRobot{
 					break;
 				case 3:
 					// Het ideale traject is this naar (target.getX(), this.getY()) bewegen en target ernaast.
-					destination2 = target.getCloseTargetCoördinate(target.getX(), this.getY());
+					destination2 = target.getCloseTargetCoï¿½rdinate(target.getX(), this.getY());
 					this.moveTo(target.getX(), this.getY(), false);
 					target.moveTo(destination2[0], destination2[1], false);
 					break;
 				case 4:
 					// Het ideale traject is this naar (this.getX(), target.getY()) bewegen en target ernaast.
-					destination2 = target.getCloseTargetCoördinate(this.getX(), target.getY());
+					destination2 = target.getCloseTargetCoï¿½rdinate(this.getX(), target.getY());
 					this.moveTo(this.getX(), target.getY(), false);
 					target.moveTo(destination2[0], destination2[1], false);
 					break;
 				case 5:
 					// Het ideale traject is target naar (target.getX(), this.getY()) bewegen en this ernaast.
-					destination2 = this.getCloseTargetCoördinate(target.getX(), this.getY());
+					destination2 = this.getCloseTargetCoï¿½rdinate(target.getX(), this.getY());
 					target.moveTo(target.getX(), this.getY(), false);
 					this.moveTo(destination2[0], destination2[1], false);
 					break;
 				case 6:
 					// Het ideale traject is target naar (this.getX(), target.getY()) bewegen en this ernaast.
-					destination2 = this.getCloseTargetCoördinate(this.getX(), target.getY());
+					destination2 = this.getCloseTargetCoï¿½rdinate(this.getX(), target.getY());
 					target.moveTo(this.getX(), target.getY(), false);
 					this.moveTo(destination2[0], destination2[1], false);
 					break;
@@ -655,13 +655,13 @@ public class Robot implements IRobot{
 	}
 	
 	/**
-	 * Deze methode beweegt naar de gegeven coördinaten. Met de boolean closeOrNot kan ervoor gezorgd worden dat de robot tot net naast de gegeven positie beweegt.
+	 * Deze methode beweegt naar de gegeven coï¿½rdinaten. Met de boolean closeOrNot kan ervoor gezorgd worden dat de robot tot net naast de gegeven positie beweegt.
 	 * 
 	 * @param	xpos
-	 * 			X-coördinaat van de te bereiken positie.
+	 * 			X-coï¿½rdinaat van de te bereiken positie.
 	 * 
 	 * @param	ypos
-	 * 			Y-coördinaat van de te bereiken positie.
+	 * 			Y-coï¿½rdinaat van de te bereiken positie.
 	 * 
 	 * @param	closeOrNot
 	 * 			Indien deze true is wordt de robot slechts tot net naast de gegeven positie bewogen. Indien deze false is wordt de robot tot op de gegeven positie bewogen.
@@ -669,7 +669,7 @@ public class Robot implements IRobot{
 	 * @pre		De gegeven positie moet een geldige positie zijn.
 	 * 			|isValidPosition(xpos, ypos)
 	 * 
-	 * @note	Alle bewegingen gebeuren zo efficiënt mogelijk.
+	 * @note	Alle bewegingen gebeuren zo efficiï¿½nt mogelijk.
 	 * 
 	 * @effect	De nieuwe positie van de robot is (xpos, ypos) (indien closeOrNot false was) of net naast (xpos, ypos) (indien closeOrNot true was).
 	 */
@@ -678,7 +678,7 @@ public class Robot implements IRobot{
 		pos[0] = xpos;
 		pos[1] = ypos;
 		if(closeOrNot)
-			pos = this.getCloseTargetCoördinate(xpos, ypos);
+			pos = this.getCloseTargetCoï¿½rdinate(xpos, ypos);
 		int[] turns = this.calculateTurnsToPosition(pos[0], pos[1]);
 		this.setEnergy(this.getEnergy() - this.calculateManhattanDistance(pos[0], pos[1]) * 500);
 		this.setPosition(pos[0], pos[1]);
@@ -707,7 +707,7 @@ public class Robot implements IRobot{
 	 * @pre		Een van beide robots heeft voldoende energie om te bewegen.
 	 * 			|this.getEnergy() >= 500 || other.getEnergy() >= 500
 	 * 
-	 * @effect	Robots die op dezelfde plaats stonden zijn zo efficiënt mogelijk naast elkaar verplaatst rekening houdend met de beschikbare energie.
+	 * @effect	Robots die op dezelfde plaats stonden zijn zo efficiï¿½nt mogelijk naast elkaar verplaatst rekening houdend met de beschikbare energie.
 	 */
 	private void moveRobotsOnSamePlace(Robot other){
 		boolean moveThis = true;
@@ -818,15 +818,15 @@ public class Robot implements IRobot{
 	 * Deze methode geeft het energieverbruik terug om de robot te verplaatsen naar de plaats gegeven in de parameters (zie nota).
 	 * 
 	 * @param	xpos
-	 * 			X-coördinaat van de te bereiken positie.
+	 * 			X-coï¿½rdinaat van de te bereiken positie.
 	 * 
 	 * @param	ypos
-	 * 			Y-coördinaat van de te bereiken positie.
+	 * 			Y-coï¿½rdinaat van de te bereiken positie.
 	 * 
 	 * @return	double
 	 * 			De berekende energie op basis van het aantal bewegingen.
 	 * 
-	 * @note	Deze methode houdt enkel rekening met het aantal moves en turns maar negeert efficiëntere manieren om op een positie te geraken.
+	 * @note	Deze methode houdt enkel rekening met het aantal moves en turns maar negeert efficiï¿½ntere manieren om op een positie te geraken.
 	 */
 	private double getEnergyBasedOnTurnsAndMoves(long xpos, long ypos){
 		return getEnergyBasedOnTurnsAndMoves(this.getX(), this.getY(), xpos, ypos, this.getDirection());
@@ -836,16 +836,16 @@ public class Robot implements IRobot{
 	 * Deze methode geeft het energieverbruik terug om een robot van (xpos1, ypos1) te verplaatsen naar (xpos2, ypos2) (zie nota).
 	 * 
 	 * @param 	xpos1
-	 * 			X-coördinaat van de beginpositie.
+	 * 			X-coï¿½rdinaat van de beginpositie.
 	 * 
 	 * @param 	ypos1
-	 * 			Y-coördinaat van de beginpositie.
+	 * 			Y-coï¿½rdinaat van de beginpositie.
 	 * 
 	 * @param 	xpos2
-	 * 			X-coördinaat van de te bereiken positie.
+	 * 			X-coï¿½rdinaat van de te bereiken positie.
 	 * 
 	 * @param 	ypos2
-	 * 			Y-coördinaat van de te bereiken positie.
+	 * 			Y-coï¿½rdinaat van de te bereiken positie.
 	 * 
 	 * @param	direction
 	 * 			De richting van de robot op de beginpositie.
@@ -853,7 +853,7 @@ public class Robot implements IRobot{
 	 * @return	double
 	 * 			De berekende energie op basis van het aantal bewegingen.
 	 * 
-	 * @note	Deze methode houdt enkel rekening met het aantal moves en turns maar negeert efficiëntere manieren om op een positie te geraken.
+	 * @note	Deze methode houdt enkel rekening met het aantal moves en turns maar negeert efficiï¿½ntere manieren om op een positie te geraken.
 	 */
 	private double getEnergyBasedOnTurnsAndMoves(long xpos1, long ypos1, long xpos2, long ypos2, int direction){
 		if(xpos1 == xpos2 && ypos1 == ypos2)
@@ -868,10 +868,10 @@ public class Robot implements IRobot{
 	 * Methode die de minimale energieconsumptie naar een gegeven positie (x,y) berekent.
 	 * 
 	 * @param 	xpos
-	 * 			X-coördinaat van de gegeven te bereiken positie
+	 * 			X-coï¿½rdinaat van de gegeven te bereiken positie
 	 * 
 	 * @param 	ypos
-	 * 			Y-coördinaat van de gegeven te bereiken positie
+	 * 			Y-coï¿½rdinaat van de gegeven te bereiken positie
 	 * 	
 	 * @return 	double 
 	 * 			Met de energie die de robot voor deze verplaatsing zal gebruiken
@@ -883,13 +883,13 @@ public class Robot implements IRobot{
 		double ManhattanAlternative1 = getEnergyBasedOnTurnsAndMoves(xpos, this.getY()) + getEnergyBasedOnTurnsAndMoves(xpos, this.getY(), this.getX(), this.getY(), this.getDirection());
 		double ManhattanAlternative2 = getEnergyBasedOnTurnsAndMoves(this.getX(), ypos) + getEnergyBasedOnTurnsAndMoves(this.getX(), ypos, this.getX(), this.getY(), this.getDirection());
 		if(ManhattanAlternative1 < thisNeededEnergy && ManhattanAlternative1 != 0){
-			// Efficiënter om Manhattan alternatief 1 te gebruiken (target.getX(), this.getY()).
+			// Efficiï¿½nter om Manhattan alternatief 1 te gebruiken (target.getX(), this.getY()).
 			return ManhattanAlternative1;
 		}else if(ManhattanAlternative2 < thisNeededEnergy && ManhattanAlternative2 != 0){
-			// Efficiënter om Manhattan alternatief 2 te gebruiken (this.getX(), target.getY()).
+			// Efficiï¿½nter om Manhattan alternatief 2 te gebruiken (this.getX(), target.getY()).
 			return ManhattanAlternative2;
 		}else{
-			// Manhattan alternatieven zijn niet efficiënter
+			// Manhattan alternatieven zijn niet efficiï¿½nter
 			return thisNeededEnergy;
 		}
 	}
@@ -917,19 +917,19 @@ public class Robot implements IRobot{
 	}
 	
 	 /**
-	  * Methode die het coördinaat zo dicht mogelijk naast het gegeven coördinaat teruggeeft.
+	  * Methode die het coï¿½rdinaat zo dicht mogelijk naast het gegeven coï¿½rdinaat teruggeeft.
 	  * 
 	  * @param 	xpos
-	  * 		X-coördinaat waarnaar bewogen moet worden.
+	  * 		X-coï¿½rdinaat waarnaar bewogen moet worden.
 	  * 
 	  * @param 	ypos
-	  * 		Y-coördinaat waarnaar bewogen moet worden.
+	  * 		Y-coï¿½rdinaat waarnaar bewogen moet worden.
 	  * 
 	  * @return	long[]
-	  * 		Een array met 2 longs waarvan de eerste de gezochte x-coördinaat is en de tweede de gezochte y-coördinaat.
+	  * 		Een array met 2 longs waarvan de eerste de gezochte x-coï¿½rdinaat is en de tweede de gezochte y-coï¿½rdinaat.
 	  * 
 	  */
-	private long[] getCloseTargetCoördinate(long xpos , long ypos){
+	private long[] getCloseTargetCoï¿½rdinate(long xpos , long ypos){
 		long[] result = new long[2];
 		int[] turns = this.calculateTurnsToPosition(xpos, ypos);
 		if (turns[0] == 0){
@@ -1166,10 +1166,10 @@ public class Robot implements IRobot{
 	 * Checkt of een gegeven positie toegestaan is.
 	 * 
 	 * @param	x 
-	 * 			X-coördinaat die moet worden nagegaan.
+	 * 			X-coï¿½rdinaat die moet worden nagegaan.
 	 * 
 	 * @param 	y
-	 * 			Y-coördinaat die moet worden nagegaan.
+	 * 			Y-coï¿½rdinaat die moet worden nagegaan.
 	 * 
 	 * @return	boolean 
 	 * 			Deze geeft true terug als de positie geldig is, false indien ongeldig.
@@ -1184,10 +1184,10 @@ public class Robot implements IRobot{
 	  * Checkt of de gegeven orientatie toegestaan is.
 	  * 
 	  * @param 	dir
-	  * 		Integer die de oriëntatie van een robot voorstelt.
+	  * 		Integer die de oriï¿½ntatie van een robot voorstelt.
 	  * 
 	  * @return boolean 
-	  * 		Deze geeft true terug als een bepaalde oriëntatie toegestaan is.
+	  * 		Deze geeft true terug als een bepaalde oriï¿½ntatie toegestaan is.
 	  */
 	public boolean isValidDirection(int dir){
 		return ((dir >= 0) && (dir <= 3));
