@@ -3,6 +3,7 @@ import java.util.*;
 
 import be.kuleuven.cs.som.annotate.*;
 
+import roborally.basics.Position;
 import roborally.interfaces.IRobot;
 /**
  * Een klasse om robots voor te stellen.
@@ -10,22 +11,16 @@ import roborally.interfaces.IRobot;
  * @invar	De energie van een robot kan nooit kleiner zijn dan 0 en niet groter dan 20000.
  * 			|isValidEnergy(new.getEnergy())
  * 
- * @invar 	Een robot heeft altijd een geldige x- en y-positie (niet negatief).
- * 			|isValidPosition(new.getX(), new.getY())
- * 
  * @invar 	Een robot heeft altijd een geldige oriëntatie.
  * 			|isValidDirection(new.getDirection)
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
- * @version 1.1
- *
  */
 
 public class Robot implements IRobot{
 
-	private long xpos;
-	private long ypos;
+	private Position position;
 	private double energy;
 	private int direction;
 	private final double maxEnergy = 20000;
@@ -33,11 +28,8 @@ public class Robot implements IRobot{
 	/**
 	 * Maakt een nieuwe Robot aan
 	 * 
-	 * @param 	x 
-	 * 			X-coördinaat van de robot.
-	 * 
-	 * @param 	y 
-	 * 			Y-coördinaat van de robot.
+	 * @param 	position
+	 * 			De positie van de robot
 	 * 
 	 * @param 	direction
 	 * 			De oriëntatie van de robot: 0, 1, 2, 3 stellen respectievelijk boven, rechts, onder en links voor.
@@ -46,8 +38,8 @@ public class Robot implements IRobot{
 	 * 			De hoeveelheid initiële energie in Ws.
 	 * 
 	 * @post 	De positie van de nieuwe robot is gelijk aan de gegeven positie.
-	 * 			|new.getX() == x
-	 * 			|new.getY() == y
+	 * 			|new.getPosition().getX() == x
+	 * 			|new.getPosition().getY() == y
 	 * 
 	 * @post	De energie van de nieuwe robot is gelijk aan de gegeven energie .
 	 * 			|new.getEnergy() == energy
@@ -56,8 +48,8 @@ public class Robot implements IRobot{
 	 * 			|new.getDirection() == direction
 	 * 
 	 */
-	public Robot(long x, long y,  int direction , double energy){
-		setPosition(x,y);
+	public Robot(Position position,  int direction , double energy){
+		setPosition(position);
 		setEnergy(energy);
 		setDirection(direction);
 	}
@@ -105,48 +97,21 @@ public class Robot implements IRobot{
 	/**
 	 * Methode om de positie van een robot te wijzigen.
 	 * 
-	 * @param 	x
-	 * 			X-coördinaat van de nieuwe positie van de robot.
-	 * 
-	 * @param 	y
-	 * 			Y-coördinaat van de nieuwe positie van de robot.
+	 * @param 	position
+	 * 			|Nieuwe positie van de robot
 	 * 
 	 * @throws 	IllegalArgumentException
 	 * 			De gegeven x- en y-coördinaten stellen geen geldige positie voor.
 	 * 			|!isValidPosition(x, y)
 	 * 
 	 * @post 	De positie van de robot verandert naar die gegeven als parameters.
-	 * 			|new.getX() == x
-	 * 			|new.getY() == y
+	 * 			|new.getPosition().getX() == x
+	 * 			|new.getPosition().getY() == y
 	 */
-	private void setPosition(long x, long y) throws IllegalArgumentException{
-			if(!isValidPosition(x, y))
-				throw new IllegalArgumentException("Gegeven positie is ongeldig!");
-			this.xpos = x;
-			this.ypos = y;
+	private void setPosition(Position position){
+		this.position = position;
 	}
 
-	/**
-	 * Methode om de x-coördinaat van de robot te verkrijgen.
-	 * 
-	 * @return 	long
-	 * 			X-coördinaat van de robot.
-	 */
-	@Basic
-	public long getX(){
-		return this.xpos;
-	}
-
-	/**
-	 * Methode om de y-coördinaat van de robot te verkrijgen.
-	 * 
-	 * @return 	long
-	 * 			Y-coördinaat van de robot.
-	 */
-	@Basic
-	public long getY(){
-		return this.ypos;
-	}
 
 	/**
 	 * Methode om de oriëntatie van de robot te verkrijgen.
@@ -168,6 +133,17 @@ public class Robot implements IRobot{
 	@Basic
 	public double getEnergy(){
 		return this.energy;
+	}
+
+	/**
+	 * Methode om de positie van de robot te verkrijgen.
+	 * 
+	 * @return	Position
+	 * 			De positie van de robot.
+	 */
+	@Basic
+	public Position getPosition(){
+		return this.position;
 	}
 
 	/**
@@ -248,7 +224,7 @@ public class Robot implements IRobot{
 	 * 			Manhattan-afstand tussen de robot en de gegeven positie.
 	 */
 	private long calculateManhattanDistance(long xpos, long ypos){
-		return calculateManhattanDistance(this.getX(), this.getY(), xpos, ypos);
+		return calculateManhattanDistance(this.getPosition().getX(), this.getPosition().getY(), xpos, ypos);
 	}
 
 	/**
@@ -431,7 +407,7 @@ public class Robot implements IRobot{
 	 */
 	private int[] calculateTurnsToPosition(long xpos, long ypos){
 		int[] result = new int[2];
-		result = calculateTurnsToPosition(this.getX(), this.getY(), xpos, ypos, this.getDirection());
+		result = calculateTurnsToPosition(this.getPosition().getX(), this.getPosition().getY(), xpos, ypos, this.getDirection());
 		return result;
 	}
 
@@ -449,21 +425,21 @@ public class Robot implements IRobot{
 
 			// Berekingen nodig voor de gevallenonderscheiding. ManhattanAlternatives zijn uitzonderingen waarbij het beter is om niet naar de andere robot te bewegen maar beide robots te laten bewegen.
 			long[] altpos = new long [2];
-			altpos = this.getCloseTargetCoördinate(target.getX(), target.getY());
+			altpos = this.getCloseTargetCoördinate(target.getPosition().getX(), target.getPosition().getY());
 			double thisNeededEnergy = this.getEnergyBasedOnTurnsAndMoves(altpos[0], altpos[1]);
-			altpos = target.getCloseTargetCoördinate(this.getX(), this.getY());
+			altpos = target.getCloseTargetCoördinate(this.getPosition().getX(), this.getPosition().getY());
 			double targetNeededEnergy = target.getEnergyBasedOnTurnsAndMoves(altpos[0], altpos[1]);
-			double ManhattanAlternative1a = this.getEnergyBasedOnTurnsAndMoves(target.getX(), this.getY());
-			altpos =  target.getCloseTargetCoördinate(target.getX(), this.getY());
+			double ManhattanAlternative1a = this.getEnergyBasedOnTurnsAndMoves(target.getPosition().getX(), this.getPosition().getY());
+			altpos =  target.getCloseTargetCoördinate(target.getPosition().getX(), this.getPosition().getY());
 			double ManhattanAlternative1b = target.getEnergyBasedOnTurnsAndMoves(altpos[0],altpos[1]);
-			double ManhattanAlternative2a = this.getEnergyBasedOnTurnsAndMoves(this.getX(), target.getY());
-			altpos = target.getCloseTargetCoördinate(this.getX(), target.getY());
+			double ManhattanAlternative2a = this.getEnergyBasedOnTurnsAndMoves(this.getPosition().getX(), target.getPosition().getY());
+			altpos = target.getCloseTargetCoördinate(this.getPosition().getX(), target.getPosition().getY());
 			double ManhattanAlternative2b = target.getEnergyBasedOnTurnsAndMoves(altpos[0], altpos[1]);
-			double ManhattanAlternative3b = target.getEnergyBasedOnTurnsAndMoves(target.getX(), this.getY());
-			altpos = this.getCloseTargetCoördinate(target.getX(), this.getY());
+			double ManhattanAlternative3b = target.getEnergyBasedOnTurnsAndMoves(target.getPosition().getX(), this.getPosition().getY());
+			altpos = this.getCloseTargetCoördinate(target.getPosition().getX(), this.getPosition().getY());
 			double ManhattanAlternative3a = this.getEnergyBasedOnTurnsAndMoves(altpos[0], altpos[1]);
-			double ManhattanAlternative4b = target.getEnergyBasedOnTurnsAndMoves(this.getX(), target.getY());
-			altpos = this.getCloseTargetCoördinate(this.getX(), target.getY());
+			double ManhattanAlternative4b = target.getEnergyBasedOnTurnsAndMoves(this.getPosition().getX(), target.getPosition().getY());
+			altpos = this.getCloseTargetCoördinate(this.getPosition().getX(), target.getPosition().getY());
 			double ManhattanAlternative4a = this.getEnergyBasedOnTurnsAndMoves(altpos[0], altpos[1]);			
 			double ManhattanAlternative1 = ManhattanAlternative1a + ManhattanAlternative1b;
 			double ManhattanAlternative2 = ManhattanAlternative2a + ManhattanAlternative2b;
@@ -520,16 +496,16 @@ public class Robot implements IRobot{
 			}
 
 			Collections.sort(enoughEnergy, new Comparator<double[]>(){
-			    public int compare(double[] route1, double[] route2){
+				public int compare(double[] route1, double[] route2){
 
-		        double route1Cost = route1[1];      
-		        double route2Cost = route2[1];      
+					double route1Cost = route1[1];      
+					double route2Cost = route2[1];      
 
-		        return (route1Cost < route2Cost) ? -1 : ((route1Cost == route2Cost) ? 0 : 1); 
-			    }
-		    });
+					return (route1Cost < route2Cost) ? -1 : ((route1Cost == route2Cost) ? 0 : 1); 
+				}
+			});
 
-			if(this.getX() == target.getX() && this.getY() == target.getY()){
+			if(this.getPosition().getX() == target.getPosition().getX() && this.getPosition().getY() == target.getPosition().getY()){
 				// De robots staan op elkaar.
 				this.moveRobotsOnSamePlace(target);
 			}else if(enoughEnergy.size() > 0){
@@ -547,27 +523,27 @@ public class Robot implements IRobot{
 					target.moveTo(this);
 					break;
 				case 3:
-					// Het ideale traject is this naar (target.getX(), this.getY()) bewegen en target ernaast.
-					destination2 = target.getCloseTargetCoördinate(target.getX(), this.getY());
-					this.moveTo(target.getX(), this.getY(), false);
+					// Het ideale traject is this naar (target.getPosition().getX(), this.getPosition().getY()) bewegen en target ernaast.
+					destination2 = target.getCloseTargetCoördinate(target.getPosition().getX(), this.getPosition().getY());
+					this.moveTo(target.getPosition().getX(), this.getPosition().getY(), false);
 					target.moveTo(destination2[0], destination2[1], false);
 					break;
 				case 4:
-					// Het ideale traject is this naar (this.getX(), target.getY()) bewegen en target ernaast.
-					destination2 = target.getCloseTargetCoördinate(this.getX(), target.getY());
-					this.moveTo(this.getX(), target.getY(), false);
+					// Het ideale traject is this naar (this.getPosition().getX(), target.getPosition().getY()) bewegen en target ernaast.
+					destination2 = target.getCloseTargetCoördinate(this.getPosition().getX(), target.getPosition().getY());
+					this.moveTo(this.getPosition().getX(), target.getPosition().getY(), false);
 					target.moveTo(destination2[0], destination2[1], false);
 					break;
 				case 5:
-					// Het ideale traject is target naar (target.getX(), this.getY()) bewegen en this ernaast.
-					destination2 = this.getCloseTargetCoördinate(target.getX(), this.getY());
-					target.moveTo(target.getX(), this.getY(), false);
+					// Het ideale traject is target naar (target.getPosition().getX(), this.getPosition().getY()) bewegen en this ernaast.
+					destination2 = this.getCloseTargetCoördinate(target.getPosition().getX(), this.getPosition().getY());
+					target.moveTo(target.getPosition().getX(), this.getPosition().getY(), false);
 					this.moveTo(destination2[0], destination2[1], false);
 					break;
 				case 6:
-					// Het ideale traject is target naar (this.getX(), target.getY()) bewegen en this ernaast.
-					destination2 = this.getCloseTargetCoördinate(this.getX(), target.getY());
-					target.moveTo(this.getX(), target.getY(), false);
+					// Het ideale traject is target naar (this.getPosition().getX(), target.getPosition().getY()) bewegen en this ernaast.
+					destination2 = this.getCloseTargetCoördinate(this.getPosition().getX(), target.getPosition().getY());
+					target.moveTo(this.getPosition().getX(), target.getPosition().getY(), false);
 					this.moveTo(destination2[0], destination2[1], false);
 					break;
 				}
@@ -587,12 +563,12 @@ public class Robot implements IRobot{
 	 * @effect	De huidige robot en de gegeven robot staan zo dicht mogelijk bij elkaar.
 	 */
 	private void moveAsCloseAsPossibleTo(Robot robot){
-		double thisEnergy = this.getEnergyBasedOnTurnsAndMoves(robot.getX(), robot.getY());
-		double robotEnergy = robot.getEnergyBasedOnTurnsAndMoves(this.getX(), this.getY());
+		double thisEnergy = this.getEnergyBasedOnTurnsAndMoves(robot.getPosition().getX(), robot.getPosition().getY());
+		double robotEnergy = robot.getEnergyBasedOnTurnsAndMoves(this.getPosition().getX(), this.getPosition().getY());
 		while ((this.getEnergy() >= 500 || robot.getEnergy() >= 500) && !this.isNextTo(robot)){
 			if(((thisEnergy > robotEnergy && robot.getEnergy() >= 500)) || this.getEnergy() < 500){
 				//robot zal bewegen, this blijft staan.
-				int[] turnCalculations = robot.calculateTurnsToPosition(this.getX(), this.getY());
+				int[] turnCalculations = robot.calculateTurnsToPosition(this.getPosition().getX(), this.getPosition().getY());
 				if(turnCalculations[0] > 1 && robot.getEnergy() >= 700){
 					if(turnCalculations[1] == 0){
 						robot.turnClockWise();
@@ -605,7 +581,7 @@ public class Robot implements IRobot{
 					}else{
 						robot.turnCounterClockWise();
 					}
-					if(robot.getEnergyBasedOnTurnsAndMoves(this.getX(), this.getY()) >= robotEnergy){
+					if(robot.getEnergyBasedOnTurnsAndMoves(this.getPosition().getX(), this.getPosition().getY()) >= robotEnergy){
 						if(turnCalculations[1] == 1){
 							robot.turnClockWise();
 						}else{
@@ -617,9 +593,9 @@ public class Robot implements IRobot{
 				}else{
 					break;
 				}
- 			}else if(this.getEnergy() >= 500 || robot.getEnergy() < 500){
+			}else if(this.getEnergy() >= 500 || robot.getEnergy() < 500){
 				//this zal bewegen, robot blijft staan
-				int[] turnCalculations = this.calculateTurnsToPosition(robot.getX(), robot.getY());
+				int[] turnCalculations = this.calculateTurnsToPosition(robot.getPosition().getX(), robot.getPosition().getY());
 				if(turnCalculations[0] > 1 && this.getEnergy() >= 700){
 					if(turnCalculations[1] == 0){
 						this.turnClockWise();
@@ -632,7 +608,7 @@ public class Robot implements IRobot{
 					}else{
 						this.turnCounterClockWise();
 					}
-					if(this.getEnergyBasedOnTurnsAndMoves(robot.getX(), robot.getY()) >= thisEnergy){
+					if(this.getEnergyBasedOnTurnsAndMoves(robot.getPosition().getX(), robot.getPosition().getY()) >= thisEnergy){
 						if(turnCalculations[1] == 1){
 							this.turnClockWise();
 						}else{
@@ -648,8 +624,8 @@ public class Robot implements IRobot{
 				// niet genoeg energie
 				break;
 			}
-			thisEnergy = this.getEnergyBasedOnTurnsAndMoves(robot.getX(), robot.getY());
-			robotEnergy = robot.getEnergyBasedOnTurnsAndMoves(this.getX(), this.getY());
+			thisEnergy = this.getEnergyBasedOnTurnsAndMoves(robot.getPosition().getX(), robot.getPosition().getY());
+			robotEnergy = robot.getEnergyBasedOnTurnsAndMoves(this.getPosition().getX(), this.getPosition().getY());
 		}
 	}
 
@@ -680,7 +656,8 @@ public class Robot implements IRobot{
 			pos = this.getCloseTargetCoördinate(xpos, ypos);
 		int[] turns = this.calculateTurnsToPosition(pos[0], pos[1]);
 		this.setEnergy(this.getEnergy() - this.calculateManhattanDistance(pos[0], pos[1]) * 500);
-		this.setPosition(pos[0], pos[1]);
+		Position position = new Position(pos[0], pos[1]);
+		this.setPosition(position);
 		if(turns[0] == 1){
 			if(turns[1] == 0){
 				this.turnClockWise();
@@ -694,7 +671,7 @@ public class Robot implements IRobot{
 	}
 
 	private void moveTo(Robot target){
-		moveTo(target.getX(), target.getY(), true);
+		moveTo(target.getPosition().getX(), target.getPosition().getY(), true);
 	}
 
 	/**
@@ -713,32 +690,32 @@ public class Robot implements IRobot{
 		boolean moveOther = true;
 
 		if(this.getEnergy() >= 500){
-			if(this.getX() == 0 && this.getDirection() == 3){
+			if(this.getPosition().getX() == 0 && this.getDirection() == 3){
 				moveThis = false;
 			}
-			if(this.getY() == 0 && this.getDirection() == 0){
+			if(this.getPosition().getY() == 0 && this.getDirection() == 0){
 				moveThis = false;
 			}
-			if(this.getX() == Long.MAX_VALUE && this.getDirection() == 1){
+			if(this.getPosition().getX() == Long.MAX_VALUE && this.getDirection() == 1){
 				moveThis = false;
 			}
-			if(this.getY() == Long.MAX_VALUE && this.getDirection() == 2){
+			if(this.getPosition().getY() == Long.MAX_VALUE && this.getDirection() == 2){
 				moveThis = false;
 			}
 		}else{
 			moveThis = false;
 		}
 		if(other.getEnergy() >= 500){
-			if(other.getX() == 0 && other.getDirection() == 3){
+			if(other.getPosition().getX() == 0 && other.getDirection() == 3){
 				moveOther = false;
 			}
-			if(other.getY() == 0 && other.getDirection() == 0){
+			if(other.getPosition().getY() == 0 && other.getDirection() == 0){
 				moveOther = false;
 			}
-			if(other.getX() == Long.MAX_VALUE && other.getDirection() == 1){
+			if(other.getPosition().getX() == Long.MAX_VALUE && other.getDirection() == 1){
 				moveOther = false;
 			}
-			if(other.getY() == Long.MAX_VALUE && other.getDirection() == 2){
+			if(other.getPosition().getY() == Long.MAX_VALUE && other.getDirection() == 2){
 				moveOther = false;
 			}
 		}else{
@@ -747,25 +724,25 @@ public class Robot implements IRobot{
 
 		if(!moveThis && !moveOther){
 			if(this.getEnergy() >= 600){
-				if(this.getX() == 0 && this.getY() == 0){
+				if(this.getPosition().getX() == 0 && this.getPosition().getY() == 0){
 					if(this.getDirection() == 0){
 						this.turnClockWise();
 					}else if(this.getDirection() == 3){
 						this.turnCounterClockWise();
 					}
-				}else if(this.getX() == Long.MAX_VALUE && this.getY() == Long.MAX_VALUE){
+				}else if(this.getPosition().getX() == Long.MAX_VALUE && this.getPosition().getY() == Long.MAX_VALUE){
 					if(this.getDirection() == 1){
 						this.turnCounterClockWise();
 					}else if(this.getDirection() == 2){
 						this.turnClockWise();
 					}
-				}else if(this.getX() == 0 && this.getY() == Long.MAX_VALUE){
+				}else if(this.getPosition().getX() == 0 && this.getPosition().getY() == Long.MAX_VALUE){
 					if(this.getDirection() == 2){
 						this.turnCounterClockWise();
 					}else if(this.getDirection() == 3){
 						this.turnClockWise();
 					}
-				}else if(this.getX() == Long.MAX_VALUE && this.getY() == 0){
+				}else if(this.getPosition().getX() == Long.MAX_VALUE && this.getPosition().getY() == 0){
 					if(this.getDirection() == 0){
 						this.turnCounterClockWise();
 					}else if(this.getDirection() == 1){
@@ -776,25 +753,25 @@ public class Robot implements IRobot{
 				}
 				moveThis = true;
 			}else if(other.getEnergy() >= 600){
-				if(other.getX() == 0 && other.getY() == 0){
+				if(other.getPosition().getX() == 0 && other.getPosition().getY() == 0){
 					if(other.getDirection() == 0){
 						other.turnClockWise();
 					}else if(other.getDirection() == 3){
 						other.turnCounterClockWise();
 					}
-				}else if(other.getX() == Long.MAX_VALUE && other.getY() == Long.MAX_VALUE){
+				}else if(other.getPosition().getX() == Long.MAX_VALUE && other.getPosition().getY() == Long.MAX_VALUE){
 					if(other.getDirection() == 1){
 						other.turnCounterClockWise();
 					}else if(other.getDirection() == 2){
 						other.turnClockWise();
 					}
-				}else if(other.getX() == 0 && other.getY() == Long.MAX_VALUE){
+				}else if(other.getPosition().getX() == 0 && other.getPosition().getY() == Long.MAX_VALUE){
 					if(other.getDirection() == 2){
 						other.turnCounterClockWise();
 					}else if(other.getDirection() == 3){
 						other.turnClockWise();
 					}
-				}else if(other.getX() == Long.MAX_VALUE && other.getY() == 0){
+				}else if(other.getPosition().getX() == Long.MAX_VALUE && other.getPosition().getY() == 0){
 					if(other.getDirection() == 0){
 						other.turnCounterClockWise();
 					}else if(other.getDirection() == 1){
@@ -828,7 +805,7 @@ public class Robot implements IRobot{
 	 * @note	Deze methode houdt enkel rekening met het aantal moves en turns maar negeert efficiëntere manieren om op een positie te geraken.
 	 */
 	private double getEnergyBasedOnTurnsAndMoves(long xpos, long ypos){
-		return getEnergyBasedOnTurnsAndMoves(this.getX(), this.getY(), xpos, ypos, this.getDirection());
+		return getEnergyBasedOnTurnsAndMoves(this.getPosition().getX(), this.getPosition().getY(), xpos, ypos, this.getDirection());
 	}
 
 	/**
@@ -876,16 +853,16 @@ public class Robot implements IRobot{
 	 * 			Met de energie die de robot voor deze verplaatsing zal gebruiken
 	 */
 	public double getEnergyRequiredToReach(long xpos, long ypos){
-		if(this.getX() == xpos && this.getY() == ypos)
+		if(this.getPosition().getX() == xpos && this.getPosition().getY() == ypos)
 			return 0;
 		double thisNeededEnergy = this.getEnergyBasedOnTurnsAndMoves(xpos, ypos);
-		double ManhattanAlternative1 = getEnergyBasedOnTurnsAndMoves(xpos, this.getY()) + getEnergyBasedOnTurnsAndMoves(xpos, this.getY(), this.getX(), this.getY(), this.getDirection());
-		double ManhattanAlternative2 = getEnergyBasedOnTurnsAndMoves(this.getX(), ypos) + getEnergyBasedOnTurnsAndMoves(this.getX(), ypos, this.getX(), this.getY(), this.getDirection());
+		double ManhattanAlternative1 = getEnergyBasedOnTurnsAndMoves(xpos, this.getPosition().getY()) + getEnergyBasedOnTurnsAndMoves(xpos, this.getPosition().getY(), this.getPosition().getX(), this.getPosition().getY(), this.getDirection());
+		double ManhattanAlternative2 = getEnergyBasedOnTurnsAndMoves(this.getPosition().getX(), ypos) + getEnergyBasedOnTurnsAndMoves(this.getPosition().getX(), ypos, this.getPosition().getX(), this.getPosition().getY(), this.getDirection());
 		if(ManhattanAlternative1 < thisNeededEnergy && ManhattanAlternative1 != 0){
-			// Efficiënter om Manhattan alternatief 1 te gebruiken (target.getX(), this.getY()).
+			// Efficiënter om Manhattan alternatief 1 te gebruiken (target.getPosition().getX(), this.getPosition().getY()).
 			return ManhattanAlternative1;
 		}else if(ManhattanAlternative2 < thisNeededEnergy && ManhattanAlternative2 != 0){
-			// Efficiënter om Manhattan alternatief 2 te gebruiken (this.getX(), target.getY()).
+			// Efficiënter om Manhattan alternatief 2 te gebruiken (this.getPosition().getX(), target.getPosition().getY()).
 			return ManhattanAlternative2;
 		}else{
 			// Manhattan alternatieven zijn niet efficiënter
@@ -915,42 +892,42 @@ public class Robot implements IRobot{
 		return this.getEnergy()/this.maxEnergy;
 	}
 
-	 /**
-	  * Methode die het coördinaat zo dicht mogelijk naast het gegeven coördinaat teruggeeft.
-	  * 
-	  * @param 	xpos
-	  * 		X-coördinaat waarnaar bewogen moet worden.
-	  * 
-	  * @param 	ypos
-	  * 		Y-coördinaat waarnaar bewogen moet worden.
-	  * 
-	  * @return	long[]
-	  * 		Een array met 2 longs waarvan de eerste de gezochte x-coördinaat is en de tweede de gezochte y-coördinaat.
-	  * 
-	  */
+	/**
+	 * Methode die het coördinaat zo dicht mogelijk naast het gegeven coördinaat teruggeeft.
+	 * 
+	 * @param 	xpos
+	 * 		X-coördinaat waarnaar bewogen moet worden.
+	 * 
+	 * @param 	ypos
+	 * 		Y-coördinaat waarnaar bewogen moet worden.
+	 * 
+	 * @return	long[]
+	 * 		Een array met 2 longs waarvan de eerste de gezochte x-coördinaat is en de tweede de gezochte y-coördinaat.
+	 * 
+	 */
 	private long[] getCloseTargetCoördinate(long xpos , long ypos){
 		long[] result = new long[2];
 		int[] turns = this.calculateTurnsToPosition(xpos, ypos);
 		if (turns[0] == 0){
 			if(this.getDirection() == 0 ){
-				result[0] = this.getX();
+				result[0] = this.getPosition().getX();
 				result[1] = ypos + 1;
 				return result;
 			}
 			else if (this.getDirection() == 1){
 				result[0] = xpos - 1;
-				result[1] = this.getY();
+				result[1] = this.getPosition().getY();
 				return result;
 			}
 			else if (this.getDirection() == 2){
-				result[0] = this.getX();
+				result[0] = this.getPosition().getX();
 				result[1] = ypos - 1;
 				return result;
 			}
 			result[0] = xpos + 1;
-			result[1] = this.getY();
+			result[1] = this.getPosition().getY();
 			return result;
-			}
+		}
 		else if ((turns[0] == 1) && (turns[1] == 0)){
 			if (this.getDirection() == 0){
 				result[0] = xpos - 1;
@@ -967,8 +944,8 @@ public class Robot implements IRobot{
 				result[1] = ypos;
 				return result;
 			}
-			if(xpos == this.getX()){
-				result[0] = this.getX();
+			if(xpos == this.getPosition().getX()){
+				result[0] = this.getPosition().getX();
 				result[1] = ypos + 1;
 				return result;
 			}
@@ -992,8 +969,8 @@ public class Robot implements IRobot{
 				result[1] = ypos;
 				return result;
 			}
-			if(xpos == this.getX()){
-				result[0] = this.getX();
+			if(xpos == this.getPosition().getX()){
+				result[0] = this.getPosition().getX();
 				result[1] = ypos - 1;
 				return result;
 			}
@@ -1002,7 +979,7 @@ public class Robot implements IRobot{
 			return result;
 		}
 		else if ((turns[0] == 2) && (turns[1] == 0)){
-			if ((this.getX() != xpos) && (this.getY() != ypos)){
+			if ((this.getPosition().getX() != xpos) && (this.getPosition().getY() != ypos)){
 				if (this.getDirection() == 0){
 					result[0] = xpos;
 					result[1] = ypos - 1;
@@ -1042,7 +1019,7 @@ public class Robot implements IRobot{
 			return result;
 		}
 		else if ((turns[0] == 2) && (turns[1] == 1)){
-			if ((this.getX() != xpos) && (this.getY() != ypos)){
+			if ((this.getPosition().getX() != xpos) && (this.getPosition().getY() != ypos)){
 				if (this.getDirection() == 0){
 					result[0] = xpos;
 					result[1] = ypos - 1;
@@ -1076,62 +1053,50 @@ public class Robot implements IRobot{
 	 * 
 	 * @post 	De robot staat 1 stap verder (in de richting waarnaar hij keek).
 	 * 			|if (getDirection() == O)
-	 * 			|				(new this).getY = this.getY() - 1 
+	 * 			|				(new this).getY = this.getPosition().getY() - 1 
 	 * 			|if (getDirection() == 1)
-	 * 			|				(new this).getX = this.getX() + 1
+	 * 			|				(new this).getX = this.getPosition().getX() + 1
 	 * 			|if (getDirection() == 2)
-	 * 			|				(new this).getY = this.getY() + 1
+	 * 			|				(new this).getY = this.getPosition().getY() + 1
 	 * 			|if (getDirection() == 3)
-	 * 			|				(new this).getX = this.getX() - 1
+	 * 			|				(new this).getX = this.getPosition().getX() - 1
 	 * 
 	 * @post 	De robot verliest 500Ws energie.
 	 * 			| (new this).getEnergy() = this.getEnergy() - 500
 	 * 
 	 * @throws	IllegalStateException
 	 * 			De robot kan niet buiten het bord bewegen.
-	 * 			|this.getDirection() == 0 && !isValidPosition(getX(), getY() - 1)
-	 * 			|this.getDirection() == 1 && !isValidPosition(getX() + 1, getY())
-	 * 			|this.getDirection() == 2 && !isValidPosition(getX(), getY() + 1)
-	 * 			|this.getDirection() == 3 && !isValidPosition(getX() - 1, getY())
+	 * 			|this.getDirection() == 0 && !isValidPosition(getPosition().getX(), getPosition().getY() - 1)
+	 * 			|this.getDirection() == 1 && !isValidPosition(getPosition().getX() + 1, getPosition().getY())
+	 * 			|this.getDirection() == 2 && !isValidPosition(getPosition().getX(), getPosition().getY() + 1)
+	 * 			|this.getDirection() == 3 && !isValidPosition(getPosition().getX() - 1, getPosition().getY())
 	 * 			
 	 */
-	public void move(){
-		assert isValidPosition(this.getX(), this.getY()) && isValidDirection(this.getDirection()) && isValidEnergy(this.getEnergy()) && this.getEnergy() >= 500;
+	public void move() throws IllegalStateException{
+		assert isValidDirection(this.getDirection()) && isValidEnergy(this.getEnergy()) && this.getEnergy() >= 500;
 		if(this.getEnergy() >= 500){
-			switch (this.getDirection()){
-			case 0:
-				if(isValidPosition(getX(), getY() - 1)){
-					this.setPosition(getX(), getY() - 1);
-					this.setEnergy(getEnergy() - 500);
-				}else{
-					throw new IllegalStateException("De robot kan niet buiten het bord bewegen.");
+			Position destination = null;
+			try{
+				switch (this.getDirection()){
+				case 0:
+					destination = new Position(getPosition().getX(), getPosition().getY() - 1);
+					break;
+				case 1:
+					destination = new Position(getPosition().getX() + 1, getPosition().getY());
+					break;
+				case 2:
+					destination = new Position(getPosition().getX(), getPosition().getY() + 1);
+					break;
+				case 3:
+					destination = new Position(getPosition().getX() - 1, getPosition().getY());
+					break;
 				}
-				break;
-			case 1:
-				if(isValidPosition(getX() + 1, getY())){
-					this.setPosition(getX() + 1, getY());
-					this.setEnergy(getEnergy() - 500);
-				}else{
-					throw new IllegalStateException("De robot kan niet buiten het bord bewegen.");
-				}
-				break;
-			case 2:
-				if(isValidPosition(getX(), getY() + 1)){
-					this.setPosition(getX(), getY() + 1);
-					this.setEnergy(getEnergy() - 500);
-				}else{
-					throw new IllegalStateException("De robot kan niet buiten het bord bewegen.");
-				}
-				break;
-			case 3:
-				if(isValidPosition(getX() - 1, getY())){
-					this.setPosition(getX() - 1, getY());
-					this.setEnergy(getEnergy() - 500);
-				}else{
-					throw new IllegalStateException("De robot kan niet buiten het bord bewegen.");
-				}
-				break;
 			}
+			catch (IllegalArgumentException e){
+				throw new IllegalStateException("De robot kan niet buiten het bord bewegen.");
+			}
+			this.setPosition(destination);
+			this.setEnergy(getEnergy() - 500);
 		}
 	}
 
@@ -1162,32 +1127,14 @@ public class Robot implements IRobot{
 	}
 
 	/**
-	 * Checkt of een gegeven positie toegestaan is.
+	 * Checkt of de gegeven orientatie toegestaan is.
 	 * 
-	 * @param	x 
-	 * 			X-coördinaat die moet worden nagegaan.
+	 * @param 	dir
+	 * 		Integer die de oriëntatie van een robot voorstelt.
 	 * 
-	 * @param 	y
-	 * 			Y-coördinaat die moet worden nagegaan.
-	 * 
-	 * @return	boolean 
-	 * 			Deze geeft true terug als de positie geldig is, false indien ongeldig.
-	 * 
+	 * @return boolean 
+	 * 		Deze geeft true terug als een bepaalde oriëntatie toegestaan is.
 	 */
-	public boolean isValidPosition(long x, long y){
-		if ((x > Long.MAX_VALUE) || (x < 0) || (y > Long.MAX_VALUE) || (y < 0)) return false;
-		return true;
-	}
-
-	 /**
-	  * Checkt of de gegeven orientatie toegestaan is.
-	  * 
-	  * @param 	dir
-	  * 		Integer die de oriëntatie van een robot voorstelt.
-	  * 
-	  * @return boolean 
-	  * 		Deze geeft true terug als een bepaalde oriëntatie toegestaan is.
-	  */
 	public boolean isValidDirection(int dir){
 		return ((dir >= 0) && (dir <= 3));
 	}
@@ -1216,10 +1163,10 @@ public class Robot implements IRobot{
 	 * 			Deze geeft true terug als de gegeven robot naast de huidige staat.
 	 */
 	private boolean isNextTo(Robot robot){
-		 if ((this.getX() == robot.getX()) && ((this.getY() + 1 == robot.getY())||(this.getY() == robot.getY()+ 1)))
-			 return true;
-		 else if ((this.getY() == robot.getY()) && ((this.getX() + 1 == robot.getX())|| (this.getX() == robot.getX() + 1)))
-			 return true;
+		if ((this.getPosition().getX() == robot.getPosition().getX()) && ((this.getPosition().getY() + 1 == robot.getPosition().getY())||(this.getPosition().getY() == robot.getPosition().getY()+ 1)))
+			return true;
+		else if ((this.getPosition().getY() == robot.getPosition().getY()) && ((this.getPosition().getX() + 1 == robot.getPosition().getX())|| (this.getPosition().getX() == robot.getPosition().getX() + 1)))
+			return true;
 		return false; 
 	}
 }
