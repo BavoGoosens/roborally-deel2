@@ -1,10 +1,11 @@
 package roborally.model;
-import java.util.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import be.kuleuven.cs.som.annotate.*;
-
 import roborally.basics.Position;
 import roborally.interfaces.IRobot;
+import roborally.utils.RouteComparator;
 /**
  * Een klasse om robots voor te stellen.
  * 
@@ -99,10 +100,6 @@ public class Robot implements IRobot{
 	 * 
 	 * @param 	position
 	 * 			|Nieuwe positie van de robot
-	 * 
-	 * @throws 	IllegalArgumentException
-	 * 			De gegeven x- en y-coördinaten stellen geen geldige positie voor.
-	 * 			|!isValidPosition(x, y)
 	 * 
 	 * @post 	De positie van de robot verandert naar die gegeven als parameters.
 	 * 			|new.getPosition().getX() == x
@@ -495,15 +492,7 @@ public class Robot implements IRobot{
 				enoughEnergy.add(addToList);
 			}
 
-			Collections.sort(enoughEnergy, new Comparator<double[]>(){
-				public int compare(double[] route1, double[] route2){
-
-					double route1Cost = route1[1];      
-					double route2Cost = route2[1];      
-
-					return (route1Cost < route2Cost) ? -1 : ((route1Cost == route2Cost) ? 0 : 1); 
-				}
-			});
+			Collections.sort(enoughEnergy, new RouteComparator());
 
 			if(this.getPosition().getX() == target.getPosition().getX() && this.getPosition().getY() == target.getPosition().getY()){
 				// De robots staan op elkaar.
@@ -1066,10 +1055,10 @@ public class Robot implements IRobot{
 	 * 
 	 * @throws	IllegalStateException
 	 * 			De robot kan niet buiten het bord bewegen.
-	 * 			|this.getDirection() == 0 && !isValidPosition(getPosition().getX(), getPosition().getY() - 1)
-	 * 			|this.getDirection() == 1 && !isValidPosition(getPosition().getX() + 1, getPosition().getY())
-	 * 			|this.getDirection() == 2 && !isValidPosition(getPosition().getX(), getPosition().getY() + 1)
-	 * 			|this.getDirection() == 3 && !isValidPosition(getPosition().getX() - 1, getPosition().getY())
+	 * 			|this.getDirection() == 0 && !Position.isValidPosition(getPosition().getX(), getPosition().getY() - 1)
+	 * 			|this.getDirection() == 1 && !Position.isValidPosition(getPosition().getX() + 1, getPosition().getY())
+	 * 			|this.getDirection() == 2 && !Position.isValidPosition(getPosition().getX(), getPosition().getY() + 1)
+	 * 			|this.getDirection() == 3 && !Position.isValidPosition(getPosition().getX() - 1, getPosition().getY())
 	 * 			
 	 */
 	public void move() throws IllegalStateException{
