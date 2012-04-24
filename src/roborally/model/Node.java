@@ -1,6 +1,8 @@
 package roborally.model;
 
-import javax.swing.text.Position;
+import roborally.basics.Position;
+
+import roborally.basics.Orientation;
 
 //mag parent moet ten alle tijden naar een andere node wijzen => geen selfreferenties $
 //position zal altyd naar een geldige pos verwijzen 
@@ -12,12 +14,14 @@ private Position pos;
 private long gCost;
 private long hCost;
 private long fCost = gCost + hCost;
+private Orientation orientation;
 private Node parent;
 
-public Node(Position pos, long g, long h, Node parent){
-	setPos(pos);
+public Node(Position position, long g, long h,Orientation orientation, Node parent){
+	setPos(position);
 	setGCost(g);
 	setHCost(h);
+	setOrientation(orientation);
 	setParent(parent);
 }
 
@@ -25,8 +29,12 @@ private void setParent(Node parent){
 	this.parent = parent;
 }
 
-private void setPos(Position pos){
-	this.pos = pos;
+private void setOrientation(Orientation or){
+	this.orientation = or;
+}
+
+private void setPos(Position position){
+	this.pos = position;
 }
 
 private void setGCost(long g){

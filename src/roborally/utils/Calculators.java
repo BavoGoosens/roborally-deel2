@@ -1,9 +1,9 @@
 package roborally.utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-
-import com.sun.java.swing.plaf.gtk.GTKConstants.Orientation;
+import java.util.Iterator;
 
 import roborally.basics.Position;
 import roborally.model.Node;
@@ -25,18 +25,37 @@ public class Calculators {
 	}
 	
 	public long calculateTurnsToPosition(Robot a, Position pos){
-		or = a.getOrientation();
+		roborally.basics.Orientation or = a.getOrientation();
+		Position aPos = a.getPosition();
 		
 	}
 	
-	public ArrayList<Node> aStar(Robot a, Robot b){
-		ArrayList<Node> openSet = new ArrayList<Node>(); 
-		//de experimentele posities die nog geëvalueerd moeten/kunnen worden
-		openSet.add(new Node(a.getPosition(), 0, calculateHCost(a, b);
-		Map<Position, F, G, H> closedSet = new HashMap<Position, F, G, H>(); 
+	public HashMap<Position,Node> aStar(Robot a, Robot b){
+		HashMap<Position,Node> openSet = new HashMap<Position,Node>(); 
+		// de experimentele posities die nog geëvalueerd moeten/kunnen worden
+		openSet.put(a.getPosition(), new Node(a.getPosition(), 0 , calculateHCost(a, b),a.getOrientation(), null));
+		// de startPositie aan de open list toevoegen
+		HashMap<Position,Node> closedSet = new HashMap<Position, Node>(); 
 		// de lijst met al geëvalueerde posities
-		Map<> traveledMap = new HashMap<>();  
-		// de kaart van al geteste nodes
+		while ( !openSet.isEmpty()){
+			Node currentNode = getMinimalFNode(openSet);
+			if (b.getPosition().getNeighBours().contains(currentNode.getPosition())){
+				troleoeleooeoel
+			}
+			
+		}
 
 	}
+	
+	public Node getMinimalFNode(HashMap<Position, Node> map){
+		Collection<Node>c = map.values();
+		Iterator<Node> itr = c.iterator();
+		Node minimalNode = itr.next();
+		for (Node node : c){
+			if (node.getFCost() < minimalNode.getFCost())
+				minimalNode = node;
+		}
+		return minimalNode;
+	}
+	
 }
