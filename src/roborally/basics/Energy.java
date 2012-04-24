@@ -77,4 +77,9 @@ public class Energy {
 	public boolean isValidEnergyAmount(double amount, eUnit unit){
 		return (amount*unit.factor() >= MINENERGY) && (amount*unit.factor() <= MAXENERGY);
 	}
+	
+	public Energy energySum(Energy e1, Energy e2){
+		return new Energy(e1.getAmount(eUnit.WS) + e2.getAmount(eUnit.WS), eUnit.WS);
+	}
+	
 }

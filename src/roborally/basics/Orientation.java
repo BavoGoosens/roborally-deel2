@@ -1,73 +1,41 @@
 package roborally.basics;
 
-import be.kuleuven.cs.som.annotate.Basic;
-import be.kuleuven.cs.som.annotate.Value;
-
 /**
- * Deze klasse stelt een richting voor.
+ * Een enumeratie met alle mogelijke waarden voor een richting. Momenteel UP, RIGHT, DOWN, LEFT.
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
  * @version 1.0
  */
-public class Orientation{
+public enum Orientation{
 
-	@Value
-	public enum orientationValue{
-		UP, RIGHT, DOWN, LEFT;
-	}
-
-	private orientationValue ov;
-
-	/**
-	 * Deze methode maakt een nieuwe oriëntatie aan.
-	 * 
-	 * @param 	ov
-	 * 			De waarde van de oriëntatie. Mogelijke waarden zijn gedefinieerd in de enumeratie orientationValue als UP, RIGHT, DOWN en LEFT.
-	 */
-	public Orientation(orientationValue ov){
-		this.setOV(ov);
-	}
-
-	/**
-	 * Deze methode geeft de waarde van de oriëntatie terug.
-	 * 
-	 * @return 	orientationValue
-	 * 			De waarde van de richting.
-	 */
-	@Basic
-	public orientationValue getOV() {
-		return ov;
-	}
+	UP, RIGHT, DOWN, LEFT;
 	
-	@Basic
-	/**
-	 * Deze methode wijzigt de huidige oriëntatie.
-	 * 
-	 * @param 	ov
-	 * 			Nieuwe waarde van de richting.
-	 */
-	public void setOV(orientationValue ov){
-		this.ov = ov;
-	}
-
 	/**
 	 * Deze methode geeft de oriëntatie terug als er 1 keer in wijzerzin gedraaid wordt.
 	 * 
 	 * @return	Orientation
 	 * 			De oriëntatie als er 1 keer in wijzerzin gedraaid wordt.
+	 *			|if(new.equals(UP))
+	 *			|	RIGHT
+	 *			|if(new.equals(RIGHT))
+	 *			|	DOWN
+	 *			|if(new.equals(DOWN))
+	 *			|	LEFT
+	 *			|if(new.equals(LEFT))
+	 *			|	UP
+	 *			|null
 	 */
 	public Orientation getClockwiseOrientation(){
-		Orientation result = null;
-		if(this.getOV().equals(Orientation.orientationValue.UP))
-			result = new Orientation(Orientation.orientationValue.RIGHT);
-		if(this.getOV().equals(Orientation.orientationValue.RIGHT))
-			result = new Orientation(Orientation.orientationValue.DOWN);
-		if(this.getOV().equals(Orientation.orientationValue.DOWN))
-			result = new Orientation(Orientation.orientationValue.LEFT);
-		if(this.getOV().equals(Orientation.orientationValue.LEFT))
-			result = new Orientation(Orientation.orientationValue.UP);
-		return result;	
+		if(this.equals(UP))
+			return RIGHT;
+		if(this.equals(RIGHT))
+			return DOWN;
+		if(this.equals(DOWN))
+			return LEFT;
+		if(this.equals(LEFT))
+			return UP;
+		return null;	
 	}
 
 	/**
@@ -75,17 +43,26 @@ public class Orientation{
 	 * 
 	 * @return	Orientation
 	 * 			De oriëntatie als er 1 keer in tegenwijzerzin gedraaid wordt.
+	 *			|if(new.equals(UP))
+	 *			|	LEFT
+	 *			|if(new.equals(RIGHT))
+	 *			|	UP
+	 *			|if(new.equals(DOWN))
+	 *			|	RIGHT
+	 *			|if(new.equals(LEFT))
+	 *			|	DOWN
+	 *			|null
+	 * 			
 	 */
 	public Orientation getCounterClockwiseOrientation(){
-		Orientation result = null;
-		if(this.getOV().equals(Orientation.orientationValue.UP))
-			result = new Orientation(Orientation.orientationValue.LEFT);
-		if(this.getOV().equals(Orientation.orientationValue.RIGHT))
-			result = new Orientation(Orientation.orientationValue.UP);
-		if(this.getOV().equals(Orientation.orientationValue.DOWN))
-			result = new Orientation(Orientation.orientationValue.RIGHT);
-		if(this.getOV().equals(Orientation.orientationValue.LEFT))
-			result = new Orientation(Orientation.orientationValue.DOWN);
-		return result;	
+		if(this.equals(UP))
+			return LEFT;
+		if(this.equals(RIGHT))
+			return UP;
+		if(this.equals(DOWN))
+			return RIGHT;
+		if(this.equals(LEFT))
+			return DOWN;
+		return null;
 	}
 }
