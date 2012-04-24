@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import roborally.basics.Energy;
 import roborally.basics.Orientation;
-import roborally.basics.Orientation.orientationValue;
 import roborally.basics.Position;
 import roborally.model.Node;
 import roborally.model.Robot;
@@ -57,19 +56,19 @@ public class Calculators {
 		Position previousPosition = currentNode.getPosition();
 		if (previousPosition.getX() == pos.getX()){
 			if (previousPosition.getY() > pos.getY())
-				return new Orientation(orientationValue.DOWN);
-			return new Orientation(orientationValue.UP);
+				return Orientation.DOWN;
+			return Orientation.UP;
 		}
 		if (previousPosition.getX() > pos.getX())
-			return new Orientation(orientationValue.LEFT);
-		return new Orientation(orientationValue.RIGHT);
+			return Orientation.LEFT;
+		return Orientation.RIGHT;
 	}
 
 
 	private double getHCost(Position position, Orientation orientation, Position pos) {
 		Energy manHattanCost = new Energy(Energy.MOVE_COST*calculateManhattan(position, pos), Energy.eUnit.WS);
 		Energy turnCost = new Energy(Energy.TURN_COST*getTurns(new Node(position,orientation),pos), Energy.eUnit.WS);
-		Energy cost = energySum(manHattanCost, turnCost);
+		Energy cost = Energy.energySum(manHattanCost, turnCost);
 		return cost.getAmount(Energy.eUnit.WS);
 	}
 
@@ -95,7 +94,7 @@ public class Calculators {
 		 */
 		if(pos.getX() == node.getPosition().getX() && pos.getY() < node.getPosition().getY()){
 			// E
-			switch(node.getOrientation().getOV()){
+			switch(node.getOrientation()){
 			case RIGHT:
 			case LEFT:
 				result = 1;
@@ -106,7 +105,7 @@ public class Calculators {
 			}
 		}else if(pos.getX() == node.getPosition().getX() && pos.getY() > node.getPosition().getY()){
 			// G
-			switch(node.getOrientation().getOV()){
+			switch(node.getOrientation()){
 			case LEFT:
 			case RIGHT:
 				result = 1;
@@ -117,7 +116,7 @@ public class Calculators {
 			}
 		}else if(pos.getX() > node.getPosition().getX() && pos.getY() == node.getPosition().getY()){
 			// F
-			switch(node.getOrientation().getOV()){
+			switch(node.getOrientation()){
 			case DOWN:
 			case UP:
 				result = 1;
@@ -128,7 +127,7 @@ public class Calculators {
 			}
 		}else if(pos.getX() > node.getPosition().getX() && pos.getY() < node.getPosition().getY()){
 			// B
-			switch(node.getOrientation().getOV()){
+			switch(node.getOrientation()){
 			case RIGHT:
 			case UP:
 				result = 1;
@@ -140,7 +139,7 @@ public class Calculators {
 			}
 		}else if(pos.getX() > node.getPosition().getX() && pos.getY() > node.getPosition().getY()){
 			// C
-			switch(node.getOrientation().getOV()){
+			switch(node.getOrientation()){
 			case DOWN:
 			case RIGHT:
 				result = 1;
@@ -152,7 +151,7 @@ public class Calculators {
 			}
 		}else if(pos.getX() < node.getPosition().getX() && pos.getY() == node.getPosition().getY()){
 			// H
-			switch(node.getOrientation().getOV()){
+			switch(node.getOrientation()){
 			case UP:
 			case DOWN:
 				result = 1;
@@ -163,7 +162,7 @@ public class Calculators {
 			}
 		}else if(pos.getX() < node.getPosition().getX() && pos.getY() < node.getPosition().getY()){
 			// A
-			switch(node.getOrientation().getOV()){
+			switch(node.getOrientation()){
 			case UP:
 			case LEFT:
 				result = 1;
@@ -175,7 +174,7 @@ public class Calculators {
 			}
 		}else if(pos.getX() < node.getPosition().getX() && pos.getY() > node.getPosition().getY()){
 			// D
-			switch(node.getOrientation().getOV()){
+			switch(node.getOrientation()){
 			case LEFT:
 			case DOWN:
 				result = 1;
