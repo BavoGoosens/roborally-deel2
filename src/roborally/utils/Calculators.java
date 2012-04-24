@@ -16,10 +16,10 @@ public class Calculators {
 	} 
 	
 	public long getHCost(Node a, Node b){
-		long manHattanCost = Energy.MOVE_COST*calculateManhattan(a.getPosition(), b.getPosition());
-		long turnCost = Energy.TURN_COST*calculateTurnsToPosition();
-		long cost = manHattanCost + turnCost;
-		return cost;
+		Energy manHattanCost = new Energy(Energy.MOVE_COST*calculateManhattan(a.getPosition(), b.getPosition()), Energy.eUnit.WS);
+		Energy turnCost = new Energy(Energy.TURN_COST*calculateTurnsToPosition(), Energy.eUnit.WS);
+		Energy cost = energySum(manHattanCost, turnCost);
+		return (Long) cost.getAmountInWs();
 	}
 	
 	public long calculateTurnsToPosition(Robot a, Position pos){
@@ -61,7 +61,7 @@ public class Calculators {
 	}
 	
 	private long getGCost(Node currentNode, Position pos) {
-		long gCost = currentNode.getGCost() + Energy.MOVE_COST + Energy.TURN_COST*getTurns(currentNode.getOrientation, pos);
+		long gCost = currentNode.getGCost() + Energy.MOVE_COST + Energy.TURN_COST*getTurns(currentNode.getOrientation(), pos);
 		return gCost;
 	}
 

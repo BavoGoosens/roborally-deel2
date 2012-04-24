@@ -65,6 +65,9 @@ public Position getPosition(){
 	return this.pos;
 }
 
+public Orientation getOrientation(){
+	return this.orientation;
+}
 }
 
 	
