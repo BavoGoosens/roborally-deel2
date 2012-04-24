@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import roborally.basics.Energy;
+import roborally.basics.Orientation;
 import roborally.basics.Position;
 import roborally.model.Node;
 import roborally.model.Robot;
@@ -17,15 +18,9 @@ public class Calculators {
 	
 	public long getHCost(Node a, Node b){
 		Energy manHattanCost = new Energy(Energy.MOVE_COST*calculateManhattan(a.getPosition(), b.getPosition()), Energy.eUnit.WS);
-		Energy turnCost = new Energy(Energy.TURN_COST*calculateTurnsToPosition(), Energy.eUnit.WS);
+		Energy turnCost = new Energy(Energy.TURN_COST*getTurns(), Energy.eUnit.WS);
 		Energy cost = energySum(manHattanCost, turnCost);
 		return ((Double) cost.getAmountInWs()).longValue();
-	}
-	
-	public long calculateTurnsToPosition(Robot a, Position pos){
-		roborally.basics.Orientation or = a.getOrientation();
-		Position aPos = a.getPosition();
-		
 	}
 	
 	public HashMap<Position,Node> aStar(Robot a, Robot b){
@@ -61,10 +56,33 @@ public class Calculators {
 	}
 	
 	private long getGCost(Node currentNode, Position pos) {
-		long gCost = currentNode.getGCost() + Energy.MOVE_COST + Energy.TURN_COST*getTurns(currentNode.getOrientation(), pos);
+		long gCost = currentNode.getGCost() + Energy.MOVE_COST + Energy.TURN_COST*getTurns(currentNode, pos);
 		return gCost;
 	}
-
+	/**
+	 * methode voor het aantal turns terug te geven om van een node met oreinatie m naar een nabijgelegen node te 
+	 * bewegen (vlak naast)
+	 *  
+	 * @param node
+	 * @return
+	 */
+	private int getTurns(Node node, Position pos){
+		if (node.getOrientation().getOV() == Orientation.orientationValue.UP ){
+			if (node.getPosition().getX() == pos.getX()){
+				if (node.getPosition().getY() > pos.getY())
+					return 0;
+				return 2;
+			}
+			if (node.getPosition().getY() ==  pos.getY())
+		}
+		else if (node.getOrientation().getOV() == Orientation.orientationValue.LEFT){
+			
+		}else if (node.getOrientation().getOV() == Orientation.orientationValue.DOWN){
+			
+		}else{
+			
+		}
+	}
 	private Node getNodeOrientation(Node currentNode, Position pos) {
 		return null;
 	}
