@@ -3,6 +3,7 @@ package roborally.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import be.kuleuven.cs.som.annotate.*;
+import roborally.basics.Orientation;
 import roborally.basics.Position;
 import roborally.interfaces.IRobot;
 import roborally.utils.RouteComparator;
@@ -23,7 +24,7 @@ public class Robot implements IRobot{
 
 	private Position position;
 	private double energy;
-	private int direction;
+	private Orientation orientation;
 	private final double maxEnergy = 20000;
 
 	/**
@@ -49,10 +50,10 @@ public class Robot implements IRobot{
 	 * 			|new.getDirection() == direction
 	 * 
 	 */
-	public Robot(Position position,  int direction , double energy){
+	public Robot(Position position, Orientation orientation, double energy){
 		setPosition(position);
 		setEnergy(energy);
-		setDirection(direction);
+		setOrientation(orientation);
 	}
 
 	/**
@@ -66,16 +67,8 @@ public class Robot implements IRobot{
 	 * 
 	 * @note	Indien de gegeven richting negatief was worden 1 en 3 omgewisseld. Dit is iets logischer wanneer bvb. 1 van de richting wordt afgetrokken en het resultaat -1 is. De implementatie is totaal.
 	 */
-	private void setDirection(int direction) {
-		if(direction < 0){
-			direction = Math.abs(direction % 4);
-			if(direction == 1){
-				direction = 3;
-			}else if(direction == 3){
-				direction = 1;
-			}
-		}
-		this.direction = (direction % 4);
+	private void setOrientation(Orientation or) {
+		this.orientation = or;
 	}
 
 	/**
@@ -117,8 +110,8 @@ public class Robot implements IRobot{
 	 * 			De oriëntatie van de robot.
 	 */
 	@Basic
-	public int getDirection(){
-		return this.direction;
+	public Orientation getOrientation(){
+		return this.orientation;
 	}
 
 	/**
