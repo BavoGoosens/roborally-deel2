@@ -67,22 +67,110 @@ public class Calculators {
 	 * @return
 	 */
 	private int getTurns(Node node, Position pos){
-		if (node.getOrientation().getOV() == Orientation.orientationValue.UP ){
-			if (node.getPosition().getX() == pos.getX()){
-				if (node.getPosition().getY() > pos.getY())
-					return 0;
-				return 2;
+		int result = 0;
+		if(node.getPosition().getX() == pos.getX() && node.getPosition().getY() == pos.getY())
+			return result;
+		/*
+		 * In dit gedeelte kijken we de verhouding van de huidige robot met zijn bestemming na. Hier worden alle gevallen overlopen.
+		 * Om dit visueel voor te stellen staan er letters die de posities voorstellen. De hoekpunten zijn in wijzerszin A, B, C en D.
+		 * Vervolgens worden de middens van elke rand voorgesteld met E, F, G en H.
+		 */
+		if(pos.getX() == node.getPosition().getX() && pos.getY() < node.getPosition().getY()){
+			// E
+			switch(node.getOrientation().getOV()){
+			case RIGHT:
+			case LEFT:
+				result = 1;
+				break;
+			case DOWN:
+				result = 2;
+				break;
 			}
-			if (node.getPosition().getY() ==  pos.getY())
+		}else if(pos.getX() == node.getPosition().getX() && pos.getY() > node.getPosition().getY()){
+			// G
+			switch(node.getOrientation().getOV()){
+			case LEFT:
+			case RIGHT:
+				result = 1;
+				break;
+			case UP:
+				result = 2;
+				break;
+			}
+		}else if(pos.getX() > node.getPosition().getX() && pos.getY() == node.getPosition().getY()){
+			// F
+			switch(node.getOrientation().getOV()){
+			case DOWN:
+			case UP:
+				result = 1;
+				break;
+			case LEFT:
+				result = 2;
+				break;
+			}
+		}else if(pos.getX() > node.getPosition().getX() && pos.getY() < node.getPosition().getY()){
+			// B
+			switch(node.getOrientation().getOV()){
+			case RIGHT:
+			case UP:
+				result = 1;
+				break;
+			case DOWN:
+			case LEFT:
+				result = 2;
+				break;
+			}
+		}else if(pos.getX() > node.getPosition().getX() && pos.getY() > node.getPosition().getY()){
+			// C
+			switch(node.getOrientation().getOV()){
+			case DOWN:
+			case RIGHT:
+				result = 1;
+				break;
+			case LEFT:
+			case UP:
+				result = 2;	
+				break;
+			}
+		}else if(pos.getX() < node.getPosition().getX() && pos.getY() == node.getPosition().getY()){
+			// H
+			switch(node.getOrientation().getOV()){
+			case UP:
+			case DOWN:
+				result = 1;
+				break;
+			case RIGHT:
+				result = 2;
+				break;
+			}
+		}else if(pos.getX() < node.getPosition().getX() && pos.getY() < node.getPosition().getY()){
+			// A
+			switch(node.getOrientation().getOV()){
+			case UP:
+			case LEFT:
+				result = 1;
+				break;
+			case RIGHT:
+			case DOWN:
+				result = 2;
+				break;
+			}
+		}else if(pos.getX() < node.getPosition().getX() && pos.getY() > node.getPosition().getY()){
+			// D
+			switch(node.getOrientation().getOV()){
+			case LEFT:
+			case DOWN:
+				result = 1;
+				break;
+			case UP:
+			case RIGHT:
+				result = 2;
+				break;
+			}
 		}
-		else if (node.getOrientation().getOV() == Orientation.orientationValue.LEFT){
-			
-		}else if (node.getOrientation().getOV() == Orientation.orientationValue.DOWN){
-			
-		}else{
-			
-		}
+		return result;
 	}
+	
 	private Node getNodeOrientation(Node currentNode, Position pos) {
 		return null;
 	}
