@@ -19,7 +19,7 @@ public class Calculators {
 		Energy manHattanCost = new Energy(Energy.MOVE_COST*calculateManhattan(a.getPosition(), b.getPosition()), Energy.eUnit.WS);
 		Energy turnCost = new Energy(Energy.TURN_COST*calculateTurnsToPosition(), Energy.eUnit.WS);
 		Energy cost = energySum(manHattanCost, turnCost);
-		return (Long) cost.getAmountInWs();
+		return ((Double) cost.getAmountInWs()).longValue();
 	}
 	
 	public long calculateTurnsToPosition(Robot a, Position pos){
