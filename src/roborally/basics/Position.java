@@ -1,5 +1,8 @@
 package roborally.basics;
 
+import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Immutable;
+
 /**
  * @invar	Een positie is altijd geldig (de coördinaten liggen op of tussen hun minima en maxima).
  * 			|isValidPosition(new.getX(), new.getY())
@@ -32,6 +35,7 @@ public class Position {
 	/**
 	 * @return x-waarde van deze positie
 	 */
+	@Basic @Immutable
 	public long getX() {
 		return x;
 	}
@@ -39,13 +43,15 @@ public class Position {
 	/**
 	 * @param x-waarde om in te stellen voor deze positie
 	 */
-	public void setX(long x) {
+	@Immutable
+	private void setX(long x) {
 		this.x = x;
 	}
 
 	/**
 	 * @return y-waarde van deze positie
 	 */
+	@Basic @Immutable
 	public long getY() {
 		return y;
 	}
@@ -53,7 +59,8 @@ public class Position {
 	/**
 	 * @param y-waarde om in te stellen voor deze positie
 	 */
-	public void setY(long y) {
+	@Immutable
+	private void setY(long y) {
 		this.y = y;
 	}
 	
@@ -69,7 +76,8 @@ public class Position {
 	 * @return	boolean
 	 * 			True als de positie geldig is, false indien deze ongeldig is.
 	 */
-	public boolean isValidPosition(long xpos, long ypos){
+	@Basic
+	private boolean isValidPosition(long xpos, long ypos){
 		if (xpos > UPPER_BOUND_X || xpos < LOWER_BOUND_X || ypos > UPPER_BOUND_Y || ypos < LOWER_BOUND_Y) return false;
 		return true;
 	}

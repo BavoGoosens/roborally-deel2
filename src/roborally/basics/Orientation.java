@@ -1,5 +1,8 @@
 package roborally.basics;
 
+import be.kuleuven.cs.som.annotate.Value;
+
+@Value
 public enum Orientation {
 	
 	UP{
