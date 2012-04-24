@@ -18,6 +18,7 @@ import roborally.utils.RouteComparator;
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
+ * @version 2.0
  */
 
 public class Robot implements IRobot{

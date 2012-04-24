@@ -2,6 +2,7 @@ package roborally.basics;
 
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
+import java.util.ArrayList;
 
 /**
  * @invar	Een positie is altijd geldig (de coördinaten liggen op of tussen hun minima en maxima).
@@ -78,8 +79,12 @@ public class Position {
 	 */
 	@Basic
 	private boolean isValidPosition(long xpos, long ypos){
-		if (xpos > UPPER_BOUND_X || xpos < LOWER_BOUND_X || ypos > UPPER_BOUND_Y || ypos < LOWER_BOUND_Y) return false;
+		if (xpos > UPPER_BOUND_X || xpos < LOWER_BOUND_X || ypos > UPPER_BOUND_Y || ypos < LOWER_BOUND_Y)
+			return false;
 		return true;
 	}
 	
+	public ArrayList<Position> getNeighbours(){
+		return null;
+	}
 }
