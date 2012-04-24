@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import roborally.basics.Energy;
 import roborally.basics.Orientation;
+import roborally.basics.Orientation.orientationValue;
 import roborally.basics.Position;
 import roborally.model.Node;
 import roborally.model.Robot;
@@ -15,18 +16,13 @@ public class Calculators {
 	public long calculateManhattan(Position pos1, Position pos2){
 		return Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY());
 	} 
+		
 	
-	public long getHCost(Node a, Node b){
-		Energy manHattanCost = new Energy(Energy.MOVE_COST*calculateManhattan(a.getPosition(), b.getPosition()), Energy.eUnit.WS);
-		Energy turnCost = new Energy(Energy.TURN_COST*getTurns(), Energy.eUnit.WS);
-		Energy cost = energySum(manHattanCost, turnCost);
-		return ((Double) cost.getAmountInWs()).longValue();
-	}
-	
-	public HashMap<Position,Node> aStar(Robot a, Robot b){
+	public HashMap<Position,Node> aStar(Robot a, Position pos){
 		HashMap<Position,Node> openSet = new HashMap<Position,Node>(); 
 		// de experimentele posities die nog geëvalueerd moeten/kunnen worden
-		openSet.put(a.getPosition(), new Node(a.getPosition(), 0 , getHCost(a.getPosition(),a.getOrientation(), b),a.getOrientation(), null));
+		Node startNode = new Node(a.getPosition(), 0 , getHCost(a.getPosition(), a.getOrientation(),pos),a.getOrientation(), null);
+		openSet.put(a.getPosition(), startNode);
 		// de startPositie aan de open list toevoegen
 		HashMap<Position,Node> closedSet = new HashMap<Position, Node>(); 
 		// de lijst met al geëvalueerde posities
@@ -35,19 +31,21 @@ public class Calculators {
 		
 		while ( !openSet.isEmpty()){
 			Node currentNode = getMinimalFNode(openSet);
-			if (b.getPosition().getNeighbours().contains(currentNode.getPosition())){
+			if (pos.getNeighbours().contains(currentNode.getPosition())){
 				return travelledSet;
 			}
 			openSet.remove(currentNode.getPosition());
 	        closedSet.put(currentNode.getPosition(), currentNode);
 	        
 	        ArrayList<Position> neighbours = currentNode.getPosition().getNeighbours();
-	        for (Position pos : neighbours){
-	        	if (closedSet.containsKey(pos))
+	        for (Position neighbour : neighbours){
+	        	if (closedSet.containsKey(neighbour))
 	        		continue;
 	        	
-	        	if (!openSet.containsKey(pos)){
-	        		openSet.put(pos,new Node(pos,getGCost(currentNode, pos),getHCost(pos, getNodeOrientation(currentNode, pos), b), getNodeOrientation(currentNode, pos), currentNode));
+	        	if (!openSet.containsKey(neighbour)){
+	        		openSet.put(neighbour,new Node(neighbour,getGCost(currentNode, neighbour),getHCost(neighbour, getNodeOrientation(currentNode, neighbour),pos),
+	        				getNodeOrientation(currentNode, neighbour),currentNode));
+	        		
 	        	}
 	        }
 			
@@ -55,8 +53,28 @@ public class Calculators {
 
 	}
 	
-	private long getGCost(Node currentNode, Position pos) {
-		long gCost = currentNode.getGCost() + Energy.MOVE_COST + Energy.TURN_COST*getTurns(currentNode, pos);
+	private Orientation getNodeOrientation(Node currentNode, Position pos) {
+		Position previousPosition = currentNode.getPosition();
+		if (previousPosition.getX() == pos.getX()){
+			if (previousPosition.getY() > pos.getY())
+				return new Orientation(orientationValue.DOWN);
+			return new Orientation(orientationValue.UP);
+		}
+		if (previousPosition.getX() > pos.getX())
+			return new Orientation(orientationValue.LEFT);
+		return new Orientation(orientationValue.RIGHT);
+	}
+
+
+	private double getHCost(Position position, Orientation orientation, Position pos) {
+		Energy manHattanCost = new Energy(Energy.MOVE_COST*calculateManhattan(position, pos), Energy.eUnit.WS);
+		Energy turnCost = new Energy(Energy.TURN_COST*getTurns(new Node(position,orientation),pos), Energy.eUnit.WS);
+		Energy cost = energySum(manHattanCost, turnCost);
+		return cost.getAmount(Energy.eUnit.WS);
+	}
+
+	private double getGCost(Node currentNode, Position pos) {
+		double gCost = currentNode.getGCost() + Energy.MOVE_COST + Energy.TURN_COST*getTurns(currentNode, pos);
 		return gCost;
 	}
 	/**
@@ -171,10 +189,6 @@ public class Calculators {
 		return result;
 	}
 	
-	private Node getNodeOrientation(Node currentNode, Position pos) {
-		return null;
-	}
-
 	public Node getMinimalFNode(HashMap<Position, Node> map){
 		Collection<Node>c = map.values();
 		Iterator<Node> itr = c.iterator();

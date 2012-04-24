@@ -11,18 +11,23 @@ import roborally.basics.Orientation;
 public class Node{
 
 private Position pos;
-private long gCost;
-private long hCost;
-private long fCost = gCost + hCost;
+private double gCost;
+private double hCost;
+private double fCost = gCost + hCost;
 private Orientation orientation;
 private Node parent;
 
-public Node(Position position, long g, long h,Orientation orientation, Node parent){
+public Node(Position position, double g, double h,Orientation orientation, Node parent){
 	setPos(position);
 	setGCost(g);
 	setHCost(h);
 	setOrientation(orientation);
 	setParent(parent);
+}
+
+public Node(Position position, Orientation orientation) {
+	setPos(position);
+	setOrientation(orientation);
 }
 
 private void setParent(Node parent){
@@ -37,11 +42,11 @@ private void setPos(Position position){
 	this.pos = position;
 }
 
-private void setGCost(long g){
+private void setGCost(double g){
 	this.gCost = g;
 }
 
-private void setHCost(long h){
+private void setHCost(double h){
 	this.hCost = h;
 }
 
@@ -49,15 +54,15 @@ public Node getParent(){
 	return this.parent;
 }
 
-public long getFCost(){
+public double getFCost(){
 	return this.fCost;
 }
 
-public long getHCost(){
+public double getHCost(){
 	return this.hCost;
 }
 
-public long getGCost(){
+public double getGCost(){
 	return this.gCost;
 }
 
