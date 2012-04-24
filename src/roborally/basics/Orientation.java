@@ -18,7 +18,7 @@ public class Orientation{
 		UP, RIGHT, DOWN, LEFT;
 	}
 
-	private final orientationValue ov;
+	private orientationValue ov;
 
 	/**
 	 * Deze methode maakt een nieuwe oriëntatie aan.
@@ -27,7 +27,7 @@ public class Orientation{
 	 * 			De waarde van de oriëntatie. Mogelijke waarden zijn gedefinieerd in de enumeratie orientationValue als UP, RIGHT, DOWN en LEFT.
 	 */
 	public Orientation(orientationValue ov){
-		this.ov = ov;
+		this.setOv(ov);
 	}
 
 	/**
@@ -36,9 +36,20 @@ public class Orientation{
 	 * @return 	orientationValue
 	 * 			De waarde van de richting.
 	 */
-	@Basic @Immutable
-	private orientationValue getOv() {
+	@Basic
+	public orientationValue getOv() {
 		return ov;
+	}
+	
+	@Basic
+	/**
+	 * Deze methode wijzigt de huidige oriëntatie.
+	 * 
+	 * @param 	ov
+	 * 			Nieuwe waarde van de richting.
+	 */
+	public void setOv(orientationValue ov){
+		this.ov = ov;
 	}
 
 	/**
