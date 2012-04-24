@@ -2,6 +2,10 @@ package roborally.model;
 
 import javax.swing.text.Position;
 
+//mag parent moet ten alle tijden naar een andere node wijzen => geen selfreferenties $
+//position zal altyd naar een geldige pos verwijzen 
+//de cost moet altijd groter zijn dan 0 
+//hoe da combinere me die interpretatie van energie me die omzettingen 
 public class Node{
 
 private Position pos;
@@ -49,5 +53,10 @@ public long getGCost(){
 	return this.gCost;
 }
 
+public Position getPostion(){
+	return this.pos;
 }
+
+}
+
 	
