@@ -1,6 +1,7 @@
 package roborally.basics;
 
 import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Value;
 
 /**
@@ -11,14 +12,14 @@ import be.kuleuven.cs.som.annotate.Value;
  * @version 1.0
  */
 public class Orientation{
-	
+
 	@Value
 	public enum orientationValue{
 		UP, RIGHT, DOWN, LEFT;
 	}
-	
+
 	private final orientationValue ov;
-	
+
 	/**
 	 * Deze methode maakt een nieuwe oriëntatie aan.
 	 * 
@@ -35,11 +36,11 @@ public class Orientation{
 	 * @return 	orientationValue
 	 * 			De waarde van de richting.
 	 */
-	@Basic
+	@Basic @Immutable
 	private orientationValue getOv() {
 		return ov;
 	}
-	
+
 	/**
 	 * Deze methode geeft de oriëntatie terug als er 1 keer in wijzerzin gedraaid wordt.
 	 * 
@@ -58,7 +59,7 @@ public class Orientation{
 			result = new Orientation(Orientation.orientationValue.UP);
 		return result;	
 	}
-	
+
 	/**
 	 * Deze methode geeft de oriëntatie terug als er 1 keer in tegenwijzerzin gedraaid wordt.
 	 * 
