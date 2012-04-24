@@ -37,11 +37,19 @@ public class Calculators {
 		// de startPositie aan de open list toevoegen
 		HashMap<Position,Node> closedSet = new HashMap<Position, Node>(); 
 		// de lijst met al geëvalueerde posities
+		HashMap<Position,Node> travelledSet = new HashMap<Position,Node>();
+		// de afgelegde weg 
+		
 		while ( !openSet.isEmpty()){
 			Node currentNode = getMinimalFNode(openSet);
-			if (b.getPosition().getNeighBours().contains(currentNode.getPosition())){
-				troleoeleooeoel
+			if (b.getPosition().getNeighbours().contains(currentNode.getPosition())){
+				return travelledSet;
 			}
+			openSet.remove(currentNode.getPosition());
+	        closedSet.put(currentNode.getPosition(), currentNode);
+	        
+	        ArrayList<Position> neighbours = currentNode.getPosition().getNeighbours();
+	        for 
 			
 		}
 

@@ -61,7 +61,7 @@ public long getGCost(){
 	return this.gCost;
 }
 
-public Position getPostion(){
+public Position getPosition(){
 	return this.pos;
 }
 
