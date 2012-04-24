@@ -1,5 +1,7 @@
 package roborally.basics;
 
+import be.kuleuven.cs.som.annotate.Value;
+
 /**
  * Deze klasse stelt een hoeveelheid energie voor.
  * 
@@ -15,22 +17,42 @@ public class Energy {
 	public final static double MAXENERGY = 20000;
 	public double amount;
 	
+	@Value
+	public enum eUnit{
+		Ws(1);
+		
+		private final double factor;
+		
+		eUnit(double factor){
+			this.factor = factor;
+		}
+		
+		private double factor() { return factor; }
+	}
+	
 	/**
+	 * Deze methode maakt een nieuwe hoeveelheid energie aan.
+	 * 
+	 * @param 	double amount
+	 * 			De hoeveelheid energie
+	 */
+	public Energy(double amount, eUnit unit){
+		this.setEnergy(amount, unit);
+	}
+	
+	/**
+	 * 
 	 * @return the amount
 	 */
-	public double getAmount() {
+	public double getAmountInWs() {
 		return amount;
 	}
 
 	/**
 	 * @param amount the amount to set
 	 */
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
-
-	public Energy(double amount){
-		
+	public void setEnergy(double amount, eUnit unit) {
+		this.amount = amount * unit.factor();
 	}
 	
 	public boolean isValidEnergy(double energy){
