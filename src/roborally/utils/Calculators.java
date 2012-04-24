@@ -10,8 +10,6 @@ import roborally.model.Node;
 import roborally.model.Robot;
 
 public class Calculators {
-	public final long MOVE_COST = 500;
-	public final long TURN_COST = 100;
 
 	public long calculateManhattan(Position pos1, Position pos2){
 		return Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY());
@@ -49,7 +47,11 @@ public class Calculators {
 	        closedSet.put(currentNode.getPosition(), currentNode);
 	        
 	        ArrayList<Position> neighbours = currentNode.getPosition().getNeighbours();
-	        for 
+	        for (Position pos : neighbours){
+	        	if (closedSet.containsKey(pos))
+	        		continue;
+	        	
+	        }
 			
 		}
 
