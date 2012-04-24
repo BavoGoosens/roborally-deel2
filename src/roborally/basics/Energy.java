@@ -15,11 +15,12 @@ public class Energy {
 	public final static double TURN_COST = 100;
 	public final static double MINENERGY = 0;
 	public final static double MAXENERGY = 20000;
-	public double amount;
+	private double amount;
+	private eUnit unit;
 	
 	@Value
 	public enum eUnit{
-		Ws(1);
+		WS(1);
 		
 		private final double factor;
 		
@@ -32,6 +33,8 @@ public class Energy {
 	
 	/**
 	 * Deze methode maakt een nieuwe hoeveelheid energie aan.
+	 * 
+	 * 
 	 * 
 	 * @param 	double amount
 	 * 			De hoeveelheid energie
@@ -55,7 +58,7 @@ public class Energy {
 		this.amount = amount * unit.factor();
 	}
 	
-	public boolean isValidEnergy(double energy){
+	public boolean isValidEnergyAmount(double energy){
 		return (energy >= MINENERGY) && (energy <= MAXENERGY);
 	}
 }
