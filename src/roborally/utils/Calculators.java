@@ -35,6 +35,7 @@ public class Calculators {
 			}
 			openSet.remove(currentNode.getPosition());
 	        closedSet.put(currentNode.getPosition(), currentNode);
+	        travelledSet.put(currentNode.getPosition(), currentNode);
 	        
 	        ArrayList<Position> neighbours = currentNode.getPosition().getNeighbours();
 	        for (Position neighbour : neighbours){
