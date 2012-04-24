@@ -34,23 +34,28 @@ public class Energy {
 	/**
 	 * Deze methode maakt een nieuwe hoeveelheid energie aan.
 	 * 
-	 * 
-	 * 
 	 * @param 	double amount
 	 * 			De hoeveelheid energie
+	 * 
+	 * @param	eUnit unit
+	 * 			De eenheid van de opgegeven energie
+	 * 
+	 * @pre		De energie is een geldige hoeveelheid.
+	 * 			|isValidEnergy(double amount, eUnit unit)
 	 */
 	public Energy(double amount, eUnit unit){
 		this.setEnergy(amount, unit);
 	}
 	
 	/**
-	 * 
-	 * @return the amount
+	 * Deze methode geeft de huidige hoeveelheid energie terug in de gekozen eenheid.
+	 * @param 	unit
+	 * @return
 	 */
-	public double getAmountInWs() {
-		return amount;
+	public double getAmount(eUnit unit) {
+		return amount * unit.factor();
 	}
-
+	
 	/**
 	 * @param amount the amount to set
 	 */
@@ -58,7 +63,18 @@ public class Energy {
 		this.amount = amount * unit.factor();
 	}
 	
-	public boolean isValidEnergyAmount(double energy){
-		return (energy >= MINENERGY) && (energy <= MAXENERGY);
+	/**
+	 * Methode die controleert of de opgegeven hoeveelheid energie een geldige hoeveelheid is.
+	 * 
+	 * @param 	double amount
+	 * 			De hoeveelheid energie.
+	 * 
+	 * @param	eUnit unit
+	 * 			De eenheid van de te controleren hoeveelheid energie
+	 * 
+	 * @return	|(amount*unit.factor() >= MINENERGY) && (amount*unit.factor() <= MAXENERGY)
+	 */
+	public boolean isValidEnergyAmount(double amount, eUnit unit){
+		return (amount*unit.factor() >= MINENERGY) && (amount*unit.factor() <= MAXENERGY);
 	}
 }

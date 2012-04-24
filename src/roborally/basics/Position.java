@@ -31,6 +31,9 @@ public class Position {
 	 * 
 	 * @param 	ypos
 	 * 			Y-waarde van de in te stellen positie
+	 * 
+	 * @throws	IllegalArgumentException
+	 * 			|!isValidPosition(xpos, ypos)
 	 */
 	public Position(long xpos, long ypos) throws IllegalArgumentException{
 		if(!isValidPosition(xpos, ypos)) throw new IllegalArgumentException("Gegeven positie is ongeldig!");
@@ -41,7 +44,8 @@ public class Position {
 	/**
 	 * Deze methode geeft de x-coördinaat van de positie terug.
 	 * 
-	 * @return x-waarde van deze positie
+	 * @return 	x-waarde van deze positie
+	 * 			|this.x
 	 */
 	@Basic @Immutable
 	public long getX() {
@@ -51,7 +55,8 @@ public class Position {
 	/**
 	 * Deze methode geeft de y-coördinaat van de positie terug.
 	 * 
-	 * @return y-waarde van deze positie
+	 * @return 	y-waarde van deze positie
+	 * 			|this.y
 	 */
 	@Basic @Immutable
 	public long getY() {

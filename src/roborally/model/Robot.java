@@ -240,142 +240,105 @@ public class Robot implements IRobot{
 		return Math.abs(xpos2 - xpos1) + Math.abs(ypos2 - ypos1);
 	}
 
-	/**
-	 * Methode die berekent hoeveel draaien er gemaakt moeten worden om een positie te bereiken vertrekkende van een beginpositie en vertelt of de volgende draai in wijzerszin of tegenwijzerszin moet.
-	 * 
-	 * @param	xpos1
-	 * 			X-coördinaat van de startpositie.
-	 * 
-	 * @param	ypos1
-	 * 			Y-coördinaat van de startpositie.
-	 * 
-	 * @param 	xpos2
-	 * 			X-coördinaat van de te bereiken positie.
-	 * 
-	 * @param 	ypos2
-	 * 			Y-coördinaat van de te bereiken positie.
-	 * 
-	 * @param	direction
-	 * 			De richting van de robot die moet beginnen met bewegen.
-	 * 
-	 * @return	int[]
-	 * 			Array van integers waarbij de eerste integer het aantal draaien voorstelt en de tweede integer gelijk is aan 0 voor wijzerszin en 1 voor tegenwijzerszin.
-	 * 
-	 * @note	Indien het niet uitmaakt of de eerste draai in wijzerszin of in tegenwijzerszin moet wordt 0 teruggegeven (wijzerszin).
-	 */
-	private int[] calculateTurnsToPosition(long xpos1, long ypos1, long xpos2, long ypos2, int direction){
-		int[] result = new int[2];
-		result[0] = 0;
-		result[1] = 0;
-		if(xpos1 == xpos2 && ypos1 == ypos2)
+	private int calculateTurnsToPosition(Node node, Position pos){
+		int result = 0;
+		if(node.getPosition().getX() == pos.getX() && node.getPosition().getY() == pos.getY())
 			return result;
 		/*
 		 * In dit gedeelte kijken we de verhouding van de huidige robot met zijn bestemming na. Hier worden alle gevallen overlopen.
 		 * Om dit visueel voor te stellen staan er letters die de posities voorstellen. De hoekpunten zijn in wijzerszin A, B, C en D.
 		 * Vervolgens worden de middens van elke rand voorgesteld met E, F, G en H.
 		 */
-		if(xpos2 == xpos1 && ypos2 < ypos1){
+		if(pos.getX() == node.getPosition().getX() && pos.getY() < node.getPosition().getY()){
 			// E
-			switch(direction){
-			case 1:
-				result[1] = 1;
-			case 3:
-				result[0] = 1;
+			switch(node.getOrientation().getOV()){
+			case RIGHT:
+			case LEFT:
+				result = 1;
 				break;
-			case 2:
-				result[0] = 2;
+			case DOWN:
+				result = 2;
 				break;
 			}
-		}else if(xpos2 == xpos1 && ypos2 > ypos1){
+		}else if(pos.getX() == node.getPosition().getX() && pos.getY() > node.getPosition().getY()){
 			// G
-			switch(direction){
-			case 3:
-				result[1] = 1;			
-			case 1:
-				result[0] = 1;
+			switch(node.getOrientation().getOV()){
+			case LEFT:
+			case RIGHT:
+				result = 1;
 				break;
-			case 0:
-				result[0] = 2;
+			case UP:
+				result = 2;
 				break;
 			}
-		}else if(xpos2 > xpos1 && ypos2 == ypos1){
+		}else if(pos.getX() > node.getPosition().getX() && pos.getY() == node.getPosition().getY()){
 			// F
-			switch(direction){
-			case 2:
-				result[1] = 1;
-			case 0:
-				result[0] = 1;
+			switch(node.getOrientation().getOV()){
+			case DOWN:
+			case UP:
+				result = 1;
 				break;
-			case 3:
-				result[0] = 2;
+			case LEFT:
+				result = 2;
 				break;
 			}
-		}else if(xpos2 > xpos1 && ypos2 < ypos1){
+		}else if(pos.getX() > node.getPosition().getX() && pos.getY() < node.getPosition().getY()){
 			// B
-			switch(direction){
-			case 1:
-				result[1] = 1;
-			case 0:
-				result[0] = 1;
+			switch(node.getOrientation().getOV()){
+			case RIGHT:
+			case UP:
+				result = 1;
 				break;
-			case 2:
-				result[1] = 1;
-			case 3:
-				result[0] = 2;
+			case DOWN:
+			case LEFT:
+				result = 2;
 				break;
 			}
-		}else if(xpos2 > xpos1 && ypos2 > ypos1){
+		}else if(pos.getX() > node.getPosition().getX() && pos.getY() > node.getPosition().getY()){
 			// C
-			switch(direction){
-			case 2:
-				result[1] = 1;
-			case 1:
-				result[0] = 1;
+			switch(node.getOrientation().getOV()){
+			case DOWN:
+			case RIGHT:
+				result = 1;
 				break;
-			case 3:
-				result[1] = 1;
-			case 0:
-				result[0] = 2;	
+			case LEFT:
+			case UP:
+				result = 2;	
 				break;
 			}
-		}else if(xpos2 < xpos1 && ypos2 == ypos1){
+		}else if(pos.getX() < node.getPosition().getX() && pos.getY() == node.getPosition().getY()){
 			// H
-			switch(direction){
-			case 0:
-				result[1] = 1;
-			case 2:
-				result[0] = 1;
+			switch(node.getOrientation().getOV()){
+			case UP:
+			case DOWN:
+				result = 1;
 				break;
-			case 1:
-				result[0] = 2;
+			case RIGHT:
+				result = 2;
 				break;
 			}
-		}else if(xpos2 < xpos1 && ypos2 < ypos1){
+		}else if(pos.getX() < node.getPosition().getX() && pos.getY() < node.getPosition().getY()){
 			// A
-			switch(direction){
-			case 0:
-				result[1] = 1;
-			case 3:
-				result[0] = 1;
+			switch(node.getOrientation().getOV()){
+			case UP:
+			case LEFT:
+				result = 1;
 				break;
-			case 1:
-				result[1] = 1;
-			case 2:
-				result[0] = 2;
+			case RIGHT:
+			case DOWN:
+				result = 2;
 				break;
 			}
-		}else if(xpos2 < xpos1 && ypos2 > ypos1){
+		}else if(pos.getX() < node.getPosition().getX() && pos.getY() > node.getPosition().getY()){
 			// D
-			switch(direction){
-			case 3:
-				result[1] = 1;
-			case 2:
-				result[0] = 1;
+			switch(node.getOrientation().getOV()){
+			case LEFT:
+			case DOWN:
+				result = 1;
 				break;
-			case 0:
-				result[1] = 1;
-			case 1:
-				result[0] = 2;
+			case UP:
+			case RIGHT:
+				result = 2;
 				break;
 			}
 		}

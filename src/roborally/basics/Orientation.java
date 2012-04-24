@@ -26,7 +26,7 @@ public class Orientation{
 	 * 			De waarde van de oriëntatie. Mogelijke waarden zijn gedefinieerd in de enumeratie orientationValue als UP, RIGHT, DOWN en LEFT.
 	 */
 	public Orientation(orientationValue ov){
-		this.setOv(ov);
+		this.setOV(ov);
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class Orientation{
 	 * 			De waarde van de richting.
 	 */
 	@Basic
-	public orientationValue getOv() {
+	public orientationValue getOV() {
 		return ov;
 	}
 	
@@ -47,7 +47,7 @@ public class Orientation{
 	 * @param 	ov
 	 * 			Nieuwe waarde van de richting.
 	 */
-	public void setOv(orientationValue ov){
+	public void setOV(orientationValue ov){
 		this.ov = ov;
 	}
 
@@ -59,13 +59,13 @@ public class Orientation{
 	 */
 	public Orientation getClockwiseOrientation(){
 		Orientation result = null;
-		if(this.getOv().equals(Orientation.orientationValue.UP))
+		if(this.getOV().equals(Orientation.orientationValue.UP))
 			result = new Orientation(Orientation.orientationValue.RIGHT);
-		if(this.getOv().equals(Orientation.orientationValue.RIGHT))
+		if(this.getOV().equals(Orientation.orientationValue.RIGHT))
 			result = new Orientation(Orientation.orientationValue.DOWN);
-		if(this.getOv().equals(Orientation.orientationValue.DOWN))
+		if(this.getOV().equals(Orientation.orientationValue.DOWN))
 			result = new Orientation(Orientation.orientationValue.LEFT);
-		if(this.getOv().equals(Orientation.orientationValue.LEFT))
+		if(this.getOV().equals(Orientation.orientationValue.LEFT))
 			result = new Orientation(Orientation.orientationValue.UP);
 		return result;	
 	}
@@ -78,13 +78,13 @@ public class Orientation{
 	 */
 	public Orientation getCounterClockwiseOrientation(){
 		Orientation result = null;
-		if(this.getOv().equals(Orientation.orientationValue.UP))
+		if(this.getOV().equals(Orientation.orientationValue.UP))
 			result = new Orientation(Orientation.orientationValue.LEFT);
-		if(this.getOv().equals(Orientation.orientationValue.RIGHT))
+		if(this.getOV().equals(Orientation.orientationValue.RIGHT))
 			result = new Orientation(Orientation.orientationValue.UP);
-		if(this.getOv().equals(Orientation.orientationValue.DOWN))
+		if(this.getOV().equals(Orientation.orientationValue.DOWN))
 			result = new Orientation(Orientation.orientationValue.RIGHT);
-		if(this.getOv().equals(Orientation.orientationValue.LEFT))
+		if(this.getOV().equals(Orientation.orientationValue.LEFT))
 			result = new Orientation(Orientation.orientationValue.DOWN);
 		return result;	
 	}
