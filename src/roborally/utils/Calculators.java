@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-
+import roborally.basics.Energy;
 import roborally.basics.Position;
 import roborally.model.Node;
 import roborally.model.Robot;
@@ -15,9 +15,9 @@ public class Calculators {
 		return Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY());
 	} 
 	
-	public long calculateHCost(Robot a, Robot b){
-		long manHattanCost = MOVE_COST*calculateManhattan(a.getPosition(), b.getPosition());
-		long turnCost = TURN_COST*calculateTurnsToPosition();
+	public long getHCost(Node a, Node b){
+		long manHattanCost = Energy.MOVE_COST*calculateManhattan(a.getPosition(), b.getPosition());
+		long turnCost = Energy.TURN_COST*calculateTurnsToPosition();
 		long cost = manHattanCost + turnCost;
 		return cost;
 	}
@@ -31,7 +31,7 @@ public class Calculators {
 	public HashMap<Position,Node> aStar(Robot a, Robot b){
 		HashMap<Position,Node> openSet = new HashMap<Position,Node>(); 
 		// de experimentele posities die nog geëvalueerd moeten/kunnen worden
-		openSet.put(a.getPosition(), new Node(a.getPosition(), 0 , calculateHCost(a, b),a.getOrientation(), null));
+		openSet.put(a.getPosition(), new Node(a.getPosition(), 0 , getHCost(a.getPosition(),a.getOrientation(), b),a.getOrientation(), null));
 		// de startPositie aan de open list toevoegen
 		HashMap<Position,Node> closedSet = new HashMap<Position, Node>(); 
 		// de lijst met al geëvalueerde posities
@@ -51,12 +51,24 @@ public class Calculators {
 	        	if (closedSet.containsKey(pos))
 	        		continue;
 	        	
+	        	if (!openSet.containsKey(pos)){
+	        		openSet.put(pos,new Node(pos,getGCost(currentNode, pos),getHCost(pos, getNodeOrientation(currentNode, pos), b), getNodeOrientation(currentNode, pos), currentNode));
+	        	}
 	        }
 			
 		}
 
 	}
 	
+	private long getGCost(Node currentNode, Position pos) {
+		long gCost = currentNode.getGCost() + Energy.MOVE_COST + Energy.TURN_COST*getTurns(currentNode.getOrientation, pos);
+		return gCost;
+	}
+
+	private Node getNodeOrientation(Node currentNode, Position pos) {
+		return null;
+	}
+
 	public Node getMinimalFNode(HashMap<Position, Node> map){
 		Collection<Node>c = map.values();
 		Iterator<Node> itr = c.iterator();
