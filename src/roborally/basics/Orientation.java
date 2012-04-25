@@ -9,7 +9,19 @@ package roborally.basics;
  */
 public enum Orientation{
 
-	UP, RIGHT, DOWN, LEFT;
+	/**
+	 * De oriëntatie is naar boven gericht.
+	 */
+	UP, /**
+	 * De oriëntatie is naar rechts gericht.
+	 */
+	RIGHT, /**
+	 * De oriëntatie is naar beneden gericht.
+	 */
+	DOWN, /**
+	 * De oriëntatie is naar links gericht.
+	 */
+	LEFT;
 	
 	/**
 	 * Deze methode geeft de oriëntatie terug als er 1 keer in wijzerzin gedraaid wordt.

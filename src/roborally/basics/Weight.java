@@ -11,14 +11,23 @@ import be.kuleuven.cs.som.annotate.Basic;
  */
 public class Weight {
 
+	/**
+	 * Het maximale gewicht van een object.
+	 */
 	public final static int MAXWEIGHT = Integer.MAX_VALUE;
+	/**
+	 * Het minimale gewicht van een object.
+	 */
 	public final static int MINWEIGHT = 0;
+	/**
+	 * Gewicht van dit object.
+	 */
 	private int weight;
 
 	/**
 	 * Deze methode maakt een nieuwe massa aan.
 	 * 
-	 * @param	int newWeight
+	 * @param	newWeight
 	 * 			De opgegeven massa.
 	 * 
 	 * @post	|if(newWeight < MINWEIGHT)
@@ -45,7 +54,7 @@ public class Weight {
 	/**
 	 * Deze methode wijzigt de massa.
 	 * 
-	 * @param	int newWeight
+	 * @param	newWeight
 	 * 			De nieuwe massa.
 	 * 
 	 * @post	|if(newWeight < MINWEIGHT)

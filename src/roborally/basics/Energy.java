@@ -11,16 +11,31 @@ import be.kuleuven.cs.som.annotate.Basic;
  */
 public class Energy {
 	
-	public final static int MOVE_COST = 500;
-	public final static int TURN_COST = 100;
+	/**
+	 * De energiekost van 1 move.
+	 */
+	public final static Energy MOVE_COST = new Energy(500);
+	/**
+	 * De energiekost van 1 draai.
+	 */
+	public final static Energy TURN_COST = new Energy(100);
+	/**
+	 * De minimale energie van een robot.
+	 */
 	public final static int MINENERGY = 0;
+	/**
+	 * De maximale energie van een robot.
+	 */
 	public final static int MAXENERGY = 20000;
+	/**
+	 * Hoeveelheid energie opgeslagen in dit object.
+	 */
 	private int amount;
 	
 	/**
 	 * Deze methode maakt een nieuwe hoeveelheid energie aan.
 	 * 
-	 * @param 	int amount
+	 * @param 	amount
 	 * 			De hoeveelheid energie
 	 * 
 	 * @pre		De energie is een geldige hoeveelheid.
@@ -43,7 +58,7 @@ public class Energy {
 	/**
 	 * Deze methode wijzigt de energie naar de gegeven waarde.
 	 * 
-	 * @param 	double amount
+	 * @param 	amount
 	 * 			De hoeveelheid energie
 	 * 
 	 * @pre		De energie is een geldige hoeveelheid.
@@ -59,7 +74,7 @@ public class Energy {
 	/**
 	 * Methode die controleert of de opgegeven hoeveelheid energie een geldige hoeveelheid is.
 	 * 
-	 * @param 	int amount
+	 * @param 	amount
 	 * 			De hoeveelheid energie.
 	 *
 	 * @return	boolean
@@ -72,10 +87,10 @@ public class Energy {
 	/**
 	 * Deze methode geeft de som van 2 hoeveelheden energie met hun eenheid.
 	 * 
-	 * @param 	Energy e1
+	 * @param 	e1
 	 * 			Eerste hoeveelheid energie.
 	 * 
-	 * @param 	Energy e2
+	 * @param 	e2
 	 * 			Eerste hoeveelheid energie.
 	 * 
 	 * @return	Energy

@@ -12,6 +12,9 @@ import roborally.basics.Position;
  */
 public class Wall {
 	
+	/**
+	 * Positie van deze muur.
+	 */
 	private final Position position;
 	
 	/**

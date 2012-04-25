@@ -16,11 +16,29 @@ import java.util.ArrayList;
  */
 public class Position {
 	
+	/**
+	 * X-coördinaat van de positie.
+	 */
 	private final long x;
+	/**
+	 * Y-coördinaat van de positie.
+	 */
 	private final long y;
+	/**
+	 * Maximale x-waarde.
+	 */
 	private final static long UPPER_BOUND_X = Long.MAX_VALUE;
+	/**
+	 * Minimale x-waarde.
+	 */
 	private final static long LOWER_BOUND_X = 0;
+	/**
+	 * Maximale y-waarde
+	 */
 	private final static long UPPER_BOUND_Y = Long.MAX_VALUE;
+	/**
+	 * Minimale y-waarde.
+	 */
 	private final static long LOWER_BOUND_Y = 0;
 	
 	/**
