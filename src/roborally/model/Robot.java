@@ -3,10 +3,7 @@ package roborally.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import be.kuleuven.cs.som.annotate.*;
-import roborally.basics.Energy;
-import roborally.basics.Orientation;
-import roborally.basics.Position;
-import roborally.basics.Weight;
+import roborally.basics.*;
 import roborally.interfaces.IRobot;
 import roborally.utils.RouteComparator;
 /**
