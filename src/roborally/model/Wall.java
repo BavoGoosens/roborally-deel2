@@ -1,6 +1,7 @@
 package roborally.model;
 
 import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Raw;
 import roborally.basics.Position;
 
 /**
@@ -28,6 +29,7 @@ public class Wall {
 	 * @param	position
 	 * 			Nieuwe positie van de muur. Null indien de positie buiten het bord is.
 	 */
+	@Raw @Basic
 	public void setPosition(Position position){
 		this.position = position;		
 	}
