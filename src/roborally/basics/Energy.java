@@ -14,11 +14,11 @@ public class Energy {
 	/**
 	 * De energiekost van 1 move.
 	 */
-	public final static Energy MOVE_COST = new Energy(500);
+	public final static int MOVE_COST = 500;
 	/**
 	 * De energiekost van 1 draai.
 	 */
-	public final static Energy TURN_COST = new Energy(100);
+	public final static int TURN_COST = 100;
 	/**
 	 * De minimale energie van een robot.
 	 */
