@@ -1,5 +1,7 @@
 package roborally.basics;
 
+import be.kuleuven.cs.som.annotate.Basic;
+
 /**
  * Een enumeratie met alle mogelijke waarden voor een richting. Momenteel UP, RIGHT, DOWN, LEFT.
  * 
@@ -38,6 +40,7 @@ public enum Orientation{
 	 *			|	UP
 	 *			|null
 	 */
+	@Basic
 	public Orientation getClockwiseOrientation(){
 		if(this.equals(UP))
 			return RIGHT;
@@ -66,6 +69,7 @@ public enum Orientation{
 	 *			|null
 	 * 			
 	 */
+	@Basic
 	public Orientation getCounterClockwiseOrientation(){
 		if(this.equals(UP))
 			return LEFT;
