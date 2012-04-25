@@ -12,8 +12,8 @@ import roborally.model.Robot;
 
 public class Calculators {
 
-	public long calculateManhattan(Position pos1, Position pos2){
-		return Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY());
+	public int calculateManhattan(Position pos1, Position pos2){
+		return (int) (Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY()));
 	} 
 		
 	
@@ -79,11 +79,11 @@ public class Calculators {
 	}
 
 
-	private double getHCost(Position position, Orientation orientation, Position pos) {
+	private int getHCost(Position position, Orientation orientation, Position pos) {
 		Energy manHattanCost = new Energy(Energy.MOVE_COST*calculateManhattan(position, pos));
-		Energy turnCost = new Energy(Energy.TURN_COST*getTurns(new Node(position,orientation),pos), Energy.eUnit.WS);
+		Energy turnCost = new Energy(Energy.TURN_COST*getTurns(new Node(position,orientation),pos));
 		Energy cost = Energy.energySum(manHattanCost, turnCost);
-		return cost.getAmount(Energy.eUnit.WS);
+		return cost.getEnergy();
 	}
 
 	private double getGCost(Node currentNode, Position pos) {
