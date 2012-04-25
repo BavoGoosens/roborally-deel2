@@ -120,6 +120,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 	@Override
 	public Set<Battery> getPossessions(Robot robot) {
+		return null;
 		
 	}
 
@@ -200,6 +201,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 	@Override
 	public Set<Robot> getRobots(Board board) {
+		return null;
 	
 	}
 
