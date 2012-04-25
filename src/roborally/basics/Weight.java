@@ -63,7 +63,6 @@ public class Weight {
 	 * 			|	new.weight == MAXWEIGHT
 	 * 			|new.weight == newWeight
 	 */
-	@Basic
 	public void setWeight(int newWeight){
 		if(newWeight < MINWEIGHT)
 			newWeight = MINWEIGHT;

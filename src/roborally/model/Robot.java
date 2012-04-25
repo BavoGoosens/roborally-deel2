@@ -163,5 +163,19 @@ public class Robot implements IRobot{
 	public double getEnergyFraction(){
 		return this.getEnergy().getEnergy()/MAXENERGY;
 	}
+	
+	public void turnClockWise(){
+		this.setOrientation(this.getOrientation().getClockwiseOrientation());
+		this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST);
+	}
+	
+	public void turnCounterClockWise(){
+		this.setOrientation(this.getOrientation().getCounterClockwiseOrientation());
+		this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST);
+	}
+	
+	public void move(){
+		
+	}
 
 }

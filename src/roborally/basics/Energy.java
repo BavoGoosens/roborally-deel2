@@ -50,7 +50,6 @@ public class Energy {
 	 * 
 	 * @post	new.amount == amount
 	 */
-	@Basic
 	public void setEnergy(int amount){
 		this.amount = amount;
 	}
