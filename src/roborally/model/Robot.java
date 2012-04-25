@@ -6,6 +6,7 @@ import be.kuleuven.cs.som.annotate.*;
 import roborally.basics.Energy;
 import roborally.basics.Orientation;
 import roborally.basics.Position;
+import roborally.basics.Weight;
 import roborally.interfaces.IRobot;
 import roborally.utils.RouteComparator;
 /**
@@ -27,7 +28,7 @@ public class Robot implements IRobot{
 	private Position position;
 	private Energy energy;
 	private Orientation orientation;
-	private static final double maxEnergy = 20000;
+	private Weight weight;
 
 	/**
 	 * Maakt een nieuwe Robot aan

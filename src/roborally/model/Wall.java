@@ -15,20 +15,23 @@ public class Wall {
 	/**
 	 * Positie van deze muur.
 	 */
-	private final Position position;
+	private Position position;
 	
 	/**
-	 * Deze methode maakt een nieuwe muur aan op een gegeven positie.
+	 * Deze methode maakt een nieuwe muur aan.
+	 */
+	public Wall(){}
+	
+	/**
+	 * Wijzigt de positie van de muur.
 	 * 
 	 * @param	position
-	 * 			De positie van de nieuwe muur.
-	 * 
-	 * @post	new.position == position
+	 * 			Nieuwe positie van de muur. Null indien de positie buiten het bord is.
 	 */
-	public Wall(Position position){
-		this.position = position;
+	public void setPosition(Position position){
+		this.position = position;		
 	}
-	
+
 	/**
 	 * Geeft de positie van de muur terug.
 	 * 
@@ -39,5 +42,7 @@ public class Wall {
 	public Position getPosition() {
 		return position;
 	}
+	
+	
 	
 }
