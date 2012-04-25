@@ -100,4 +100,13 @@ public class Energy {
 		return new Energy(e1.getEnergy() + e2.getEnergy());
 	}
 	
+	/**
+	 * Deze methode geeft de verhouding tussen de huidige hoeveelheid energie en de maximale hoeveelheid energie.
+	 * 
+	 * @return	new.getEnergy()/MAXENERGY
+	 */
+	public double getEnergyFraction(){
+		return this.getEnergy()/MAXENERGY;
+	}
+	
 }
