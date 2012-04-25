@@ -42,14 +42,27 @@ public class Calculators {
 	        	if (closedSet.containsKey(neighbour))
 	        		continue;
 	        	
+	        	double tentativeGScore = getGCost(currentNode,neighbour);
+	        	boolean tentativeIsBetter = false;
+	        	
 	        	if (!openSet.containsKey(neighbour)){
 	        		openSet.put(neighbour,new Node(neighbour,getGCost(currentNode, neighbour),getHCost(neighbour, getNodeOrientation(currentNode, neighbour),pos),
 	        				getNodeOrientation(currentNode, neighbour),currentNode));
-	        		
+	        		tentativeIsBetter = true;
+	        	}
+	        	else if (tentativeGScore < openSet.get(neighbour).getGCost())
+	        		tentativeIsBetter = true;
+	        	else
+	        		tentativeIsBetter = false;	        		
+	        	
+	        	if (tentativeIsBetter == true){
+	        		openSet.get(neighbour).setParent(currentNode);
+	        		openSet.get(neighbour).setGCost(tentativeGScore);
 	        	}
 	        }
 			
 		}
+		return closedSet;
 
 	}
 	

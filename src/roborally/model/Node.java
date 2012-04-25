@@ -30,7 +30,7 @@ public Node(Position position, Orientation orientation) {
 	setOrientation(orientation);
 }
 
-private void setParent(Node parent){
+public void setParent(Node parent){
 	this.parent = parent;
 }
 
@@ -42,7 +42,7 @@ private void setPos(Position position){
 	this.pos = position;
 }
 
-private void setGCost(double g){
+public void setGCost(double g){
 	this.gCost = g;
 }
 
