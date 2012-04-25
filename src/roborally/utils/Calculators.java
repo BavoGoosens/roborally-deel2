@@ -80,7 +80,7 @@ public class Calculators {
 
 
 	private double getHCost(Position position, Orientation orientation, Position pos) {
-		Energy manHattanCost = new Energy(Energy.MOVE_COST*calculateManhattan(position, pos), Energy.eUnit.WS);
+		Energy manHattanCost = new Energy(Energy.MOVE_COST*calculateManhattan(position, pos));
 		Energy turnCost = new Energy(Energy.TURN_COST*getTurns(new Node(position,orientation),pos), Energy.eUnit.WS);
 		Energy cost = Energy.energySum(manHattanCost, turnCost);
 		return cost.getAmount(Energy.eUnit.WS);
