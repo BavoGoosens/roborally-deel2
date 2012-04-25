@@ -22,5 +22,20 @@ public class Board{
 	public boolean isValidWidth(long width){
 		return (width > Board.LOWER_BOUND_WIDTH) && (width <= Board.UPPER_BOUND_WIDTH);
 	}
+
+	public void putBattery(long x, long y, Battery battery) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void putRobot(long x, long y, Robot robot) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void putWall(long x, long y, Wall wall) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

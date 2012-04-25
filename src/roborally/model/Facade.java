@@ -5,6 +5,7 @@ import roborally.basics.Orientation;
 import roborally.basics.Weight;
 import roborally.interfaces.IFacade;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 
@@ -73,72 +74,69 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 	
 	@Override
 	public Robot createRobot(int orientation, double initialEnergy) {
-		Robot robot = new Robot(new Orientation(getOrientationEnum(orientation)),new Energy((int)initialEnergy));
+		Robot robot = new Robot(getOrientationEnum(orientation),new Energy((int)initialEnergy));
+		return robot;
 	}
 
 	@Override
 	public void putRobot(Board board, long x, long y, Robot robot) {
-		// TODO Auto-generated method stub
+		board.putRobot(x ,y , robot);
 		
 	}
 
 	@Override
 	public long getRobotX(Robot robot) throws IllegalStateException {
-		// TODO Auto-generated method stub
-		return 0;
+		try {return robot.getPosition().getX();} catch (IllegalArgumentException esc) {
+			throw new IllegalStateException("not on a board");
+		}
 	}
 
 	@Override
 	public long getRobotY(Robot robot) throws IllegalStateException {
-		// TODO Auto-generated method stub
-		return 0;
+		try {return robot.getPosition().getY();} catch (IllegalArgumentException esc) {
+			throw new IllegalStateException("not on a board");
+		}
 	}
 
 	@Override
 	public int getOrientation(Robot robot) {
-		// TODO Auto-generated method stub
-		return 0;
+		return robot.getOrientation().ordinal();
 	}
 
 	@Override
 	public double getEnergy(Robot robot) {
-		// TODO Auto-generated method stub
-		return 0;
+		return robot.getEnergy().getEnergy();
 	}
 
 	@Override
 	public void move(Robot robot) {
-		// TODO Auto-generated method stub
-		
+		robot.move();	
 	}
 
 	@Override
 	public void turn(Robot robot) {
-		// TODO Auto-generated method stub
-		
+		robot.turnClockwise();
 	}
 
 	@Override
 	public Set<Battery> getPossessions(Robot robot) {
-		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 	@Override
 	public void pickUp(Robot robot, Battery battery) {
-		// TODO Auto-generated method stub
+		robot.pickUp(battery);
 		
 	}
 
 	@Override
 	public void use(Robot robot, Battery battery) {
-		// TODO Auto-generated method stub
-		
+		robot.use(battery);
 	}
 
 	@Override
 	public void drop(Robot robot, Battery battery) {
-		// TODO Auto-generated method stub
+		robot.drop(battery);
 		
 	}
 
@@ -162,13 +160,12 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 	@Override
 	public void moveNextTo(Robot robot, Robot other) {
-		// TODO Auto-generated method stub
-		
+		robot.moveNextTo(other);
 	}
 
 	@Override
 	public void shoot(Robot robot) throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
+		robot.shoot();
 		
 	}
 
@@ -181,28 +178,29 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 	@Override
 	public void putWall(Board board, long x, long y, Wall wall)
 			throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
+		board.putWall(x , y , wall);
 		
 	}
 
 	@Override
 	public long getWallX(Wall wall) throws IllegalStateException,
 			UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return 0;
+		try {return wall.getPosition().getX();} catch (IllegalArgumentException esc) {
+			throw new IllegalStateException("not on a board");
+		}
 	}
 
 	@Override
 	public long getWallY(Wall wall) throws IllegalStateException,
 			UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return 0;
+		try {return wall.getPosition().getY();} catch (IllegalArgumentException esc) {
+			throw new IllegalStateException("not on a board");
+		}
 	}
 
 	@Override
 	public Set<Robot> getRobots(Board board) {
-		// TODO Auto-generated method stub
-		return null;
+	
 	}
 
 	@Override
