@@ -3,7 +3,7 @@ package roborally.basics;
 import be.kuleuven.cs.som.annotate.Basic;
 
 /**
- * Deze klasse stelt een massa voor.
+ * Deze klasse stelt een gewicht voor.
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
@@ -28,7 +28,7 @@ public class Weight {
 	 * Deze methode maakt een nieuwe massa aan.
 	 * 
 	 * @param	newWeight
-	 * 			De opgegeven massa.
+	 * 			Het opgegeven gewicht.
 	 * 
 	 * @post	|if(newWeight < MINWEIGHT)
 	 * 			|	new.weight == MINWEIGHT
@@ -52,10 +52,10 @@ public class Weight {
 	}
 	
 	/**
-	 * Deze methode wijzigt de massa.
+	 * Deze methode wijzigt het gewicht.
 	 * 
 	 * @param	newWeight
-	 * 			De nieuwe massa.
+	 * 			Het nieuwe gewicht.
 	 * 
 	 * @post	|if(newWeight < MINWEIGHT)
 	 * 			|	new.weight == MINWEIGHT
