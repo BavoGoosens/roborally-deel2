@@ -46,6 +46,9 @@ public class Battery {
 	 * 
 	 * @param	weight
 	 * 			Massa van de batterij.
+	 * 
+	 * @pre		Energie moet geldige hoeveelheid zijn.
+	 * 			|isValidBatteryEnergyAmount(energy)
 	 */
 	public Battery(Energy energy, Weight weight){
 		this.setEnergy(energy);
@@ -123,14 +126,14 @@ public class Battery {
 	/**
 	 * Geeft terug of de hoeveelheid energie een geldige hoeveelheid is voor deze batterij.
 	 * 
-	 * @param	energyAmount
+	 * @param	energy
 	 * 			De na te kijken hoeveelheid energie.
 	 * 
 	 * @return	Boolean met het resultaat van de controle.
 	 * 			|energyAmount >= MINBATTERYENERGY && energyAmount <= MAXBATTERYENERGY
 	 */
-	public static boolean isValidBatteryEnergyAmount(int energyAmount){
-		return (energyAmount >= MINBATTERYENERGY && energyAmount <= MAXBATTERYENERGY);
+	public static boolean isValidBatteryEnergyAmount(Energy energy){
+		return (energy.getEnergy() >= MINBATTERYENERGY && energy.getEnergy() <= MAXBATTERYENERGY);
 	}
 	
 }
