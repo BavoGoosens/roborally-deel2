@@ -9,6 +9,9 @@ import roborally.basics.Weight;
 /**
  * Deze klasse houdt een batterij bij. Deze heeft een positie en een hoeveelheid energie.
  * 
+ * @invar	De hoeveelheid energie van een batterij moet altijd geldig zijn.
+ * 			|isValidBatteryEnergyAmount(getEnergy())
+ * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
  * @version 1.0

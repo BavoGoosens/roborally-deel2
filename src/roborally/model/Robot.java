@@ -144,14 +144,14 @@ public class Robot implements IRobot{
 	/**
 	 * Methode die controleert of de opgegeven hoeveelheid energie een geldige hoeveelheid is.
 	 * 
-	 * @param 	amount
+	 * @param 	energy
 	 * 			De hoeveelheid energie.
 	 *
 	 * @return	boolean
 	 * 			|(amount >= MINENERGY) && (amount <= MAXENERGY)
 	 */
-	public static boolean isValidRobotEnergyAmount(int amount){
-		return (amount >= MINENERGY) && (amount <= MAXENERGY);
+	public static boolean isValidRobotEnergyAmount(Energy energy){
+		return (energy.getEnergy() >= MINENERGY) && (energy.getEnergy() <= MAXENERGY);
 	}
 	
 	/**
