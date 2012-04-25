@@ -47,7 +47,7 @@ public class Robot implements IRobot{
 	/**
 	 * Geeft weer of de robot getermineerd is of niet.
 	 */
-	private boolean isDestroyed = false;
+	private boolean isTerminated = false;
 
 	/**
 	 * Deze methode maakt een nieuwe robot aan.
@@ -206,11 +206,17 @@ public class Robot implements IRobot{
 	}
 
 	public void shoot(){
-		//TODO
+		if(this.getPosition() != null){
+			
+		}else{
+			System.err.println("Robot staat niet op een bord!");
+		}
 	}
 
 	public void destroy(){
-		//TODO
+		//TODO: remove from board
+		this.isTerminated = true;
+		this.setPosition(null);
 	}
 
 	public void recharge(){
