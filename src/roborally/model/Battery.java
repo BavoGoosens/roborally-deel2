@@ -18,7 +18,13 @@ public class Battery {
 	/**
 	 * Maximale energie die een batterij kan hebben.
 	 */
-	public final static Energy MAXBATTERYENERGY = new Energy(5000);
+	public final static int MAXBATTERYENERGY = 5000;
+	
+	/**
+	 * Minimale energie die een batterij kan hebben.
+	 */
+	public final static int MINBATTERYENERGY = 0;
+	
 	/**
 	 * Positie van de batterij (niet noodzakelijk).
 	 */
@@ -95,7 +101,7 @@ public class Battery {
 	/**
 	 * Geeft het gewicht terug van de batterij.
 	 * 
-	 * @return	weight
+	 * @return	Het gewicht van de batterij.
 	 * 			|new.weight
 	 */
 	@Basic
@@ -114,8 +120,17 @@ public class Battery {
 		this.weight = weight;
 	}
 	
-	public static boolean isValidBatteryEnergyAmount(){
-		return 
+	/**
+	 * Geeft terug of de hoeveelheid energie een geldige hoeveelheid is voor deze batterij.
+	 * 
+	 * @param	energyAmount
+	 * 			De na te kijken hoeveelheid energie.
+	 * 
+	 * @return	Boolean met het resultaat van de controle.
+	 * 			|energyAmount >= MINBATTERYENERGY && energyAmount <= MAXBATTERYENERGY
+	 */
+	public static boolean isValidBatteryEnergyAmount(int energyAmount){
+		return (energyAmount >= MINBATTERYENERGY && energyAmount <= MAXBATTERYENERGY);
 	}
 	
 }

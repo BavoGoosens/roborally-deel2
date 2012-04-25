@@ -78,7 +78,6 @@ public class Robot implements IRobot{
 	 * @post	De direction van de robot is gelijk aan de gegeven parameter.
 	 * 			|new.getOrientation() == or
 	 */
-	@Basic
 	private void setOrientation(Orientation or) {
 		this.orientation = or;
 	}
@@ -103,7 +102,6 @@ public class Robot implements IRobot{
 	 * @post 	De energie van de robot is newEnergy.
 	 * 			|new.getEnergy() == newEnergy
 	 */
-	@Basic
 	private void setEnergy(Energy newEnergy) {
 		this.energy = newEnergy;
 	}
@@ -128,7 +126,6 @@ public class Robot implements IRobot{
 	 * @post 	De positie van de robot is gelijk aan de gegeven positie.
 	 * 			|new.getPosition().getPosition() == position
 	 */
-	@Basic
 	private void setPosition(Position position){
 		this.position = position;
 	}
@@ -158,9 +155,10 @@ public class Robot implements IRobot{
 	}
 	
 	/**
-	 * Deze methode geeft de verhouding tussen de huidige hoeveelheid energie en de maximale hoeveelheid energie.
+	 * Deze methode berekent de verhouding tussen de huidige hoeveelheid energie en de maximale hoeveelheid energie.
 	 * 
-	 * @return	|new.getEnergy().getEnergy()/MAXENERGY
+	 * @return	De verhouding tussen de huidige hoeveelheid energie en de maximale hoeveelheid energie.
+	 * 			|new.getEnergy().getEnergy()/MAXENERGY
 	 */
 	public double getEnergyFraction(){
 		return this.getEnergy().getEnergy()/MAXENERGY;
