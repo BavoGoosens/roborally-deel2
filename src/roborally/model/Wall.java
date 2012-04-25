@@ -19,6 +19,11 @@ public class Wall {
 	private Position position;
 	
 	/**
+	 * Indien de muur vernietigd is wordt dit true.
+	 */
+	private boolean isTerminated = false;
+	
+	/**
 	 * Deze methode maakt een nieuwe muur aan.
 	 */
 	public Wall(){}
@@ -43,6 +48,28 @@ public class Wall {
 	@Basic
 	public Position getPosition() {
 		return position;
+	}
+	
+	/**
+	 * Deze methode vernietigt de muur.
+	 * 
+	 * @post	|this.isDestroyed()
+	 * @post	|this.getPosition() == null
+	 */
+	public void destroy(){
+		//TODO: remove from board
+		this.setPosition(null);
+		this.isTerminated = true;
+	}
+	
+	/**
+	 * Deze methode geeft true indien de muur vernietigd is, anders false.
+	 * 
+	 * @return	|new.isTerminated
+	 */
+	@Basic
+	public boolean isDestroyed(){
+		return isTerminated;
 	}
 	
 }

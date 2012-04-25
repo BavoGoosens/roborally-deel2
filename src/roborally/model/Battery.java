@@ -42,6 +42,11 @@ public class Battery {
 	private Weight weight;
 	
 	/**
+	 * Indien de batterij vernietigd is wordt dit true.
+	 */
+	private boolean isTerminated = false;
+	
+	/**
 	 * Maakt een nieuwe batterij aan.
 	 * 
 	 * @param	energy
@@ -137,6 +142,28 @@ public class Battery {
 	 */
 	public static boolean isValidBatteryEnergyAmount(Energy energy){
 		return (energy.getEnergy() >= MINBATTERYENERGY && energy.getEnergy() <= MAXBATTERYENERGY);
+	}
+	
+	/**
+	 * Deze methode vernietigt de batterij.
+	 * 
+	 * @post	|this.isDestroyed()
+	 * @post	|this.getPosition() == null
+	 */
+	public void destroy(){
+		//TODO: remove from board
+		this.setPosition(null);
+		this.isTerminated = true;
+	}
+	
+	/**
+	 * Deze methode geeft true indien de batterij vernietigd is, anders false.
+	 * 
+	 * @return	|new.isTerminated
+	 */
+	@Basic
+	public boolean isDestroyed(){
+		return isTerminated;
 	}
 	
 }

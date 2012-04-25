@@ -14,7 +14,7 @@ import roborally.interfaces.IRobot;
  * @version 2.0
  */
 public class Robot implements IRobot{
-	
+
 	/**
 	 * De energiekost van 1 move.
 	 */
@@ -81,7 +81,7 @@ public class Robot implements IRobot{
 	private void setOrientation(Orientation or) {
 		this.orientation = or;
 	}
-	
+
 	/**
 	 * Methode om de oriëntatie van de robot te verkrijgen.
 	 * 
@@ -105,7 +105,7 @@ public class Robot implements IRobot{
 	private void setEnergy(Energy newEnergy) {
 		this.energy = newEnergy;
 	}
-	
+
 	/**
 	 * Methode om de energie van de robot te verkrijgen.
 	 * 
@@ -140,7 +140,7 @@ public class Robot implements IRobot{
 	public Position getPosition(){
 		return position;
 	}
-	
+
 	/**
 	 * Methode die controleert of de opgegeven hoeveelheid energie een geldige hoeveelheid is.
 	 * 
@@ -153,7 +153,7 @@ public class Robot implements IRobot{
 	public static boolean isValidRobotEnergyAmount(Energy energy){
 		return (energy.getEnergy() >= MINENERGY) && (energy.getEnergy() <= MAXENERGY);
 	}
-	
+
 	/**
 	 * Deze methode berekent de verhouding tussen de huidige hoeveelheid energie en de maximale hoeveelheid energie.
 	 * 
@@ -163,19 +163,58 @@ public class Robot implements IRobot{
 	public double getEnergyFraction(){
 		return this.getEnergy().getEnergy()/MAXENERGY;
 	}
-	
+
+	/**
+	 * Draait de robot 1 keer in wijzerzin.
+	 * 
+	 * @post	De nieuwe oriëntatie van de robot is gelijk aan de volgende oriëntatie in wijzerzin.
+	 * 			|new.getOrientation() == this.getOrienation().getClockwiseOrientation()
+	 */
 	public void turnClockWise(){
-		this.setOrientation(this.getOrientation().getClockwiseOrientation());
-		this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST);
+		//TODO
+		if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST))){
+			this.setOrientation(this.getOrientation().getClockwiseOrientation());
+			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST);
+		}
 	}
-	
+
+	/**
+	 * Draait de robot 1 keer in tegenwijzerzin.
+	 * 
+	 * @post	De nieuwe oriëntatie van de robot is gelijk aan de volgende oriëntatie in wijzerzin.
+	 * 			|new.getOrientation() == this.getOrienation().getCounterClockwiseOrientation()
+	 */
 	public void turnCounterClockWise(){
-		this.setOrientation(this.getOrientation().getCounterClockwiseOrientation());
-		this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST);
+		//TODO
+		if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST))){
+			this.setOrientation(this.getOrientation().getCounterClockwiseOrientation());
+			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST);
+		}
 	}
-	
+
 	public void move(){
-		
+		//TODO
+	}
+
+	public Energy getEnergyRequiredToReach(Position position){
+		//TODO
+		return null;
+	}
+
+	public void moveNextTo(Robot robot){
+		//TODO
+	}
+
+	public void shoot(){
+		//TODO
+	}
+
+	public void destroy(){
+		//TODO
+	}
+
+	public void recharge(){
+		//TODO
 	}
 
 }
