@@ -1,6 +1,6 @@
 package roborally.basics;
 
-import be.kuleuven.cs.som.annotate.Value;
+import be.kuleuven.cs.som.annotate.Basic;
 
 /**
  * Deze klasse stelt een hoeveelheid energie voor.
@@ -11,102 +11,62 @@ import be.kuleuven.cs.som.annotate.Value;
  */
 public class Energy {
 	
-	public final static double MOVE_COST = 500;
-	public final static double TURN_COST = 100;
-	public final static double MINENERGY = 0;
-	public final static double MAXENERGY = 20000;
-	private double amount;
-	
-	/**
-	 * Deze enumeratie stelt alle energie-eenheden voor.
-	 * 
-	 * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
-	 *
-	 * @version	1.0
-	 */
-	@Value
-	public enum eUnit{
-		WS(1);
-		
-		private final double factor;
-		
-		/**
-		 * Maakt een energie-eenheid aan met de factor ten opzichte van de standaardeenheid (hier wordt Ws als standaard gebruikt).
-		 * 
-		 * @param 	double factor
-		 * 			De factor ten opzichte van Ws.
-		 * 
-		 * @post	|new.factor() == factor
-		 */
-		eUnit(double factor){
-			this.factor = factor;
-		}
-		
-		/**
-		 * Deze methode geeft de factor terug ten opzichte van Ws.
-		 * 
-		 * @return	factor
-		 * 			|this.factor
-		 */
-		private double factor() { return factor; }
-	}
+	public final static int MOVE_COST = 500;
+	public final static int TURN_COST = 100;
+	public final static int MINENERGY = 0;
+	public final static int MAXENERGY = 20000;
+	private int amount;
 	
 	/**
 	 * Deze methode maakt een nieuwe hoeveelheid energie aan.
 	 * 
-	 * @param 	double amount
+	 * @param 	int amount
 	 * 			De hoeveelheid energie
-	 * 
-	 * @param	eUnit unit
-	 * 			De eenheid van de opgegeven energie
 	 * 
 	 * @pre		De energie is een geldige hoeveelheid.
-	 * 			|isValidEnergy(double amount, eUnit unit)
+	 * 			|isValidEnergy(int amount)
 	 */
-	public Energy(double amount, eUnit unit){
-		this.setEnergy(amount, unit);
+	public Energy(int amount){
+		this.setEnergy(amount);
 	}
 	
 	/**
-	 * Deze methode geeft de huidige hoeveelheid energie terug in de gekozen eenheid.
+	 * Deze methode geeft de huidige hoeveelheid energie terug.
 	 * 
-	 * @param 	eUnit unit
-	 * 			Eenheid waarin de energie gegeven moet worden.
-	 * 
-	 * @return	new.amount*unit.factor()
+	 * @return	new.amount
 	 */
-	public double getAmount(eUnit unit) {
-		return amount * unit.factor();
+	@Basic
+	public int getEnergy(){
+		return amount;
 	}
 	
 	/**
-	 * Deze methode wijzigt de energie naar de gegeven waarde in de gegeven eenheid.
+	 * Deze methode wijzigt de energie naar de gegeven waarde.
 	 * 
 	 * @param 	double amount
 	 * 			De hoeveelheid energie
 	 * 
-	 * @param	eUnit unit
-	 * 			De eenheid van de te controleren hoeveelheid energie
+	 * @pre		De energie is een geldige hoeveelheid.
+	 * 			|isValidEnergy(int amount)
 	 * 
-	 * @post	new.amount == amount * unit.factor()
+	 * @post	new.amount == amount
 	 */
-	public void setEnergy(double amount, eUnit unit) {
-		this.amount = amount * unit.factor();
+	@Basic
+	public void setEnergy(int amount){
+		this.amount = amount;
 	}
 	
 	/**
 	 * Methode die controleert of de opgegeven hoeveelheid energie een geldige hoeveelheid is.
 	 * 
-	 * @param 	double amount
+	 * @param 	int amount
 	 * 			De hoeveelheid energie.
-	 * 
-	 * @param	eUnit unit
-	 * 			De eenheid van de te controleren hoeveelheid energie
-	 * 
-	 * @return	|(amount*unit.factor() >= MINENERGY) && (amount*unit.factor() <= MAXENERGY)
+	 *
+	 * @return	boolean
+	 * 			|(amount >= MINENERGY) && (amount <= MAXENERGY)
 	 */
-	public boolean isValidEnergyAmount(double amount, eUnit unit){
-		return (amount*unit.factor() >= MINENERGY) && (amount*unit.factor() <= MAXENERGY);
+	public boolean isValidEnergyAmount(int amount){
+		return (amount >= MINENERGY) && (amount <= MAXENERGY);
 	}
 	
 	/**
@@ -119,10 +79,10 @@ public class Energy {
 	 * 			Eerste hoeveelheid energie.
 	 * 
 	 * @return	Energy
-	 * 			Som van de gegeven hoeveelheden.
+	 * 			|new Energy(e1.getAmount(eUnit.WS) + e2.getAmount(eUnit.WS), eUnit.WS)
 	 */
 	public static Energy energySum(Energy e1, Energy e2){
-		return new Energy(e1.getAmount(eUnit.WS) + e2.getAmount(eUnit.WS), eUnit.WS);
+		return new Energy(e1.getEnergy() + e2.getEnergy());
 	}
 	
 }
