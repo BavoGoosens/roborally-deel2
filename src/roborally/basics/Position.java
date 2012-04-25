@@ -94,7 +94,9 @@ public class Position {
 	 * 			Y-waarde van de positie die nagekeken moet worden.
 	 * 
 	 * @return	boolean
-	 * 			|!(xpos > UPPER_BOUND_X || xpos < LOWER_BOUND_X || ypos > UPPER_BOUND_Y || ypos < LOWER_BOUND_Y)
+	 * 			|if(xpos > UPPER_BOUND_X || xpos < LOWER_BOUND_X || ypos > UPPER_BOUND_Y || ypos < LOWER_BOUND_Y)
+	 * 			|	false
+	 * 			|true
 	 */
 	@Basic
 	private boolean isValidPosition(long xpos, long ypos){
