@@ -114,4 +114,8 @@ public class Battery {
 		this.weight = weight;
 	}
 	
+	public static boolean isValidBatteryEnergyAmount(){
+		return 
+	}
+	
 }

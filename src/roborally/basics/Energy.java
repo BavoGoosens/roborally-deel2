@@ -12,22 +12,6 @@ import be.kuleuven.cs.som.annotate.Basic;
 public class Energy {
 	
 	/**
-	 * De energiekost van 1 move.
-	 */
-	public final static int MOVE_COST = 500;
-	/**
-	 * De energiekost van 1 draai.
-	 */
-	public final static int TURN_COST = 100;
-	/**
-	 * De minimale energie van een robot.
-	 */
-	public final static int MINENERGY = 0;
-	/**
-	 * De maximale energie van een robot.
-	 */
-	public final static int MAXENERGY = 20000;
-	/**
 	 * Hoeveelheid energie opgeslagen in dit object.
 	 */
 	private int amount;
@@ -72,19 +56,6 @@ public class Energy {
 	}
 	
 	/**
-	 * Methode die controleert of de opgegeven hoeveelheid energie een geldige hoeveelheid is.
-	 * 
-	 * @param 	amount
-	 * 			De hoeveelheid energie.
-	 *
-	 * @return	boolean
-	 * 			|(amount >= MINENERGY) && (amount <= MAXENERGY)
-	 */
-	public boolean isValidEnergyAmount(int amount){
-		return (amount >= MINENERGY) && (amount <= MAXENERGY);
-	}
-	
-	/**
 	 * Deze methode geeft de som van 2 hoeveelheden energie met hun eenheid.
 	 * 
 	 * @param 	e1
@@ -98,15 +69,6 @@ public class Energy {
 	 */
 	public static Energy energySum(Energy e1, Energy e2){
 		return new Energy(e1.getEnergy() + e2.getEnergy());
-	}
-	
-	/**
-	 * Deze methode geeft de verhouding tussen de huidige hoeveelheid energie en de maximale hoeveelheid energie.
-	 * 
-	 * @return	new.getEnergy()/MAXENERGY
-	 */
-	public double getEnergyFraction(){
-		return this.getEnergy()/MAXENERGY;
 	}
 	
 }
