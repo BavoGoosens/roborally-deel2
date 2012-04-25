@@ -1,6 +1,7 @@
 package roborally.model;
 
 import roborally.basics.Energy;
+import roborally.basics.Orientation;
 import roborally.basics.Weight;
 import roborally.interfaces.IFacade;
 
@@ -32,25 +33,47 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 	@Override
 	public void putBattery(Board board, long x, long y, Battery battery) {
-		// TODO Auto-generated method stub
+		board.putBattery(x,y,battery);
 		
 	}
 
 	@Override
 	public long getBatteryX(Battery battery) throws IllegalStateException {
-		// TODO Auto-generated method stub
-		return 0;
+		try {return battery.getPosition().getX();} catch (IllegalArgumentException esc) {
+			throw new IllegalStateException("not on a board");
+		}
 	}
 
 	@Override
 	public long getBatteryY(Battery battery) throws IllegalStateException {
-		// TODO Auto-generated method stub
-		return 0;
+		try {return battery.getPosition().getY();} catch (IllegalArgumentException esc) {
+			throw new IllegalStateException("not on a board");
+		}
 	}
-
+	
+	public Orientation getOrientationEnum(int i ){
+		if(i < 0){
+			int tmp = Math.abs(i % 4);
+			if(tmp == 1){
+				return Orientation.LEFT;
+			}else if(tmp == 3){
+				return Orientation.RIGHT;
+			}
+		}
+		int tmp = (i % 4);
+		if (tmp == 0)
+			return Orientation.UP;
+		else if (tmp == 1)
+			return Orientation.RIGHT;
+		else if (tmp == 2)
+			return Orientation.DOWN;
+		else 
+			return Orientation.LEFT;
+	}
+	
 	@Override
 	public Robot createRobot(int orientation, double initialEnergy) {
-		Robot robot = new Robot(new Orientation())
+		Robot robot = new Robot(new Orientation(getOrientationEnum(orientation)),new Energy((int)initialEnergy));
 	}
 
 	@Override
