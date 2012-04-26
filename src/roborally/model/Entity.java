@@ -71,10 +71,22 @@ public class Entity {
 	 * 
 	 * @param	position
 	 * 			De nieuwe positie. Null indien deze buiten het bord is.
+	 * 
+	 * @throws	IllegalArgumentException
+	 * 			|this.isOnBoard()
+	 * 
+	 * @throws	IllegalStateException 
+	 * 			|this.getBoard().isValidBoardPosition(position)
 	 */
 	@Raw
-	public void setPosition(Position position) {
-		this.position = position;
+	public void setPosition(Position position) throws IllegalArgumentException, IllegalStateException{
+		if(!this.isOnBoard()){
+			throw new IllegalStateException("Het object staat niet op een bord.");
+		}else if(!this.getBoard().isValidBoardPosition(position)){
+			throw new IllegalArgumentException("De gegeven positie is ongeldig voor dit bord.");
+		}else{
+			this.position = position;
+		}
 	}
 	
 	/**

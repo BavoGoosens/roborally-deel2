@@ -21,14 +21,16 @@ import roborally.utils.BatteryComparator;
 public class Robot extends Entity{
 
 	/**
-	 * De energiekost van 1 move.
+	 * De energiekost van 1 move (geen rekening houdend met bezittingen).
 	 */
 	private final static int MOVE_COST = 500;
 	/**
 	 * De energiekost van 1 draai.
 	 */
 	public final static int TURN_COST = 100;
-	
+	/**
+	 * De energiekost die bij een move bijkomt per kg gewicht in bezittingen.
+	 */
 	private final static int MOVE_COST_PER_KG = 50;
 	/**
 	 * De minimale energie van een robot.
