@@ -22,7 +22,10 @@ public class Wall {
 	 * Indien de muur vernietigd is wordt dit true.
 	 */
 	private boolean isTerminated = false;
-
+	
+	/**
+	 * Het board waarop deze muur staat.
+	 */
 	private Board board;
 	
 	/**
@@ -35,14 +38,16 @@ public class Wall {
 	 * 
 	 * @param 	board
 	 * 			Het board waarop deze Wall zich bevindt.
+	 * 
+	 * @post	new.board == board
 	 */
-	public void setBoard(Board board){
+	private void setBoard(Board board){
 		this.board = board;
 	}
 	/**
 	 * Methode die het board teruggeeft waarop deze Wall zich bevindt. Deze methode kan ook null teruggeven wat wil zeggen dat de Wall zich niet op een board bevindt.
 	 * 
-	 * @return	Board of null
+	 * @return	new.board
 	 * 			Het board waarop de wall zich bevindt of null als de wall niet op een board staat;
 	 */
 	public Board getBoard(){

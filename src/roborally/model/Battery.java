@@ -45,7 +45,10 @@ public class Battery {
 	 * Indien de batterij vernietigd is wordt dit true.
 	 */
 	private boolean isTerminated = false;
-
+	
+	/**
+	 * Het board waarop deze batterij staat.
+	 */
 	private Board board;
 	
 	/**
@@ -70,15 +73,17 @@ public class Battery {
 	 * 
 	 * @param 	board
 	 * 			Het board waarop deze battery zich bevindt.
+	 * 
+	 * @post	new.board == board
 	 */
-	public void setBoard(Board board){
+	private void setBoard(Board board){
 		this.board = board;
 	}
 	
 	/**
 	 * Methode die het board teruggeeft waarop deze battery zich bevindt. Deze methode kan ook null teruggeven wat wil zeggen dat de battery zich niet op een board bevindt.
 	 * 
-	 * @return	Board of null
+	 * @return	new.board
 	 * 			Het board waarop de battery zich bevindt of null als de battery niet op een board staat;
 	 */
 	public Board getBoard(){

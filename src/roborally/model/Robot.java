@@ -53,10 +53,19 @@ public class Robot implements IRobot{
 	 */
 	private boolean isTerminated = false;
 	
+	/**
+	 * Een instance van de comparator waarmee batterijen vergeleken kunnen worden op basis van gewicht.
+	 */
 	private BatteryComparator bc;
 	
+	/**
+	 * De set van batterijen die de robot bezit.
+	 */
 	private Set<Battery> Possessions = new TreeSet<Battery>(bc);
 	
+	/**
+	 * Het board waarop deze robot staat.
+	 */
 	private Board board;
 
 	/**
@@ -83,15 +92,17 @@ public class Robot implements IRobot{
 	 * 
 	 * @param 	board
 	 * 			Het board waarop deze robot zich bevindt.
+	 * 
+	 * @post	new.board == board
 	 */
-	public void setBoard(Board board){
+	private void setBoard(Board board){
 		this.board = board;
 	}
 
 	/**
 	 * Methode die het board teruggeeft waarop deze robot zich bevindt. Deze methode kan ook null teruggeven wat wil zeggen dat de robot zich niet op een board bevindt.
 	 * 
-	 * @return	Board of null
+	 * @return	new.board
 	 * 			Het board waarop de robot zich bevindt of null als de robot niet op een board staat;
 	 */
 	public Board getBoard(){
