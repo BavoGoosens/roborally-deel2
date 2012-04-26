@@ -29,7 +29,7 @@ public class Energy {
 	/**
 	 * Deze methode geeft de huidige hoeveelheid energie terug.
 	 * 
-	 * @return	new.amount
+	 * @return	this.amount
 	 */
 	@Basic
 	public int getEnergy(){
@@ -61,7 +61,7 @@ public class Energy {
 	 * 			Eerste hoeveelheid energie.
 	 * 
 	 * @return	Energy
-	 * 			|new Energy(e1.getAmount(eUnit.WS) + e2.getAmount(eUnit.WS), eUnit.WS)
+	 * 			|new Energy(e1.getEnergy() + e2.getEnergy())
 	 */
 	public static Energy energySum(Energy e1, Energy e2){
 		return new Energy(e1.getEnergy() + e2.getEnergy());

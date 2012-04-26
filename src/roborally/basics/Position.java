@@ -66,7 +66,7 @@ public class Position {
 	 * Deze methode geeft de x-coördinaat van de positie terug.
 	 * 
 	 * @return 	x-waarde van deze positie
-	 * 			|new.x
+	 * 			|this.x
 	 */
 	@Basic @Immutable
 	public long getX() {
@@ -77,7 +77,7 @@ public class Position {
 	 * Deze methode geeft de y-coördinaat van de positie terug.
 	 * 
 	 * @return 	y-waarde van deze positie
-	 * 			|new.y
+	 * 			|this.y
 	 */
 	@Basic @Immutable
 	public long getY() {
@@ -99,7 +99,7 @@ public class Position {
 	 * 			|true
 	 */
 	@Basic
-	private boolean isValidPosition(long xpos, long ypos){
+	private static boolean isValidPosition(long xpos, long ypos){
 		if (xpos > UPPER_BOUND_X || xpos < LOWER_BOUND_X || ypos > UPPER_BOUND_Y || ypos < LOWER_BOUND_Y)
 			return false;
 		return true;

@@ -30,13 +30,13 @@ public enum Orientation{
 	 * 
 	 * @return	Orientation
 	 * 			De oriëntatie als er 1 keer in wijzerzin gedraaid wordt.
-	 *			|if(new.equals(UP))
+	 *			|if(this.equals(UP))
 	 *			|	RIGHT
-	 *			|if(new.equals(RIGHT))
+	 *			|if(this.equals(RIGHT))
 	 *			|	DOWN
-	 *			|if(new.equals(DOWN))
+	 *			|if(this.equals(DOWN))
 	 *			|	LEFT
-	 *			|if(new.equals(LEFT))
+	 *			|if(this.equals(LEFT))
 	 *			|	UP
 	 *			|null
 	 */
@@ -58,13 +58,13 @@ public enum Orientation{
 	 * 
 	 * @return	Orientation
 	 * 			De oriëntatie als er 1 keer in tegenwijzerzin gedraaid wordt.
-	 *			|if(new.equals(UP))
+	 *			|if(this.equals(UP))
 	 *			|	LEFT
-	 *			|if(new.equals(RIGHT))
+	 *			|if(this.equals(RIGHT))
 	 *			|	UP
-	 *			|if(new.equals(DOWN))
+	 *			|if(this.equals(DOWN))
 	 *			|	RIGHT
-	 *			|if(new.equals(LEFT))
+	 *			|if(this.equals(LEFT))
 	 *			|	DOWN
 	 *			|null
 	 * 			

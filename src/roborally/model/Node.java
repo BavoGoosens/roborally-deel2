@@ -8,6 +8,8 @@ import roborally.basics.Orientation;
 //position zal altyd naar een geldige pos verwijzen 
 //de cost moet altijd groter zijn dan 0 
 //hoe da combinere me die interpretatie van energie me die omzettingen 
+
+//TODO: Node moet uitbreiding worden van Entity
 public class Node{
 
 private Position pos;

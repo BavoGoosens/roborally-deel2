@@ -44,7 +44,7 @@ public class Weight {
 	 * Geeft het gewicht terug.
 	 * 
 	 * @return 	int weight
-	 * 			|new.weight
+	 * 			|this.weight
 	 */
 	@Basic
 	public int getWeight() {

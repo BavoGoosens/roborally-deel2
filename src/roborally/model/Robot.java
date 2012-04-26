@@ -1,5 +1,6 @@
 package roborally.model;
 
+import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -7,6 +8,7 @@ import be.kuleuven.cs.som.annotate.Basic;
 import roborally.basics.Energy;
 import roborally.basics.Orientation;
 import roborally.basics.Position;
+import roborally.basics.Weight;
 import roborally.interfaces.IRobot;
 import roborally.utils.BatteryComparator;
 
@@ -30,6 +32,8 @@ public class Robot extends Entity implements IRobot{
 	 * De energiekost van 1 draai.
 	 */
 	public final static int TURN_COST = 100;
+	
+	private final static int MOVE_COST_PER_KG = 50;
 	/**
 	 * De minimale energie van een robot.
 	 */
@@ -234,9 +238,27 @@ public class Robot extends Entity implements IRobot{
 		//TODO
 	}
 	
-	public static int moveCost(){
-		//TODO
-		return MOVE_COST;
+	/**
+	 * Deze methode berekent de kost terug van 1 move.
+	 * 
+	 * @return	de kost terug van 1 move
+	 * 			|MOVE_COST + MOVE_COST_PER_KG*(this.getTotalWeight().getWeight() / 1000)
+	 */
+	public int moveCost(){
+		return MOVE_COST + MOVE_COST_PER_KG*(this.getTotalWeight().getWeight() / 1000);
+	}
+	
+	/**
+	 * Geeft het totale gewicht van alles wat de robot draagt.
+	 * 
+	 * @return	Het totale gewicht van alles wat de robot draagt.
+	 */
+	public Weight getTotalWeight(){
+		int totalWeight = 0;
+		Iterator<Battery> itr = this.getPossessions().iterator();
+		while(itr.hasNext())
+			totalWeight += itr.next().getWeight().getWeight();
+		return new Weight(totalWeight);
 	}
 	
 	/**

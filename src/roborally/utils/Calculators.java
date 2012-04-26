@@ -79,7 +79,7 @@ public class Calculators {
 	}
 
 
-	private int getHCost(Position position, Orientation orientation, Position pos) {
+	private double getHCost(Position position, Orientation orientation, Position pos) {
 		Energy manHattanCost = new Energy(Robot.moveCost()*calculateManhattan(position, pos));
 		Energy turnCost = new Energy(Robot.TURN_COST*getTurns(new Node(position,orientation),pos));
 		Energy cost = Energy.energySum(manHattanCost, turnCost);
