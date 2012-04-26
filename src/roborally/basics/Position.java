@@ -100,6 +100,7 @@ public class Position {
 	 */
 	@Basic
 	public static boolean isValidPosition(long xpos, long ypos){
+		//TODO: Maximumwaardes van positie wijzigen samen met die van board. Nog niet geïmplementeerd op deze manier.
 		if (xpos > UPPER_BOUND_X || xpos < LOWER_BOUND_X || ypos > UPPER_BOUND_Y || ypos < LOWER_BOUND_Y)
 			return false;
 		return true;
