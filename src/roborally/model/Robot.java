@@ -6,7 +6,6 @@ import java.util.TreeSet;
 
 import be.kuleuven.cs.som.annotate.Basic;
 import roborally.basics.*;
-import roborally.interfaces.IRobot;
 import roborally.utils.BatteryComparator;
 
 /**
@@ -19,7 +18,7 @@ import roborally.utils.BatteryComparator;
  * 
  * @version 2.1
  */
-public class Robot extends Entity implements IRobot{
+public class Robot extends Entity{
 
 	/**
 	 * De energiekost van 1 move.
