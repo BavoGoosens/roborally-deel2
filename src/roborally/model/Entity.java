@@ -8,6 +8,9 @@ import be.kuleuven.cs.som.annotate.Raw;
 /**
  * Deze klasse houdt een object bij dat op een board kan staan en een positie kan hebben.
  * 
+ * @invar	Indien bord of positie null is, moet de andere van de 2 ook null zijn.
+ * 			|isValid()
+ * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
  * @version 1.0
@@ -37,6 +40,7 @@ public class Entity {
 	 * 
 	 * @post	new.board == board
 	 */
+	@Raw
 	private void setBoard(Board board){
 		this.board = board;
 	}
@@ -68,6 +72,7 @@ public class Entity {
 	 * @param	position
 	 * 			De nieuwe positie. Null indien deze buiten het bord is.
 	 */
+	@Raw
 	public void setPosition(Position position) {
 		this.position = position;
 	}
@@ -126,5 +131,23 @@ public class Entity {
 		//TODO: remove from board in Board
 		this.setBoard(null);
 		this.setPosition(null);
+	}
+	
+	/**
+	 * Kijkt na of het object op het bord staat met een geldige positie.
+	 * 
+	 * @return	(new.getPosition() != null && new.getBoard() != null)
+	 */
+	public boolean isOnBoard(){
+		return (this.getPosition() != null && this.getBoard() != null);
+	}
+	
+	/**
+	 * Kijk na of het object geldig is. Indien bord of positie null is, moet de andere van de 2 ook null zijn.
+	 * 
+	 * @return !(getBoard() == null ^ getPosition() == null)
+	 */
+	public boolean isValid(){
+		return !(getBoard() == null ^ getPosition() == null);
 	}
 }
