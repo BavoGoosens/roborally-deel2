@@ -85,8 +85,7 @@ public class Entity {
 	public void destroy(){
 		//TODO: remove from board
 		this.isTerminated = true;
-		this.setPosition(null);
-		this.setBoard(null);
+		this.removeFromBoard();
 	}
 	
 	/**
@@ -99,11 +98,32 @@ public class Entity {
 		return isTerminated;
 	}
 	
+	/**
+	 * Plaats het object op een bord met een geldige positie.
+	 * 
+	 * @param	board
+	 * 			Het bord waarop het object geplaatst moet worden.
+	 * 
+	 * @param	position
+	 * 			De plaats waar het object moet komen.
+	 * 
+	 * @post	|new.getBoard() == board
+	 * @post	|new.getPosition() == position
+	 * 			
+	 */
 	public void putOnBoard(Board board, Position position){
 		//TODO
 	}
 	
+	/**
+	 * Verwijdert de entity van een bord en haalt de opgeslagen positie weg.
+	 * 
+	 * @post	|new.getBoard() == null
+	 * @post	|new.getPosition() == null
+	 */
 	public void removeFromBoard(){
-		//TODO
+		//TODO: remove from board in Board
+		this.setBoard(null);
+		this.setPosition(null);
 	}
 }
