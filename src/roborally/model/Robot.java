@@ -249,8 +249,9 @@ public class Robot extends Entity implements IRobot{
 		return this.Possessions;
 	}
 
-	public void pickUp(Battery battery) {
+	public void pickUp(Battery battery){
 		// TODO Auto-generated method stub
+		
 	}
 
 	public void use(Battery battery) {
