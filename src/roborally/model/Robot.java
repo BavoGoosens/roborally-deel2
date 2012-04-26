@@ -99,7 +99,7 @@ public class Robot extends Entity implements IRobot{
 	 * Methode om de oriëntatie van de robot te verkrijgen.
 	 * 
 	 * @return 	De oriëntatie van de robot.
-	 * 			|thisorientation 			
+	 * 			|this.orientation 			
 	 */
 	@Basic
 	public Orientation getOrientation(){
@@ -237,8 +237,14 @@ public class Robot extends Entity implements IRobot{
 			throw new IllegalStateException("De robot staat niet op een bord.");
 		}
 	}
-
-	public void recharge(){
+	
+	/**
+	 * Deze methode laadt een robot op met de opgegeven hoeveelheid energie.
+	 * 
+	 * @param 	energy
+	 * 			Energie waarmee moet opgeladen worden.
+	 */
+	public void recharge(Energy energy){
 		//TODO
 	}
 	
