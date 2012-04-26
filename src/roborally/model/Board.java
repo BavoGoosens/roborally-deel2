@@ -38,7 +38,7 @@ public class Board{
 			if (!map.containsValue(battery)){
 				if (isPlacableOnPosition(key,battery)){
 					if (map.get(key) == null){
-						HashSet<Object> input = new HashSet<Object>();
+						HashSet<Entity> input = new HashSet<Entity>();
 						input.add(battery);
 						map.put(key,input);
 					}
@@ -48,8 +48,13 @@ public class Board{
 		}
 	}
 	
-	public HashSet<Object> getObjectsOnPosition(Position pos){
+	public HashSet<Entity> getEntityOnPosition(Position pos){
 		return this.map.get(pos);
+	}
+	
+	public void removeEntity(Entity ent){
+		
+		
 	}
 	
 	public boolean isPlacableOnPosition(Position pos , Object obj){

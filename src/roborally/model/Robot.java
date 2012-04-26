@@ -234,7 +234,7 @@ public class Robot extends Entity implements IRobot{
 		//TODO
 	}
 	
-	public int moveCost(){
+	public static int moveCost(){
 		//TODO
 		return MOVE_COST;
 	}
