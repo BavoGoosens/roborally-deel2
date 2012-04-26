@@ -75,7 +75,7 @@ public class Board{
 		if (!map.containsValue(robot)){
 			if (isPlacableOnPosition(key,robot)){
 				if (map.get(key) == null){
-					HashSet<Object> input = new HashSet<Object>();
+					HashSet<Entity> input = new HashSet<Entity>();
 					input.add(robot);
 					map.put(key,input);
 				}

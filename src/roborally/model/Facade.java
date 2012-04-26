@@ -4,8 +4,8 @@ import roborally.basics.Energy;
 import roborally.basics.Orientation;
 import roborally.basics.Weight;
 import roborally.interfaces.IFacade;
+import roborally.model.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
