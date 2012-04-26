@@ -6,6 +6,7 @@ import be.kuleuven.cs.som.annotate.Basic;
  * Deze klasse stelt een hoeveelheid energie voor.
  * 
  * @invar	De energie mag niet negatief zijn.
+ * 			|this.getEnergy() >= 0
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
