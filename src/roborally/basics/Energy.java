@@ -21,9 +21,6 @@ public class Energy {
 	 * 
 	 * @param 	amount
 	 * 			De hoeveelheid energie
-	 * 
-	 * @pre		De energie is een geldige hoeveelheid.
-	 * 			|isValidEnergy(int amount)
 	 */
 	public Energy(int amount){
 		this.setEnergy(amount);

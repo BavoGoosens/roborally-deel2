@@ -13,6 +13,9 @@ import roborally.utils.BatteryComparator;
 /**
  * Een klasse om robots voor te stellen.
  * 
+ * @invar	De hoeveelheid energie van een batterij moet altijd geldig zijn.
+ * 			|isValidRobotEnergyAmount(getEnergy())
+ * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
  * @version 2.0
@@ -22,7 +25,7 @@ public class Robot extends Entity implements IRobot{
 	/**
 	 * De energiekost van 1 move.
 	 */
-	public final static int MOVE_COST = 500;
+	private final static int MOVE_COST = 500;
 	/**
 	 * De energiekost van 1 draai.
 	 */
@@ -257,7 +260,6 @@ public class Robot extends Entity implements IRobot{
 
 	public void drop(Battery battery) {
 		// TODO Auto-generated method stub
-		
 	}
 
 }
