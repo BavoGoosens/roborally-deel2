@@ -48,7 +48,7 @@ public class Entity {
 	/**
 	 * Methode die het board teruggeeft waarop dit object zich bevindt. Deze methode kan ook null teruggeven wat wil zeggen dat het object zich niet op een board bevindt.
 	 * 
-	 * @return	new.board
+	 * @return	this.board
 	 * 			Het board waarop dit object zich bevindt of null als het object niet op een board staat;
 	 */
 	@Basic
@@ -59,7 +59,7 @@ public class Entity {
 	 * Geeft de positie van dit object terug.
 	 * 
 	 * @return	De positie van het object.
-	 * 			|new.position
+	 * 			|this.position
 	 */
 	@Basic
 	public Position getPosition() {
@@ -95,7 +95,7 @@ public class Entity {
 	/**
 	 * Deze methode geeft true indien het object vernietigd is, anders false.
 	 * 
-	 * @return	|new.isTerminated
+	 * @return	|this.isTerminated
 	 */
 	@Basic
 	public boolean isDestroyed(){
@@ -135,7 +135,7 @@ public class Entity {
 	/**
 	 * Kijkt na of het object op het bord staat met een geldige positie.
 	 * 
-	 * @return	(new.getPosition() != null && new.getBoard() != null)
+	 * @return	(this.getPosition() != null && this.getBoard() != null)
 	 */
 	public boolean isOnBoard(){
 		return (this.getPosition() != null && this.getBoard() != null);
@@ -144,7 +144,7 @@ public class Entity {
 	/**
 	 * Kijk na of het object geldig is. Indien bord of positie null is, moet de andere van de 2 ook null zijn.
 	 * 
-	 * @return !(getBoard() == null ^ getPosition() == null)
+	 * @return !(this.getBoard() == null ^ this.getPosition() == null)
 	 */
 	public boolean isValid(){
 		return !(getBoard() == null ^ getPosition() == null);

@@ -12,7 +12,7 @@ import roborally.basics.Weight;
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
- * @version 1.0
+ * @version 1.1
  */
 public class Battery extends Entity{
 	
@@ -55,7 +55,7 @@ public class Battery extends Entity{
 	 * Geeft de energie van de batterij.
 	 * 
 	 * @return	Energie van de batterij.
-	 * 			|new.energy
+	 * 			|this.energy
 	 */
 	@Basic
 	public Energy getEnergy() {
@@ -79,7 +79,7 @@ public class Battery extends Entity{
 	 * Geeft het gewicht terug van de batterij.
 	 * 
 	 * @return	Het gewicht van de batterij.
-	 * 			|new.weight
+	 * 			|this.weight
 	 */
 	@Basic
 	public Weight getWeight() {

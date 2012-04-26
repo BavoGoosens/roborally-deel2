@@ -1,8 +1,6 @@
 package roborally.model;
 
-import roborally.basics.Energy;
-import roborally.basics.Orientation;
-import roborally.basics.Weight;
+import roborally.basics.*;
 import roborally.interfaces.IFacade;
 import roborally.model.*;
 

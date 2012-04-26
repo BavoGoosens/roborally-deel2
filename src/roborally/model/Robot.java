@@ -20,7 +20,7 @@ import roborally.utils.BatteryComparator;
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
- * @version 2.0
+ * @version 2.1
  */
 public class Robot extends Entity implements IRobot{
 
@@ -99,7 +99,7 @@ public class Robot extends Entity implements IRobot{
 	 * Methode om de oriëntatie van de robot te verkrijgen.
 	 * 
 	 * @return 	De oriëntatie van de robot.
-	 * 			|new.orientation 			
+	 * 			|thisorientation 			
 	 */
 	@Basic
 	public Orientation getOrientation(){
@@ -123,7 +123,7 @@ public class Robot extends Entity implements IRobot{
 	 * Methode om de energie van de robot te verkrijgen.
 	 * 
 	 * @return 	De energie van de robot.
-	 * 			|new.energy
+	 * 			|this.energy
 	 */
 	@Basic
 	public Energy getEnergy(){
@@ -147,7 +147,7 @@ public class Robot extends Entity implements IRobot{
 	 * Deze methode berekent de verhouding tussen de huidige hoeveelheid energie en de maximale hoeveelheid energie.
 	 * 
 	 * @return	De verhouding tussen de huidige hoeveelheid energie en de maximale hoeveelheid energie.
-	 * 			|new.getEnergy().getEnergy()/MAXENERGY
+	 * 			|this.getEnergy().getEnergy()/MAXENERGY
 	 */
 	public double getEnergyFraction(){
 		return this.getEnergy().getEnergy()/MAXENERGY;
@@ -265,15 +265,43 @@ public class Robot extends Entity implements IRobot{
 	 * Geeft een set terug van alle batterijen die de robot momenteel draagt.
 	 * 
 	 * @return	De set van batterijen
-	 * 			|new.Possessions
+	 * 			|this.Possessions
 	 */
 	public Set<Battery> getPossessions(){
 		return this.Possessions;
 	}
 
-	public void pickUp(Battery battery){
-		// TODO Auto-generated method stub
-		
+	/**
+	 * Deze methode neemt een batterij op in de bezittingen van de robot.
+	 * 
+	 * @param 	battery
+	 * 			De batterij die moet opgenomen worden.
+	 * 
+	 * @throws 	IllegalArgumentException
+	 * 			De batterij staat niet op dezelfde plaats als de robot of niet op hetzelfde bord.
+	 * 			|!this.getBoard().equals(battery.getBoard()) || !this.getPosition().equals(battery.getPosition())
+	 * 
+	 * @throws 	IllegalStateException
+	 * 			De robot staat niet op een bord.
+	 * 			|!this.isOnBoard()
+	 * 
+	 * @post	De batterij zit in de bezittingen van de robot.
+	 * 			|new.getPossessions().contains(battery)
+	 * 
+	 * @post	De batterij staat niet meer op een bord.
+	 * 			|!battery.isOnBoard()
+	 */
+	public void pickUp(Battery battery) throws IllegalArgumentException, IllegalStateException{
+		if(!this.isOnBoard()){
+			throw new IllegalStateException("De robot staat niet op een bord.");
+		}else if(!this.getBoard().equals(battery.getBoard())){
+			throw new IllegalArgumentException("De robot staat niet op hetzelfde bord als de batterij.");
+		}else if(!this.getPosition().equals(battery.getPosition())){
+			throw new IllegalArgumentException("De robot staat niet op dezelfde positie als de batterij.");
+		}else{
+			battery.removeFromBoard();
+			this.getPossessions().add(battery);
+		}
 	}
 
 	public void use(Battery battery) {

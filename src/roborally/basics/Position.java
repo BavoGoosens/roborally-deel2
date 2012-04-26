@@ -99,7 +99,7 @@ public class Position {
 	 * 			|true
 	 */
 	@Basic
-	private static boolean isValidPosition(long xpos, long ypos){
+	public static boolean isValidPosition(long xpos, long ypos){
 		if (xpos > UPPER_BOUND_X || xpos < LOWER_BOUND_X || ypos > UPPER_BOUND_Y || ypos < LOWER_BOUND_Y)
 			return false;
 		return true;
