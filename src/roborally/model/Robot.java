@@ -17,7 +17,7 @@ import roborally.utils.BatteryComparator;
  * 
  * @version 2.0
  */
-public class Robot implements IRobot{
+public class Robot extends Entity implements IRobot{
 
 	/**
 	 * De energiekost van 1 move.
@@ -37,10 +37,6 @@ public class Robot implements IRobot{
 	public final static int MAXENERGY = 20000;
 
 	/**
-	 * De positie van de robot. Null indien deze niet op het bord staat.
-	 */
-	private Position position;
-	/**
 	 * De energie van de robot.
 	 */
 	private Energy energy;
@@ -48,10 +44,6 @@ public class Robot implements IRobot{
 	 * De oriëntatie van de robot.
 	 */
 	private Orientation orientation;
-	/**
-	 * Geeft weer of de robot getermineerd is of niet.
-	 */
-	private boolean isTerminated = false;
 	
 	/**
 	 * Een instance van de comparator waarmee batterijen vergeleken kunnen worden op basis van gewicht.
@@ -63,11 +55,6 @@ public class Robot implements IRobot{
 	 */
 	private Set<Battery> Possessions = new TreeSet<Battery>(bc);
 	
-	/**
-	 * Het board waarop deze robot staat.
-	 */
-	private Board board;
-
 	/**
 	 * Deze methode maakt een nieuwe robot aan.
 	 * 
@@ -87,27 +74,7 @@ public class Robot implements IRobot{
 		setEnergy(energy);
 		setOrientation(orientation);
 	}
-	/**
-	 * Methode die het board instelt waartoe deze Robot behoort.
-	 * 
-	 * @param 	board
-	 * 			Het board waarop deze robot zich bevindt.
-	 * 
-	 * @post	new.board == board
-	 */
-	private void setBoard(Board board){
-		this.board = board;
-	}
 
-	/**
-	 * Methode die het board teruggeeft waarop deze robot zich bevindt. Deze methode kan ook null teruggeven wat wil zeggen dat de robot zich niet op een board bevindt.
-	 * 
-	 * @return	new.board
-	 * 			Het board waarop de robot zich bevindt of null als de robot niet op een board staat;
-	 */
-	public Board getBoard(){
-		return this.board;
-	}
 	/**
 	 * Methode om de oriëntatie van een robot te wijzigen.
 	 *  
@@ -154,30 +121,6 @@ public class Robot implements IRobot{
 	@Basic
 	public Energy getEnergy(){
 		return energy;
-	}
-
-	/**
-	 * Methode om de positie van een robot te wijzigen.
-	 * 
-	 * @param 	position
-	 * 			Nieuwe positie van de robot
-	 * 
-	 * @post 	De positie van de robot is gelijk aan de gegeven positie.
-	 * 			|new.getPosition().getPosition() == position
-	 */
-	private void setPosition(Position position){
-		this.position = position;
-	}
-
-	/**
-	 * Methode om de positie van de robot te verkrijgen.
-	 * 
-	 * @return	De positie van de robot.
-	 * 			|new.position
-	 */
-	@Basic
-	public Position getPosition(){
-		return position;
 	}
 
 	/**
@@ -280,20 +223,6 @@ public class Robot implements IRobot{
 		}else{
 			System.err.println("Robot staat niet op een bord!");
 		}
-	}
-	
-	/**
-	 * Deze methode vernietigt een robot.
-	 * 
-	 * @post	De robot bevindt zich niet op een bord.
-	 * 			|new.getPosition() == nulls
-	 * @post	De robot is vernietigd.
-	 * 			|new.isDestroyed()
-	 */
-	public void destroy(){
-		//TODO: remove from board
-		this.isTerminated = true;
-		this.setPosition(null);
 	}
 
 	public void recharge(){

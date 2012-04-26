@@ -1,9 +1,7 @@
 package roborally.model;
 
 import be.kuleuven.cs.som.annotate.Basic;
-import be.kuleuven.cs.som.annotate.Raw;
 import roborally.basics.Energy;
-import roborally.basics.Position;
 import roborally.basics.Weight;
 
 /**
@@ -16,7 +14,7 @@ import roborally.basics.Weight;
  * 
  * @version 1.0
  */
-public class Battery {
+public class Battery extends Entity{
 	
 	/**
 	 * Maximale energie die een batterij kan hebben.
@@ -27,11 +25,6 @@ public class Battery {
 	 * Minimale energie die een batterij kan hebben.
 	 */
 	public final static int MINBATTERYENERGY = 0;
-	
-	/**
-	 * Positie van de batterij (niet noodzakelijk).
-	 */
-	private Position position;
 	/**
 	 * Energie in de batterij.
 	 */
@@ -40,16 +33,6 @@ public class Battery {
 	 * Gewicht van de batterij.
 	 */
 	private Weight weight;
-	
-	/**
-	 * Indien de batterij vernietigd is wordt dit true.
-	 */
-	private boolean isTerminated = false;
-	
-	/**
-	 * Het board waarop deze batterij staat.
-	 */
-	private Board board;
 	
 	/**
 	 * Maakt een nieuwe batterij aan.
@@ -66,49 +49,6 @@ public class Battery {
 	public Battery(Energy energy, Weight weight){
 		this.setEnergy(energy);
 		this.setWeight(weight);
-	}
-
-	/**
-	 * Methode die het board instelt waartoe deze battery behoort.
-	 * 
-	 * @param 	board
-	 * 			Het board waarop deze battery zich bevindt.
-	 * 
-	 * @post	new.board == board
-	 */
-	private void setBoard(Board board){
-		this.board = board;
-	}
-	
-	/**
-	 * Methode die het board teruggeeft waarop deze battery zich bevindt. Deze methode kan ook null teruggeven wat wil zeggen dat de battery zich niet op een board bevindt.
-	 * 
-	 * @return	new.board
-	 * 			Het board waarop de battery zich bevindt of null als de battery niet op een board staat;
-	 */
-	public Board getBoard(){
-		return this.board;
-	}
-	/**
-	 * Geeft de positie van de batterij terug.
-	 * 
-	 * @return	De positie van de batterij.
-	 * 			|new.position
-	 */
-	@Basic
-	public Position getPosition() {
-		return position;
-	}
-
-	/**
-	 * Wijzigt de positie van de robot naar de nieuwe positie.
-	 * 
-	 * @param	position
-	 * 			De nieuwe positie. Null indien deze buiten het bord is.
-	 */
-	@Basic @Raw
-	public void setPosition(Position position) {
-		this.position = position;
 	}
 
 	/**
@@ -168,28 +108,6 @@ public class Battery {
 	 */
 	public static boolean isValidBatteryEnergyAmount(Energy energy){
 		return (energy.getEnergy() >= MINBATTERYENERGY && energy.getEnergy() <= MAXBATTERYENERGY);
-	}
-	
-	/**
-	 * Deze methode vernietigt de batterij.
-	 * 
-	 * @post	|this.isDestroyed()
-	 * @post	|this.getPosition() == null
-	 */
-	public void destroy(){
-		//TODO: remove from board
-		this.setPosition(null);
-		this.isTerminated = true;
-	}
-	
-	/**
-	 * Deze methode geeft true indien de batterij vernietigd is, anders false.
-	 * 
-	 * @return	|new.isTerminated
-	 */
-	@Basic
-	public boolean isDestroyed(){
-		return isTerminated;
 	}
 	
 }
