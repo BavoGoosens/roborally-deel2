@@ -274,6 +274,21 @@ public class Robot implements IRobot{
 	public Set<Battery> getPossessions(){
 		return this.Possessions;
 	}
+
+	public void pickUp(Battery battery) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void use(Battery battery) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void drop(Battery battery) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 

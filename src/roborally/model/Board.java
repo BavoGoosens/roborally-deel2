@@ -45,12 +45,7 @@ public class Board{
 	public boolean isPlacableOnPosition(Position pos , Object obj){
 		if (this.map.get(pos).isEmpty())
 			return true;
-		if (obj instanceof Battery){
-			
-		}
-		if (obj instanceof Robot){
-			if(this.map.get(pos).
-		}
+		//if(this.map.get(pos))
 		return false;
 	}
 
