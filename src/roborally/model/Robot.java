@@ -243,14 +243,17 @@ public class Robot extends Entity implements IRobot{
 	 * 			Energie waarmee moet opgeladen worden.
 	 * 
 	 * @post	De robot is opgeladen met de opgegeven hoeveelheid energie.
+	 * 			|if(!isValidRobotEnergyAmount(Energy.energySum(this.getEnergy(), energy))){
+	 * 			|	new.getEnergy() == new Energy(MAXENERGY)
+	 * 			|}else{
+	 * 			|	new.getEnergy() == Energy.energySum(this.getEnergy(), energy)
+	 * 			|}
+	 * 			
 	 */
 	public void recharge(Energy energy){
-		//TODO
 		Energy newEnergy = Energy.energySum(this.getEnergy(), energy);
-		if(newEnergy.getEnergy() > MAXENERGY)
+		if(!isValidRobotEnergyAmount(newEnergy))
 			newEnergy = new Energy(MAXENERGY);
-		if(newEnergy.getEnergy() < MINENERGY)
-			newEnergy = new Energy(MINENERGY);
 		this.setEnergy(newEnergy);
 	}
 	
