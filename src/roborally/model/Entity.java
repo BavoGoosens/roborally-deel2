@@ -116,6 +116,7 @@ public class Entity {
 	 * 			
 	 */
 	public void putOnBoard(Board board, Position position){
+		//TODO: add to board in Board
 		this.setBoard(board);
 		this.setPosition(position);
 	}

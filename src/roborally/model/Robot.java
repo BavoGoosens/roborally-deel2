@@ -225,12 +225,16 @@ public class Robot extends Entity implements IRobot{
 	 * Deze methode doet een robot schieten met zijn laser.
 	 * 
 	 * @effect	Mogelijks wordt een object op het bord geraakt en verwijderd.
+	 * 
+	 * @throws	IllegalStateException
+	 * 			De robot staat niet op een bord.
+	 * 			|!this.isOnBoard()
 	 */
-	public void shoot(){
+	public void shoot() throws IllegalStateException{
 		if(this.isOnBoard()){
 			//TODO
 		}else{
-			System.err.println("Robot staat niet op een bord!");
+			throw new IllegalStateException("De robot staat niet op een bord.");
 		}
 	}
 
