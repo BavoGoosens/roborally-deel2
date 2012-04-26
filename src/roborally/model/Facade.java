@@ -6,6 +6,7 @@ import roborally.basics.Weight;
 import roborally.interfaces.IFacade;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -115,7 +116,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 	@Override
 	public void turn(Robot robot) {
-		robot.turnClockwise();
+		robot.turnClockWise();
 	}
 
 	@Override
@@ -201,20 +202,23 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 	@Override
 	public Set<Robot> getRobots(Board board) {
-		return null;
-	
+		// TODO Auto-generated method stub
+		HashSet<Robot> result = board.getRobots();
+		return result;
 	}
 
 	@Override
 	public Set<Battery> getBatteries(Board board) {
 		// TODO Auto-generated method stub
-		return null;
+		HashSet<Battery> result = board.getBatteries();
+		return result;
 	}
 
 	@Override
 	public Set<Wall> getWalls(Board board) throws UnsupportedOperationException {
 		// TODO Auto-generated method stub
-		return null;
+		HashSet<Wall> result = board.getWalls();
+		return result;
 	}
 }
 

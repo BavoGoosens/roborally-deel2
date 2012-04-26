@@ -1,5 +1,6 @@
 package roborally.model;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -30,8 +31,27 @@ public class Board{
 	}
 
 	public void putBattery(long x, long y, Battery battery) {
-		// TODO Auto-generated method stub
-		
+		Position key = new Position(x,y);
+		if (!map.containsValue(battery)){
+			if (isPlacableOnPosition(key,battery)){
+				
+			}
+		}
+	}
+	
+	public HashSet<Object> getObjectsOnPosition(Position pos){
+		return this.map.get(pos);
+	}
+	public boolean isPlacableOnPosition(Position pos , Object obj){
+		if (this.map.get(pos).isEmpty())
+			return true;
+		if (obj instanceof Battery){
+			
+		}
+		if (obj instanceof Robot){
+			if(this.map.get(pos).
+		}
+		return false;
 	}
 
 	public void putRobot(long x, long y, Robot robot) {
@@ -42,6 +62,48 @@ public class Board{
 	public void putWall(long x, long y, Wall wall) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public HashSet<Robot> getRobots() {
+		// TODO testen en checken
+		Collection<HashSet> c = map.values();
+		HashSet<Robot> result = new HashSet<Robot>();
+		for (HashSet<Object> values : c){
+			while (values.iterator().hasNext()){
+				Object obj = values.iterator().next();
+				if (obj instanceof Robot)
+					result.add((Robot) obj);
+			}
+		}
+		return result;
+	}
+
+	public HashSet<Battery> getBatteries() {
+		// TODO testen en checken
+		Collection<HashSet> c = map.values();
+		HashSet<Battery> result = new HashSet<Battery>();
+		for (HashSet<Object> values : c){
+			while (values.iterator().hasNext()){
+				Object obj = values.iterator().next();
+				if (obj instanceof Battery)
+					result.add((Battery) obj);
+			}
+		}
+		return result;
+	}
+
+	public HashSet<Wall> getWalls() {
+		// TODO testen en checken
+		Collection<HashSet> c = map.values();
+		HashSet<Wall> result = new HashSet<Wall>();
+		for (HashSet<Object> values : c){
+			while (values.iterator().hasNext()){
+				Object obj = values.iterator().next();
+				if (obj instanceof Wall)
+					result.add((Wall) obj);
+			}
+		}
+		return result;
 	}
 	
 }
