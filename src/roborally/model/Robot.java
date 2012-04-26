@@ -1,5 +1,8 @@
 package roborally.model;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 import be.kuleuven.cs.som.annotate.Basic;
 import roborally.basics.Energy;
 import roborally.basics.Orientation;
@@ -48,6 +51,8 @@ public class Robot implements IRobot{
 	 * Geeft weer of de robot getermineerd is of niet.
 	 */
 	private boolean isTerminated = false;
+	
+	private Set<Battery> Possessions = new TreeSet();
 
 	/**
 	 * Deze methode maakt een nieuwe robot aan.
@@ -260,5 +265,16 @@ public class Robot implements IRobot{
 	public void recharge(){
 		//TODO
 	}
+	
+	public int moveCost(){
+		//TODO
+		return MOVE_COST;
+	}
+	
+	public Set<Battery> getPossessions(){
+		return this.Possessions;
+	}
+	
+	
 
 }
