@@ -20,7 +20,7 @@ public class Entity {
 	/**
 	 * Positie van dit object (niet noodzakelijk).
 	 */
-	private Position position;
+	private Position position = null;
 	
 	/**
 	 * Indien het object vernietigd is wordt dit true.
@@ -30,7 +30,7 @@ public class Entity {
 	/**
 	 * Het board waarop dit object staat (niet noodzakelijk).
 	 */
-	private Board board;
+	private Board board = null;
 	
 	/**
 	 * Methode die het board instelt waartoe dit object behoort.
