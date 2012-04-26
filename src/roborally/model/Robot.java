@@ -184,6 +184,8 @@ public class Robot extends Entity implements IRobot{
 	
 	/**
 	 * Deze methode beweegt de robot een stap vooruit indien mogelijk.
+	 * 
+	 * @effect	De positie van de robot is veranderd (indien het mogelijk was om te bewegen).
 	 */
 	public void move(){
 		//TODO
@@ -234,12 +236,19 @@ public class Robot extends Entity implements IRobot{
 		return MOVE_COST;
 	}
 	
+	/**
+	 * Geeft een set terug van alle batterijen die de robot momenteel draagt.
+	 * 
+	 * @return	De set van batterijen
+	 * 			|new.Possessions
+	 */
 	public Set<Battery> getPossessions(){
 		return this.Possessions;
 	}
 
 	public void pickUp(Battery battery) {
-		// TODO Auto-generated method stub
+		// TODO: remove from board
+		
 		
 		
 	}

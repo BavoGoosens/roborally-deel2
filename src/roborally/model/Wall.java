@@ -5,6 +5,6 @@ package roborally.model;
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
- * @version 1.0
+ * @version 1.1
  */
 public class Wall extends Entity{}

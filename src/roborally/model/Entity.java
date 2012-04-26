@@ -47,6 +47,7 @@ public class Entity {
 	 * @return	new.board
 	 * 			Het board waarop dit object zich bevindt of null als het object niet op een board staat;
 	 */
+	@Basic
 	public Board getBoard(){
 		return this.board;
 	}
@@ -67,7 +68,6 @@ public class Entity {
 	 * @param	position
 	 * 			De nieuwe positie. Null indien deze buiten het bord is.
 	 */
-	@Basic @Raw
 	public void setPosition(Position position) {
 		this.position = position;
 	}
@@ -75,15 +75,18 @@ public class Entity {
 	/**
 	 * Deze methode vernietigt het object.
 	 * 
-	 * @post	Het object bevindt zich niet op een bord.
+	 * @post	Het object heeft geen positie meer.
 	 * 			|new.getPosition() == null
 	 * @post	Het object is vernietigd.
 	 * 			|new.isDestroyed()
+	 * @post	Het object staat niet meer op een bord.
+	 * 			|new.getBoard() == null
 	 */
 	public void destroy(){
 		//TODO: remove from board
 		this.isTerminated = true;
 		this.setPosition(null);
+		this.setBoard(null);
 	}
 	
 	/**
@@ -94,5 +97,13 @@ public class Entity {
 	@Basic
 	public boolean isDestroyed(){
 		return isTerminated;
+	}
+	
+	public void putOnBoard(Board board, Position position){
+		//TODO
+	}
+	
+	public void removeFromBoard(){
+		//TODO
 	}
 }
