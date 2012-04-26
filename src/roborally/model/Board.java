@@ -139,11 +139,11 @@ public class Board{
 	
 
 	public boolean isValidHeight(long height){
-		return (height > Board.LOWER_BOUND_HEIGTH) && (height <= Board.UPPER_BOUND_HEIGTH);
+		return (height > LOWER_BOUND_HEIGTH) && (height <= UPPER_BOUND_HEIGTH);
 	}
 	
 	public boolean isValidWidth(long width){
-		return (width > Board.LOWER_BOUND_WIDTH) && (width <= Board.UPPER_BOUND_WIDTH);
+		return (width > LOWER_BOUND_WIDTH) && (width <= UPPER_BOUND_WIDTH);
 	}
 
 	public long getWidth() {
@@ -152,5 +152,11 @@ public class Board{
 
 	public long getHeight() {
 		return height;
+	}
+	
+	public boolean isValidBoardPosition(Position position){
+		if (position.getX() > UPPER_BOUND_WIDTH || position.getX() < LOWER_BOUND_WIDTH || position.getY() > this.getWidth() || position.getY() < this.getHeight())
+			return false;
+		return true;
 	}
 }
