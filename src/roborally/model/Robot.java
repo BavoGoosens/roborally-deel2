@@ -85,7 +85,7 @@ public class Robot extends Entity implements IRobot{
 	 * @param 	or
 	 * 			De oriëntatie die de robot moet krijgen.
 	 * 
-	 * @post	De direction van de robot is gelijk aan de gegeven parameter.
+	 * @post	De oriëntatie van de robot is gelijk aan de gegeven parameter.
 	 * 			|new.getOrientation() == or
 	 */
 	private void setOrientation(Orientation or) {
@@ -108,6 +108,9 @@ public class Robot extends Entity implements IRobot{
 	 * 
 	 * @param	newEnergy
 	 * 			De energie die de robot moet krijgen.
+	 * 
+	 * @pre		De hoeveelheid energie moet geldig zijn.
+	 * 			|isValidRobotEnergyAmount(newEnergy)
 	 * 
 	 * @post 	De energie van de robot is newEnergy.
 	 * 			|new.getEnergy() == newEnergy
@@ -134,7 +137,7 @@ public class Robot extends Entity implements IRobot{
 	 * 			De hoeveelheid energie.
 	 *
 	 * @return	boolean
-	 * 			|(amount >= MINENERGY) && (amount <= MAXENERGY)
+	 * 			|(energy.getEnergy() >= MINENERGY) && (energy.getEnergy() <= MAXENERGY)
 	 */
 	public static boolean isValidRobotEnergyAmount(Energy energy){
 		return (energy.getEnergy() >= MINENERGY) && (energy.getEnergy() <= MAXENERGY);

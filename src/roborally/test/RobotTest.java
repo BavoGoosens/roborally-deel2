@@ -7,7 +7,7 @@ import roborally.model.Robot;
 
 
 public class RobotTest {
-
+/*
 	private Robot robot;
 	private Robot robot1;
 	private Robot robot2;
@@ -204,8 +204,6 @@ public class RobotTest {
 		assertEquals(15000, this.robot.getEnergy(),0);
 		this.robot.recharge(10000);
 		assertEquals(20000, this.robot.getEnergy(),0);
-		/*this.robot.recharge(-500);
-		assertEquals(20000,this.robot.getEnergy(),0);*/
 	}
 
 
@@ -925,4 +923,5 @@ public class RobotTest {
 			 return true;
 		return false; 
 	 }
+*/
 }
