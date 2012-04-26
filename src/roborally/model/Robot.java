@@ -168,7 +168,11 @@ public class Robot implements IRobot{
 	 * Draait de robot 1 keer in wijzerzin.
 	 * 
 	 * @post	De nieuwe oriëntatie van de robot is gelijk aan de volgende oriëntatie in wijzerzin.
-	 * 			|new.getOrientation() == this.getOrienation().getClockwiseOrientation()
+	 * 			|if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST)))
+	 * 			|	new.getOrientation() == this.getOrienation().getClockwiseOrientation()
+	 * @post	De energie van de robot is verminderd met benodigde energie voor een draai.
+	 * 			|if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST)))
+	 * 			|	new.getEnergy().getEnergy().equals(this.getEnergy().getEnergy() - TURN_COST)
 	 */
 	public void turnClockWise(){
 		//TODO
@@ -182,7 +186,11 @@ public class Robot implements IRobot{
 	 * Draait de robot 1 keer in tegenwijzerzin.
 	 * 
 	 * @post	De nieuwe oriëntatie van de robot is gelijk aan de volgende oriëntatie in wijzerzin.
-	 * 			|new.getOrientation() == this.getOrienation().getCounterClockwiseOrientation()
+	 * 			|if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST)))
+	 * 			|	new.getOrientation() == this.getOrienation().getCounterClockwiseOrientation()
+	 * @post	De energie van de robot is verminderd met benodigde energie voor een draai.
+	 * 			|if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST)))
+	 * 			|	new.getEnergy().getEnergy().equals(this.getEnergy().getEnergy() - TURN_COST)
 	 */
 	public void turnCounterClockWise(){
 		//TODO
@@ -191,28 +199,58 @@ public class Robot implements IRobot{
 			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST);
 		}
 	}
-
+	
+	/**
+	 * Deze methode beweegt de robot een stap vooruit indien mogelijk.
+	 */
 	public void move(){
 		//TODO
 	}
-
+	
+	/**
+	 * Deze methode geeft de energie terug die nodig is om een bepaalde plaats te bereiken.
+	 * 
+	 * @param 	position
+	 * 			De plaats die bereikt moet worden.
+	 * 
+	 * @return	De energie die nodig is om de plaats te bereiken.
+	 */
 	public Energy getEnergyRequiredToReach(Position position){
 		//TODO
 		return null;
 	}
-
+	
+	/**
+	 * Deze methode verplaatst de robot zo dicht mogelijk bij een andere robot.
+	 * 
+	 * @param	robot
+	 * 			De robot waar naartoe moet bewogen worden.
+	 */
 	public void moveNextTo(Robot robot){
 		//TODO
 	}
-
+	
+	/**
+	 * Deze methode doet een robot schieten met zijn laser.
+	 * 
+	 * @effect	Mogelijks wordt een object op het bord geraakt en verwijderd.
+	 */
 	public void shoot(){
 		if(this.getPosition() != null){
-			
+			//TODO
 		}else{
 			System.err.println("Robot staat niet op een bord!");
 		}
 	}
-
+	
+	/**
+	 * Deze methode vernietigt een robot.
+	 * 
+	 * @post	De robot bevindt zich niet op een bord.
+	 * 			|new.getPosition() == nulls
+	 * @post	De robot is vernietigd.
+	 * 			|new.isDestroyed()
+	 */
 	public void destroy(){
 		//TODO: remove from board
 		this.isTerminated = true;
