@@ -56,6 +56,8 @@ public class Robot implements IRobot{
 	private BatteryComparator bc;
 	
 	private Set<Battery> Possessions = new TreeSet<Battery>(bc);
+	
+	private Board board;
 
 	/**
 	 * Deze methode maakt een nieuwe robot aan.
@@ -76,7 +78,25 @@ public class Robot implements IRobot{
 		setEnergy(energy);
 		setOrientation(orientation);
 	}
+	/**
+	 * Methode die het board instelt waartoe deze Robot behoort.
+	 * 
+	 * @param 	board
+	 * 			Het board waarop deze robot zich bevindt.
+	 */
+	public void setBoard(Board board){
+		this.board = board;
+	}
 
+	/**
+	 * Methode die het board teruggeeft waarop deze robot zich bevindt. Deze methode kan ook null teruggeven wat wil zeggen dat de robot zich niet op een board bevindt.
+	 * 
+	 * @return	Board of null
+	 * 			Het board waarop de robot zich bevindt of null als de robot niet op een board staat;
+	 */
+	public Board getBoard(){
+		return this.board;
+	}
 	/**
 	 * Methode om de oriëntatie van een robot te wijzigen.
 	 *  
