@@ -333,4 +333,22 @@ public class Robot extends Entity{
 		// TODO Auto-generated method stub
 	}
 
+	/*
+	 * De robot en al zijn bezittingen vernietigd.
+	 * 
+	 * @post	|new.getPossessions().isEmpty()
+	 * 
+	 * @see 	roborally.model.Entity#destroy()
+	 */
+	@Override
+	public void destroy() {
+		Iterator<Battery> itr = this.getPossessions().iterator();
+		while(itr.hasNext()){
+			Battery current = itr.next();
+			current.destroy();
+			this.getPossessions().remove(current);
+		}
+		super.destroy();
+	}
+
 }

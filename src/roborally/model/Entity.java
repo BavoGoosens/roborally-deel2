@@ -16,22 +16,22 @@ import be.kuleuven.cs.som.annotate.Raw;
  * @version 1.0
  */
 public class Entity {
-	
+
 	/**
 	 * Positie van dit object (niet noodzakelijk).
 	 */
 	private Position position = null;
-	
+
 	/**
 	 * Indien het object vernietigd is wordt dit true.
 	 */
 	private boolean isTerminated = false;
-	
+
 	/**
 	 * Het board waarop dit object staat (niet noodzakelijk).
 	 */
 	private Board board = null;
-	
+
 	/**
 	 * Methode die het board instelt waartoe dit object behoort.
 	 * 
@@ -44,7 +44,7 @@ public class Entity {
 	private void setBoard(Board board){
 		this.board = board;
 	}
-	
+
 	/**
 	 * Methode die het board teruggeeft waarop dit object zich bevindt. Deze methode kan ook null teruggeven wat wil zeggen dat het object zich niet op een board bevindt.
 	 * 
@@ -88,7 +88,7 @@ public class Entity {
 			this.position = position;
 		}
 	}
-	
+
 	/**
 	 * Deze methode vernietigt het object.
 	 * 
@@ -101,9 +101,10 @@ public class Entity {
 	 */
 	public void destroy(){
 		this.isTerminated = true;
-		this.removeFromBoard();
+		if(this.isOnBoard())
+			this.removeFromBoard();
 	}
-	
+
 	/**
 	 * Deze methode geeft true indien het object vernietigd is, anders false.
 	 * 
@@ -113,7 +114,7 @@ public class Entity {
 	public boolean isDestroyed(){
 		return isTerminated;
 	}
-	
+
 	/**
 	 * Plaats het object op een bord met een geldige positie.
 	 * 
@@ -132,7 +133,7 @@ public class Entity {
 		this.setBoard(board);
 		this.setPosition(position);
 	}
-	
+
 	/**
 	 * Verwijdert de entity van een bord en haalt de opgeslagen positie weg.
 	 * 
@@ -144,7 +145,7 @@ public class Entity {
 		this.setBoard(null);
 		this.setPosition(null);
 	}
-	
+
 	/**
 	 * Kijkt na of het object op het bord staat met een geldige positie.
 	 * 
@@ -153,7 +154,7 @@ public class Entity {
 	public boolean isOnBoard(){
 		return (this.getPosition() != null && this.getBoard() != null);
 	}
-	
+
 	/**
 	 * Kijk na of het object geldig is. Indien bord of positie null is, moet de andere van de 2 ook null zijn.
 	 * 

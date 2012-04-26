@@ -1,6 +1,5 @@
 roborally
 roborally.basics
-roborally.interfaces
 roborally.model
 roborally.test
 roborally.utils
