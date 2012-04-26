@@ -1,9 +1,15 @@
 package roborally.model;
 
+import java.util.HashMap;
+import java.util.HashSet;
+
+import roborally.basics.Position;
+
 public class Board{
 	
 	private final long width;
 	private final long height;
+	private HashMap <Position,HashSet> map;
 	
 	private static final long UPPER_BOUND_WIDTH = Long.MAX_VALUE;
 	private static final long LOWER_BOUND_WIDTH = 0;
