@@ -8,6 +8,7 @@ import roborally.basics.Energy;
 import roborally.basics.Orientation;
 import roborally.basics.Position;
 import roborally.interfaces.IRobot;
+import roborally.utils.BatteryComparator;
 
 /**
  * Een klasse om robots voor te stellen.
@@ -52,7 +53,9 @@ public class Robot implements IRobot{
 	 */
 	private boolean isTerminated = false;
 	
-	private Set<Battery> Possessions = new TreeSet();
+	private BatteryComparator bc;
+	
+	private Set<Battery> Possessions = new TreeSet<Battery>(bc);
 
 	/**
 	 * Deze methode maakt een nieuwe robot aan.
@@ -277,6 +280,7 @@ public class Robot implements IRobot{
 
 	public void pickUp(Battery battery) {
 		// TODO Auto-generated method stub
+		
 		
 	}
 
