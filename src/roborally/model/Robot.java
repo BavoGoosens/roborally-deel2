@@ -5,10 +5,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import be.kuleuven.cs.som.annotate.Basic;
-import roborally.basics.Energy;
-import roborally.basics.Orientation;
-import roborally.basics.Position;
-import roborally.basics.Weight;
+import roborally.basics.*;
 import roborally.interfaces.IRobot;
 import roborally.utils.BatteryComparator;
 
@@ -164,7 +161,6 @@ public class Robot extends Entity implements IRobot{
 	 * 			|	new.getEnergy().getEnergy().equals(this.getEnergy().getEnergy() - TURN_COST)
 	 */
 	public void turnClockWise(){
-		//TODO
 		if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST))){
 			this.setOrientation(this.getOrientation().getClockwiseOrientation());
 			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST);
@@ -182,7 +178,6 @@ public class Robot extends Entity implements IRobot{
 	 * 			|	new.getEnergy().getEnergy().equals(this.getEnergy().getEnergy() - TURN_COST)
 	 */
 	public void turnCounterClockWise(){
-		//TODO
 		if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST))){
 			this.setOrientation(this.getOrientation().getCounterClockwiseOrientation());
 			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST);
@@ -243,9 +238,17 @@ public class Robot extends Entity implements IRobot{
 	 * 
 	 * @param 	energy
 	 * 			Energie waarmee moet opgeladen worden.
+	 * 
+	 * @post	De robot is opgeladen met de opgegeven hoeveelheid energie.
 	 */
 	public void recharge(Energy energy){
 		//TODO
+		Energy newEnergy = Energy.energySum(this.getEnergy(), energy);
+		if(newEnergy.getEnergy() > MAXENERGY)
+			newEnergy = new Energy(MAXENERGY);
+		if(newEnergy.getEnergy() < MINENERGY)
+			newEnergy = new Energy(MINENERGY);
+		this.setEnergy(newEnergy);
 	}
 	
 	/**

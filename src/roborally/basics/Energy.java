@@ -5,6 +5,8 @@ import be.kuleuven.cs.som.annotate.Basic;
 /**
  * Deze klasse stelt een hoeveelheid energie voor.
  * 
+ * @invar	De energie mag niet negatief zijn.
+ * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
  * @version 1.0
@@ -21,6 +23,9 @@ public class Energy {
 	 * 
 	 * @param 	amount
 	 * 			De hoeveelheid energie
+	 * 
+	 * @pre		De hoeveelheid mag niet negatief zijn.
+	 * 			|amount >= 0
 	 */
 	public Energy(int amount){
 		this.setEnergy(amount);
@@ -42,8 +47,8 @@ public class Energy {
 	 * @param 	amount
 	 * 			De hoeveelheid energie
 	 * 
-	 * @pre		De energie is een geldige hoeveelheid.
-	 * 			|isValidEnergy(int amount)
+	 * @pre		De energie is niet negatief.
+	 * 			|amount >= 0
 	 * 
 	 * @post	new.amount == amount
 	 */
