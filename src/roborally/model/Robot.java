@@ -262,7 +262,5 @@ public class Robot extends Entity implements IRobot{
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
 
 }

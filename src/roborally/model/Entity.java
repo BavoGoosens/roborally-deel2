@@ -112,7 +112,8 @@ public class Entity {
 	 * 			
 	 */
 	public void putOnBoard(Board board, Position position){
-		//TODO
+		this.setBoard(board);
+		this.setPosition(position);
 	}
 	
 	/**
