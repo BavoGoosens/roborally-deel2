@@ -220,7 +220,7 @@ public class Robot extends Entity implements IRobot{
 	 * @effect	Mogelijks wordt een object op het bord geraakt en verwijderd.
 	 */
 	public void shoot(){
-		if(this.getPosition() != null){
+		if(this.isOnBoard()){
 			//TODO
 		}else{
 			System.err.println("Robot staat niet op een bord!");
@@ -247,10 +247,7 @@ public class Robot extends Entity implements IRobot{
 	}
 
 	public void pickUp(Battery battery) {
-		// TODO: remove from board
-		
-		
-		
+		// TODO Auto-generated method stub
 	}
 
 	public void use(Battery battery) {

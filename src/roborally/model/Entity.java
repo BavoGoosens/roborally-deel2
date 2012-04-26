@@ -88,7 +88,6 @@ public class Entity {
 	 * 			|new.getBoard() == null
 	 */
 	public void destroy(){
-		//TODO: remove from board
 		this.isTerminated = true;
 		this.removeFromBoard();
 	}
