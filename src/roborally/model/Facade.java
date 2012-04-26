@@ -1,8 +1,7 @@
 package roborally.model;
 
+import roborally.IFacade;
 import roborally.basics.*;
-import roborally.interfaces.IFacade;
-import roborally.model.*;
 
 import java.util.HashSet;
 import java.util.Set;

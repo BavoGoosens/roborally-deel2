@@ -2,8 +2,6 @@ package roborally;
 
 import static java.lang.System.out;
 
-import roborally.interfaces.IFacade;
-
 import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
 
 public class RoboRally<Board, Robot, Wall, Battery> extends JFrame {
 	

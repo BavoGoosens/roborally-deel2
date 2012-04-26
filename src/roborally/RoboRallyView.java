@@ -1,7 +1,5 @@
 package roborally;
 
-import roborally.interfaces.IFacade;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -13,7 +11,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
 
 
 public class RoboRallyView<Board, Robot, Wall, Battery> extends JPanel {
