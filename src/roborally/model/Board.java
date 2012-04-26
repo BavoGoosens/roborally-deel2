@@ -22,16 +22,28 @@ public class Board{
 		this.width = width;
 	}
 
+	/**
+	 * Deze methode plaats een battery op een gegeven plaats in het bord.
+	 * 
+	 * @param 	x
+	 * 
+	 * @param 	y
+	 * 
+	 * @param 	battery
+	 * 
+	 */
 	public void putBattery(long x, long y, Battery battery) {
-		Position key = new Position(x,y);
-		if (!map.containsValue(battery)){
-			if (isPlacableOnPosition(key,battery)){
-				if (map.get(key) == null){
-					HashSet<Object> input = new HashSet<Object>();
-					input.add(battery);
-					map.put(key,input);
+		if (battery.getBoard() != null){
+			Position key = new Position(x,y);
+			if (!map.containsValue(battery)){
+				if (isPlacableOnPosition(key,battery)){
+					if (map.get(key) == null){
+						HashSet<Object> input = new HashSet<Object>();
+						input.add(battery);
+						map.put(key,input);
+					}
+					map.get(key).add(battery);
 				}
-				map.get(key).add(battery);
 			}
 		}
 	}
