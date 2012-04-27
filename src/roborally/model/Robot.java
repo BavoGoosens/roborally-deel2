@@ -165,7 +165,7 @@ public class Robot extends Entity{
 	 * 			|	new.getEnergy().getEnergy().equals(this.getEnergy().getEnergy() - TURN_COST)
 	 */
 	public void turnClockWise(){
-		if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST))){
+		if(this.canTurn()){
 			this.setOrientation(this.getOrientation().getClockwiseOrientation());
 			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST);
 		}
@@ -182,7 +182,7 @@ public class Robot extends Entity{
 	 * 			|	new.getEnergy().getEnergy().equals(this.getEnergy().getEnergy() - TURN_COST)
 	 */
 	public void turnCounterClockWise(){
-		if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST))){
+		if(this.canTurn()){
 			this.setOrientation(this.getOrientation().getCounterClockwiseOrientation());
 			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST);
 		}
@@ -351,6 +351,28 @@ public class Robot extends Entity{
 			this.getPossessions().remove(battery);
 			battery.putOnBoard(this.getBoard(), this.getPosition());
 		}
+	}
+	
+	/**
+	 * Deze methode kijkt na of de robot kan draaien.
+	 * 
+	 * @return	Boolean die true is als de robot voldoende energie heeft om te draaien.
+	 * 			|isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST))
+	 */
+	public boolean canTurn(){
+		return isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST));
+	}
+	
+	/**
+	 * Deze methode kijkt na of de robot kan moven.
+	 * 
+	 * @return	Boolean die true is als de robot voldoende energie heeft om te moven.
+	 * 			|isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - this.moveCost()))
+	 * 
+	 * @note	Deze methode houdt enkel rekening met de minimale energie en niet met de positie.
+	 */
+	public boolean canMove(){
+		return isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - this.moveCost()));
 	}
 
 	/*
