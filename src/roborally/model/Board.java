@@ -37,7 +37,14 @@ public class Board{
 	}
 
 	public void removeEntity(Entity ent){
-		//TODO
+		if (this.map.containsValue(ent)){
+			Collection<HashSet<Entity>> c = this.map.values();
+			for (HashSet<Entity> val  : c){
+				if (val.contains(ent)){
+					val.remove(ent);
+				}
+			}
+		}
 
 	}
 
