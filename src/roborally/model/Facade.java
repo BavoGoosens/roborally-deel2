@@ -32,8 +32,9 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 	@Override
 	public void putBattery(Board board, long x, long y, Battery battery) {
-		board.putBattery(x,y,battery);
-		
+		Position pos = new Position(x,y);
+		battery.putOnBoard(board, pos);
+		board.putEntity(pos,battery);
 	}
 
 	@Override
@@ -80,7 +81,9 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 	@Override
 	public void putRobot(Board board, long x, long y, Robot robot) {
-		board.putRobot(x ,y , robot);
+		Position pos = new Position(x , y);
+		robot.putOnBoard(board, pos);
+		board.putEntity(pos, robot);
 		
 	}
 
@@ -120,14 +123,12 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 	@Override
 	public Set<Battery> getPossessions(Robot robot) {
-		return null;
-		
+		return robot.getPossessions();
 	}
 
 	@Override
 	public void pickUp(Robot robot, Battery battery) {
 		robot.pickUp(battery);
-		
 	}
 
 	@Override
@@ -138,7 +139,6 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 	@Override
 	public void drop(Robot robot, Battery battery) {
 		robot.drop(battery);
-		
 	}
 
 	@Override
@@ -167,20 +167,19 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 	@Override
 	public void shoot(Robot robot) throws UnsupportedOperationException {
 		robot.shoot();
-		
 	}
 
 	@Override
 	public Wall createWall() throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
+		return new Wall();
 	}
 
 	@Override
 	public void putWall(Board board, long x, long y, Wall wall)
 			throws UnsupportedOperationException {
-		board.putWall(x , y , wall);
-		
+		Position pos = new Position(x , y);
+		wall.putOnBoard(board, pos);
+		board.putEntity(pos, wall);
 	}
 
 	@Override
@@ -201,23 +200,17 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 	@Override
 	public Set<Robot> getRobots(Board board) {
-		// TODO Auto-generated method stub
-		Set<Robot> result = board.getRobots();
-		return result;
+		return board.getRobots();
 	}
 
 	@Override
 	public Set<Battery> getBatteries(Board board) {
-		// TODO Auto-generated method stub
-		Set<Battery> result = board.getBatteries();
-		return result;
+		return board.getBatteries();
 	}
 
 	@Override
 	public Set<Wall> getWalls(Board board) throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		Set<Wall> result = board.getWalls();
-		return result;
+		return board.getWalls();
 	}
 }
 

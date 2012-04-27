@@ -14,8 +14,7 @@ import roborally.utils.Calculator;
 
 public class Board{
 	
-	//TODO: documentatie en annotations
-	//TODO: Helaas veel meer dan enkel da de puts en gets werken niet... Die rare structuur snap ik ni van hashmap
+	//TODO: documentatie en annotations & Helaas veel meer dan enkel da de puts en gets werken niet... Die rare structuur snap ik ni van hashmap
 	
 	private final long width;
 	private final long height;

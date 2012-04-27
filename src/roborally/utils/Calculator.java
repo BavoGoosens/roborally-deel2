@@ -14,6 +14,16 @@ public class Calculator {
 	
 	//TODO: documentatie en annotations
 
+	/**
+	 * Deze Methode gaat de manhattandistance van punt A met pos pos1 tot punt B met pos pos2 berekenen.
+	 * 
+	 * @param 	pos1
+	 * 
+	 * @param 	pos2
+	 * 
+	 * @return	
+	 * 
+	 */
 	public static long calculateManhattan(Position pos1, Position pos2){
 		return (Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY()));
 	} 

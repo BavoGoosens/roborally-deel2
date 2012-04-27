@@ -15,6 +15,11 @@ import be.kuleuven.cs.som.annotate.Raw;
  * 
  * @version 1.0
  */
+//TODO: er zit hier nog een serieus probleem in want ge kunt geen entity's op een board zetten zoals da nu is gemaakt
+// die entity wordt aangemaakt maar heeft geen position maar als ge die dan wilt gaan plaatsen gaat ge geen setposition kunnen doen 
+// want die wordt door if(!this.isOnBoard() && position != null) verhindert en gaat dus alty die error throwe voor iedere
+// entity die ge probeert te plaatsen
+
 public class Entity {
 
 	/**
@@ -143,6 +148,7 @@ public class Entity {
 		//TODO: add to board in Board
 		this.setBoard(board);
 		this.setPosition(position);
+		board.putEntity(position, this);
 	}
 
 	/**
@@ -153,7 +159,7 @@ public class Entity {
 	 */
 	@Raw
 	public void removeFromBoard(){
-		//TODO: remove from board in Board
+		this.board.removeEntity(this);
 		this.setBoard(null);
 		this.setPosition(null);
 	}
