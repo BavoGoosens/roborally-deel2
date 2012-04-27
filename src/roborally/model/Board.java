@@ -85,28 +85,6 @@ public class Board{
 		}
 
 	}
-	/**
-	 * Deze methode plaats een battery op een gegeven plaats in het bord.
-	 * 
-	 * @param 	x
-	 * 
-	 * @param 	y
-	 * 
-	 * @param 	battery
-	 * 
-	 */
-	//TODO: 3 functies samenvoegen
-	public void putBattery(Position pos, Battery battery) {
-		putEntity(pos,battery);
-	}
-	
-	public void putRobot(Position pos, Robot robot) {
-		putEntity(pos,robot);
-	}
-
-	public void putWall(Position pos, Wall wall) {
-		putEntity(pos,wall);
-	}
 
 	public Set<Robot> getRobots() {
 		Collection<HashSet<Entity>> c = map.values();

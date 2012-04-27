@@ -159,7 +159,7 @@ public class Entity {
 	 */
 	@Raw
 	public void removeFromBoard(){
-		this.board.removeEntity(this);
+		this.getBoard().removeEntity(this);
 		this.setBoard(null);
 		this.setPosition(null);
 	}
