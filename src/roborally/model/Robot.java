@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Raw;
 import roborally.basics.*;
 import roborally.utils.BatteryComparator;
 
@@ -191,10 +192,18 @@ public class Robot extends Entity{
 	/**
 	 * Deze methode beweegt de robot een stap vooruit indien mogelijk.
 	 * 
+	 * @throws 	IllegalStateException
+	 * 			De robot heeft onvoldoende energie om te bewegen.
+	 * 			|!this.canMove()
+	 * 
 	 * @effect	De positie van de robot is veranderd (indien het mogelijk was om te bewegen).
 	 */
-	public void move(){
-		//TODO
+	public void move() throws IllegalStateException{
+		if(!this.canMove()){
+			throw new IllegalStateException("De robot heeft onvoldoende energie om te bewegen.");
+		}else{
+			//TODO
+		}
 	}
 	
 	/**
@@ -359,6 +368,7 @@ public class Robot extends Entity{
 	 * @return	Boolean die true is als de robot voldoende energie heeft om te draaien.
 	 * 			|isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST))
 	 */
+	@Raw
 	public boolean canTurn(){
 		return isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST));
 	}
@@ -371,6 +381,7 @@ public class Robot extends Entity{
 	 * 
 	 * @note	Deze methode houdt enkel rekening met de minimale energie en niet met de positie.
 	 */
+	@Raw
 	public boolean canMove(){
 		return isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - this.moveCost()));
 	}
