@@ -148,7 +148,7 @@ public class Board{
 	}
 	
 	public boolean isValidBoardPosition(Position position){
-		if (position.getX() > UPPER_BOUND_WIDTH || position.getX() < LOWER_BOUND_WIDTH || position.getY() > this.getWidth() || position.getY() < this.getHeight())
+		if (position.getX() > UPPER_BOUND_WIDTH || position.getX() < LOWER_BOUND_WIDTH || position.getX() < this.getWidth() || position.getY() < this.getHeight())
 			return false;
 		return true;
 	}
