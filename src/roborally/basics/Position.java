@@ -4,6 +4,8 @@ import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import java.util.ArrayList;
 
+import roborally.model.Board;
+
 /**
  * Deze klasse houdt een positie bij. Deze bestaat uit een x- en een y-coordinaat.
  * 
@@ -108,18 +110,31 @@ public class Position {
 	/**
 	 * Deze methode dient om de posities te vinden naast de huidige positie.
 	 * 
+	 * @param	board
+	 * 			Het bord is nodig om na te kijken of de posities erond geldig zijn voor dit bord.
+	 * 
 	 * @return	ArrayList<Position>
 	 * 			Dit is een lijst van posities rond de huidige positie.
 	 */
-	public ArrayList<Position> getNeighbours(){
+	public ArrayList<Position> getNeighbours(Board board){
 		ArrayList<Position> positions = new ArrayList<Position>();
 		try{
 			positions.add(new Position(this.getX() - 1, this.getY()));
+		}catch(IllegalArgumentException e){}
+		try{
 			positions.add(new Position(this.getX() + 1, this.getY()));
+		}catch(IllegalArgumentException e){}
+		try{
 			positions.add(new Position(this.getX(), this.getY() - 1));
+		}catch(IllegalArgumentException e){}
+		try{
 			positions.add(new Position(this.getX(), this.getY() + 1));
+		}catch(IllegalArgumentException e){}
+		for(Position pos: positions){
+			if(!board.isValidBoardPosition(pos)){
+				positions.remove(pos);
+			}
 		}
-		catch(IllegalArgumentException e){}
 		return positions;
 	}
 }

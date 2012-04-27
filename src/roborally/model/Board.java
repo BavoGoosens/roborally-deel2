@@ -158,7 +158,7 @@ public class Board{
 
 	public void putEntity(Position key, Entity entity){
 		if (entity instanceof Battery || entity instanceof Robot){
-			if (isPlacableOnPosition(key)){
+			if (isPlacableOnPosition(key, entity)){
 				HashSet<Entity> set = this.map.get(key);
 				if (set == null){
 					HashSet<Entity> input = new HashSet<Entity>();
@@ -169,7 +169,7 @@ public class Board{
 				}
 			}
 		}else if(entity instanceof Wall){
-			if (isPlacableOnPosition(key)){
+			if (isPlacableOnPosition(key, entity)){
 				HashSet<Entity> set = map.get(key);
 				HashSet<Entity> input = new HashSet<Entity>();
 				input.add(entity);
