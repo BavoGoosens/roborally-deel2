@@ -58,7 +58,7 @@ public class Energy {
 	}
 	
 	/**
-	 * Deze methode geeft de som van 2 hoeveelheden energie met hun eenheid.
+	 * Deze methode geeft de som van 2 hoeveelheden energie.
 	 * 
 	 * @param 	e1
 	 * 			Eerste hoeveelheid energie.

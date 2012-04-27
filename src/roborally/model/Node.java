@@ -1,5 +1,6 @@
 package roborally.model;
 
+import roborally.basics.Energy;
 import roborally.basics.Position;
 
 import roborally.basics.Orientation;
@@ -13,13 +14,13 @@ import roborally.basics.Orientation;
 public class Node{
 
 private Position pos;
-private double gCost;
-private double hCost;
-private double fCost = gCost + hCost;
+private final Energy gCost = new Energy(0);
+private final Energy hCost = new Energy(0);
+private final Energy fCost = new Energy(0);
 private Orientation orientation;
 private Node parent;
 
-public Node(Position position, double g, double h,Orientation orientation, Node parent){
+public Node(Position position, Energy g, Energy h,Orientation orientation, Node parent){
 	setPos(position);
 	setGCost(g);
 	setHCost(h);
@@ -44,27 +45,37 @@ private void setPos(Position position){
 	this.pos = position;
 }
 
-public void setGCost(double g){
-	this.gCost = g;
+public void setGCost(Energy g){
+	this.gCost.setEnergy(g.getEnergy());
+	this.calcFCost();
 }
 
-private void setHCost(double h){
-	this.hCost = h;
+public void setHCost(Energy h){
+	this.hCost.setEnergy(h.getEnergy());
+	this.calcFCost();
+}
+
+private void calcFCost(){
+	this.setFCost(Energy.energySum(this.getGCost(), this.getHCost()));
+}
+
+private void setFCost(Energy f){
+	this.fCost.setEnergy(f.getEnergy());
 }
 
 public Node getParent(){
 	return this.parent;
 }
 
-public double getFCost(){
+public Energy getFCost(){
 	return this.fCost;
 }
 
-public double getHCost(){
+public Energy getHCost(){
 	return this.hCost;
 }
 
-public double getGCost(){
+public Energy getGCost(){
 	return this.gCost;
 }
 

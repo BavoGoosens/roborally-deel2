@@ -24,28 +24,28 @@ public class Robot extends Entity{
 	/**
 	 * De energiekost van 1 move (geen rekening houdend met bezittingen).
 	 */
-	private final static int MOVE_COST = 500;
+	private final static Energy MOVE_COST = new Energy(500);
 	/**
 	 * De energiekost van 1 draai.
 	 */
-	public final static int TURN_COST = 100;
+	public final static Energy TURN_COST = new Energy(100);
 	/**
 	 * De energiekost die bij een move bijkomt per kg gewicht in bezittingen.
 	 */
-	private final static int MOVE_COST_PER_KG = 50;
+	private final static Energy MOVE_COST_PER_KG = new Energy(50);
 	/**
 	 * De minimale energie van een robot.
 	 */
-	public final static int MINENERGY = 0;
+	public final static Energy MINENERGY = new Energy(0);
 	/**
 	 * De maximale energie van een robot.
 	 */
-	public final static int MAXENERGY = 20000;
+	public final static Energy MAXENERGY = new Energy(20000);
 
 	/**
 	 * De energie van de robot.
 	 */
-	private Energy energy;
+	private final Energy energy;
 	/**
 	 * De oriëntatie van de robot.
 	 */
@@ -77,7 +77,7 @@ public class Robot extends Entity{
 	 * 			|new.getOrientation().equals(orientation)
 	 */
 	public Robot(Orientation orientation, Energy energy){
-		setEnergy(energy);
+		this.energy = energy;
 		setOrientation(orientation);
 	}
 
@@ -106,22 +106,6 @@ public class Robot extends Entity{
 	}
 
 	/**
-	 * Methode om de energie van een robot te wijzigen.
-	 * 
-	 * @param	newEnergy
-	 * 			De energie die de robot moet krijgen.
-	 * 
-	 * @pre		De hoeveelheid energie moet geldig zijn.
-	 * 			|isValidRobotEnergyAmount(newEnergy)
-	 * 
-	 * @post 	De energie van de robot is newEnergy.
-	 * 			|new.getEnergy() == newEnergy
-	 */
-	private void setEnergy(Energy newEnergy) {
-		this.energy = newEnergy;
-	}
-
-	/**
 	 * Methode om de energie van de robot te verkrijgen.
 	 * 
 	 * @return 	De energie van de robot.
@@ -138,37 +122,37 @@ public class Robot extends Entity{
 	 * @param 	energy
 	 * 			De hoeveelheid energie.
 	 *
-	 * @return	boolean
-	 * 			|(energy.getEnergy() >= MINENERGY) && (energy.getEnergy() <= MAXENERGY)
+	 * @return	Boolean die weergeeft of de hoeveelheid energie geldig is.
+	 * 			|(energy.getEnergy() >= MINENERGY.getEnergy() && energy.getEnergy() <= MAXENERGY.getEnergy())
 	 */
 	public static boolean isValidRobotEnergyAmount(Energy energy){
-		return (energy.getEnergy() >= MINENERGY) && (energy.getEnergy() <= MAXENERGY);
+		return (energy.getEnergy() >= MINENERGY.getEnergy() && energy.getEnergy() <= MAXENERGY.getEnergy());
 	}
 
 	/**
 	 * Deze methode berekent de verhouding tussen de huidige hoeveelheid energie en de maximale hoeveelheid energie.
 	 * 
 	 * @return	De verhouding tussen de huidige hoeveelheid energie en de maximale hoeveelheid energie.
-	 * 			|this.getEnergy().getEnergy()/MAXENERGY
+	 * 			|this.getEnergy().getEnergy()/MAXENERGY.getEnergy()
 	 */
 	public double getEnergyFraction(){
-		return this.getEnergy().getEnergy()/MAXENERGY;
+		return this.getEnergy().getEnergy()/MAXENERGY.getEnergy();
 	}
 
 	/**
 	 * Draait de robot 1 keer in wijzerzin.
 	 * 
 	 * @post	De nieuwe oriëntatie van de robot is gelijk aan de volgende oriëntatie in wijzerzin.
-	 * 			|if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST)))
+	 * 			|if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST.getEnergy())))
 	 * 			|	new.getOrientation() == this.getOrienation().getClockwiseOrientation()
 	 * @post	De energie van de robot is verminderd met benodigde energie voor een draai.
-	 * 			|if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST)))
-	 * 			|	new.getEnergy().getEnergy().equals(this.getEnergy().getEnergy() - TURN_COST)
+	 * 			|if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST.getEnergy())))
+	 * 			|	new.getEnergy().getEnergy().equals(this.getEnergy().getEnergy() - TURN_COST.getEnergy())
 	 */
 	public void turnClockWise(){
 		if(this.canTurn()){
 			this.setOrientation(this.getOrientation().getClockwiseOrientation());
-			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST);
+			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST.getEnergy());
 		}
 	}
 
@@ -176,16 +160,16 @@ public class Robot extends Entity{
 	 * Draait de robot 1 keer in tegenwijzerzin.
 	 * 
 	 * @post	De nieuwe oriëntatie van de robot is gelijk aan de volgende oriëntatie in wijzerzin.
-	 * 			|if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST)))
+	 * 			|if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST.getEnergy())))
 	 * 			|	new.getOrientation() == this.getOrienation().getCounterClockwiseOrientation()
 	 * @post	De energie van de robot is verminderd met benodigde energie voor een draai.
-	 * 			|if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST)))
-	 * 			|	new.getEnergy().getEnergy().equals(this.getEnergy().getEnergy() - TURN_COST)
+	 * 			|if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST.getEnergy())))
+	 * 			|	new.getEnergy().getEnergy().equals(this.getEnergy().getEnergy() - TURN_COST.getEnergy())
 	 */
 	public void turnCounterClockWise(){
 		if(this.canTurn()){
 			this.setOrientation(this.getOrientation().getCounterClockwiseOrientation());
-			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST);
+			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST.getEnergy());
 		}
 	}
 	
@@ -194,7 +178,7 @@ public class Robot extends Entity{
 	 * 
 	 * @throws 	IllegalStateException
 	 * 			De robot heeft onvoldoende energie om te bewegen.
-	 * 			|!this.canMove()
+	 * 			|!this.canMove() || !Position.isValidPosition(this.getOrientation().getNextPosition(this.getPosition()))
 	 * 
 	 * @effect	De positie van de robot is veranderd (indien het mogelijk was om te bewegen).
 	 */
@@ -202,7 +186,14 @@ public class Robot extends Entity{
 		if(!this.canMove()){
 			throw new IllegalStateException("De robot heeft onvoldoende energie om te bewegen.");
 		}
-		//TODO
+		Position destination;
+		try{
+			destination = this.getOrientation().getNextPosition(this.getPosition());
+		}catch (IllegalStateException e){
+			throw new IllegalStateException("De positie waarnaar bewogen moet worden is ongeldig.");
+		}
+		this.setPosition(destination);
+		this.getEnergy().setEnergy(this.getEnergy().getEnergy() - moveCost(this).getEnergy());
 	}
 	
 	/**
@@ -252,7 +243,7 @@ public class Robot extends Entity{
 	 * 			Energie waarmee moet opgeladen worden.
 	 * 
 	 * @post	De robot is opgeladen met de opgegeven hoeveelheid energie.
-	 * 			|if(!isValidRobotEnergyAmount(Energy.energySum(this.getEnergy(), energy))){
+	 * 			|if(!isValidRobotEnergyAmount(Energy.energySum(this.getEnergy(), energy).getEnergy())){
 	 * 			|	new.getEnergy() == new Energy(MAXENERGY)
 	 * 			|}else{
 	 * 			|	new.getEnergy() == Energy.energySum(this.getEnergy(), energy)
@@ -262,18 +253,8 @@ public class Robot extends Entity{
 	public void recharge(Energy energy){
 		Energy newEnergy = Energy.energySum(this.getEnergy(), energy);
 		if(!isValidRobotEnergyAmount(newEnergy))
-			newEnergy = new Energy(MAXENERGY);
-		this.setEnergy(newEnergy);
-	}
-	
-	/**
-	 * Deze methode berekent de kost van 1 move.
-	 * 
-	 * @return	de kost terug van 1 move
-	 * 			|MOVE_COST + MOVE_COST_PER_KG*(this.getTotalWeight().getWeight() / 1000)
-	 */
-	public int moveCost(){
-		return moveCost(this);
+			newEnergy = MAXENERGY;
+		this.getEnergy().setEnergy(newEnergy.getEnergy());
 	}
 	
 	/**
@@ -283,10 +264,10 @@ public class Robot extends Entity{
 	 * 			De robot waarvoor de berekening moet uitgevoerd worden.
 	 * 
 	 * @return	de kost terug van 1 move
-	 * 			|MOVE_COST + MOVE_COST_PER_KG*(robot.getTotalWeight().getWeight() / 1000)
+	 * 			|new Energy(MOVE_COST.getEnergy() + MOVE_COST_PER_KG.getEnergy()*(robot.getTotalWeight().getWeight() / 1000))
 	 */
-	public static int moveCost(Robot robot){
-		return MOVE_COST + MOVE_COST_PER_KG*(robot.getTotalWeight().getWeight() / 1000);
+	public static Energy moveCost(Robot robot){
+		return new Energy(MOVE_COST.getEnergy() + MOVE_COST_PER_KG.getEnergy()*(robot.getTotalWeight().getWeight() / 1000));
 	}
 	
 	/**
@@ -363,7 +344,6 @@ public class Robot extends Entity{
 	 * 			De robot staat niet op een bord.
 	 */
 	public void drop(Battery battery) throws IllegalArgumentException, IllegalStateException{
-		// TODO Auto-generated method stub
 		if(!this.isOnBoard()){
 			throw new IllegalStateException("De robot staat niet op een bord.");
 		}else if(!this.getPossessions().contains(battery)){
@@ -378,24 +358,32 @@ public class Robot extends Entity{
 	 * Deze methode kijkt na of de robot kan draaien.
 	 * 
 	 * @return	Boolean die true is als de robot voldoende energie heeft om te draaien.
-	 * 			|isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST))
+	 * 			|if(this.getEnergy().getEnergy() - TURN_COST.getEnergy() < 0)
+	 * 			|	false
+	 * 			|isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST.getEnergy()))
 	 */
 	@Raw
 	public boolean canTurn(){
-		return isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST));
+		if(this.getEnergy().getEnergy() - TURN_COST.getEnergy() < 0)
+			return false;
+		return isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST.getEnergy()));
 	}
 	
 	/**
 	 * Deze methode kijkt na of de robot kan moven.
 	 * 
 	 * @return	Boolean die true is als de robot voldoende energie heeft om te moven.
-	 * 			|isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - this.moveCost()))
+	 * 			|if(this.getEnergy().getEnergy() - moveCost(this).getEnergy() < 0)
+	 * 			|	false
+	 * 			|isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - moveCost(this).getEnergy()))
 	 * 
 	 * @note	Deze methode houdt enkel rekening met de minimale energie en niet met de positie.
 	 */
 	@Raw
 	public boolean canMove(){
-		return isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - this.moveCost()));
+		if(this.getEnergy().getEnergy() - moveCost(this).getEnergy() < 0)
+			return false;
+		return isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - moveCost(this).getEnergy()));
 	}
 
 	/*

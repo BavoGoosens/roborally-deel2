@@ -22,7 +22,7 @@ public class Calculators {
 	public static HashMap<Position,Node> aStar(Robot a, Position pos){
 		HashMap<Position,Node> openSet = new HashMap<Position,Node>(); 
 		// de experimentele posities die nog geëvalueerd moeten/kunnen worden
-		Node startNode = new Node(a.getPosition(), 0 , getHCost(a.getPosition(), a.getOrientation(),pos, a),a.getOrientation(), null);
+		Node startNode = new Node(a.getPosition(), new Energy(0) , getHCost(a.getPosition(), a.getOrientation(),pos, a),a.getOrientation(), null);
 		openSet.put(a.getPosition(), startNode);
 		// de startPositie aan de open list toevoegen
 		HashMap<Position,Node> closedSet = new HashMap<Position, Node>(); 
@@ -44,7 +44,7 @@ public class Calculators {
 	        	if (closedSet.containsKey(neighbour))
 	        		continue;
 	        	
-	        	double tentativeGScore = getGCost(currentNode,neighbour, a);
+	        	Energy tentativeGScore = getGCost(currentNode,neighbour, a);
 	        	boolean tentativeIsBetter = false;
 	        	
 	        	if (!openSet.containsKey(neighbour)){
@@ -52,7 +52,7 @@ public class Calculators {
 	        				getNodeOrientation(currentNode, neighbour),currentNode));
 	        		tentativeIsBetter = true;
 	        	}
-	        	else if (tentativeGScore < openSet.get(neighbour).getGCost())
+	        	else if (tentativeGScore.getEnergy() < openSet.get(neighbour).getGCost().getEnergy())
 	        		tentativeIsBetter = true;
 	        	else
 	        		tentativeIsBetter = false;	        		
@@ -81,15 +81,14 @@ public class Calculators {
 	}
 
 
-	private static double getHCost(Position position, Orientation orientation, Position pos, Robot robot) {
-		Energy manHattanCost = new Energy(Robot.moveCost(robot) * (int) calculateManhattan(position, pos));
-		Energy turnCost = new Energy(Robot.TURN_COST*getTurns(new Node(position,orientation),pos));
-		Energy cost = Energy.energySum(manHattanCost, turnCost);
-		return cost.getEnergy();
+	private static Energy getHCost(Position position, Orientation orientation, Position pos, Robot robot) {
+		Energy manHattanCost = new Energy(Robot.moveCost(robot).getEnergy() * (int) calculateManhattan(position, pos));
+		Energy turnCost = new Energy(Robot.TURN_COST.getEnergy()*getTurns(new Node(position,orientation),pos));
+		return Energy.energySum(manHattanCost, turnCost);
 	}
 
-	private static double getGCost(Node currentNode, Position pos, Robot robot) {
-		return currentNode.getGCost() + Robot.moveCost(robot) + Robot.TURN_COST*getTurns(currentNode, pos);
+	private static Energy getGCost(Node currentNode, Position pos, Robot robot) {
+		return Energy.energySum(Energy.energySum(currentNode.getGCost(), Robot.moveCost(robot)), new Energy(Robot.TURN_COST.getEnergy()*getTurns(currentNode, pos)));
 	}
 	/**
 	 * methode voor het aantal turns terug te geven om van een node met orientatie m naar een nabijgelegen node te 
@@ -209,7 +208,7 @@ public class Calculators {
 		Iterator<Node> itr = c.iterator();
 		Node minimalNode = itr.next();
 		for (Node node : c){
-			if (node.getFCost() < minimalNode.getFCost())
+			if (node.getFCost().getEnergy() < minimalNode.getFCost().getEnergy())
 				minimalNode = node;
 		}
 		return minimalNode;
