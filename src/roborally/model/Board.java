@@ -19,7 +19,7 @@ public class Board{
 	
 	private final long width;
 	private final long height;
-	private HashMap <Position, Set > map = new HashMap<Position,Set>();
+	private HashMap <Position, HashSet<Entity>> map = new HashMap<Position, HashSet<Entity>>();
 	
 	private static final long UPPER_BOUND_WIDTH = Long.MAX_VALUE;
 	private static final long LOWER_BOUND_WIDTH = 0;
@@ -32,7 +32,7 @@ public class Board{
 	}
 
 	
-	public Set getEntityOnPosition(Position pos){
+	public HashSet<Entity> getEntityOnPosition(Position pos){
 		return this.map.get(pos);
 	}
 	
@@ -47,37 +47,40 @@ public class Board{
 		if (this.map.get(pos).isEmpty())
 			return true;
 		if (this.map.get(pos).size() == 1){
-			Object obj = this.map.get(pos).iterator().next();
+			Entity obj = this.map.get(pos).iterator().next();
 			if (obj instanceof Wall)
 				return false;
 		}
-		return false;
+		return true;
 	}
 
-	public void putEntity(long x ,long y, Entity entity){
-		Position key = new Position(x,y);
+	public void putEntity(Position key, Entity entity){
 		if (entity instanceof Battery || entity instanceof Robot){
-			if (entity.getBoard() == null){
+			if (!entity.isOnBoard()){
 				if (isPlacableOnPosition(key)){
-					Set set = map.get(key);
+					HashSet<Entity> set = map.get(key);
 					if (set == null){
-						Set input = new HashSet<Entity>();
+						HashSet<Entity> input = new HashSet<Entity>();
 						input.add(entity);
 						map.put(key, input);
 					}else{
 						set.add(entity);
 					}
 				}
+			}else{
+				//TODO
 			}
 		}
 		if(entity instanceof Wall){
-			if (entity.getBoard() == null){
+			if (!entity.isOnBoard()){
 				if (isPlacableOnPosition(key)){
-					Set set = map.get(key);
-					Set input = new HashSet<Entity>();
+					HashSet<Entity> set = map.get(key);
+					HashSet<Entity> input = new HashSet<Entity>();
 					input.add(entity);
 					map.put(key, input);
 				}
+			}else{
+				//TODO
 			}
 
 		}
@@ -93,39 +96,39 @@ public class Board{
 	 * @param 	battery
 	 * 
 	 */
-	public void putBattery(long x, long y, Battery battery) {
-		putEntity(x,y,battery);
+	//TODO: 3 functies samenvoegen
+	public void putBattery(Position pos, Battery battery) {
+		putEntity(pos,battery);
 	}
 	
-	public void putRobot(long x, long y, Robot robot) {
-		putEntity(x,y,robot);
+	public void putRobot(Position pos, Robot robot) {
+		putEntity(pos,robot);
 	}
 
-	public void putWall(long x, long y, Wall wall) {
-		putEntity(x,y,wall);
+	public void putWall(Position pos, Wall wall) {
+		putEntity(pos,wall);
 	}
 
 	public Set<Robot> getRobots() {
-		Collection<Set> c = map.values();
+		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Robot> rob = new HashSet<Robot>();
-		for (Set values : c ){
+		for (Set<Entity> values : c ){
 			while (values.iterator().hasNext()){
-				Object obj = values.iterator().next();
+				Entity obj = values.iterator().next();
 				if (obj instanceof Robot){
 					rob.add((Robot) obj);
 				}
 			}
-			
 		}
 		return rob;
 	}
 
 	public Set<Battery> getBatteries() {
-		Collection<Set> c = map.values();
+		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Battery> bat = new HashSet<Battery>();
-		for (Set values : c ){
+		for (Set<Entity> values : c ){
 			while (values.iterator().hasNext()){
-				Object obj = values.iterator().next();
+				Entity obj = values.iterator().next();
 				if (obj instanceof Battery){
 					bat.add((Battery) obj);
 				}
@@ -136,11 +139,11 @@ public class Board{
 	}
 
 	public Set<Wall> getWalls() {
-		Collection<Set> c = map.values();
+		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Wall> wall = new HashSet<Wall>();
-		for (Set values : c ){
+		for (Set<Entity> values : c ){
 			while (values.iterator().hasNext()){
-				Object obj = values.iterator().next();
+				Entity obj = values.iterator().next();
 				if (obj instanceof Wall){
 					wall.add((Wall) obj);
 				}
