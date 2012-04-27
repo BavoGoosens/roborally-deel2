@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
@@ -98,8 +99,9 @@ public class Board{
 		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Robot> rob = new HashSet<Robot>();
 		for (Set<Entity> values : c ){
-			while (values.iterator().hasNext()){
-				Entity obj = values.iterator().next();
+			Iterator<Entity> i = values.iterator();
+			while (i.hasNext()){
+				Entity obj = i.next();
 				if (obj instanceof Robot){
 					rob.add((Robot) obj);
 				}
@@ -112,8 +114,9 @@ public class Board{
 		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Battery> bat = new HashSet<Battery>();
 		for (Set<Entity> values : c ){
-			while (values.iterator().hasNext()){
-				Entity obj = values.iterator().next();
+			Iterator<Entity> i = values.iterator();
+			while (i.hasNext()){
+				Entity obj = i.next();
 				if (obj instanceof Battery){
 					bat.add((Battery) obj);
 				}
@@ -127,8 +130,9 @@ public class Board{
 		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Wall> wall = new HashSet<Wall>();
 		for (Set<Entity> values : c ){
-			while (values.iterator().hasNext()){
-				Entity obj = values.iterator().next();
+			Iterator<Entity> i = values.iterator();
+			while (i.hasNext()){
+				Entity obj = i.next();
 				if (obj instanceof Wall){
 					wall.add((Wall) obj);
 				}
