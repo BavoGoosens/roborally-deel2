@@ -93,7 +93,7 @@ public class Entity {
 	 */
 	@Raw
 	public void setPosition(Position position) throws IllegalArgumentException, IllegalStateException{
-		if(!this.isOnBoard() && position != null){
+		if(this.getBoard() == null && position != null){
 			throw new IllegalStateException("Het object staat niet op een bord.");
 		}else if(this.isDestroyed()){
 			throw new IllegalStateException("Het object is getermineerd.");
