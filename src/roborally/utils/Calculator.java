@@ -30,16 +30,22 @@ public class Calculator {
 	
 	
 	public static HashMap<Position,Node> aStarNextTo(Robot a, Position pos){
+		//hier gaat de robot uiteindelijk naast de positie moeten uitkomen
+	
+		
 		HashMap<Position,Node> openSet = new HashMap<Position,Node>(); 
 		// de experimentele posities die nog geëvalueerd moeten/kunnen worden
-		Node startNode = new Node(a.getPosition(), a.getBoard(), new Energy(0) , getHCost(a.getPosition(), a.getOrientation(),pos, a),a.getOrientation(), null);
+		Node startNode = new Node(a.getPosition(), a.getBoard(), new Energy(0) , 
+				getHCost(a.getPosition(), a.getOrientation(),pos, a),a.getOrientation(), null);
+		
 		openSet.put(a.getPosition(), startNode);
 		// de startPositie aan de open list toevoegen
 		HashMap<Position,Node> closedSet = new HashMap<Position, Node>(); 
 		// de lijst met al geëvalueerde posities
 		
+		/*Position goal = getBestPosToMoveTo(a, pos);*/
 		
-		while ( !openSet.isEmpty()){
+		while (!openSet.isEmpty()){
 			Node currentNode = getMinimalFNode(openSet);
 			if (pos.getNeighbours(a.getBoard()).contains(currentNode.getPosition())){
 				openSet.remove(currentNode.getPosition());
@@ -78,7 +84,16 @@ public class Calculator {
 
 	}
 	
+	/*private static Position getBestPosToMoveTo(Robot a, Position pos) {
+		// deze methode moet het optimale doel teruggeven juist naast de pos
+		ArrayList<Position> neighbours = a.getPosition().getNeighbours(a.getBoard());
+		;
+	}*/
+
+
 	public static HashMap<Position,Node> aStarOnTo(Robot a, Position pos){
+		//deze gaat direct naar de positie die opgegeven wordt
+		
 		HashMap<Position,Node> open = new HashMap<Position,Node>(); 
 		// de experimentele posities die nog geëvalueerd moeten/kunnen worden
 		Node startNode = new Node(a.getPosition(), a.getBoard(), new Energy(0) , 
