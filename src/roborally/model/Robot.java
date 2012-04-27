@@ -271,7 +271,7 @@ public class Robot extends Entity{
 	 * 			|}
 	 * 			
 	 */
-	public void recharge(Energy energy){
+	public void recharge(Energy energy){recharge
 		Energy newEnergy = Energy.energySum(this.getEnergy(), energy);
 		if(!isValidRobotEnergyAmount(newEnergy))
 			newEnergy = MAXENERGY;
@@ -348,7 +348,11 @@ public class Robot extends Entity{
 	}
 
 	public void use(Battery battery) {
-		// TODO Auto-generated method stub
+		if (this.Possessions.contains(battery)){
+			this.Possessions.remove(battery);
+			this.recharge(battery.getEnergy());
+			battery.destroy();
+		}
 		
 	}
 
