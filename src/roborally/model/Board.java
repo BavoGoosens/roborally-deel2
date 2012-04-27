@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
+import roborally.basics.Energy;
 import roborally.basics.Orientation;
 import roborally.basics.Position;
 
@@ -186,15 +188,17 @@ public class Board{
 
 	public Entity getFirstHit(Robot robot) {
 		// bepaalt welke entity door een laser gaat geraakt worden 
-		if (robot.getOrientation() == Orientation.UP){
-			
-			
-		}else if(robot.getOrientation() == Orientation.DOWN){
-			
-		}else if(robot.getOrientation() == Orientation.LEFT){
-			
+		Position pos = robot.getOrientation().getNextPosition(robot.getPosition());
+		if (map.containsKey(pos)){
+			Set hits = map.get(pos);
+			Random rndm = new Random();
+			Object hit = hits.toArray()[rndm.nextInt(hits.toArray().length)];
+			return (Entity) hit;
 		}else{
-			
+			//dummy Robot maken met de nieuwe positie en dez orientatie en dan dez methode oproepen tot wnn we result hebben
+			Robot dummy = new Robot(robot.getOrientation(), new Energy(0));
+			dummy.setPosition(pos);
+			return getFirstHit(dummy);
 		}
 	}
 }

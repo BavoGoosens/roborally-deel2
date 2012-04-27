@@ -48,7 +48,7 @@ public class Robot extends Entity{
 	/**
 	 * De energie van de robot.
 	 */
-	private Energy energy;
+	private final Energy energy;
 	/**
 	 * De oriëntatie van de robot.
 	 */
@@ -208,8 +208,7 @@ public class Robot extends Entity{
 	 * @return	De energie die nodig is om de plaats te bereiken.
 	 */
 	public Energy getEnergyRequiredToReach(Position position){
-		Calculator calc = new Calculator();
-		HashMap<Position, Node> resultpad = calc.aStarOnTo(this, position);
+		HashMap<Position, Node> resultpad = Calculator.aStarOnTo(this, position);
 		Node n = resultpad.get(position);
 		return n.getGCost();
 	}
@@ -221,22 +220,17 @@ public class Robot extends Entity{
 	 * 			De robot waar naartoe moet bewogen worden.
 	 */
 	public void moveNextTo(Robot robot){
-		Calculator calc = new Calculator();
 		ArrayList <Position> neighbours = robot.getPosition().getNeighbours();
-		HashMap<Position, Node> resultpad = calc.aStarNextTo(this, robot.getPosition());
+		HashMap<Position, Node> resultpad = Calculator.aStarNextTo(this, robot.getPosition());
 		if (resultpad.containsKey(neighbours)){
 			Node n = resultpad.get(neighbours); 
 			if (this.energy.getEnergy() >= n.getGCost().getEnergy()){
 				setPosition(n.getPosition());
-				setEnergy(new Energy(this.getEnergy().getEnergy()- n.getGCost().getEnergy()));
+				this.getEnergy().setEnergy(this.getEnergy().getEnergy()- n.getGCost().getEnergy());
 			}
 		}
 		else
 			robot.moveNextTo(this);
-	}
-	
-	private void setEnergy(Energy newEnergy) {
-		this.energy = newEnergy;
 	}
 
 	/**
@@ -353,6 +347,7 @@ public class Robot extends Entity{
 			this.recharge(battery.getEnergy());
 			battery.destroy();
 		}
+		throw new IllegalArgumentException("deze battery is niet in het bezit van de Robot"); 
 		
 	}
 
