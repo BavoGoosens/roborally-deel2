@@ -1,5 +1,6 @@
 package roborally.model;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
@@ -8,6 +9,7 @@ import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
 import roborally.basics.*;
 import roborally.utils.BatteryComparator;
+import roborally.utils.Calculator;
 
 /**
  * Een klasse om robots voor te stellen.
@@ -205,8 +207,11 @@ public class Robot extends Entity{
 	 * @return	De energie die nodig is om de plaats te bereiken.
 	 */
 	public Energy getEnergyRequiredToReach(Position position){
-		//TODO
-		return null;
+		Calculator calc = new Calculator();
+		HashMap<Position, Node> resultpad = calc.aStarOnTo(this, position);
+		Node n = resultpad.get(position);
+		return n.getGCost();
+		
 	}
 	
 	/**
