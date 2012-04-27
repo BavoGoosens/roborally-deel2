@@ -81,19 +81,19 @@ public class Entity {
 	 * 			De nieuwe positie. Null indien deze buiten het bord is.
 	 * 
 	 * @throws	IllegalArgumentException
-	 * 			|this.isOnBoard()
+	 * 			|this.isOnBoard() && position != null
 	 * 
 	 * @throws	IllegalStateException 
 	 * 			Deze positie is niet geldig voor het huidige bord of het object bestaat is getermineerd.
-	 * 			|this.getBoard().isValidBoardPosition(position) || this.isDestroyed()
+	 * 			|(this.getBoard().isValidBoardPosition(position) && position != null) || this.isDestroyed()
 	 */
 	@Raw
 	public void setPosition(Position position) throws IllegalArgumentException, IllegalStateException{
-		if(!this.isOnBoard()){
+		if(!this.isOnBoard() && position != null){
 			throw new IllegalStateException("Het object staat niet op een bord.");
 		}else if(this.isDestroyed()){
 			throw new IllegalStateException("Het object is getermineerd.");
-		}else if(!this.getBoard().isValidBoardPosition(position)){
+		}else if(!this.getBoard().isValidBoardPosition(position) && position != null){
 			throw new IllegalArgumentException("De gegeven positie is ongeldig voor dit bord.");
 		}else{
 			this.position = position;
