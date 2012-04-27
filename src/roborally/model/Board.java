@@ -18,7 +18,7 @@ public class Board{
 
 	private final long width;
 	private final long height;
-	private HashMap <Position, HashSet<Entity>> map = new HashMap<Position, HashSet<Entity>>();
+	private HashMap <Position, HashSet<Entity>> map;
 
 	private static final long UPPER_BOUND_WIDTH = Long.MAX_VALUE;
 	private static final long LOWER_BOUND_WIDTH = 0;
@@ -41,6 +41,8 @@ public class Board{
 	}
 
 	public boolean isPlacableOnPosition(Position pos){
+		if(this.map == null)
+			return true;
 		if (this.map.get(pos) == null)
 			return true;
 		if (this.map.get(pos).isEmpty())
@@ -56,7 +58,7 @@ public class Board{
 	public void putEntity(Position key, Entity entity){
 		if (entity instanceof Battery || entity instanceof Robot){
 			if (isPlacableOnPosition(key)){
-				HashSet<Entity> set = map.get(key);
+				HashSet<Entity> set = this.map.get(key);
 				if (set == null){
 					HashSet<Entity> input = new HashSet<Entity>();
 					input.add(entity);
@@ -77,46 +79,49 @@ public class Board{
 	}
 
 	public Set<Robot> getRobots() {
-		Collection<HashSet<Entity>> c = map.values();
+//		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Robot> rob = new HashSet<Robot>();
-		for (Set<Entity> values : c ){
-			while (values.iterator().hasNext()){
-				Entity obj = values.iterator().next();
-				if (obj instanceof Robot){
-					rob.add((Robot) obj);
-				}
-			}
-		}
+//		for (Set<Entity> values : c ){
+//			while (values.iterator().hasNext()){
+//				Entity obj = values.iterator().next();
+//				if (obj instanceof Robot){
+//					rob.add((Robot) obj);
+//				}
+//			}
+//		}
+		//TODO: fix check
 		return rob;
 	}
 
 	public Set<Battery> getBatteries() {
-		Collection<HashSet<Entity>> c = map.values();
+//		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Battery> bat = new HashSet<Battery>();
-		for (Set<Entity> values : c ){
-			while (values.iterator().hasNext()){
-				Entity obj = values.iterator().next();
-				if (obj instanceof Battery){
-					bat.add((Battery) obj);
-				}
-			}
-
-		}
+//		for (Set<Entity> values : c ){
+//			while (values.iterator().hasNext()){
+//				Entity obj = values.iterator().next();
+//				if (obj instanceof Battery){
+//					bat.add((Battery) obj);
+//				}
+//			}
+//
+//		}
+		//TODO: fix check
 		return bat;
 	}
 
 	public Set<Wall> getWalls() {
-		Collection<HashSet<Entity>> c = map.values();
+//		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Wall> wall = new HashSet<Wall>();
-		for (Set<Entity> values : c ){
-			while (values.iterator().hasNext()){
-				Entity obj = values.iterator().next();
-				if (obj instanceof Wall){
-					wall.add((Wall) obj);
-				}
-			}
-
-		}
+//		for (Set<Entity> values : c ){
+//			while (values.iterator().hasNext()){
+//				Entity obj = values.iterator().next();
+//				if (obj instanceof Wall){
+//					wall.add((Wall) obj);
+//				}
+//			}
+//
+//		}
+		//TODO: fix check
 		return wall;
 	}
 
