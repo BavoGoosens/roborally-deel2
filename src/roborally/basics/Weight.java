@@ -64,7 +64,7 @@ public class Weight {
 	 * 			|new.weight == newWeight
 	 */
 	public void setWeight(int newWeight){
-		int tmp = newWeight;
+		int tmp = Math.abs(newWeight);
 		if(newWeight < MINWEIGHT)
 			tmp = MINWEIGHT;
 		if(newWeight > MAXWEIGHT)

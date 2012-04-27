@@ -44,7 +44,10 @@ public class Robot extends Entity{
 	 * De maximale energie van een robot.
 	 */
 	public final static Energy MAXENERGY = new Energy(20000);
-
+	/**
+	 * De kost van 1 schot met zijn laser.
+	 */
+	public final static Energy SHOOT_COST = new Energy(1000);
 	/**
 	 * De energie van de robot.
 	 */
@@ -53,12 +56,10 @@ public class Robot extends Entity{
 	 * De oriëntatie van de robot.
 	 */
 	private Orientation orientation;
-	
 	/**
 	 * Een instance van de comparator waarmee batterijen vergeleken kunnen worden op basis van gewicht.
 	 */
 	private BatteryComparator bc;
-	
 	/**
 	 * De set van batterijen die de robot bezit.
 	 */
@@ -241,11 +242,15 @@ public class Robot extends Entity{
 	 * @throws	IllegalStateException
 	 * 			De robot staat niet op een bord.
 	 * 			|!this.isOnBoard()
+	 * 
+	 * @post	De robot verliest energie. De hoeveelheid is bepaald in de constante SHOOT_COST.
+	 * 			|new.getEnergy() == new Energy(this.getEnergy().getEnergy() - SHOOT_COST.getEnergy())
 	 */
 	public void shoot() throws IllegalStateException{
 		if(this.isOnBoard()){
 			Entity ent = this.getBoard().getFirstHit(this);
 			ent.destroy();
+			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - SHOOT_COST.getEnergy());
 		}else{
 			throw new IllegalStateException("De robot staat niet op een bord.");
 		}
@@ -341,14 +346,22 @@ public class Robot extends Entity{
 		}
 	}
 
+	/**
+	 * Deze methode laadt de robot op met de energie in een batterij die hij bij zich heeft.
+	 * 
+	 * @param	battery
+	 * 			De batterij die gebruikt moet worden.
+	 * 
+	 * @post	
+	 */
 	public void use(Battery battery) {
-		if (this.Possessions.contains(battery)){
-			this.Possessions.remove(battery);
+		if (this.getPossessions().contains(battery)){
+			this.getPossessions().remove(battery);
 			this.recharge(battery.getEnergy());
-			battery.destroy();
+			//TODO: batterij moet verwerkt worden
+			//TODO: post doc
 		}
-		throw new IllegalArgumentException("deze battery is niet in het bezit van de Robot"); 
-		
+		throw new IllegalArgumentException("Deze batterij is niet in het bezit van de robot."); 
 	}
 
 	/**
@@ -409,7 +422,8 @@ public class Robot extends Entity{
 	/*
 	 * De robot en al zijn bezittingen worden vernietigd.
 	 * 
-	 * @post	|new.getPossessions().isEmpty()
+	 * @post	De robot heeft geen bezittingen meer.
+	 * 			|new.getPossessions().isEmpty()
 	 * 
 	 * @see 	roborally.model.Entity#destroy()
 	 */

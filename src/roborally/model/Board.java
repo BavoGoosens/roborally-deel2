@@ -16,23 +16,65 @@ import roborally.basics.Orientation;
 import roborally.basics.Position;
 import roborally.utils.Calculator;
 
+/**
+ * Een klasse om borden voor te stellen.
+ * 
+ * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
+ * 
+ * @version 1.1
+ */
 public class Board{
+	//TODO: invarianten
+	//TODO: documentatie en annotations
+	//TODO:	kan getermineerd worden (met alles in zich)
 
-	//TODO: documentatie en annotations & Helaas veel meer dan enkel da de puts en gets werken niet... Die rare structuur snap ik ni van hashmap
-
+	/**
+	 * De breedte van het bord.
+	 */
 	private final long width;
+	/**
+	 * De hoogte van het bord.
+	 */
 	private final long height;
-	private HashMap <Position, HashSet<Entity>> map;
+	/**
+	 * Deze HashMap houdt een lijst van HashSets bij per Position met in elke HashSet alle objecten op die plaats.
+	 */
+	private final HashMap <Position, HashSet<Entity>> map;
 
+	/**
+	 * De maximale breedte die een bord kan hebben.
+	 */
 	private static final long UPPER_BOUND_WIDTH = Long.MAX_VALUE;
+	/**
+	 * De minimale breedte die een bord kan hebben.
+	 */
 	private static final long LOWER_BOUND_WIDTH = 0;
+	/**
+	 * De maximale hoogte die een bord kan hebben.
+	 */
 	private static final long UPPER_BOUND_HEIGTH = Long.MAX_VALUE;
+	/**
+	 * De minimale hoogte die een bord kan hebben.
+	 */
 	private static final long LOWER_BOUND_HEIGTH = 0;
 
 	/**
-	 * Deze constructor maakt een nieuw board aan 
-	 * @param height
-	 * @param width
+	 * Deze constructor maakt een nieuw bord aan.
+	 * 
+	 * @param	height
+	 * 			De hoogte van het nieuwe bord.
+	 * 
+	 * @param 	width
+	 * 			De breedte van het nieuwe bord.
+	 * 
+	 * @post	Het bord heeft een map gekregen.
+	 * 			|new.getMap() != null
+	 * 
+	 * @post	Het bord heeft een hoogte gekregen.
+	 * 			|new.getHeight() == height
+	 * 
+	 * @post	Het bord heeft een breedte gekregen.
+	 * 			|new.getWidth() == width
 	 */
 	public Board (long height, long width){
 		this.height = height;
@@ -40,11 +82,23 @@ public class Board{
 		this.map = new HashMap<Position, HashSet<Entity>>();
 	}
 
-
+	/**
+	 * Deze methode geeft alle objecten terug op een positie.
+	 * 
+	 * @param	pos
+	 * 			De positie waar gekeken moet worden.
+	 * 
+	 * @return	De HashSet met alle objecten op deze positie.
+	 * 			|this.getMap().get(pos)
+	 */
 	public HashSet<Entity> getEntityOnPosition(Position pos){
-		return this.map.get(pos);
+		return this.getMap().get(pos);
 	}
-
+	
+	/**
+	 * 
+	 * @param ent
+	 */
 	public void removeEntity(Entity ent){
 		if (this.map.containsValue(ent)){
 			Collection<HashSet<Entity>> c = this.map.values();
@@ -194,16 +248,8 @@ public class Board{
 		return true;
 	}
 
-	/**
-	 * Methode die het de random de eerst entity teruggeeft die geraakt wordt door de laser van de robot.
-	 * 
-	 * @param 	robot
-	 * 			De Robot wiens orientation en positie bepaalt welke entity geraakt wordt.
-	 * 
-	 * @return	Entity
-	 * 			De entity die geraakt en vervolgens vernietigd zal worden.
-	 */
-	public Entity getFirstHit(Robot robot) {
+	
+	public static Entity getFirstHit(Robot robot) {
 		// bepaalt welke entity door een laser gaat geraakt worden 
 		Position pos = Calculator.getNextPosition(robot.getPosition(), robot.getOrientation());
 		if (map.containsKey(pos)){
@@ -217,5 +263,10 @@ public class Board{
 			dummy.setPosition(pos);
 			return getFirstHit(dummy);
 		}
+	}
+
+
+	public HashMap<Position, HashSet<Entity>> getMap() {
+		return this.map;
 	}
 }
