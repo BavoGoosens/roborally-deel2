@@ -41,7 +41,7 @@ public class Calculator {
 		
 		while ( !openSet.isEmpty()){
 			Node currentNode = getMinimalFNode(openSet);
-			if (pos.getNeighbours().contains(currentNode.getPosition())){
+			if (pos.getNeighbours(a.getBoard()).contains(currentNode.getPosition())){
 				openSet.remove(currentNode.getPosition());
 		        closedSet.put(currentNode.getPosition(), currentNode);
 				return closedSet;
@@ -49,7 +49,7 @@ public class Calculator {
 			openSet.remove(currentNode.getPosition());
 	        closedSet.put(currentNode.getPosition(), currentNode);
 	        
-	        ArrayList<Position> neighbours = currentNode.getPosition().getNeighbours();
+	        ArrayList<Position> neighbours = currentNode.getPosition().getNeighbours(a.getBoard());
 	        for (Position neighbour : neighbours){
 	        	if (closedSet.containsKey(neighbour))
 	        		continue;
@@ -100,7 +100,7 @@ public class Calculator {
 			open.remove(currentNode.getPosition());
 	        closed.put(currentNode.getPosition(), currentNode);
 	        
-	        ArrayList<Position> neighbours = currentNode.getPosition().getNeighbours();
+	        ArrayList<Position> neighbours = currentNode.getPosition().getNeighbours(a.getBoard());
 	        for (Position neighbour : neighbours){
 	        	if (closed.containsKey(neighbour))
 	        		continue;

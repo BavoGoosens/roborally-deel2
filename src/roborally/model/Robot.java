@@ -221,7 +221,7 @@ public class Robot extends Entity{
 	 * 			De robot waar naartoe moet bewogen worden.
 	 */
 	public void moveNextTo(Robot robot){
-		ArrayList <Position> neighbours = robot.getPosition().getNeighbours();
+		ArrayList <Position> neighbours = robot.getPosition().getNeighbours(this.getBoard());
 		HashMap<Position, Node> resultpad = Calculator.aStarNextTo(this, robot.getPosition());
 		if (resultpad.containsKey(neighbours)){
 			Node n = resultpad.get(neighbours); 
