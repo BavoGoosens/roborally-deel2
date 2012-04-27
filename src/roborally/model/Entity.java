@@ -139,15 +139,22 @@ public class Entity {
 	 * @param	position
 	 * 			De plaats waar het object moet komen.
 	 * 
+	 * @throws	IllegalArgumentException
+	 * 			|board.isValidBoardPosition(position) ^ board.isPlacableOnPosition(position)
+	 * 
 	 * @post	|new.getBoard() == board
 	 * @post	|new.getPosition() == position
 	 * 			
 	 */
 	@Raw
-	public void putOnBoard(Board board, Position position){
-		this.setBoard(board);
-		this.setPosition(position);
-		board.putEntity(position, this);
+	public void putOnBoard(Board board, Position position) throws IllegalArgumentException{
+		if(board.isValidBoardPosition(position) && board.isPlacableOnPosition(position)){
+			this.setBoard(board);
+			this.setPosition(position);
+			board.putEntity(position, this);
+		}else{
+			throw new IllegalArgumentException("Het is niet mogelijk om het object op deze positie in het bord te zetten.");
+		}
 	}
 
 	/**

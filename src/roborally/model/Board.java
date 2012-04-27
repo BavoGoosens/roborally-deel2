@@ -138,27 +138,36 @@ public class Board{
 	 * @param	pos
 	 * 			De positie die moet nagekeken worden.
 	 * 
-	 * @param	ent
-	 * 			Het object dat voor deze positie in aanmerking komt.
-	 * 
-	 * @return	
+	 * @return	Boolean die true is als de positie niet door een muur ingenomen is.
+	 * 			|if(!this.getMap().containsKey(pos))
+	 * 			|	true
+	 * 			|if(this.getMap().get(pos).isEmpty())
+	 * 			
 	 */
-	public boolean isPlacableOnPosition(Position pos, Entity ent){
+	public boolean isPlacableOnPosition(Position pos){
 		if (!this.getMap().containsKey(pos))
 			return true;
 		if (this.getMap().get(pos).isEmpty())
 			return true;
-		if (this.getMap().get(pos).size() == 1){
-			Entity obj = this.map.get(pos).iterator().next();
+		if (this.getEntityOnPosition(pos).size() == 1){
+			Entity obj = this.getEntityOnPosition(pos).iterator().next();
 			if (obj instanceof Wall)
 				return false;
 		}
 		return true;
 	}
-
+	
+	/**
+	 * Deze methode plaatst een object op het bord.
+	 * 
+	 * @param	key
+	 * 			De positie waar het object geplaatst moet worden.
+	 * 			
+	 * @param 	entity
+	 */
 	public void putEntity(Position key, Entity entity){
 		if (entity instanceof Battery || entity instanceof Robot){
-			if (isPlacableOnPosition(key, entity)){
+			if (isPlacableOnPosition(key)){
 				HashSet<Entity> set = this.map.get(key);
 				if (set == null){
 					HashSet<Entity> input = new HashSet<Entity>();
@@ -169,7 +178,7 @@ public class Board{
 				}
 			}
 		}else if(entity instanceof Wall){
-			if (isPlacableOnPosition(key, entity)){
+			if (isPlacableOnPosition(key)){
 				HashSet<Entity> set = map.get(key);
 				HashSet<Entity> input = new HashSet<Entity>();
 				input.add(entity);
