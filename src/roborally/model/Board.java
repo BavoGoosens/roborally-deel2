@@ -28,6 +28,7 @@ public class Board{
 	public Board (long height, long width){
 		this.height = height;
 		this.width = width;
+		this.map = new HashMap<Position, HashSet<Entity>>();
 	}
 
 
@@ -79,51 +80,49 @@ public class Board{
 	}
 
 	public Set<Robot> getRobots() {
-//		Collection<HashSet<Entity>> c = map.values();
+		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Robot> rob = new HashSet<Robot>();
-//		for (Set<Entity> values : c ){
-//			while (values.iterator().hasNext()){
-//				Entity obj = values.iterator().next();
-//				if (obj instanceof Robot){
-//					rob.add((Robot) obj);
-//				}
-//			}
-//		}
-		//TODO: fix check
+		for (Set<Entity> values : c ){
+			while (values.iterator().hasNext()){
+				Entity obj = values.iterator().next();
+				if (obj instanceof Robot){
+					rob.add((Robot) obj);
+				}
+			}
+		}
 		return rob;
 	}
 
 	public Set<Battery> getBatteries() {
-//		Collection<HashSet<Entity>> c = map.values();
+		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Battery> bat = new HashSet<Battery>();
-//		for (Set<Entity> values : c ){
-//			while (values.iterator().hasNext()){
-//				Entity obj = values.iterator().next();
-//				if (obj instanceof Battery){
-//					bat.add((Battery) obj);
-//				}
-//			}
-//
-//		}
-		//TODO: fix check
+		for (Set<Entity> values : c ){
+			while (values.iterator().hasNext()){
+				Entity obj = values.iterator().next();
+				if (obj instanceof Battery){
+					bat.add((Battery) obj);
+				}
+			}
+
+		}
 		return bat;
 	}
 
 	public Set<Wall> getWalls() {
-//		Collection<HashSet<Entity>> c = map.values();
+		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Wall> wall = new HashSet<Wall>();
-//		for (Set<Entity> values : c ){
-//			while (values.iterator().hasNext()){
-//				Entity obj = values.iterator().next();
-//				if (obj instanceof Wall){
-//					wall.add((Wall) obj);
-//				}
-//			}
-//
-//		}
-		//TODO: fix check
+		for (Set<Entity> values : c ){
+			while (values.iterator().hasNext()){
+				Entity obj = values.iterator().next();
+				if (obj instanceof Wall){
+					wall.add((Wall) obj);
+				}
+			}
+
+		}
 		return wall;
 	}
+
 
 
 	public static boolean isValidHeight(long height){

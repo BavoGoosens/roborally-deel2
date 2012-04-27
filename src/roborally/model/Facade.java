@@ -34,7 +34,6 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 	public void putBattery(Board board, long x, long y, Battery battery) {
 		Position pos = new Position(x,y);
 		battery.putOnBoard(board, pos);
-		board.putEntity(pos,battery);
 	}
 
 	@Override
@@ -83,7 +82,6 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 	public void putRobot(Board board, long x, long y, Robot robot) {
 		Position pos = new Position(x , y);
 		robot.putOnBoard(board, pos);
-		board.putEntity(pos, robot);
 		
 	}
 
@@ -179,7 +177,6 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 			throws UnsupportedOperationException {
 		Position pos = new Position(x , y);
 		wall.putOnBoard(board, pos);
-		board.putEntity(pos, wall);
 	}
 
 	@Override
