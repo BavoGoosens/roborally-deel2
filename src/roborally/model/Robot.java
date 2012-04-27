@@ -1,5 +1,6 @@
 package roborally.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -47,7 +48,7 @@ public class Robot extends Entity{
 	/**
 	 * De energie van de robot.
 	 */
-	private final Energy energy;
+	private Energy energy;
 	/**
 	 * De oriëntatie van de robot.
 	 */
@@ -211,7 +212,6 @@ public class Robot extends Entity{
 		HashMap<Position, Node> resultpad = calc.aStarOnTo(this, position);
 		Node n = resultpad.get(position);
 		return n.getGCost();
-		
 	}
 	
 	/**
@@ -221,9 +221,24 @@ public class Robot extends Entity{
 	 * 			De robot waar naartoe moet bewogen worden.
 	 */
 	public void moveNextTo(Robot robot){
-		//TODO
+		Calculator calc = new Calculator();
+		ArrayList <Position> neighbours = robot.getPosition().getNeighbours();
+		HashMap<Position, Node> resultpad = calc.aStarNextTo(this, robot.getPosition());
+		if (resultpad.containsKey(neighbours)){
+			Node n = resultpad.get(neighbours); 
+			if (this.energy.getEnergy() >= n.getGCost().getEnergy()){
+				setPosition(n.getPosition());
+				setEnergy(new Energy(this.getEnergy().getEnergy()- n.getGCost().getEnergy()));
+			}
+		}
+		else
+			robot.moveNextTo(this);
 	}
 	
+	private void setEnergy(Energy newEnergy) {
+		this.energy = newEnergy;
+	}
+
 	/**
 	 * Deze methode doet een robot schieten met zijn laser.
 	 * 
