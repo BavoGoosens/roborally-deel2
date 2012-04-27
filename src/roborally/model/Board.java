@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Immutable;
+
 import roborally.basics.Energy;
 import roborally.basics.Orientation;
 import roborally.basics.Position;
@@ -25,6 +28,11 @@ public class Board{
 	private static final long UPPER_BOUND_HEIGTH = Long.MAX_VALUE;
 	private static final long LOWER_BOUND_HEIGTH = 0;
 
+	/**
+	 * Deze constructor maakt een nieuw board aan 
+	 * @param height
+	 * @param width
+	 */
 	public Board (long height, long width){
 		this.height = height;
 		this.width = width;
@@ -130,24 +138,52 @@ public class Board{
 		return wall;
 	}
 
-
-
+	/**
+	 * 
+	 * @param height
+	 * @return
+	 */
+	@Basic
 	public static boolean isValidHeight(long height){
 		return (height > LOWER_BOUND_HEIGTH) && (height <= UPPER_BOUND_HEIGTH);
 	}
 
+	/**
+	 * 
+	 * @param width
+	 * @return
+	 */
+	@Basic
 	public static boolean isValidWidth(long width){
 		return (width > LOWER_BOUND_WIDTH) && (width <= UPPER_BOUND_WIDTH);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	@Basic
+	@Immutable
 	public long getWidth() {
 		return this.width;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	@Basic
+	@Immutable
 	public long getHeight() {
 		return this.height;
 	}
 
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	@Basic
 	public boolean isValidBoardPosition(Position position){
 		if (position.getX() > this.getWidth() || position.getX() < LOWER_BOUND_WIDTH || position.getY() > this.getHeight() || position.getY() < LOWER_BOUND_HEIGTH)
 			return false;
@@ -159,6 +195,7 @@ public class Board{
 	 * 
 	 * @param 	robot
 	 * 			De Robot wiens orientation en positie bepaalt welke entity geraakt wordt.
+	 * 
 	 * @return	Entity
 	 * 			De entity die geraakt en vervolgens vernietigd zal worden.
 	 */
