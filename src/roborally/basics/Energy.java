@@ -39,7 +39,7 @@ public class Energy {
 	 */
 	@Basic
 	public int getEnergy(){
-		return amount;
+		return this.amount;
 	}
 	
 	/**

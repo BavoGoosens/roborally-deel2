@@ -11,16 +11,18 @@ import roborally.model.Node;
 import roborally.model.Robot;
 
 public class Calculators {
+	
+	//TODO: documentatie en annotations
 
-	public int calculateManhattan(Position pos1, Position pos2){
-		return (int) (Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY()));
+	public static long calculateManhattan(Position pos1, Position pos2){
+		return (Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY()));
 	} 
 		
 	
-	public HashMap<Position,Node> aStar(Robot a, Position pos){
+	public static HashMap<Position,Node> aStar(Robot a, Position pos){
 		HashMap<Position,Node> openSet = new HashMap<Position,Node>(); 
 		// de experimentele posities die nog geëvalueerd moeten/kunnen worden
-		Node startNode = new Node(a.getPosition(), 0 , getHCost(a.getPosition(), a.getOrientation(),pos),a.getOrientation(), null);
+		Node startNode = new Node(a.getPosition(), 0 , getHCost(a.getPosition(), a.getOrientation(),pos, a),a.getOrientation(), null);
 		openSet.put(a.getPosition(), startNode);
 		// de startPositie aan de open list toevoegen
 		HashMap<Position,Node> closedSet = new HashMap<Position, Node>(); 
@@ -42,11 +44,11 @@ public class Calculators {
 	        	if (closedSet.containsKey(neighbour))
 	        		continue;
 	        	
-	        	double tentativeGScore = getGCost(currentNode,neighbour);
+	        	double tentativeGScore = getGCost(currentNode,neighbour, a);
 	        	boolean tentativeIsBetter = false;
 	        	
 	        	if (!openSet.containsKey(neighbour)){
-	        		openSet.put(neighbour,new Node(neighbour,getGCost(currentNode, neighbour),getHCost(neighbour, getNodeOrientation(currentNode, neighbour),pos),
+	        		openSet.put(neighbour,new Node(neighbour,getGCost(currentNode, neighbour, a),getHCost(neighbour, getNodeOrientation(currentNode, neighbour),pos, a),
 	        				getNodeOrientation(currentNode, neighbour),currentNode));
 	        		tentativeIsBetter = true;
 	        	}
@@ -66,7 +68,7 @@ public class Calculators {
 
 	}
 	
-	private Orientation getNodeOrientation(Node currentNode, Position pos) {
+	private static Orientation getNodeOrientation(Node currentNode, Position pos) {
 		Position previousPosition = currentNode.getPosition();
 		if (previousPosition.getX() == pos.getX()){
 			if (previousPosition.getY() > pos.getY())
@@ -79,25 +81,25 @@ public class Calculators {
 	}
 
 
-	private double getHCost(Position position, Orientation orientation, Position pos) {
-		Energy manHattanCost = new Energy(Robot.moveCost()*calculateManhattan(position, pos));
+	private static double getHCost(Position position, Orientation orientation, Position pos, Robot robot) {
+		Energy manHattanCost = new Energy(Robot.moveCost(robot) * (int) calculateManhattan(position, pos));
 		Energy turnCost = new Energy(Robot.TURN_COST*getTurns(new Node(position,orientation),pos));
 		Energy cost = Energy.energySum(manHattanCost, turnCost);
 		return cost.getEnergy();
 	}
 
-	private double getGCost(Node currentNode, Position pos) {
-		double gCost = currentNode.getGCost() + Robot.moveCost() + Robot.TURN_COST*getTurns(currentNode, pos);
-		return gCost;
+	private static double getGCost(Node currentNode, Position pos, Robot robot) {
+		return currentNode.getGCost() + Robot.moveCost(robot) + Robot.TURN_COST*getTurns(currentNode, pos);
 	}
 	/**
 	 * methode voor het aantal turns terug te geven om van een node met orientatie m naar een nabijgelegen node te 
 	 * bewegen (vlak naast)
 	 *  
 	 * @param node
+	 * @param pos 
 	 * @return
 	 */
-	private int getTurns(Node node, Position pos){
+	private static int getTurns(Node node, Position pos){
 		int result = 0;
 		if(node.getPosition().getX() == pos.getX() && node.getPosition().getY() == pos.getY())
 			return result;
@@ -202,7 +204,7 @@ public class Calculators {
 		return result;
 	}
 	
-	public Node getMinimalFNode(HashMap<Position, Node> map){
+	public static Node getMinimalFNode(HashMap<Position, Node> map){
 		Collection<Node>c = map.values();
 		Iterator<Node> itr = c.iterator();
 		Node minimalNode = itr.next();

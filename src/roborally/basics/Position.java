@@ -70,7 +70,7 @@ public class Position {
 	 */
 	@Basic @Immutable
 	public long getX() {
-		return x;
+		return this.x;
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class Position {
 	 */
 	@Basic @Immutable
 	public long getY() {
-		return y;
+		return this.y;
 	}
 
 	/**

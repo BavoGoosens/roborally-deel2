@@ -48,7 +48,7 @@ public class Weight {
 	 */
 	@Basic
 	public int getWeight() {
-		return weight;
+		return this.weight;
 	}
 	
 	/**
@@ -64,11 +64,12 @@ public class Weight {
 	 * 			|new.weight == newWeight
 	 */
 	public void setWeight(int newWeight){
+		int tmp = newWeight;
 		if(newWeight < MINWEIGHT)
-			newWeight = MINWEIGHT;
+			tmp = MINWEIGHT;
 		if(newWeight > MAXWEIGHT)
-			newWeight = MAXWEIGHT;
-		weight = newWeight;
+			tmp = MAXWEIGHT;
+		this.weight = tmp;
 	}
 
 }

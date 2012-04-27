@@ -48,9 +48,8 @@ public class Entity {
 	private void setBoard(Board board) throws IllegalStateException{
 		if(this.isDestroyed()){
 			throw new IllegalStateException("Het object is getermineerd.");
-		}else{
-			this.board = board;
 		}
+		this.board = board;
 	}
 
 	/**
@@ -71,7 +70,7 @@ public class Entity {
 	 */
 	@Basic
 	public Position getPosition() {
-		return position;
+		return this.position;
 	}
 
 	/**
@@ -123,7 +122,7 @@ public class Entity {
 	 */
 	@Basic
 	public boolean isDestroyed(){
-		return isTerminated;
+		return this.isTerminated;
 	}
 
 	/**

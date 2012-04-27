@@ -59,7 +59,7 @@ public class Battery extends Entity{
 	 */
 	@Basic
 	public Energy getEnergy() {
-		return energy;
+		return this.energy;
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class Battery extends Entity{
 	 */
 	@Basic
 	public Weight getWeight() {
-		return weight;
+		return this.weight;
 	}
 
 	/**

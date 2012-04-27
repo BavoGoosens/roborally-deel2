@@ -50,24 +50,26 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 		}
 	}
 	
-	public Orientation getOrientationEnum(int i ){
+	public static Orientation getOrientationEnum(int i ){
+		int tmp = Math.abs(i % 4);
 		if(i < 0){
-			int tmp = Math.abs(i % 4);
 			if(tmp == 1){
 				return Orientation.LEFT;
 			}else if(tmp == 3){
 				return Orientation.RIGHT;
 			}
 		}
-		int tmp = (i % 4);
-		if (tmp == 0)
+		switch(tmp){
+		case 0:
 			return Orientation.UP;
-		else if (tmp == 1)
+		case 1:
 			return Orientation.RIGHT;
-		else if (tmp == 2)
+		case 2:
 			return Orientation.DOWN;
-		else 
+		case 3:
 			return Orientation.LEFT;
+		}
+		return null;
 	}
 	
 	@Override

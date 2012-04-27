@@ -8,9 +8,11 @@ import roborally.basics.Position;
 
 public class Board{
 	
+	//TODO: documentatie en annotations
+	
 	private final long width;
 	private final long height;
-	private HashMap <Position,HashSet> map = new HashMap<Position,HashSet>();
+	private HashMap <Position, HashSet<Entity>> map = new HashMap<Position,HashSet<Entity>>();
 	
 	private static final long UPPER_BOUND_WIDTH = Long.MAX_VALUE;
 	private static final long LOWER_BOUND_WIDTH = 0;
@@ -35,14 +37,14 @@ public class Board{
 	public void putBattery(long x, long y, Battery battery) {
 		if (battery.getBoard() != null){
 			Position key = new Position(x,y);
-			if (!map.containsValue(battery)){
+			if (!this.map.containsValue(battery)){
 				if (isPlacableOnPosition(key,battery)){
-					if (map.get(key) == null){
+					if (this.map.get(key) == null){
 						HashSet<Entity> input = new HashSet<Entity>();
 						input.add(battery);
-						map.put(key,input);
+						this.map.put(key,input);
 					}
-					map.get(key).add(battery);
+					this.map.get(key).add(battery);
 				}
 			}
 		}
@@ -53,16 +55,18 @@ public class Board{
 	}
 	
 	public void removeEntity(Entity ent){
-		
+		//TODO
 		
 	}
 	
 	public boolean isPlacableOnPosition(Position pos , Object obj){
+		//TODO: parameter obj wordt niet gebruikt
 		if (this.map.get(pos) == null)
 			return true;
 		if (this.map.get(pos).isEmpty())
 			return true;
 		if (this.map.get(pos).size() == 1){
+			//TODO: Naam = What The Fridge?
 			Object derp = this.map.get(pos).iterator().next();
 			if (derp instanceof Wall)
 				return false;
@@ -72,36 +76,36 @@ public class Board{
 
 	public void putRobot(long x, long y, Robot robot) {
 		Position key = new Position(x,y);
-		if (!map.containsValue(robot)){
+		if (!this.map.containsValue(robot)){
 			if (isPlacableOnPosition(key,robot)){
-				if (map.get(key) == null){
+				if (this.map.get(key) == null){
 					HashSet<Entity> input = new HashSet<Entity>();
 					input.add(robot);
-					map.put(key,input);
+					this.map.put(key,input);
 				}
-				map.get(key).add(robot);
+				this.map.get(key).add(robot);
 			}
 		}
 	}
 
 	public void putWall(long x, long y, Wall wall) {
 		Position key = new Position(x,y);
-		if (!map.containsValue(wall)){
+		if (!this.map.containsValue(wall)){
 			if (isPlacableOnPosition(key,wall)){
-				HashSet<Object> input = new HashSet<Object>();
+				HashSet<Entity> input = new HashSet<Entity>();
 				input.add(wall);
-				map.put(key,input);
+				this.map.put(key,input);
 			}
 		}
 	}
 
 	public HashSet<Robot> getRobots() {
 		// TODO testen en checken
-		Collection<HashSet> c = map.values();
+		Collection<HashSet<Entity>> c = this.map.values();
 		HashSet<Robot> result = new HashSet<Robot>();
-		for (HashSet<Object> values : c){
+		for (HashSet<Entity> values : c){
 			while (values.iterator().hasNext()){
-				Object obj = values.iterator().next();
+				Entity obj = values.iterator().next();
 				if (obj instanceof Robot)
 					result.add((Robot) obj);
 			}
@@ -111,11 +115,11 @@ public class Board{
 
 	public HashSet<Battery> getBatteries() {
 		// TODO testen en checken
-		Collection<HashSet> c = map.values();
+		Collection<HashSet<Entity>> c = this.map.values();
 		HashSet<Battery> result = new HashSet<Battery>();
-		for (HashSet<Object> values : c){
+		for (HashSet<Entity> values : c){
 			while (values.iterator().hasNext()){
-				Object obj = values.iterator().next();
+				Entity obj = values.iterator().next();
 				if (obj instanceof Battery)
 					result.add((Battery) obj);
 			}
@@ -125,11 +129,11 @@ public class Board{
 
 	public HashSet<Wall> getWalls() {
 		// TODO testen en checken
-		Collection<HashSet> c = map.values();
+		Collection<HashSet<Entity>> c = this.map.values();
 		HashSet<Wall> result = new HashSet<Wall>();
-		for (HashSet<Object> values : c){
+		for (HashSet<Entity> values : c){
 			while (values.iterator().hasNext()){
-				Object obj = values.iterator().next();
+				Entity obj = values.iterator().next();
 				if (obj instanceof Wall)
 					result.add((Wall) obj);
 			}
@@ -138,20 +142,20 @@ public class Board{
 	}
 	
 
-	public boolean isValidHeight(long height){
+	public static boolean isValidHeight(long height){
 		return (height > LOWER_BOUND_HEIGTH) && (height <= UPPER_BOUND_HEIGTH);
 	}
 	
-	public boolean isValidWidth(long width){
+	public static boolean isValidWidth(long width){
 		return (width > LOWER_BOUND_WIDTH) && (width <= UPPER_BOUND_WIDTH);
 	}
 
 	public long getWidth() {
-		return width;
+		return this.width;
 	}
 
 	public long getHeight() {
-		return height;
+		return this.height;
 	}
 	
 	public boolean isValidBoardPosition(Position position){

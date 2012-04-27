@@ -59,7 +59,7 @@ public class Robot extends Entity{
 	/**
 	 * De set van batterijen die de robot bezit.
 	 */
-	private Set<Battery> Possessions = new TreeSet<Battery>(bc);
+	private Set<Battery> Possessions = new TreeSet<Battery>(this.bc);
 	
 	/**
 	 * Deze methode maakt een nieuwe robot aan.
@@ -102,7 +102,7 @@ public class Robot extends Entity{
 	 */
 	@Basic
 	public Orientation getOrientation(){
-		return orientation;
+		return this.orientation;
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class Robot extends Entity{
 	 */
 	@Basic
 	public Energy getEnergy(){
-		return energy;
+		return this.energy;
 	}
 
 	/**
@@ -201,9 +201,8 @@ public class Robot extends Entity{
 	public void move() throws IllegalStateException{
 		if(!this.canMove()){
 			throw new IllegalStateException("De robot heeft onvoldoende energie om te bewegen.");
-		}else{
-			//TODO
 		}
+		//TODO
 	}
 	
 	/**
@@ -268,13 +267,26 @@ public class Robot extends Entity{
 	}
 	
 	/**
-	 * Deze methode berekent de kost terug van 1 move.
+	 * Deze methode berekent de kost van 1 move.
 	 * 
 	 * @return	de kost terug van 1 move
 	 * 			|MOVE_COST + MOVE_COST_PER_KG*(this.getTotalWeight().getWeight() / 1000)
 	 */
 	public int moveCost(){
-		return MOVE_COST + MOVE_COST_PER_KG*(this.getTotalWeight().getWeight() / 1000);
+		return moveCost(this);
+	}
+	
+	/**
+	 * Deze methode berekent de kost van 1 move.
+	 * 
+	 * @param	robot
+	 * 			De robot waarvoor de berekening moet uitgevoerd worden.
+	 * 
+	 * @return	de kost terug van 1 move
+	 * 			|MOVE_COST + MOVE_COST_PER_KG*(robot.getTotalWeight().getWeight() / 1000)
+	 */
+	public static int moveCost(Robot robot){
+		return MOVE_COST + MOVE_COST_PER_KG*(robot.getTotalWeight().getWeight() / 1000);
 	}
 	
 	/**
