@@ -94,21 +94,42 @@ public class Board{
 	public HashSet<Entity> getEntityOnPosition(Position pos){
 		return this.getMap().get(pos);
 	}
-	
+
 	/**
+	 * Deze methode verwijdert een object uit het bord.
 	 * 
-	 * @param ent
+	 * @param 	ent
+	 * 			De entity die verwijderd moet worden.
+	 * 
+	 * @throws	IllegalStateException
+	 * 			Het object bevindt zich niet op een juiste positie in dit bord.
+	 * 			|ent.getBoard().isValidBoardPosition(ent.getPosition())
 	 */
-	public void removeEntity(Entity ent){
-		if (this.map.containsValue(ent)){
-			Collection<HashSet<Entity>> c = this.map.values();
-			for (HashSet<Entity> val  : c){
-				if (val.contains(ent)){
-					val.remove(ent);
-				}
+	public void removeEntity(Entity ent) throws IllegalStateException{
+		Position pos = ent.getPosition();
+		if(!ent.getBoard().isValidBoardPosition(pos)){
+			throw new IllegalStateException("Dit object bevindt zich niet op een geldige positie.");
+		}
+		this.getMap().get(pos).remove(ent);
+		this.cleanBoardPosition(pos);
+	}
+
+	/**
+	 * Deze methode kijkt na of het bord leeg is op deze positie, indien dat zo is wordt een mogelijke opgeslagen lege HashSet verwijderd.
+	 * 
+	 * @param	pos
+	 * 			De positie in het bord die moet nagekeken worden.
+	 * 
+	 * @post	De positie is leeg indien er geen objecten meer stonden.
+	 * 			|if(this.getMap().containsKey(pos) && this.getMap().get(pos).isEmpty())
+	 * 			|	new.getMap().containsKey(pos) == false
+	 */
+	public void cleanBoardPosition(Position pos){
+		if(this.getMap().containsKey(pos)){
+			if(this.getMap().get(pos).isEmpty()){
+				this.getMap().remove(pos);
 			}
 		}
-
 	}
 
 	public boolean isPlacableOnPosition(Position pos){
@@ -248,7 +269,7 @@ public class Board{
 		return true;
 	}
 
-	
+
 	public static Entity getFirstHit(Robot robot) {
 		// bepaalt welke entity door een laser gaat geraakt worden 
 		Position pos = Calculator.getNextPosition(robot.getPosition(), robot.getOrientation());
