@@ -250,7 +250,8 @@ public class Robot extends Entity{
 	 */
 	public void shoot() throws IllegalStateException{
 		if(this.isOnBoard()){
-			//TODO
+			Entity ent = this.getBoard().getFirstHit(this);
+			ent.destroy();
 		}else{
 			throw new IllegalStateException("De robot staat niet op een bord.");
 		}

@@ -5,11 +5,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import roborally.basics.Orientation;
 import roborally.basics.Position;
 
 public class Board{
 	
 	//TODO: documentatie en annotations
+	//TODO: Helaas veel meer dan enkel da de puts en gets werken niet... Die rare structuur snap ik ni van hashmap
 	
 	private final long width;
 	private final long height;
@@ -113,8 +115,18 @@ public class Board{
 	}
 
 	public Set<Robot> getRobots() {
-		Collection c = map.values();
-		
+		Collection<Set> c = map.values();
+		HashSet<Robot> rob = new HashSet<Robot>();
+		for (Set values : c ){
+			while (values.iterator().hasNext()){
+				Object obj = values.iterator().next();
+				if (obj instanceof Robot){
+					rob.add((Robot) obj);
+				}
+			}
+			
+		}
+		return rob;
 	}
 
 	public Set<Battery> getBatteries() {
@@ -133,7 +145,18 @@ public class Board{
 	}
 
 	public Set<Wall> getWalls() {
-		
+		Collection<Set> c = map.values();
+		HashSet<Wall> wall = new HashSet<Wall>();
+		for (Set values : c ){
+			while (values.iterator().hasNext()){
+				Object obj = values.iterator().next();
+				if (obj instanceof Wall){
+					wall.add((Wall) obj);
+				}
+			}
+			
+		}
+		return wall;
 	}
 	
 
@@ -157,5 +180,20 @@ public class Board{
 		if (position.getX() > UPPER_BOUND_WIDTH || position.getX() < LOWER_BOUND_WIDTH || position.getY() > this.getWidth() || position.getY() < this.getHeight())
 			return false;
 		return true;
+	}
+
+
+	public Entity getFirstHit(Robot robot) {
+		// bepaalt welke entity door een laser gaat geraakt worden 
+		if (robot.getOrientation() == Orientation.UP){
+			
+			
+		}else if(robot.getOrientation() == Orientation.DOWN){
+			
+		}else if(robot.getOrientation() == Orientation.LEFT){
+			
+		}else{
+			
+		}
 	}
 }
