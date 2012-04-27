@@ -271,7 +271,7 @@ public class Robot extends Entity{
 	 * 			|}
 	 * 			
 	 */
-	public void recharge(Energy energy){recharge
+	public void recharge(Energy energy){
 		Energy newEnergy = Energy.energySum(this.getEnergy(), energy);
 		if(!isValidRobotEnergyAmount(newEnergy))
 			newEnergy = MAXENERGY;
