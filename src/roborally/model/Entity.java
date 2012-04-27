@@ -139,6 +139,7 @@ public class Entity {
 	 * @post	|new.getPosition() == position
 	 * 			
 	 */
+	@Raw
 	public void putOnBoard(Board board, Position position){
 		//TODO: add to board in Board
 		this.setBoard(board);
@@ -151,6 +152,7 @@ public class Entity {
 	 * @post	|new.getBoard() == null
 	 * @post	|new.getPosition() == null
 	 */
+	@Raw
 	public void removeFromBoard(){
 		//TODO: remove from board in Board
 		this.setBoard(null);
