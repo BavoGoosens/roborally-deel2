@@ -8,7 +8,7 @@ import be.kuleuven.cs.som.annotate.Raw;
 /**
  * Deze klasse houdt een object bij dat op een board kan staan en een positie kan hebben.
  * 
- * @invar	Indien bord of positie null is, moet de andere van de 2 ook null zijn.
+ * @invar	Indien bord of positie null is, moet de andere van de 2 ook null zijn. Een positie op een bord moet geldig zijn.
  * 			|isValid()
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
@@ -38,11 +38,19 @@ public class Entity {
 	 * @param 	board
 	 * 			Het board waarop dit object zich bevindt.
 	 * 
+	 * @throws 	IllegalStateException
+	 * 			Het object is getermineerd.
+	 * 			|this.isDestroyed()
+	 * 
 	 * @post	new.board == board
 	 */
 	@Raw
-	private void setBoard(Board board){
-		this.board = board;
+	private void setBoard(Board board) throws IllegalStateException{
+		if(this.isDestroyed()){
+			throw new IllegalStateException("Het object is getermineerd.");
+		}else{
+			this.board = board;
+		}
 	}
 
 	/**
@@ -76,12 +84,15 @@ public class Entity {
 	 * 			|this.isOnBoard()
 	 * 
 	 * @throws	IllegalStateException 
-	 * 			|this.getBoard().isValidBoardPosition(position)
+	 * 			Deze positie is niet geldig voor het huidige bord of het object bestaat is getermineerd.
+	 * 			|this.getBoard().isValidBoardPosition(position) || this.isDestroyed()
 	 */
 	@Raw
 	public void setPosition(Position position) throws IllegalArgumentException, IllegalStateException{
 		if(!this.isOnBoard()){
 			throw new IllegalStateException("Het object staat niet op een bord.");
+		}else if(this.isDestroyed()){
+			throw new IllegalStateException("Het object is getermineerd.");
 		}else if(!this.getBoard().isValidBoardPosition(position)){
 			throw new IllegalArgumentException("De gegeven positie is ongeldig voor dit bord.");
 		}else{
@@ -100,9 +111,9 @@ public class Entity {
 	 * 			|new.getBoard() == null
 	 */
 	public void destroy(){
-		this.isTerminated = true;
 		if(this.isOnBoard())
 			this.removeFromBoard();
+		this.isTerminated = true;
 	}
 
 	/**
@@ -135,7 +146,7 @@ public class Entity {
 	}
 
 	/**
-	 * Verwijdert de entity van een bord en haalt de opgeslagen positie weg.
+	 * Verwijdert het object van een bord en haalt de opgeslagen positie weg.
 	 * 
 	 * @post	|new.getBoard() == null
 	 * @post	|new.getPosition() == null
@@ -156,11 +167,20 @@ public class Entity {
 	}
 
 	/**
-	 * Kijk na of het object geldig is. Indien bord of positie null is, moet de andere van de 2 ook null zijn.
+	 * Kijk na of het object geldig is.
 	 * 
-	 * @return !(this.getBoard() == null ^ this.getPosition() == null)
+	 * @return 	Indien bord of positie null is, moet de andere van de 2 ook null zijn. Indien het object op een bord staat moet de positie geldig zijn voor dat bord.
+	 * 			|if(!(getBoard() == null ^ getPosition() == null))
+	 * 			|	false
+	 * 			|if(this.isOnBoard() && this.getBoard().isValidBoardPosition(this.getPosition()))
+	 * 			|	false
+	 * 			|true
 	 */
 	public boolean isValid(){
-		return !(getBoard() == null ^ getPosition() == null);
+		if(!(getBoard() == null ^ getPosition() == null))
+			return false;
+		if(this.isOnBoard() && this.getBoard().isValidBoardPosition(this.getPosition()))
+			return false;
+		return true;
 	}
 }

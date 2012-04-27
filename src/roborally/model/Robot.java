@@ -329,12 +329,32 @@ public class Robot extends Entity{
 		
 	}
 
-	public void drop(Battery battery) {
+	/**
+	 * Deze methode plaats een batterij uit de bezittingen van de robot op de huidige positie van de robot in het bord van de robot.
+	 * 
+	 * @param	battery
+	 * 			De batterij die op het bord geplaatst moet worden.
+	 * 
+	 * @throws 	IllegalArgumentException
+	 * 			De batterij is niet in het bezit van de robot.
+	 * 
+	 * @throws 	IllegalStateException
+	 * 			De robot staat niet op een bord.
+	 */
+	public void drop(Battery battery) throws IllegalArgumentException, IllegalStateException{
 		// TODO Auto-generated method stub
+		if(!this.isOnBoard()){
+			throw new IllegalStateException("De robot staat niet op een bord.");
+		}else if(!this.getPossessions().contains(battery)){
+			throw new IllegalArgumentException("De robot heeft deze batterij niet.");
+		}else{
+			this.getPossessions().remove(battery);
+			battery.putOnBoard(this.getBoard(), this.getPosition());
+		}
 	}
 
 	/*
-	 * De robot en al zijn bezittingen vernietigd.
+	 * De robot en al zijn bezittingen worden vernietigd.
 	 * 
 	 * @post	|new.getPossessions().isEmpty()
 	 * 
