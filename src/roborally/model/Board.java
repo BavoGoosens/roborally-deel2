@@ -154,7 +154,14 @@ public class Board{
 		return true;
 	}
 
-
+	/**
+	 * Methode die het de random de eerst entity teruggeeft die geraakt wordt door de laser van de robot.
+	 * 
+	 * @param 	robot
+	 * 			De Robot wiens orientation en positie bepaalt welke entity geraakt wordt.
+	 * @return	Entity
+	 * 			De entity die geraakt en vervolgens vernietigd zal worden.
+	 */
 	public Entity getFirstHit(Robot robot) {
 		// bepaalt welke entity door een laser gaat geraakt worden 
 		Position pos = Calculator.getNextPosition(robot.getPosition(), robot.getOrientation());
