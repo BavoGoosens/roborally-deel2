@@ -202,21 +202,21 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 	@Override
 	public Set<Robot> getRobots(Board board) {
 		// TODO Auto-generated method stub
-		HashSet<Robot> result = board.getRobots();
+		Set<Robot> result = board.getRobots();
 		return result;
 	}
 
 	@Override
 	public Set<Battery> getBatteries(Board board) {
 		// TODO Auto-generated method stub
-		HashSet<Battery> result = board.getBatteries();
+		Set<Battery> result = board.getBatteries();
 		return result;
 	}
 
 	@Override
 	public Set<Wall> getWalls(Board board) throws UnsupportedOperationException {
 		// TODO Auto-generated method stub
-		HashSet<Wall> result = board.getWalls();
+		Set<Wall> result = board.getWalls();
 		return result;
 	}
 }

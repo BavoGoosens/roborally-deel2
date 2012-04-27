@@ -10,6 +10,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import roborally.model.Battery;
+import roborally.model.Board;
+import roborally.model.Facade;
+import roborally.model.Robot;
+import roborally.model.Wall;
+
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -303,7 +309,7 @@ public class RoboRally<Board, Robot, Wall, Battery> extends JFrame {
 		// roborally.model.Facade with your facade implementation)
 		/* <begin> */
 		RoboRally<roborally.model.Board, roborally.model.Robot, roborally.model.Wall, roborally.model.Battery> roboRally 
-			= new RoboRally<roborally.model.Board, roborally.model.Robot, roborally.model.Wall, roborally.model.Battery>(new roborally.model.Facade());
+			= new RoboRally<roborally.model.Board, roborally.model.Robot, roborally.model.Wall, roborally.model.Battery>(new Facade());
 		/* <end> */
 		roboRally.setVisible(true);
 		roboRally.run();

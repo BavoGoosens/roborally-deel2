@@ -22,7 +22,7 @@ public class Calculators {
 	public static HashMap<Position,Node> aStar(Robot a, Position pos){
 		HashMap<Position,Node> openSet = new HashMap<Position,Node>(); 
 		// de experimentele posities die nog geëvalueerd moeten/kunnen worden
-		Node startNode = new Node(a.getPosition(), new Energy(0) , getHCost(a.getPosition(), a.getOrientation(),pos, a),a.getOrientation(), null);
+		Node startNode = new Node(a.getPosition(), a.getBoard(), new Energy(0) , getHCost(a.getPosition(), a.getOrientation(),pos, a),a.getOrientation(), null);
 		openSet.put(a.getPosition(), startNode);
 		// de startPositie aan de open list toevoegen
 		HashMap<Position,Node> closedSet = new HashMap<Position, Node>(); 
@@ -48,7 +48,7 @@ public class Calculators {
 	        	boolean tentativeIsBetter = false;
 	        	
 	        	if (!openSet.containsKey(neighbour)){
-	        		openSet.put(neighbour,new Node(neighbour,getGCost(currentNode, neighbour, a),getHCost(neighbour, getNodeOrientation(currentNode, neighbour),pos, a),
+	        		openSet.put(neighbour,new Node(neighbour,currentNode.getBoard(),getGCost(currentNode, neighbour, a),getHCost(neighbour, getNodeOrientation(currentNode, neighbour),pos, a),
 	        				getNodeOrientation(currentNode, neighbour),currentNode));
 	        		tentativeIsBetter = true;
 	        	}
@@ -83,7 +83,7 @@ public class Calculators {
 
 	private static Energy getHCost(Position position, Orientation orientation, Position pos, Robot robot) {
 		Energy manHattanCost = new Energy(Robot.moveCost(robot).getEnergy() * (int) calculateManhattan(position, pos));
-		Energy turnCost = new Energy(Robot.TURN_COST.getEnergy()*getTurns(new Node(position,orientation),pos));
+		Energy turnCost = new Energy(Robot.TURN_COST.getEnergy()*getTurns(new Node(position,orientation,robot.getBoard()),pos));
 		return Energy.energySum(manHattanCost, turnCost);
 	}
 
