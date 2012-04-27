@@ -191,7 +191,7 @@ public class Robot extends Entity{
 		}
 		Position destination;
 		try{
-			destination = this.getOrientation().getNextPosition(this.getPosition());
+			destination = Calculator.getNextPosition(this.getPosition(), this.getOrientation());
 		}catch (IllegalStateException e){
 			throw new IllegalStateException("De positie waarnaar bewogen moet worden is ongeldig.");
 		}

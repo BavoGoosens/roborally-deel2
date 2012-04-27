@@ -10,6 +10,7 @@ import java.util.Set;
 import roborally.basics.Energy;
 import roborally.basics.Orientation;
 import roborally.basics.Position;
+import roborally.utils.Calculator;
 
 public class Board{
 	
@@ -188,7 +189,7 @@ public class Board{
 
 	public Entity getFirstHit(Robot robot) {
 		// bepaalt welke entity door een laser gaat geraakt worden 
-		Position pos = robot.getOrientation().getNextPosition(robot.getPosition());
+		Position pos = Calculator.getNextPosition(robot.getPosition(), robot.getOrientation());
 		if (map.containsKey(pos)){
 			Set hits = map.get(pos);
 			Random rndm = new Random();

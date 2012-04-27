@@ -263,4 +263,57 @@ public class Calculator {
 		return minimalNode;
 	}
 	
+	/**
+	 * Deze methode geeft de volgende positie weer met de huidige oriëntatie.
+	 * 
+	 * @param	pos
+	 * 			Positie van waaruit vertrokken moet worden.
+	 * 
+	 * @param	or
+	 * 			De huidige oriëntatie.
+	 * 
+	 * @return	De volgende positie met de huidige oriëntatie
+	 * 			|if(or.equals(Orientation.UP))
+	 *			|	new Position(pos.getX(), pos.getY() - 1)
+	 *			|if(or.equals(Orientation.RIGHT))
+	 *			|	new Position(pos.getX() + 1, pos.getY())
+	 *			|if(or.equals(Orientation.DOWN))
+	 *			|	new Position(pos.getX(), pos.getY() + 1);
+	 *			|if(or.equals(Orientation.LEFT))
+	 *			|	new Position(pos.getX() - 1, pos.getY())
+	 *			|null
+	 *
+	 * @throws	IllegalStateException
+	 * 			Er bestaat geen verdere positie meer met deze oriëntatie.
+	 */
+	public static Position getNextPosition(Position pos, Orientation or) throws IllegalStateException{
+		Position result = null;
+		if(or.equals(Orientation.UP)){
+			try {
+				result = new Position(pos.getX(), pos.getY() - 1);
+			} catch (IllegalArgumentException e) {
+				throw new IllegalStateException("Er bestaat geen verdere positie meer met deze oriëntatie.");
+			}
+		}else if(or.equals(Orientation.RIGHT)){
+			try {
+				result = new Position(pos.getX() + 1, pos.getY());
+			} catch (IllegalArgumentException e) {
+				throw new IllegalStateException("Er bestaat geen verdere positie meer met deze oriëntatie.");
+			}
+		}else if(or.equals(Orientation.DOWN)){
+			try {
+				result = new Position(pos.getX(), pos.getY() + 1);
+			} catch (IllegalArgumentException e) {
+				throw new IllegalStateException("Er bestaat geen verdere positie meer met deze oriëntatie.");
+			}
+		}else if(or.equals(Orientation.LEFT)){
+			try {
+				result = new Position(pos.getX() - 1, pos.getY());
+			} catch (IllegalArgumentException e) {
+				throw new IllegalStateException("Er bestaat geen verdere positie meer met deze oriëntatie.");
+			}
+		}
+		return result;
+	}
+	
 }
