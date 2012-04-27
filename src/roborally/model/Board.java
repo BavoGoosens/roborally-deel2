@@ -131,15 +131,24 @@ public class Board{
 			}
 		}
 	}
-
-	public boolean isPlacableOnPosition(Position pos){
-		if(this.map == null)
+	
+	/**
+	 * Deze methode kijkt na of een object op een plaats geplaatst kan worden.
+	 * 
+	 * @param	pos
+	 * 			De positie die moet nagekeken worden.
+	 * 
+	 * @param	ent
+	 * 			Het object dat voor deze positie in aanmerking komt.
+	 * 
+	 * @return	
+	 */
+	public boolean isPlacableOnPosition(Position pos, Entity ent){
+		if (!this.getMap().containsKey(pos))
 			return true;
-		if (this.map.get(pos) == null)
+		if (this.getMap().get(pos).isEmpty())
 			return true;
-		if (this.map.get(pos).isEmpty())
-			return true;
-		if (this.map.get(pos).size() == 1){
+		if (this.getMap().get(pos).size() == 1){
 			Entity obj = this.map.get(pos).iterator().next();
 			if (obj instanceof Wall)
 				return false;
