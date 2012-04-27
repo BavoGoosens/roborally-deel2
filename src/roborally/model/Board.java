@@ -164,6 +164,8 @@ public class Board{
 	 * 			De positie waar het object geplaatst moet worden.
 	 * 			
 	 * @param 	entity
+	 * 
+	 * 			
 	 */
 	public void putEntity(Position key, Entity entity){
 		if (entity instanceof Battery || entity instanceof Robot){
@@ -291,8 +293,8 @@ public class Board{
 	public static Entity getFirstHit(Robot robot) {
 		// bepaalt welke entity door een laser gaat geraakt worden 
 		Position pos = Calculator.getNextPosition(robot.getPosition(), robot.getOrientation());
-		if (map.containsKey(pos)){
-			Set hits = map.get(pos);
+		if (robot.getBoard().getMap().containsKey(pos)){
+			Set hits = robot.getBoard().getMap().get(pos);
 			Random rndm = new Random();
 			Object hit = hits.toArray()[rndm.nextInt(hits.toArray().length)];
 			return (Entity) hit;

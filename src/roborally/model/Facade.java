@@ -147,8 +147,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 	@Override
 	public double getMinimalCostToReach(Robot robot, long x, long y) {
-		// TODO Auto-generated method stub
-		return 0;
+		return robot.getEnergyRequiredToReach(new Position(x, y)).getEnergy();
 	}
 
 	@Override
