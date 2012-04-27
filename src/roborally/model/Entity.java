@@ -145,7 +145,6 @@ public class Entity {
 	 */
 	@Raw
 	public void putOnBoard(Board board, Position position){
-		//TODO: add to board in Board
 		this.setBoard(board);
 		this.setPosition(position);
 		board.putEntity(position, this);

@@ -13,33 +13,33 @@ import roborally.basics.Position;
 import roborally.utils.Calculator;
 
 public class Board{
-	
+
 	//TODO: documentatie en annotations & Helaas veel meer dan enkel da de puts en gets werken niet... Die rare structuur snap ik ni van hashmap
-	
+
 	private final long width;
 	private final long height;
 	private HashMap <Position, HashSet<Entity>> map = new HashMap<Position, HashSet<Entity>>();
-	
+
 	private static final long UPPER_BOUND_WIDTH = Long.MAX_VALUE;
 	private static final long LOWER_BOUND_WIDTH = 0;
 	private static final long UPPER_BOUND_HEIGTH = Long.MAX_VALUE;
 	private static final long LOWER_BOUND_HEIGTH = 0;
-	
+
 	public Board (long height, long width){
 		this.height = height;
 		this.width = width;
 	}
 
-	
+
 	public HashSet<Entity> getEntityOnPosition(Position pos){
 		return this.map.get(pos);
 	}
-	
+
 	public void removeEntity(Entity ent){
 		//TODO
-		
+
 	}
-	
+
 	public boolean isPlacableOnPosition(Position pos){
 		if (this.map.get(pos) == null)
 			return true;
@@ -55,35 +55,25 @@ public class Board{
 
 	public void putEntity(Position key, Entity entity){
 		if (entity instanceof Battery || entity instanceof Robot){
-			if (!entity.isOnBoard()){
-				if (isPlacableOnPosition(key)){
-					HashSet<Entity> set = map.get(key);
-					if (set == null){
-						HashSet<Entity> input = new HashSet<Entity>();
-						input.add(entity);
-						map.put(key, input);
-					}else{
-						set.add(entity);
-					}
-				}
-			}else{
-				//TODO
-			}
-		}
-		if(entity instanceof Wall){
-			if (!entity.isOnBoard()){
-				if (isPlacableOnPosition(key)){
-					HashSet<Entity> set = map.get(key);
+			if (isPlacableOnPosition(key)){
+				HashSet<Entity> set = map.get(key);
+				if (set == null){
 					HashSet<Entity> input = new HashSet<Entity>();
 					input.add(entity);
 					map.put(key, input);
+				}else{
+					set.add(entity);
 				}
-			}else{
-				//TODO
+			}
+		}else if(entity instanceof Wall){
+			if (isPlacableOnPosition(key)){
+				HashSet<Entity> set = map.get(key);
+				HashSet<Entity> input = new HashSet<Entity>();
+				input.add(entity);
+				map.put(key, input);
 			}
 
 		}
-
 	}
 
 	public Set<Robot> getRobots() {
@@ -110,7 +100,7 @@ public class Board{
 					bat.add((Battery) obj);
 				}
 			}
-			
+
 		}
 		return bat;
 	}
@@ -125,16 +115,16 @@ public class Board{
 					wall.add((Wall) obj);
 				}
 			}
-			
+
 		}
 		return wall;
 	}
-	
+
 
 	public static boolean isValidHeight(long height){
 		return (height > LOWER_BOUND_HEIGTH) && (height <= UPPER_BOUND_HEIGTH);
 	}
-	
+
 	public static boolean isValidWidth(long width){
 		return (width > LOWER_BOUND_WIDTH) && (width <= UPPER_BOUND_WIDTH);
 	}
@@ -146,7 +136,7 @@ public class Board{
 	public long getHeight() {
 		return this.height;
 	}
-	
+
 	public boolean isValidBoardPosition(Position position){
 		if (position.getX() > this.getWidth() || position.getX() < LOWER_BOUND_WIDTH || position.getY() > this.getHeight() || position.getY() < LOWER_BOUND_HEIGTH)
 			return false;
