@@ -19,7 +19,7 @@ public class Board{
 	
 	private final long width;
 	private final long height;
-	private HashMap <Position, Set > map;
+	private HashMap <Position, Set > map = new HashMap<Position,Set>();
 	
 	private static final long UPPER_BOUND_WIDTH = Long.MAX_VALUE;
 	private static final long LOWER_BOUND_WIDTH = 0;
@@ -59,20 +59,13 @@ public class Board{
 		if (entity instanceof Battery || entity instanceof Robot){
 			if (entity.getBoard() == null){
 				if (isPlacableOnPosition(key)){
-					if (map == null){
-						map = new HashMap<Position,Set>();
+					Set set = map.get(key);
+					if (set == null){
 						Set input = new HashSet<Entity>();
 						input.add(entity);
 						map.put(key, input);
 					}else{
-						Set set = map.get(key);
-						if (set == null){
-							Set input = new HashSet<Entity>();
-							input.add(entity);
-							map.put(key, input);
-						}else{
-							set.add(entity);
-						}
+						set.add(entity);
 					}
 				}
 			}
@@ -80,21 +73,15 @@ public class Board{
 		if(entity instanceof Wall){
 			if (entity.getBoard() == null){
 				if (isPlacableOnPosition(key)){
-					if (map == null){
-						map = new HashMap<Position,Set>();
-						Set input = new HashSet<Entity>();
-						input.add(entity);
-						map.put(key, input);
-					}else{
-						Set set = map.get(key);
-						Set input = new HashSet<Entity>();
-						input.add(entity);
-						map.put(key, input);
-					}
+					Set set = map.get(key);
+					Set input = new HashSet<Entity>();
+					input.add(entity);
+					map.put(key, input);
 				}
 			}
+
 		}
-			
+
 	}
 	/**
 	 * Deze methode plaats een battery op een gegeven plaats in het bord.
