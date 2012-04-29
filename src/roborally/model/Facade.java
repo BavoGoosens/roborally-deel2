@@ -20,8 +20,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 	@Override
 	public void merge(Board board1, Board board2) {
-		// TODO Auto-generated method stub
-		
+		board1.merge(board2);	
 	}
 
 	@Override
@@ -141,7 +140,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 	@Override
 	public int isMinimalCostToReach17Plus() {
-		// TODO Auto-generated method stub
+		// TODO einde
 		return 0;
 	}
 
@@ -152,7 +151,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 	@Override
 	public int isMoveNextTo18Plus() {
-		// TODO Auto-generated method stub
+		// TODO einde
 		return 0;
 	}
 

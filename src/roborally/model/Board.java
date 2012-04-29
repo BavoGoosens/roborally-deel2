@@ -21,12 +21,15 @@ import roborally.utils.Calculator;
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
+ * @Invar 	Een board moet ten alle tijden een geldige hoogte en breedte hebben/
+ * 			| isValidHeight(getHeight())
+ *  		| isValidWidth(getWidth())
+ *  
  * @version 1.1
  */
 public class Board{
-	//TODO: invarianten
 	//TODO: documentatie en annotations
-	//TODO:	kan getermineerd worden (met alles in zich)
+	//TODO:	kan getermineerd worden moet de map dan op null gezet worden (bavo)
 
 	/**
 	 * De breedte van het bord.
@@ -36,6 +39,10 @@ public class Board{
 	 * De hoogte van het bord.
 	 */
 	private final long height;
+	/**
+	 * Indien het object vernietigd is wordt dit true.
+	 */
+	private boolean isTerminated = false;
 	/**
 	 * Deze HashMap houdt een lijst van HashSets bij per Position met in elke HashSet alle objecten op die plaats.
 	 */
@@ -52,11 +59,11 @@ public class Board{
 	/**
 	 * De maximale hoogte die een bord kan hebben.
 	 */
-	private static final long UPPER_BOUND_HEIGTH = Long.MAX_VALUE;
+	private static final long UPPER_BOUND_HEIGHT = Long.MAX_VALUE;
 	/**
 	 * De minimale hoogte die een bord kan hebben.
 	 */
-	private static final long LOWER_BOUND_HEIGTH = 0;
+	private static final long LOWER_BOUND_HEIGHT = 0;
 
 	/**
 	 * Deze constructor maakt een nieuw bord aan.
@@ -190,6 +197,14 @@ public class Board{
 		}
 	}
 
+	/**
+	 * Deze methode geeft alle robots terug die op dit board staan.
+	 * 
+	 * @return	Set<Robot>
+	 * 			voor iedere robot die een element is van this.map geldt dat deze op het einde van deze methode 
+	 * 			in de set zal zitten die gereturned zal worden. tenzij de map geen robots bevat dan geeft deze null weer
+	 * 			
+	 */
 	public Set<Robot> getRobots() {
 		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Robot> rob = new HashSet<Robot>();
@@ -205,6 +220,14 @@ public class Board{
 		return rob;
 	}
 
+	/**
+	 * Deze methode geeft alle Batteries terug die op dit board staan.
+	 * 
+	 * @return	Set<Battery>
+	 * 			voor iedere Battery die een element is van this.map geldt dat deze op het einde van deze methode 
+	 * 			in de set zal zitten die gereturned zal worden. tenzij de map geen Batteries bevat dan geeft deze null weer.
+	 * 			
+	 */
 	public Set<Battery> getBatteries() {
 		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Battery> bat = new HashSet<Battery>();
@@ -221,6 +244,14 @@ public class Board{
 		return bat;
 	}
 
+	/**
+	 * Deze methode geeft alle Walls terug die op dit board staan.
+	 * 
+	 * @return	Set<Battery>
+	 * 			voor iedere Wall die een element is van this.map geldt dat deze op het einde van deze methode 
+	 * 			in de set zal zitten die gereturned zal worden. tenzij de map geen Walls bevat dan geeft deze null weer.
+	 * 			
+	 */
 	public Set<Wall> getWalls() {
 		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Wall> wall = new HashSet<Wall>();
@@ -238,19 +269,25 @@ public class Board{
 	}
 
 	/**
+	 * Deze inspector geeft een boolean die true is wanneer de hoogte toegestaan is en in het andere geval false.
 	 * 
-	 * @param height
-	 * @return
+	 * @param 	height
+	 * 	
+	 * @return	boolean 
+	 * 			| result == true if ((height > Board.LOWER_BOUND_HEIGHT) && (height < Board.UPPER_BOUND_HEIGHT))
 	 */
 	@Basic
 	public static boolean isValidHeight(long height){
-		return (height > LOWER_BOUND_HEIGTH) && (height <= UPPER_BOUND_HEIGTH);
+		return (height > LOWER_BOUND_HEIGHT) && (height <= UPPER_BOUND_HEIGHT);
 	}
 
 	/**
+	 * Inspector om na te gaan of een gegeven breedte width een toegstane waarde is.
 	 * 
-	 * @param width
-	 * @return
+	 * @param 	width
+	 * 		
+	 * @return	boolean
+	 * 			| result == true if ((width > Board.LOWER_BOUND_WIDTH) && (width < Board.UPPER_BOUND_WIDTH))
 	 */
 	@Basic
 	public static boolean isValidWidth(long width){
@@ -258,8 +295,9 @@ public class Board{
 	}
 
 	/**
+	 * Inspector die de breedte van dit board teruggeeft.
 	 * 
-	 * @return
+	 * @return	long
 	 */
 	@Basic
 	@Immutable
@@ -268,8 +306,9 @@ public class Board{
 	}
 
 	/**
+	 * Inspector die de hoogte van dit board teruggeeft.
 	 * 
-	 * @return
+	 * @return	long
 	 */
 	@Basic
 	@Immutable
@@ -284,7 +323,7 @@ public class Board{
 	 */
 	@Basic
 	public boolean isValidBoardPosition(Position position){
-		if (position.getX() > this.getWidth() || position.getX() < LOWER_BOUND_WIDTH || position.getY() > this.getHeight() || position.getY() < LOWER_BOUND_HEIGTH)
+		if (position.getX() > this.getWidth() || position.getX() < LOWER_BOUND_WIDTH || position.getY() > this.getHeight() || position.getY() < LOWER_BOUND_HEIGHT)
 			return false;
 		return true;
 	}
@@ -309,5 +348,18 @@ public class Board{
 
 	public HashMap<Position, HashSet<Entity>> getMap() {
 		return this.map;
+	}
+
+	public void merge(Board board2) {
+		// TODO methode om 2 borden samen te voegen
+		
+	}
+	
+	public boolean isTerminated(){
+		return this.isTerminated;
+	}
+	public void terminate(){
+		this.isTerminated = true;
+		//this.map = null;
 	}
 }

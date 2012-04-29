@@ -21,7 +21,7 @@ import be.kuleuven.cs.som.annotate.Raw;
 // entity die ge probeert te plaatsen
 
 public class Entity {
-
+	//TODO: invar
 	/**
 	 * Positie van dit object (niet noodzakelijk).
 	 */
