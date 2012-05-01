@@ -135,7 +135,7 @@ public class Board{
 			}
 		}
 	}
-	
+
 	/**
 	 * Deze methode kijkt na of een object op een plaats geplaatst kan worden.
 	 * 
@@ -146,6 +146,11 @@ public class Board{
 	 * 			|if(!this.getMap().containsKey(pos.toString()))
 	 * 			|	true
 	 * 			|if(this.getMap().get(pos.toString()).isEmpty())
+	 * 			|	true
+	 * 			|if (this.getEntityOnPosition(pos).size() == 1){
+	 * 			|	if(this.getEntityOnPosition(pos).iterator().next() instanceof Wall)
+	 * 			|		false
+	 * 			|true
 	 * 			
 	 */
 	public boolean isPlacableOnPosition(Position pos){
@@ -160,7 +165,7 @@ public class Board{
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Deze methode plaatst een object op het bord.
 	 * 
@@ -170,41 +175,39 @@ public class Board{
 	 * @param 	entity
 	 * 			Het object dat op het bord geplaatst moet worden.
 	 * 
+	 * @post	Als de positie op het bord beschikbaar was staat het object op deze positie.
+	 * 			|if(this.isPlacableOnPosition(key))
+	 * 			|	new.get(key.toString()) == entity
 	 * 			
 	 */
 	public void putEntity(Position key, Entity entity){
-		if (entity instanceof Battery || entity instanceof Robot){
-			if (isPlacableOnPosition(key)){
-				HashSet<Entity> set = this.map.get(key.toString());
+		if (this.isPlacableOnPosition(key)){
+			if (entity instanceof Battery || entity instanceof Robot){
+				HashSet<Entity> set = this.getMap().get(key.toString());
 				if (set == null){
 					HashSet<Entity> input = new HashSet<Entity>();
 					input.add(entity);
-					map.put(key.toString(), input);
+					this.getMap().put(key.toString(), input);
 				}else{
 					set.add(entity);
 				}
-			}
-		}else if(entity instanceof Wall){
-			if (isPlacableOnPosition(key)){
-				HashSet<Entity> set = map.get(key.toString());
+			}else if(entity instanceof Wall){
 				HashSet<Entity> input = new HashSet<Entity>();
 				input.add(entity);
-				map.put(key.toString(), input);
+				this.getMap().put(key.toString(), input);
 			}
-
 		}
 	}
 
 	/**
-	 * Deze methode geeft alle robots terug die op dit board staan.
+	 * Deze methode geeft alle robots terug die op dit bord staan.
 	 * 
 	 * @return	Set<Robot>
-	 * 			voor iedere robot die een element is van this.map geldt dat deze op het einde van deze methode 
-	 * 			in de set zal zitten die gereturned zal worden. tenzij de map geen robots bevat dan geeft deze null weer
+	 * 			Voor iedere robot die een element is van this.getMap() geldt dat deze op het einde van deze methode in de set zal zitten die teruggegeven wordt. Deze set is null als er geen robots op het bord staan.
 	 * 			
 	 */
 	public Set<Robot> getRobots() {
-		Collection<HashSet<Entity>> c = map.values();
+		Collection<HashSet<Entity>> c = this.getMap().values();
 		HashSet<Robot> rob = new HashSet<Robot>();
 		for (Set<Entity> values : c ){
 			Iterator<Entity> i = values.iterator();
@@ -222,12 +225,11 @@ public class Board{
 	 * Deze methode geeft alle Batteries terug die op dit board staan.
 	 * 
 	 * @return	Set<Battery>
-	 * 			voor iedere Battery die een element is van this.map geldt dat deze op het einde van deze methode 
-	 * 			in de set zal zitten die gereturned zal worden. tenzij de map geen Batteries bevat dan geeft deze null weer.
+	 * 			Voor iedere batterij die een element is van this.getMap() geldt dat deze op het einde van deze methode in de set zal zitten die teruggegeven wordt. Deze set is null als er geen batterijen op het bord staan.
 	 * 			
 	 */
 	public Set<Battery> getBatteries() {
-		Collection<HashSet<Entity>> c = map.values();
+		Collection<HashSet<Entity>> c = this.getMap().values();
 		HashSet<Battery> bat = new HashSet<Battery>();
 		for (Set<Entity> values : c ){
 			Iterator<Entity> i = values.iterator();
@@ -245,13 +247,12 @@ public class Board{
 	/**
 	 * Deze methode geeft alle Walls terug die op dit board staan.
 	 * 
-	 * @return	Set<Battery>
-	 * 			voor iedere Wall die een element is van this.map geldt dat deze op het einde van deze methode 
-	 * 			in de set zal zitten die gereturned zal worden. tenzij de map geen Walls bevat dan geeft deze null weer.
+	 * @return	Set<Wall>
+	 * 			Voor iedere muur die een element is van this.getMap() geldt dat deze op het einde van deze methode in de set zal zitten die teruggegeven wordt. Deze set is null als er geen muren op het bord staan.
 	 * 			
 	 */
 	public Set<Wall> getWalls() {
-		Collection<HashSet<Entity>> c = map.values();
+		Collection<HashSet<Entity>> c = this.getMap().values();
 		HashSet<Wall> wall = new HashSet<Wall>();
 		for (Set<Entity> values : c ){
 			Iterator<Entity> i = values.iterator();
@@ -272,7 +273,8 @@ public class Board{
 	 * @param 	height
 	 * 	
 	 * @return	boolean 
-	 * 			| result == true if ((height > Board.LOWER_BOUND_HEIGHT) && (height < Board.UPPER_BOUND_HEIGHT))
+	 * 			|if ((height > Board.LOWER_BOUND_HEIGHT) && (height < Board.UPPER_BOUND_HEIGHT))
+	 * 			|	true
 	 */
 	@Basic
 	public static boolean isValidHeight(long height){
@@ -285,7 +287,8 @@ public class Board{
 	 * @param 	width
 	 * 		
 	 * @return	boolean
-	 * 			| result == true if ((width > Board.LOWER_BOUND_WIDTH) && (width < Board.UPPER_BOUND_WIDTH))
+	 * 			|((width > Board.LOWER_BOUND_WIDTH) && (width < Board.UPPER_BOUND_WIDTH))
+	 * 			|	true
 	 */
 	@Basic
 	public static boolean isValidWidth(long width){
@@ -293,9 +296,9 @@ public class Board{
 	}
 
 	/**
-	 * Inspector die de breedte van dit board teruggeeft.
+	 * Inspector die de breedte van dit bord teruggeeft.
 	 * 
-	 * @return	long
+	 * @return	|this.width
 	 */
 	@Basic
 	@Immutable
@@ -304,9 +307,9 @@ public class Board{
 	}
 
 	/**
-	 * Inspector die de hoogte van dit board teruggeeft.
+	 * Inspector die de hoogte van dit bord teruggeeft.
 	 * 
-	 * @return	long
+	 * @return	|this.height
 	 */
 	@Basic
 	@Immutable
@@ -315,9 +318,14 @@ public class Board{
 	}
 
 	/**
+	 * Deze methode kijkt na of een positie op het bord geldig is.
 	 * 
-	 * @param position
-	 * @return
+	 * @param	position
+	 * 			De positie waarop nagekeken moet worden.
+	 * 
+	 * @return	|if (position.getX() > this.getWidth() || position.getX() < LOWER_BOUND_WIDTH || position.getY() > this.getHeight() || position.getY() < LOWER_BOUND_HEIGHT)
+	 * 			|	false
+	 * 			|true
 	 */
 	@Basic
 	public boolean isValidBoardPosition(Position position){
@@ -350,9 +358,9 @@ public class Board{
 
 	public void merge(Board board2) {
 		// TODO methode om 2 borden samen te voegen
-		
+
 	}
-	
+
 	public boolean isTerminated(){
 		return this.isTerminated;
 	}
