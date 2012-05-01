@@ -352,7 +352,9 @@ public class Board{
 		Orientation beginor = robot.getOrientation();
 		Entity result = null;
 		while(robot.getBoard().isValidBoardPosition(Calculator.getNextPosition(beginpos, beginor)) && result == null){
-			
+			if(!robot.getBoard().getEntityOnPosition(Calculator.getNextPosition(beginpos, beginor)).isEmpty()){
+				//TODO : Samuel weet wel wat hier moet komen
+			}
 		}
 		
 		
