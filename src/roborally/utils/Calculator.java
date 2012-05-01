@@ -370,11 +370,11 @@ public class Calculator {
 		return result;
 	}
 	
-	public static List<Object> getKeysFromValue(Map<?, ?> hashmap, Object value){
-	    List <Object>list = new ArrayList<Object>();
-	    for(Object o:hashmap.keySet()){
-	        if(hashmap.get(o).equals(value)) {
-	            list.add(o);
+	public static List<Node> getNodesFromPosition(Map<Position, Node> hashmap, Position pos){
+	    List <Node>list = new ArrayList<Node>();
+	    for(Position o:hashmap.keySet()){
+	        if(Position.posEquals(o, pos)) {
+	            list.add(hashmap.get(o));
 	        }
 	    }
 	    return list;

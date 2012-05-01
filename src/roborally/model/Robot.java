@@ -211,7 +211,7 @@ public class Robot extends Entity{
 	 */
 	public Energy getEnergyRequiredToReach(Position position){
 		HashMap<Position, Node> resultpad = Calculator.aStarOnTo(this, position);
-		List results = Calculator.getKeysFromValue(resultpad, position);
+		List results = Calculator.getNodesFromPosition(resultpad, position);
 		Node n = (Node) results.get(0);
 		return n.getGCost();
 	}
