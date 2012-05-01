@@ -346,33 +346,6 @@ public class Board{
 		return this.map;
 	}
 
-
-	public static Entity getFirstHit(Robot robot){
-		Position beginpos = robot.getPosition();
-		Orientation beginor = robot.getOrientation();
-		Entity result = null;
-		while(robot.getBoard().isValidBoardPosition(Calculator.getNextPosition(beginpos, beginor)) && result == null){
-			if(!robot.getBoard().getEntityOnPosition(Calculator.getNextPosition(beginpos, beginor)).isEmpty()){
-				//TODO : Samuel weet wel wat hier moet komen
-			}
-		}
-		
-		
-		// bepaalt welke entity door een laser gaat geraakt worden 
-		Position pos = Calculator.getNextPosition(robot.getPosition(), robot.getOrientation());
-		if (robot.getBoard().getMap().containsKey(pos.toString())){
-			Set hits = robot.getBoard().getMap().get(pos.toString());
-			Random rndm = new Random();
-			Object hit = hits.toArray()[rndm.nextInt(hits.toArray().length)];
-			return (Entity) hit;
-		}else{
-			//dummy Robot maken met de nieuwe positie en dez orientatie en dan dez methode oproepen tot wnn we result hebben
-			Robot dummy = new Robot(robot.getOrientation(), new Energy(0));
-			dummy.setPosition(pos);
-			return getFirstHit(dummy);
-		}
-	}
-
 	public void merge(Board board2) {
 		// TODO methode om 2 borden samen te voegen
 

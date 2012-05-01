@@ -2,8 +2,10 @@ package roborally.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -65,7 +67,7 @@ public class Robot extends Entity{
 	 * De set van batterijen die de robot bezit.
 	 */
 	private Set<Battery> Possessions = new TreeSet<Battery>(this.bc);
-	
+
 	/**
 	 * Deze methode maakt een nieuwe robot aan.
 	 * 
@@ -177,7 +179,7 @@ public class Robot extends Entity{
 			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST.getEnergy());
 		}
 	}
-	
+
 	/**
 	 * Deze methode beweegt de robot een stap vooruit indien mogelijk.
 	 * 
@@ -200,7 +202,7 @@ public class Robot extends Entity{
 		this.setPosition(destination);
 		this.getEnergy().setEnergy(this.getEnergy().getEnergy() - moveCost(this).getEnergy());
 	}
-	
+
 	/**
 	 * Deze methode geeft de energie terug die nodig is om een bepaalde plaats te bereiken.
 	 * 
@@ -214,7 +216,7 @@ public class Robot extends Entity{
 		Node n = resultpad.get(position.toString());
 		return n.getGCost();
 	}
-	
+
 	/**
 	 * Deze methode verplaatst de robot zo dicht mogelijk bij een andere robot.
 	 * 
@@ -222,7 +224,7 @@ public class Robot extends Entity{
 	 * 			De robot waar naartoe moet bewogen worden.
 	 */
 	public void moveNextTo(Robot robot){
-		
+
 	}
 
 	/**
@@ -238,15 +240,22 @@ public class Robot extends Entity{
 	 * 			|new.getEnergy() == new Energy(this.getEnergy().getEnergy() - SHOOT_COST.getEnergy())
 	 */
 	public void shoot() throws IllegalStateException{
-		if(this.isOnBoard()){
-			Entity ent = this.getBoard().getFirstHit(this);
-			ent.destroy();
+		if(this.isOnBoard()){	
+			Position beginpos = this.getPosition();
+			Orientation beginor = this.getOrientation();
+			while(this.getBoard().isValidBoardPosition(Calculator.getNextPosition(beginpos, beginor))){
+				HashSet<Entity> content = this.getBoard().getEntityOnPosition(Calculator.getNextPosition(beginpos, beginor));
+				if(!content.isEmpty()){
+					Random rndm = new Random();
+					((Entity) content.toArray()[rndm.nextInt(content.toArray().length)]).destroy();
+				}
+			}
 			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - SHOOT_COST.getEnergy());
 		}else{
 			throw new IllegalStateException("De robot staat niet op een bord.");
 		}
 	}
-	
+
 	/**
 	 * Deze methode laadt een robot op met de opgegeven hoeveelheid energie.
 	 * 
@@ -267,7 +276,7 @@ public class Robot extends Entity{
 			newEnergy = MAXENERGY;
 		this.getEnergy().setEnergy(newEnergy.getEnergy());
 	}
-	
+
 	/**
 	 * Deze methode berekent de kost van 1 move.
 	 * 
@@ -280,7 +289,7 @@ public class Robot extends Entity{
 	public static Energy moveCost(Robot robot){
 		return new Energy(MOVE_COST.getEnergy() + MOVE_COST_PER_KG.getEnergy()*(robot.getTotalWeight().getWeight() / 1000));
 	}
-	
+
 	/**
 	 * Geeft het totale gewicht van alles wat de robot draagt.
 	 * 
@@ -293,7 +302,7 @@ public class Robot extends Entity{
 			totalWeight += itr.next().getWeight().getWeight();
 		return new Weight(totalWeight);
 	}
-	
+
 	/**
 	 * Geeft een set terug van alle batterijen die de robot momenteel draagt.
 	 * 
@@ -377,7 +386,7 @@ public class Robot extends Entity{
 			battery.putOnBoard(this.getBoard(), this.getPosition());
 		}
 	}
-	
+
 	/**
 	 * Deze methode kijkt na of de robot kan draaien.
 	 * 
@@ -392,7 +401,7 @@ public class Robot extends Entity{
 			return false;
 		return isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST.getEnergy()));
 	}
-	
+
 	/**
 	 * Deze methode kijkt na of de robot kan moven.
 	 * 
