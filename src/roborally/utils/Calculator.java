@@ -51,11 +51,11 @@ public class Calculator {
 			Node currentNode = getMinimalFNode(openSet);
 			if (pos.getNeighbours(a.getBoard()).contains(currentNode.getPosition())){
 				openSet.remove(currentNode.getPosition());
-		        closedSet.put(currentNode.getPosition(), currentNode);
+		        closedSet.put(currentNode.getPosition().toString(), currentNode);
 				return closedSet;
 			}
 			openSet.remove(currentNode.getPosition());
-	        closedSet.put(currentNode.getPosition(), currentNode);
+	        closedSet.put(currentNode.getPosition().toString(), currentNode);
 	        
 	        ArrayList<Position> neighbours = currentNode.getPosition().getNeighbours(a.getBoard());
 	        for (Position neighbour : neighbours){
@@ -66,7 +66,7 @@ public class Calculator {
 	        	boolean tentativeIsBetter = false;
 	        	
 	        	if (!openSet.containsKey(neighbour)){
-	        		openSet.put(neighbour,new Node(neighbour,currentNode.getBoard(),getGCost(currentNode, neighbour, a),getHCost(neighbour, getNodeOrientation(currentNode, neighbour),pos, a),
+	        		openSet.put(neighbour.toString(),new Node(neighbour,currentNode.getBoard(),getGCost(currentNode, neighbour, a),getHCost(neighbour, getNodeOrientation(currentNode, neighbour),pos, a),
 	        				getNodeOrientation(currentNode, neighbour),currentNode));
 	        		tentativeIsBetter = true;
 	        	}
@@ -93,48 +93,48 @@ public class Calculator {
 	}*/
 
 
-	public static HashMap<Position,Node> aStarOnTo(Robot a, Position pos){
+	public static HashMap<String,Node> aStarOnTo(Robot a, Position pos){
 		//deze gaat direct naar de positie die opgegeven wordt
 		
-		HashMap<Position,Node> open = new HashMap<Position,Node>(); 
+		HashMap<String,Node> open = new HashMap<String,Node>(); 
 		// de experimentele posities die nog geëvalueerd moeten/kunnen worden
 		Node startNode = new Node(a.getPosition(), a.getBoard(), new Energy(0) , 
 				getHCost(a.getPosition(), a.getOrientation(),pos, a),a.getOrientation(), null);
 		
-		open.put(a.getPosition(), startNode);
+		open.put(a.getPosition().toString(), startNode);
 		// de startPositie aan de open list toevoegen
-		HashMap<Position,Node> closed = new HashMap<Position, Node>(); 
+		HashMap<String,Node> closed = new HashMap<String, Node>(); 
 		// de lijst met al geëvalueerde posities
 		Board board = a.getBoard();
 		
 		while ( !open.isEmpty()){
 			Node currentNode = getMinimalFNode(open);
-			if ((pos.getX() == currentNode.getPosition().getX()) && (pos.getY() == currentNode.getPosition().getY())){
-				open.remove(currentNode.getPosition());
-		        closed.put(currentNode.getPosition(), currentNode);
+			if (pos.toString().equals(currentNode.getPosition().toString())){
+				open.remove(currentNode.getPosition().toString());
+		        closed.put(currentNode.getPosition().toString(), currentNode);
 				return closed;
 			}
 			
-			open.remove(currentNode.getPosition());
-	        closed.put(currentNode.getPosition(), currentNode);
+			open.remove(currentNode.getPosition().toString());
+	        closed.put(currentNode.getPosition().toString(), currentNode);
 	        
 	        ArrayList<Position> neighbours = currentNode.getPosition().getNeighbours(a.getBoard());
 	        for (Position neighbour : neighbours){
 	        	double gCostNeighbour = getGCost(currentNode, neighbour, a ).getEnergy();
-	        	if (closed.containsKey(neighbour)){
-	        		if(closed.get(neighbour).getGCost().getEnergy() > gCostNeighbour){
-	        			closed.get(neighbour).setGCost(new Energy(gCostNeighbour));
-	        			closed.get(neighbour).setParent(currentNode);
+	        	if (closed.containsKey(neighbour.toString())){
+	        		if(closed.get(neighbour.toString()).getGCost().getEnergy() > gCostNeighbour){
+	        			closed.get(neighbour.toString()).setGCost(new Energy(gCostNeighbour));
+	        			closed.get(neighbour.toString()).setParent(currentNode);
 	        		}
 	         		continue;
 	        	}
-	        	else if ((open.containsKey(neighbour)) && (open.get(neighbour).getGCost().getEnergy() > gCostNeighbour)){
-	        		open.get(neighbour).setGCost(new Energy(gCostNeighbour));
-        			open.get(neighbour).setParent(currentNode);
+	        	else if ((open.containsKey(neighbour.toString())) && (open.get(neighbour.toString()).getGCost().getEnergy() > gCostNeighbour)){
+	        		open.get(neighbour.toString()).setGCost(new Energy(gCostNeighbour));
+        			open.get(neighbour.toString()).setParent(currentNode);
 	        	}
 	        	else{
 	        		if (board.isPlacableOnPosition(neighbour)){
-	        			open.put(neighbour, new Node(neighbour,board, new Energy(gCostNeighbour),
+	        			open.put(neighbour.toString(), new Node(neighbour,board, new Energy(gCostNeighbour),
 	        					getHCost(neighbour,getNodeOrientation(currentNode,neighbour) , pos, a),
 	        					getNodeOrientation(currentNode,neighbour),currentNode));
 	        		}
@@ -304,7 +304,7 @@ public class Calculator {
 		return result;
 	}
 	
-	public static Node getMinimalFNode(HashMap<Position, Node> map){
+	public static Node getMinimalFNode(HashMap<String, Node> map){
 		Collection<Node> c = map.values();
 		Iterator<Node> itr = c.iterator();
 		Node minimalNode = itr.next();

@@ -210,7 +210,7 @@ public class Robot extends Entity{
 	 * @return	De energie die nodig is om de plaats te bereiken.
 	 */
 	public Energy getEnergyRequiredToReach(Position position){
-		HashMap<Position, Node> resultpad = Calculator.aStarOnTo(this, position);
+		HashMap<String, Node> resultpad = Calculator.aStarOnTo(this, position);
 		Node n = resultpad.get(position.toString());
 		return n.getGCost();
 	}
