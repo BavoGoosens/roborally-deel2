@@ -8,9 +8,10 @@ import java.util.Set;
 
 
 public class Facade implements IFacade<Board, Robot, Wall, Battery>{
-	
-		
+
+
 	public Facade(){}
+	//TODO: alle exceptions catchen en volledig nakijken
 
 	@Override
 	public Board createBoard(long width, long height) {
@@ -24,7 +25,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 	}
 
 	@Override
-	public Battery createBattery(double initialEnergy, int weight) {
+	public Battery createBattery(double initialEnergy, int weight){
 		Battery battery = new Battery(new Energy((int)initialEnergy), new Weight(weight));
 		return battery;
 	}
@@ -48,7 +49,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 			throw new IllegalStateException("not on a board");
 		}
 	}
-	
+
 	public static Orientation getOrientationEnum(int i ){
 		int tmp = Math.abs(i % 4);
 		if(i < 0){
@@ -70,7 +71,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Robot createRobot(int orientation, double initialEnergy) {
 		Robot robot = new Robot(getOrientationEnum(orientation),new Energy((int)initialEnergy));
@@ -81,7 +82,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 	public void putRobot(Board board, long x, long y, Robot robot) {
 		Position pos = new Position(x , y);
 		robot.putOnBoard(board, pos);
-		
+
 	}
 
 	@Override
@@ -140,13 +141,15 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 	@Override
 	public int isMinimalCostToReach17Plus() {
-		// TODO einde
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public double getMinimalCostToReach(Robot robot, long x, long y) {
-		return robot.getEnergyRequiredToReach(new Position(x, y)).getEnergy();
+		double result = robot.getEnergyRequiredToReach(new Position(x, y)).getEnergy();
+		if(robot.getEnergy().getEnergy() < result)
+			return -1;
+		return result;
 	}
 
 	@Override
@@ -179,7 +182,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 	@Override
 	public long getWallX(Wall wall) throws IllegalStateException,
-			UnsupportedOperationException {
+	UnsupportedOperationException {
 		try {return wall.getPosition().getX();} catch (IllegalArgumentException esc) {
 			throw new IllegalStateException("not on a board");
 		}
@@ -187,7 +190,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 	@Override
 	public long getWallY(Wall wall) throws IllegalStateException,
-			UnsupportedOperationException {
+	UnsupportedOperationException {
 		try {return wall.getPosition().getY();} catch (IllegalArgumentException esc) {
 			throw new IllegalStateException("not on a board");
 		}
@@ -209,4 +212,4 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 	}
 }
 
-	
+

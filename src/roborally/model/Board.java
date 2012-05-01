@@ -168,6 +168,7 @@ public class Board{
 	 * 			De positie waar het object geplaatst moet worden.
 	 * 			
 	 * @param 	entity
+	 * 			Het object dat op het bord geplaatst moet worden.
 	 * 
 	 * 			
 	 */
