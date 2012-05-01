@@ -17,7 +17,7 @@ public class Energy {
 	/**
 	 * Hoeveelheid energie opgeslagen in dit object.
 	 */
-	private int amount;
+	private double amount;
 	
 	/**
 	 * Deze methode maakt een nieuwe hoeveelheid energie aan.
@@ -28,7 +28,7 @@ public class Energy {
 	 * @pre		De hoeveelheid mag niet negatief zijn.
 	 * 			|amount >= 0
 	 */
-	public Energy(int amount){
+	public Energy(double amount){
 		this.setEnergy(amount);
 	}
 	
@@ -38,7 +38,7 @@ public class Energy {
 	 * @return	this.amount
 	 */
 	@Basic
-	public int getEnergy(){
+	public double getEnergy(){
 		return this.amount;
 	}
 	
@@ -53,7 +53,7 @@ public class Energy {
 	 * 
 	 * @post	new.amount == amount
 	 */
-	public void setEnergy(int amount){
+	public void setEnergy(double amount){
 		this.amount = amount;
 	}
 	

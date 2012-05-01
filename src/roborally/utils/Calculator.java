@@ -122,7 +122,7 @@ public class Calculator {
 	        
 	        ArrayList<Position> neighbours = currentNode.getPosition().getNeighbours(a.getBoard());
 	        for (Position neighbour : neighbours){
-	        	int gCostNeighbour = getGCost(currentNode, neighbour, a ).getEnergy();
+	        	double gCostNeighbour = getGCost(currentNode, neighbour, a ).getEnergy();
 	        	if (closed.containsKey(neighbour)){
 	        		if(closed.get(neighbour).getGCost().getEnergy() > gCostNeighbour){
 	        			closed.get(neighbour).setGCost(new Energy(gCostNeighbour));
