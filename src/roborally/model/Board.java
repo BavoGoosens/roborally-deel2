@@ -42,10 +42,9 @@ public class Board{
 	 */
 	private boolean isTerminated = false;
 	/**
-	 * Deze HashMap houdt een lijst van HashSets bij per Position met in elke HashSet alle objecten op die plaats.
+	 * Deze HashMap houdt een lijst van HashSets bij per Position (als String) met in elke HashSet alle objecten op die plaats.
 	 */
 	private final HashMap <String, HashSet<Entity>> map;
-
 	/**
 	 * De maximale breedte die een bord kan hebben.
 	 */
@@ -126,8 +125,8 @@ public class Board{
 	 * 			De positie in het bord die moet nagekeken worden.
 	 * 
 	 * @post	De positie is leeg indien er geen objecten meer stonden.
-	 * 			|if(this.getMap().containsKey(pos) && this.getMap().get(pos).isEmpty())
-	 * 			|	new.getMap().containsKey(pos) == false
+	 * 			|if(this.getMap().containsKey(pos.toString()) && this.getMap().get(pos.toString()).isEmpty())
+	 * 			|	new.getMap().containsKey(pos.toString()) == false
 	 */
 	public void cleanBoardPosition(Position pos){
 		if(this.getMap().containsKey(pos.toString())){
@@ -144,9 +143,9 @@ public class Board{
 	 * 			De positie die moet nagekeken worden.
 	 * 
 	 * @return	Boolean die true is als de positie niet door een muur ingenomen is.
-	 * 			|if(!this.getMap().containsKey(pos))
+	 * 			|if(!this.getMap().containsKey(pos.toString()))
 	 * 			|	true
-	 * 			|if(this.getMap().get(pos).isEmpty())
+	 * 			|if(this.getMap().get(pos.toString()).isEmpty())
 	 * 			
 	 */
 	public boolean isPlacableOnPosition(Position pos){
