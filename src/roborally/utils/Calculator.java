@@ -10,6 +10,7 @@ import java.util.Map;
 import roborally.basics.Energy;
 import roborally.basics.Orientation;
 import roborally.basics.Position;
+import roborally.model.Board;
 import roborally.model.Node;
 import roborally.model.Robot;
 
@@ -106,10 +107,11 @@ public class Calculator {
 		// de startPositie aan de open list toevoegen
 		HashMap<Position,Node> closed = new HashMap<Position, Node>(); 
 		// de lijst met al geëvalueerde posities
+		Board board = a.getBoard();
 		
 		while ( !open.isEmpty()){
 			Node currentNode = getMinimalFNode(open);
-			if (pos.equals(currentNode.getPosition())){
+			if ((pos.getX() == currentNode.getPosition().getX()) && (pos.getY() == currentNode.getPosition().getY())){
 				open.remove(currentNode.getPosition());
 		        closed.put(currentNode.getPosition(), currentNode);
 				return closed;
@@ -120,25 +122,24 @@ public class Calculator {
 	        
 	        ArrayList<Position> neighbours = currentNode.getPosition().getNeighbours(a.getBoard());
 	        for (Position neighbour : neighbours){
-	        	if (closed.containsKey(neighbour))
-	        		continue;
-	        	
-	        	Energy tentativeGScore = getGCost(currentNode,neighbour, a);
-	        	boolean tentativeIsBetter = false;
-	        	
-	        	if (!open.containsKey(neighbour)){
-	        		open.put(neighbour,new Node(neighbour,currentNode.getBoard(),getGCost(currentNode, neighbour, a),getHCost(neighbour, getNodeOrientation(currentNode, neighbour),pos, a),
-	        				getNodeOrientation(currentNode, neighbour),currentNode));
-	        		tentativeIsBetter = true;
+	        	int gCostNeighbour = getGCost(currentNode, neighbour, a ).getEnergy();
+	        	if (closed.containsKey(neighbour)){
+	        		if(closed.get(neighbour).getGCost().getEnergy() > gCostNeighbour){
+	        			closed.get(neighbour).setGCost(new Energy(gCostNeighbour));
+	        			closed.get(neighbour).setParent(currentNode);
+	        		}
+	         		continue;
 	        	}
-	        	else if (tentativeGScore.getEnergy() < open.get(neighbour).getGCost().getEnergy())
-	        		tentativeIsBetter = true;
-	        	else
-	        		tentativeIsBetter = false;	        		
-	        	
-	        	if (tentativeIsBetter == true){
-	        		open.get(neighbour).setParent(currentNode);
-	        		open.get(neighbour).setGCost(tentativeGScore);
+	        	else if ((open.containsKey(neighbour)) && (open.get(neighbour).getGCost().getEnergy() > gCostNeighbour)){
+	        		open.get(neighbour).setGCost(new Energy(gCostNeighbour));
+        			open.get(neighbour).setParent(currentNode);
+	        	}
+	        	else{
+	        		if (board.isPlacableOnPosition(neighbour)){
+	        			open.put(neighbour, new Node(neighbour,board, new Energy(gCostNeighbour),
+	        					getHCost(neighbour,getNodeOrientation(currentNode,neighbour) , pos, a),
+	        					getNodeOrientation(currentNode,neighbour),currentNode));
+	        		}
 	        	}
 	        }
 			
@@ -159,15 +160,38 @@ public class Calculator {
 		return Orientation.RIGHT;
 	}
 
-
+	/**
+	 * Deze methode gaat de heuristiek kost naar een gegeven positie vanuit de meegegeven node berekenen.
+	 * 
+	 * @param 	position
+	 * 			
+	 * @param 	orientation
+	 * 			
+	 * @param 	pos
+	 * 			
+	 * @param 	robot
+	 * 			
+	 * @return	Energy
+	 * 		
+	 * 			
+	 */
 	private static Energy getHCost(Position position, Orientation orientation, Position pos, Robot robot) {
+		//de manhattan kost om met de robot van de beginpositie tot de eindpos te geraken.
 		Energy manHattanCost = new Energy(Robot.moveCost(robot).getEnergy() * (int) calculateManhattan(position, pos));
 		Energy turnCost = new Energy(Robot.TURN_COST.getEnergy()*getTurns(new Node(position,orientation,robot.getBoard()),pos));
 		return Energy.energySum(manHattanCost, turnCost);
 	}
 
+	/**
+	 * 
+	 * @param currentNode
+	 * @param pos
+	 * @param robot
+	 * @return
+	 */
 	private static Energy getGCost(Node currentNode, Position pos, Robot robot) {
-		return Energy.energySum(Energy.energySum(currentNode.getGCost(), Robot.moveCost(robot)), new Energy(Robot.TURN_COST.getEnergy()*getTurns(currentNode, pos)));
+		return Energy.energySum(Energy.energySum(currentNode.getGCost(), Robot.moveCost(robot)),
+				new Energy(Robot.TURN_COST.getEnergy()*getTurns(currentNode, pos)));
 	}
 	/**
 	 * methode voor het aantal turns terug te geven om van een node met orientatie m naar een nabijgelegen node te 
