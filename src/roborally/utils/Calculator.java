@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import roborally.basics.Energy;
 import roborally.basics.Orientation;
@@ -33,18 +31,18 @@ public class Calculator {
 	} 
 	
 	
-	public static HashMap<Position,Node> aStarNextTo(Robot a, Position pos){
+	public static HashMap<String,Node> aStarNextTo(Robot a, Position pos){
 		//hier gaat de robot uiteindelijk naast de positie moeten uitkomen
 	
 		
-		HashMap<Position,Node> openSet = new HashMap<Position,Node>(); 
+		HashMap<String,Node> openSet = new HashMap<String,Node>(); 
 		// de experimentele posities die nog geëvalueerd moeten/kunnen worden
 		Node startNode = new Node(a.getPosition(), a.getBoard(), new Energy(0) , 
 				getHCost(a.getPosition(), a.getOrientation(),pos, a),a.getOrientation(), null);
 		
-		openSet.put(a.getPosition(), startNode);
+		openSet.put(a.getPosition().toString(), startNode);
 		// de startPositie aan de open list toevoegen
-		HashMap<Position,Node> closedSet = new HashMap<Position, Node>(); 
+		HashMap<String,Node> closedSet = new HashMap<String, Node>(); 
 		// de lijst met al geëvalueerde posities
 		
 		/*Position goal = getBestPosToMoveTo(a, pos);*/

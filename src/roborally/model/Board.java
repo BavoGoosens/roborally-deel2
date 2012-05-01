@@ -44,7 +44,7 @@ public class Board{
 	/**
 	 * Deze HashMap houdt een lijst van HashSets bij per Position met in elke HashSet alle objecten op die plaats.
 	 */
-	private final HashMap <Position, HashSet<Entity>> map;
+	private final HashMap <String, HashSet<Entity>> map;
 
 	/**
 	 * De maximale breedte die een bord kan hebben.
@@ -84,7 +84,7 @@ public class Board{
 	public Board (long height, long width){
 		this.height = height;
 		this.width = width;
-		this.map = new HashMap<Position, HashSet<Entity>>();
+		this.map = new HashMap<String, HashSet<Entity>>();
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class Board{
 	 * 			|this.getMap().get(pos)
 	 */
 	public HashSet<Entity> getEntityOnPosition(Position pos){
-		return this.getMap().get(pos);
+		return this.getMap().get(pos.toString());
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class Board{
 		if(!ent.getBoard().isValidBoardPosition(pos)){
 			throw new IllegalStateException("Dit object bevindt zich niet op een geldige positie.");
 		}
-		this.getMap().get(pos).remove(ent);
+		this.getMap().get(pos.toString()).remove(ent);
 		this.cleanBoardPosition(pos);
 	}
 
@@ -130,9 +130,9 @@ public class Board{
 	 * 			|	new.getMap().containsKey(pos) == false
 	 */
 	public void cleanBoardPosition(Position pos){
-		if(this.getMap().containsKey(pos)){
-			if(this.getMap().get(pos).isEmpty()){
-				this.getMap().remove(pos);
+		if(this.getMap().containsKey(pos.toString())){
+			if(this.getMap().get(pos.toString()).isEmpty()){
+				this.getMap().remove(pos.toString());
 			}
 		}
 	}
@@ -150,9 +150,9 @@ public class Board{
 	 * 			
 	 */
 	public boolean isPlacableOnPosition(Position pos){
-		if (!this.getMap().containsKey(pos))
+		if (!this.getMap().containsKey(pos.toString()))
 			return true;
-		if (this.getMap().get(pos).isEmpty())
+		if (this.getMap().get(pos.toString()).isEmpty())
 			return true;
 		if (this.getEntityOnPosition(pos).size() == 1){
 			Entity obj = this.getEntityOnPosition(pos).iterator().next();
@@ -175,21 +175,21 @@ public class Board{
 	public void putEntity(Position key, Entity entity){
 		if (entity instanceof Battery || entity instanceof Robot){
 			if (isPlacableOnPosition(key)){
-				HashSet<Entity> set = this.map.get(key);
+				HashSet<Entity> set = this.map.get(key.toString());
 				if (set == null){
 					HashSet<Entity> input = new HashSet<Entity>();
 					input.add(entity);
-					map.put(key, input);
+					map.put(key.toString(), input);
 				}else{
 					set.add(entity);
 				}
 			}
 		}else if(entity instanceof Wall){
 			if (isPlacableOnPosition(key)){
-				HashSet<Entity> set = map.get(key);
+				HashSet<Entity> set = map.get(key.toString());
 				HashSet<Entity> input = new HashSet<Entity>();
 				input.add(entity);
-				map.put(key, input);
+				map.put(key.toString(), input);
 			}
 
 		}
@@ -330,8 +330,8 @@ public class Board{
 	public static Entity getFirstHit(Robot robot) {
 		// bepaalt welke entity door een laser gaat geraakt worden 
 		Position pos = Calculator.getNextPosition(robot.getPosition(), robot.getOrientation());
-		if (robot.getBoard().getMap().containsKey(pos)){
-			Set hits = robot.getBoard().getMap().get(pos);
+		if (robot.getBoard().getMap().containsKey(pos.toString())){
+			Set hits = robot.getBoard().getMap().get(pos.toString());
 			Random rndm = new Random();
 			Object hit = hits.toArray()[rndm.nextInt(hits.toArray().length)];
 			return (Entity) hit;
@@ -344,7 +344,7 @@ public class Board{
 	}
 
 
-	public HashMap<Position, HashSet<Entity>> getMap() {
+	public HashMap<String, HashSet<Entity>> getMap() {
 		return this.map;
 	}
 

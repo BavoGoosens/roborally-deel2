@@ -211,8 +211,7 @@ public class Robot extends Entity{
 	 */
 	public Energy getEnergyRequiredToReach(Position position){
 		HashMap<Position, Node> resultpad = Calculator.aStarOnTo(this, position);
-		List results = Calculator.getNodesFromPosition(resultpad, position);
-		Node n = (Node) results.get(0);
+		Node n = resultpad.get(position.toString());
 		return n.getGCost();
 	}
 	
@@ -224,9 +223,9 @@ public class Robot extends Entity{
 	 */
 	public void moveNextTo(Robot robot){
 		ArrayList <Position> neighbours = robot.getPosition().getNeighbours(this.getBoard());
-		HashMap<Position, Node> resultpad = Calculator.aStarNextTo(this, robot.getPosition());
-		if (resultpad.containsKey(neighbours)){
-			Node n = resultpad.get(neighbours); 
+		HashMap<String, Node> resultpad = Calculator.aStarNextTo(this, robot.getPosition());
+		if (resultpad.containsKey(neighbours.toString())){
+			Node n = resultpad.get(neighbours.toString()); 
 			if (this.energy.getEnergy() >= n.getGCost().getEnergy()){
 				setPosition(n.getPosition());
 				this.getEnergy().setEnergy(this.getEnergy().getEnergy()- n.getGCost().getEnergy());
