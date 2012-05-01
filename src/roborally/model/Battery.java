@@ -19,12 +19,12 @@ public class Battery extends Entity{
 	/**
 	 * Maximale energie die een batterij kan hebben.
 	 */
-	public final static int MAXBATTERYENERGY = 5000;
+	public final static Energy MAXBATTERYENERGY = new Energy(5000);
 	
 	/**
 	 * Minimale energie die een batterij kan hebben.
 	 */
-	public final static int MINBATTERYENERGY = 0;
+	public final static Energy MINBATTERYENERGY = new Energy(0);
 	/**
 	 * Energie in de batterij.
 	 */
@@ -107,7 +107,7 @@ public class Battery extends Entity{
 	 * 			|energyAmount >= MINBATTERYENERGY && energyAmount <= MAXBATTERYENERGY
 	 */
 	public static boolean isValidBatteryEnergyAmount(Energy energy){
-		return (energy.getEnergy() >= MINBATTERYENERGY && energy.getEnergy() <= MAXBATTERYENERGY);
+		return (energy.getEnergy() >= MINBATTERYENERGY.getEnergy() && energy.getEnergy() <= MAXBATTERYENERGY.getEnergy());
 	}
 	
 }

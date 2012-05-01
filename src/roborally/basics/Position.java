@@ -137,11 +137,17 @@ public class Position {
 		}
 		return positions;
 	}
-	
-	public static boolean posEquals(Position pos1, Position pos2) {
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
 		// TODO Auto-generated method stub
-		return (pos1.getX() == pos2.getX() && pos1.getY() == pos2.getY());
+		return this.getX() + "," + this.getY();
 	}
+	
+	
 	
 	
 }

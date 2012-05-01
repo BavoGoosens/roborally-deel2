@@ -370,14 +370,4 @@ public class Calculator {
 		return result;
 	}
 	
-	public static List<Node> getNodesFromPosition(Map<Position, Node> hashmap, Position pos){
-	    List <Node>list = new ArrayList<Node>();
-	    for(Position o:hashmap.keySet()){
-	        if(Position.posEquals(o, pos)) {
-	            list.add(hashmap.get(o));
-	        }
-	    }
-	    return list;
-	  }
-	
 }

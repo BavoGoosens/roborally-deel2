@@ -1,6 +1,5 @@
 package roborally.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,7 +11,6 @@ import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 
 import roborally.basics.Energy;
-import roborally.basics.Orientation;
 import roborally.basics.Position;
 import roborally.utils.Calculator;
 
