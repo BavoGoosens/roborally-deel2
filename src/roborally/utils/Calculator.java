@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import roborally.basics.Energy;
 import roborally.basics.Orientation;
 import roborally.basics.Position;
@@ -342,5 +345,15 @@ public class Calculator {
 		}
 		return result;
 	}
+	
+	public static List<Object> getKeysFromValue(Map<?, ?> hashmap, Object value){
+	    List <Object>list = new ArrayList<Object>();
+	    for(Object o:hashmap.keySet()){
+	        if(hashmap.get(o).equals(value)) {
+	            list.add(o);
+	        }
+	    }
+	    return list;
+	  }
 	
 }

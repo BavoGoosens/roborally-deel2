@@ -3,6 +3,7 @@ package roborally.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -210,7 +211,8 @@ public class Robot extends Entity{
 	 */
 	public Energy getEnergyRequiredToReach(Position position){
 		HashMap<Position, Node> resultpad = Calculator.aStarOnTo(this, position);
-		Node n = resultpad.get(position);
+		List results = Calculator.getKeysFromValue(resultpad, position);
+		Node n = (Node) results.get(0);
 		return n.getGCost();
 	}
 	
