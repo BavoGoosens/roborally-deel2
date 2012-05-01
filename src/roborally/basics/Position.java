@@ -137,4 +137,11 @@ public class Position {
 		}
 		return positions;
 	}
+
+	public boolean equals(Position pos) {
+		// TODO Auto-generated method stub
+		return (pos.getX() == pos.getX() && pos.getY() == pos.getY());
+	}
+	
+	
 }
