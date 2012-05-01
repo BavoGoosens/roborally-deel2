@@ -138,16 +138,12 @@ public class Position {
 		return positions;
 	}
 
-	/* (non-Javadoc)
+	/* Deze methode maakt een String op basis van een Position.
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return this.getX() + "," + this.getY();
-	}
-	
-	
-	
-	
+	}	
 }
