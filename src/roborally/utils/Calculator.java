@@ -30,69 +30,21 @@ public class Calculator {
 		return (Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY()));
 	} 
 	
-	
-	public static HashMap<String,Node> aStarNextTo(Robot a, Position pos){
-		//hier gaat de robot uiteindelijk naast de positie moeten uitkomen
-	
+	public static HashMap<String,Node> getReachables(Robot robot){
+		double upperbound = robot.getEnergy().getEnergy();
+		ArrayList<Position> explorable = new ArrayList<Position>();
+		ArrayList<Position> startneighbours = robot.getPosition().getNeighbours(robot.getBoard());
+		explorable.addAll(startneighbours);
+		HashMap<String,Node> reachables = new HashMap<String,Node>();
 		
-		HashMap<String,Node> openSet = new HashMap<String,Node>(); 
-		// de experimentele posities die nog geëvalueerd moeten/kunnen worden
-		Node startNode = new Node(a.getPosition(), a.getBoard(), new Energy(0) , 
-				getHCost(a.getPosition(), a.getOrientation(),pos, a),a.getOrientation(), null);
-		
-		openSet.put(a.getPosition().toString(), startNode);
-		// de startPositie aan de open list toevoegen
-		HashMap<String,Node> closedSet = new HashMap<String, Node>(); 
-		// de lijst met al geëvalueerde posities
-		
-		/*Position goal = getBestPosToMoveTo(a, pos);*/
-		
-		while (!openSet.isEmpty()){
-			Node currentNode = getMinimalFNode(openSet);
-			if (pos.getNeighbours(a.getBoard()).contains(currentNode.getPosition())){
-				openSet.remove(currentNode.getPosition());
-		        closedSet.put(currentNode.getPosition().toString(), currentNode);
-				return closedSet;
+		while(!explorable.isEmpty()){
+			
 			}
-			openSet.remove(currentNode.getPosition());
-	        closedSet.put(currentNode.getPosition().toString(), currentNode);
-	        
-	        ArrayList<Position> neighbours = currentNode.getPosition().getNeighbours(a.getBoard());
-	        for (Position neighbour : neighbours){
-	        	if (closedSet.containsKey(neighbour))
-	        		continue;
-	        	
-	        	Energy tentativeGScore = getGCost(currentNode,neighbour, a);
-	        	boolean tentativeIsBetter = false;
-	        	
-	        	if (!openSet.containsKey(neighbour)){
-	        		openSet.put(neighbour.toString(),new Node(neighbour,currentNode.getBoard(),getGCost(currentNode, neighbour, a),getHCost(neighbour, getNodeOrientation(currentNode, neighbour),pos, a),
-	        				getNodeOrientation(currentNode, neighbour),currentNode));
-	        		tentativeIsBetter = true;
-	        	}
-	        	else if (tentativeGScore.getEnergy() < openSet.get(neighbour).getGCost().getEnergy())
-	        		tentativeIsBetter = true;
-	        	else
-	        		tentativeIsBetter = false;	        		
-	        	
-	        	if (tentativeIsBetter == true){
-	        		openSet.get(neighbour).setParent(currentNode);
-	        		openSet.get(neighbour).setGCost(tentativeGScore);
-	        	}
-	        }
 			
 		}
-		return closedSet;
-
+		
 	}
 	
-	/*private static Position getBestPosToMoveTo(Robot a, Position pos) {
-		// deze methode moet het optimale doel teruggeven juist naast de pos
-		ArrayList<Position> neighbours = a.getPosition().getNeighbours(a.getBoard());
-		;
-	}*/
-
-
 	public static HashMap<String,Node> aStarOnTo(Robot a, Position pos){
 		//deze gaat direct naar de positie die opgegeven wordt
 		
@@ -182,10 +134,14 @@ public class Calculator {
 
 	/**
 	 * 
-	 * @param currentNode
-	 * @param pos
-	 * @param robot
-	 * @return
+	 * @param 	currentNode
+	 * 
+	 * @param 	pos
+	 * 
+	 * @param 	robot
+	 * 
+	 * @return	
+	 * 
 	 */
 	private static Energy getGCost(Node currentNode, Position pos, Robot robot) {
 		return Energy.energySum(Energy.energySum(currentNode.getGCost(), Robot.moveCost(robot)),
@@ -195,8 +151,10 @@ public class Calculator {
 	 * methode voor het aantal turns terug te geven om van een node met orientatie m naar een nabijgelegen node te 
 	 * bewegen (vlak naast)
 	 *  
-	 * @param node
-	 * @param pos 
+	 * @param 	node
+	 * 
+	 * @param 	pos 
+	 * 	
 	 * @return
 	 */
 	private static int getTurns(Node node, Position pos){

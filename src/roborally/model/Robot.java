@@ -222,17 +222,7 @@ public class Robot extends Entity{
 	 * 			De robot waar naartoe moet bewogen worden.
 	 */
 	public void moveNextTo(Robot robot){
-		ArrayList <Position> neighbours = robot.getPosition().getNeighbours(this.getBoard());
-		HashMap<String, Node> resultpad = Calculator.aStarNextTo(this, robot.getPosition());
-		if (resultpad.containsKey(neighbours.toString())){
-			Node n = resultpad.get(neighbours.toString()); 
-			if (this.energy.getEnergy() >= n.getGCost().getEnergy()){
-				setPosition(n.getPosition());
-				this.getEnergy().setEnergy(this.getEnergy().getEnergy()- n.getGCost().getEnergy());
-			}
-		}
-		else
-			robot.moveNextTo(this);
+		
 	}
 
 	/**
