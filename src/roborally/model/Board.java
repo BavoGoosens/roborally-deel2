@@ -11,6 +11,7 @@ import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 
 import roborally.basics.Energy;
+import roborally.basics.Orientation;
 import roborally.basics.Position;
 import roborally.utils.Calculator;
 
@@ -329,13 +330,32 @@ public class Board{
 	 */
 	@Basic
 	public boolean isValidBoardPosition(Position position){
+		if(position == null)
+			return false;
 		if (position.getX() > this.getWidth() || position.getX() < LOWER_BOUND_WIDTH || position.getY() > this.getHeight() || position.getY() < LOWER_BOUND_HEIGHT)
 			return false;
 		return true;
 	}
+	
+	/**
+	 * Deze methode geeft de map terug waarop dit bord gebaseerd is.
+	 * 
+	 * @return	|this.map
+	 */
+	public HashMap<String, HashSet<Entity>> getMap() {
+		return this.map;
+	}
 
 
-	public static Entity getFirstHit(Robot robot) {
+	public static Entity getFirstHit(Robot robot){
+		Position beginpos = robot.getPosition();
+		Orientation beginor = robot.getOrientation();
+		Entity result = null;
+		while(robot.getBoard().isValidBoardPosition(Calculator.getNextPosition(beginpos, beginor)) && result == null){
+			
+		}
+		
+		
 		// bepaalt welke entity door een laser gaat geraakt worden 
 		Position pos = Calculator.getNextPosition(robot.getPosition(), robot.getOrientation());
 		if (robot.getBoard().getMap().containsKey(pos.toString())){
@@ -351,11 +371,6 @@ public class Board{
 		}
 	}
 
-
-	public HashMap<String, HashSet<Entity>> getMap() {
-		return this.map;
-	}
-
 	public void merge(Board board2) {
 		// TODO methode om 2 borden samen te voegen
 
@@ -366,6 +381,6 @@ public class Board{
 	}
 	public void terminate(){
 		this.isTerminated = true;
-		//this.map = null;
+		//TODO: this.map = null;
 	}
 }
