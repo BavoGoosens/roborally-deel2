@@ -31,20 +31,39 @@ public class Calculator {
 	} 
 	
 	public static HashMap<String,Node> getReachables(Robot robot){
-		double upperbound = robot.getEnergy().getEnergy();
+		Energy upperbound = robot.getEnergy();
 		ArrayList<Position> explorable = new ArrayList<Position>();
-		ArrayList<Position> startneighbours = robot.getPosition().getNeighbours(robot.getBoard());
+		ArrayList<Position> start = robot.getPosition().getNeighbours(robot.getBoard());
+		ArrayList<Position> startneighbours = removeWalls(start,robot.getBoard());
 		explorable.addAll(startneighbours);
 		HashMap<String,Node> reachables = new HashMap<String,Node>();
-		
+
 		while(!explorable.isEmpty()){
-			
-			}
-			
+			Position currentPos = explorable.get(0);
+			HashMap<String,Node> pad = aStarOnTo(robot,currentPos);
+			Node currentNode = pad.get(currentPos.toString());
+			explorable.remove(0);
+			if(currentNode.getHCost().getEnergy() < upperbound.getEnergy()){
+				reachables.put(currentPos.toString(),currentNode);
+				ArrayList<Position> preNeighbours = currentPos.getNeighbours(robot.getBoard());
+				ArrayList<Position> neighbours = removeWalls(preNeighbours,robot.getBoard());
+				explorable.addAll(neighbours);
+			}			
 		}
-		
+		return reachables;
 	}
+
 	
+	private static ArrayList<Position> removeWalls(ArrayList<Position> neighbours, Board board) {
+		ArrayList<Position> result = new ArrayList<Position>();
+		for (Position pos : neighbours){
+			if (board.isPlacableOnPosition(pos)){
+				result.add(pos);
+			}
+		}
+		return result;
+	}
+
 	public static HashMap<String,Node> aStarOnTo(Robot a, Position pos){
 		//deze gaat direct naar de positie die opgegeven wordt
 		
