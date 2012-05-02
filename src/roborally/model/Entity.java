@@ -45,7 +45,7 @@ public class Entity {
 	 * 			|new.board == board
 	 */
 	@Raw
-	private void setBoard(Board board) throws IllegalStateException{
+	public void setBoard(Board board) throws IllegalStateException{
 		if(this.isDestroyed()){
 			throw new IllegalStateException("Het object is getermineerd.");
 		}

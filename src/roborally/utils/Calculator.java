@@ -14,22 +14,36 @@ import roborally.model.Robot;
 
 public class Calculator {
 
-	//TODO: documentatie en annotations
-
 	/**
 	 * Deze Methode gaat de manhattandistance van punt A met pos pos1 tot punt B met pos pos2 berekenen.
 	 * 
 	 * @param 	pos1
+	 * 			Het eerste coördinatenkoppel.
 	 * 
 	 * @param 	pos2
+	 * 	 		Het tweede coördinatenkoppel.
 	 * 
-	 * @return	
+	 *@return 	long 
+	 *			Een long die de manhattan teruggeeft.
+	 *			|return result = (Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY()))
 	 * 
 	 */
 	public static long calculateManhattan(Position pos1, Position pos2){
 		return (Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY()));
 	}
 
+	/**
+	 * Deze methode gaat van een string van de vorm long1,long2 een object maken met die longs als positions.
+	 * 
+	 * @param 	posString
+	 * 			De string waarvan je het Positie object wil maken.
+	 * 
+	 * @return	Position 
+	 * 			|result.getX() = Long.parseLong(posString.split(",")[0])
+	 * 			|result.getY() = Long.parseLong(posString.split(",")[1])
+	 *
+	 * @throws IllegalArgumentException
+	 */
 	public static Position getPositionFromString(String posString) throws IllegalArgumentException{
 		if(posString.indexOf(",") == -1)
 			throw new IllegalArgumentException("De String is niet geformatteerd als een positie.");
@@ -54,6 +68,15 @@ public class Calculator {
 		return result;		
 	}
 
+	/**
+	 * Deze methode gaat alle nodes teruggeven waar deze robot zou kunnen geraken.
+	 * 
+	 * @param 	robot
+	 * 			De robot waarvan je de haalbare posities wilt weten.
+	 * 
+	 * @return	HashMap<String,Node> 
+	 * 			
+	 */
 	public static HashMap<String,Node> getReachables(Robot robot){
 		Energy upperbound = robot.getEnergy();
 		ArrayList<String> explorable = new ArrayList<String>();
@@ -78,7 +101,12 @@ public class Calculator {
 		return reachables;
 	}
 
-
+	/**
+	 * 
+	 * @param neighbours
+	 * @param board
+	 * @return
+	 */
 	private static ArrayList<Position> removeWalls(ArrayList<Position> neighbours, Board board) {
 		ArrayList<Position> result = new ArrayList<Position>();
 		for (Position pos : neighbours){
@@ -88,7 +116,13 @@ public class Calculator {
 		}
 		return result;
 	}
-
+	
+	/**
+	 * 
+	 * @param a
+	 * @param pos
+	 * @return
+	 */
 	public static HashMap<String,Node> aStarOnTo(Robot a, Position pos){
 		//deze gaat direct naar de positie die opgegeven wordt
 
@@ -142,6 +176,12 @@ public class Calculator {
 
 	}
 
+	/**
+	 * 
+	 * @param currentNode
+	 * @param pos
+	 * @return
+	 */
 	private static Orientation getNodeOrientation(Node currentNode, Position pos) {
 		Position previousPosition = currentNode.getPosition();
 		if (previousPosition.getX() == pos.getX()){
@@ -306,6 +346,11 @@ public class Calculator {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param map
+	 * @return
+	 */
 	public static Node getMinimalFNode(HashMap<String, Node> map){
 		Collection<Node> c = map.values();
 		Iterator<Node> itr = c.iterator();
