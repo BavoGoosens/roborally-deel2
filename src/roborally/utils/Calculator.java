@@ -13,7 +13,7 @@ import roborally.model.Node;
 import roborally.model.Robot;
 
 public class Calculator {
-	
+
 	//TODO: documentatie en annotations
 
 	/**
@@ -29,9 +29,9 @@ public class Calculator {
 	public static long calculateManhattan(Position pos1, Position pos2){
 		return (Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY()));
 	}
-	
+
 	public static Position getPositionFromString(String posString) throws IllegalArgumentException{
-		if(posString.indexOf("c") == -1)
+		if(posString.indexOf(",") == -1)
 			throw new IllegalArgumentException("De String is niet geformatteerd als een positie.");
 		String[] split = posString.split(",");
 		long x, y;
@@ -53,17 +53,19 @@ public class Calculator {
 		}
 		return result;		
 	}
-	
+
 	public static HashMap<String,Node> getReachables(Robot robot){
 		Energy upperbound = robot.getEnergy();
-		ArrayList<Position> explorable = new ArrayList<Position>();
+		ArrayList<String> explorable = new ArrayList<String>();
 		ArrayList<Position> start = robot.getPosition().getNeighbours(robot.getBoard());
 		ArrayList<Position> startneighbours = removeWalls(start,robot.getBoard());
-		explorable.addAll(startneighbours);
+		for(Position neighbour: startneighbours){
+			explorable.add(neighbour.toString());
+		}
 		HashMap<String,Node> reachables = new HashMap<String,Node>();
 
 		while(!explorable.isEmpty()){
-			Position currentPos = explorable.get(0);
+			Position currentPos = Calculator.getPositionFromString(explorable.get(0));
 			HashMap<String,Node> pad = aStarOnTo(robot,currentPos);
 			Node currentNode = pad.get(currentPos.toString());
 			explorable.remove(0);
@@ -71,13 +73,16 @@ public class Calculator {
 				reachables.put(currentPos.toString(),currentNode);
 				ArrayList<Position> preNeighbours = currentPos.getNeighbours(robot.getBoard());
 				ArrayList<Position> neighbours = removeWalls(preNeighbours,robot.getBoard());
-				explorable.addAll(neighbours);
+				for(Position neighbour: neighbours){
+					if(neighbour.toString() != currentPos.toString())
+						explorable.add(neighbour.toString());
+				}
 			}			
 		}
 		return reachables;
 	}
 
-	
+
 	private static ArrayList<Position> removeWalls(ArrayList<Position> neighbours, Board board) {
 		ArrayList<Position> result = new ArrayList<Position>();
 		for (Position pos : neighbours){
@@ -90,57 +95,57 @@ public class Calculator {
 
 	public static HashMap<String,Node> aStarOnTo(Robot a, Position pos){
 		//deze gaat direct naar de positie die opgegeven wordt
-		
+
 		HashMap<String,Node> open = new HashMap<String,Node>(); 
 		// de experimentele posities die nog geëvalueerd moeten/kunnen worden
 		Node startNode = new Node(a.getPosition(), a.getBoard(), new Energy(0) , 
 				getHCost(a.getPosition(), a.getOrientation(),pos, a),a.getOrientation(), null);
-		
+
 		open.put(a.getPosition().toString(), startNode);
 		// de startPositie aan de open list toevoegen
 		HashMap<String,Node> closed = new HashMap<String, Node>(); 
 		// de lijst met al geëvalueerde posities
 		Board board = a.getBoard();
-		
+
 		while ( !open.isEmpty()){
 			Node currentNode = getMinimalFNode(open);
 			if (pos.toString().equals(currentNode.getPosition().toString())){
 				open.remove(currentNode.getPosition().toString());
-		        closed.put(currentNode.getPosition().toString(), currentNode);
+				closed.put(currentNode.getPosition().toString(), currentNode);
 				return closed;
 			}
-			
+
 			open.remove(currentNode.getPosition().toString());
-	        closed.put(currentNode.getPosition().toString(), currentNode);
-	        
-	        ArrayList<Position> neighbours = currentNode.getPosition().getNeighbours(a.getBoard());
-	        for (Position neighbour : neighbours){
-	        	double gCostNeighbour = getGCost(currentNode, neighbour, a ).getEnergy();
-	        	if (closed.containsKey(neighbour.toString())){
-	        		if(closed.get(neighbour.toString()).getGCost().getEnergy() > gCostNeighbour){
-	        			closed.get(neighbour.toString()).setGCost(new Energy(gCostNeighbour));
-	        			closed.get(neighbour.toString()).setParent(currentNode);
-	        		}
-	         		continue;
-	        	}
-	        	else if ((open.containsKey(neighbour.toString())) && (open.get(neighbour.toString()).getGCost().getEnergy() > gCostNeighbour)){
-	        		open.get(neighbour.toString()).setGCost(new Energy(gCostNeighbour));
-        			open.get(neighbour.toString()).setParent(currentNode);
-	        	}
-	        	else{
-	        		if (board.isPlacableOnPosition(neighbour)){
-	        			open.put(neighbour.toString(), new Node(neighbour,board, new Energy(gCostNeighbour),
-	        					getHCost(neighbour,getNodeOrientation(currentNode,neighbour) , pos, a),
-	        					getNodeOrientation(currentNode,neighbour),currentNode));
-	        		}
-	        	}
-	        }
-			
+			closed.put(currentNode.getPosition().toString(), currentNode);
+
+			ArrayList<Position> neighbours = currentNode.getPosition().getNeighbours(a.getBoard());
+			for (Position neighbour : neighbours){
+				double gCostNeighbour = getGCost(currentNode, neighbour, a ).getEnergy();
+				if (closed.containsKey(neighbour.toString())){
+					if(closed.get(neighbour.toString()).getGCost().getEnergy() > gCostNeighbour){
+						closed.get(neighbour.toString()).setGCost(new Energy(gCostNeighbour));
+						closed.get(neighbour.toString()).setParent(currentNode);
+					}
+					continue;
+				}
+				else if ((open.containsKey(neighbour.toString())) && (open.get(neighbour.toString()).getGCost().getEnergy() > gCostNeighbour)){
+					open.get(neighbour.toString()).setGCost(new Energy(gCostNeighbour));
+					open.get(neighbour.toString()).setParent(currentNode);
+				}
+				else{
+					if (board.isPlacableOnPosition(neighbour)){
+						open.put(neighbour.toString(), new Node(neighbour,board, new Energy(gCostNeighbour),
+								getHCost(neighbour,getNodeOrientation(currentNode,neighbour) , pos, a),
+								getNodeOrientation(currentNode,neighbour),currentNode));
+					}
+				}
+			}
+
 		}
 		return closed;
 
 	}
-	
+
 	private static Orientation getNodeOrientation(Node currentNode, Position pos) {
 		Position previousPosition = currentNode.getPosition();
 		if (previousPosition.getX() == pos.getX()){
@@ -304,7 +309,7 @@ public class Calculator {
 		}
 		return result;
 	}
-	
+
 	public static Node getMinimalFNode(HashMap<String, Node> map){
 		Collection<Node> c = map.values();
 		Iterator<Node> itr = c.iterator();
@@ -315,7 +320,7 @@ public class Calculator {
 		}
 		return minimalNode;
 	}
-	
+
 	/**
 	 * Deze methode geeft de volgende positie weer met de huidige oriëntatie.
 	 * 
@@ -368,5 +373,5 @@ public class Calculator {
 		}
 		return result;
 	}
-	
+
 }
