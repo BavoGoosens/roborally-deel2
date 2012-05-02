@@ -201,8 +201,8 @@ public class Robot extends Entity{
 			throw new IllegalStateException("De positie waarnaar bewogen moet worden is ongeldig.");
 		}
 		if(this.getBoard().isPlacableOnPosition(destination)){
-		this.setPosition(destination);
-		this.getEnergy().setEnergy(this.getEnergy().getEnergy() - moveCost(this).getEnergy());
+			this.setPosition(destination);
+			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - moveCost(this).getEnergy());
 		}else{
 			throw new IllegalStateException("De positie is al bezet.");
 		}
@@ -410,8 +410,9 @@ public class Robot extends Entity{
 					battery.destroy();
 				}
 			}
+		}else{
+			throw new IllegalArgumentException("Deze batterij is niet in het bezit van de robot."); 
 		}
-		throw new IllegalArgumentException("Deze batterij is niet in het bezit van de robot."); 
 	}
 
 	/**
