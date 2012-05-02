@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import be.kuleuven.cs.som.annotate.Basic;
@@ -13,7 +14,6 @@ import roborally.basics.*;
 import roborally.utils.BatteryComparator;
 import roborally.utils.Calculator;
 import roborally.utils.PositionPair;
-import roborally.utils.PositionPairComparator;
 
 /**
  * Een klasse om robots voor te stellen.
@@ -225,16 +225,19 @@ public class Robot extends Entity{
 		HashMap<String,Node> otherReachables = Calculator.getReachables(robot);
 		Set<String> thisKeys = thisReachables.keySet();
 		Set<String> otherKeys = otherReachables.keySet();
-		Set<PositionPair> posPairs = new TreeSet<PositionPair>(new PositionPairComparator());
+		SortedSet<PositionPair> posPairs = new TreeSet<PositionPair>();
 		for(String thisPosString: thisKeys){
 			Position thisPos = Calculator.getPositionFromString(thisPosString);
 			for(String otherPosString: otherKeys){
 				Position otherPos = Calculator.getPositionFromString(otherPosString);
-				long manhattanDistance = Calculator.calculateManhattan(thisPos, otherPos);
-				posPairs.add(new PositionPair(thisPos, otherPos, manhattanDistance));
+				posPairs.add(new PositionPair(thisPos, otherPos, Energy.energySum(thisReachables.get(thisPosString).getHCost(), otherReachables.get(otherPosString).getHCost())));
 			}
 		}
-		
+		SortedSet<PositionPair> validPosPairs = new TreeSet<PositionPair>();
+		for(PositionPair posPair: posPairs){
+			
+			int result = posPair.compareTo(posPairs.first());
+		}
 	}
 
 	/**
