@@ -16,7 +16,7 @@ import roborally.basics.Position;
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
- * @Invar 	Een board moet ten alle tijden een geldige hoogte en breedte hebben/
+ * @invar 	Een board moet ten alle tijden een geldige hoogte en breedte hebben/
  * 			| isValidHeight(getHeight())
  *  		| isValidWidth(getWidth())
  *  
