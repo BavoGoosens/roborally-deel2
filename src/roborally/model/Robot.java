@@ -242,12 +242,9 @@ public class Robot extends Entity{
 			}
 		}
 		Collections.sort(posPairs, new PositionPairComparatorDistance());
-		ArrayList<PositionPair> validPosPairs = new ArrayList<PositionPair>();
-		PositionPair firstpp = posPairs.get(0);
+		ArrayList<PositionPair> validPosPairs = new ArrayList<>();
 		for(PositionPair pp: posPairs){
-			if((pp.getManhattanDistance() == firstpp.getManhattanDistance()) && 
-					((pp.getPos1().getX() != pp.getPos2().getX()) ||
-				(pp.getPos1().getY() != pp.getPos2().getY())))
+			if(pp.getManhattanDistance() == 1)
 				validPosPairs.add(pp);
 		}
 		Collections.sort(validPosPairs, new PositionPairComparatorEnergy());
