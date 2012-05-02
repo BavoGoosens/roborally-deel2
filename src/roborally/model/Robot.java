@@ -229,7 +229,7 @@ public class Robot extends Entity{
 		HashMap<String,Node> otherReachables = Calculator.getReachables(robot);
 		Set<String> thisKeys = thisReachables.keySet();
 		Set<String> otherKeys = otherReachables.keySet();
-		ArrayList<PositionPair> posPairs = new ArrayList<PositionPair>();
+		ArrayList<PositionPair> posPairs = new ArrayList<>();
 		for(String thisPosString: thisKeys){
 			Position thisPos = Calculator.getPositionFromString(thisPosString);
 			for(String otherPosString: otherKeys){
@@ -243,8 +243,9 @@ public class Robot extends Entity{
 		}
 		Collections.sort(posPairs, new PositionPairComparatorDistance());
 		ArrayList<PositionPair> validPosPairs = new ArrayList<>();
+		PositionPair firstpp = posPairs.get(0);
 		for(PositionPair pp: posPairs){
-			if(pp.getManhattanDistance() == 1)
+			if((pp.getManhattanDistance() == firstpp.getManhattanDistance()) && !(pp.getPos1().toString().equals(pp.getPos2().toString())))
 				validPosPairs.add(pp);
 		}
 		Collections.sort(validPosPairs, new PositionPairComparatorEnergy());
@@ -253,8 +254,8 @@ public class Robot extends Entity{
 		robot.setPosition(thePair.getPos2());
 		this.setOrientation(thePair.getOr1());
 		robot.setOrientation(thePair.getOr2());
-		this.getEnergy().setEnergy(thePair.getCost1().getEnergy());
-		robot.getEnergy().setEnergy(thePair.getCost2().getEnergy());		
+		this.getEnergy().setEnergy(Energy.energyDifference(this.getEnergy(),thePair.getCost1()).getEnergy());
+		robot.getEnergy().setEnergy(Energy.energyDifference(robot.getEnergy(),thePair.getCost2()).getEnergy());		
 	}
 
 	/**
