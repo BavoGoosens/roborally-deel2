@@ -161,7 +161,6 @@ public class Entity {
 	public void removeFromBoard(){
 		this.getBoard().removeEntity(this);
 		this.setBoard(null);
-		this.setPosition(null);
 	}
 
 	/**
@@ -170,7 +169,7 @@ public class Entity {
 	 * @return	(this.getPosition() != null && this.getBoard() != null)
 	 */
 	public boolean isOnBoard(){
-		return (this.getPosition() != null && this.getBoard() != null);
+		return (this.getBoard() != null);
 	}
 
 	/**

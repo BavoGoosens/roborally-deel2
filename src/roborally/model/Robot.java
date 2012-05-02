@@ -63,7 +63,7 @@ public class Robot extends Entity{
 	 * De oriëntatie van de robot.
 	 */
 	private Orientation orientation;
-	
+
 	/**
 	 * De set van batterijen die de robot bezit.
 	 */
@@ -288,11 +288,14 @@ public class Robot extends Entity{
 		if(this.isOnBoard()){	
 			Position beginpos = this.getPosition();
 			Orientation beginor = this.getOrientation();
-			while(this.getBoard().isValidBoardPosition(Calculator.getNextPosition(beginpos, beginor))){
-				HashSet<Entity> content = this.getBoard().getEntityOnPosition(Calculator.getNextPosition(beginpos, beginor));
-				if(!content.isEmpty()){
+			boolean found = false;
+			while(this.getBoard().isValidBoardPosition(Calculator.getNextPosition(beginpos, beginor)) && !found){
+				beginpos = Calculator.getNextPosition(beginpos, beginor);
+				HashSet<Entity> content = this.getBoard().getEntityOnPosition(beginpos);
+				if(content != null){
 					Random rndm = new Random();
 					((Entity) content.toArray()[rndm.nextInt(content.toArray().length)]).destroy();
+					found = true;
 				}
 			}
 			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - SHOOT_COST.getEnergy());

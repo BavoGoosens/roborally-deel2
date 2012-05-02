@@ -342,30 +342,35 @@ public class Calculator {
 	 */
 	public static Position getNextPosition(Position pos, Orientation or) throws IllegalStateException{
 		Position result = null;
-		if(or.equals(Orientation.UP)){
+		switch(or){
+		case UP:
 			try {
 				result = new Position(pos.getX(), pos.getY() - 1);
 			} catch (IllegalArgumentException e) {
 				throw new IllegalStateException("Er bestaat geen verdere positie meer met deze oriëntatie.");
 			}
-		}else if(or.equals(Orientation.RIGHT)){
+			break;
+		case RIGHT:
 			try {
 				result = new Position(pos.getX() + 1, pos.getY());
 			} catch (IllegalArgumentException e) {
 				throw new IllegalStateException("Er bestaat geen verdere positie meer met deze oriëntatie.");
 			}
-		}else if(or.equals(Orientation.DOWN)){
+			break;
+		case DOWN:
 			try {
 				result = new Position(pos.getX(), pos.getY() + 1);
 			} catch (IllegalArgumentException e) {
 				throw new IllegalStateException("Er bestaat geen verdere positie meer met deze oriëntatie.");
 			}
-		}else if(or.equals(Orientation.LEFT)){
+			break;
+		case LEFT:
 			try {
 				result = new Position(pos.getX() - 1, pos.getY());
 			} catch (IllegalArgumentException e) {
 				throw new IllegalStateException("Er bestaat geen verdere positie meer met deze oriëntatie.");
 			}
+			break;
 		}
 		return result;
 	}
