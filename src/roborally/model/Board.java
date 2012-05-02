@@ -10,6 +10,7 @@ import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 
 import roborally.basics.Position;
+import roborally.utils.Calculator;
 
 /**
  * Een klasse om een bord voor te stellen.
@@ -123,12 +124,14 @@ public class Board{
 	 * 			De positie in het bord die moet nagekeken worden.
 	 * 
 	 * @post	De positie is leeg indien er geen objecten meer stonden.
-	 * 			|if(this.getMap().containsKey(pos.toString()) && this.getMap().get(pos.toString()).isEmpty())
+	 * 			|if(this.getMap().containsKey(pos.toString()) && !this.getMap().get(pos.toString()).isEmpty() && this.getMap().get(pos.toString()) != null)
 	 * 			|	new.getMap().containsKey(pos.toString()) == false
 	 */
 	public void cleanBoardPosition(Position pos){
 		if(this.getMap().containsKey(pos.toString())){
-			if(this.getMap().get(pos.toString()).isEmpty()){
+			if(this.getMap().get(pos.toString()) == null){
+				this.getMap().remove(pos.toString());
+			}else if(this.getMap().get(pos.toString()).isEmpty()){
 				this.getMap().remove(pos.toString());
 			}
 		}
@@ -355,20 +358,26 @@ public class Board{
 		return this.map;
 	}
 
+	/**
+	 * Deze methode voegt 2 borden samen. Elementen uit het 2de bord die niet op dit bord geplaatst kunnen worden, worden getermineerd.
+	 * 
+	 * @param	board2
+	 * 			Het bord dat moet samengevoegd worden met dit bord.
+	 * 
+	 * @post	Het 2de bord is getermineerd.
+	 * 			|(new board2).isTerminated() == true
+	 */
 	public void merge(Board board2) {
-		// TODO methode om 2 borden samen te voegen
-		HashMap<String, HashSet<Entity>> possessions = board2.getMap();
-		Set<String> keys = possessions.keySet();
-		for (String key : keys){
-			HashSet<Entity> pos = possessions.get(key);
-			if (this.getMap().containsKey(key)){
-				HashSet<Entity> mapset = this.getMap().get(key);
-				//TODO: isPlacableOnPosition gebruiken
-				//TODO: putEntityOnPosition gebruiken
-			}else{
-				//TODO: isValidBoardPosition gebruiken
-				if ((this.getWidth() >= pos.iterator().next().getPosition().getX()) || (this.getHeight() >= pos.iterator().next().getPosition().getY())){
-					this.getMap().put(key, pos);
+		Set<String> b2PosStrings = board2.getMap().keySet();
+		for (String b2PosString : b2PosStrings){
+			Position b2Pos = Calculator.getPositionFromString(b2PosString);
+			if(this.isValidBoardPosition(b2Pos)){
+				HashSet<Entity> b2EntitiesOnPos = board2.getEntityOnPosition(b2Pos);
+				for(Entity ent: b2EntitiesOnPos){
+					if(this.isPlacableOnPosition(b2Pos)){
+						ent.removeFromBoard();
+						ent.putOnBoard(this, b2Pos);
+					}
 				}
 			}
 		}
