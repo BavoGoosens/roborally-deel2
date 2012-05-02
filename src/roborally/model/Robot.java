@@ -64,10 +64,9 @@ public class Robot extends Entity{
 	 */
 	private Orientation orientation;
 	/**
-	 * De set van batterijen die de robot bezit.
+	 * De lijst van batterijen die de robot bezit.
 	 */
-	private SortedSet<Battery> Possessions = new TreeSet<Battery>(new BatteryComparator());
-	//TODO: probleem: wanneer een batterij wordt toegevoegd die hetzelfde gewicht en energie heeft als een batterij die de robot al heeft, wordt deze niet toegevoegd aan deze SortedSet.
+	private ArrayList<Battery> Possessions = new ArrayList<Battery>();
 	/**
 	 * Deze methode maakt een nieuwe robot aan.
 	 * 
@@ -348,12 +347,12 @@ public class Robot extends Entity{
 	}
 
 	/**
-	 * Geeft een set terug van alle batterijen die de robot momenteel draagt.
+	 * Geeft een lijst terug van alle batterijen die de robot momenteel draagt.
 	 * 
-	 * @return	De set van batterijen
+	 * @return	De lijst van batterijen
 	 * 			|this.Possessions
 	 */
-	public Set<Battery> getPossessions(){
+	public ArrayList<Battery> getPossessions(){
 		return this.Possessions;
 	}
 
