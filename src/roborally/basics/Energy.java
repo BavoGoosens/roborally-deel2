@@ -35,7 +35,7 @@ public class Energy {
 	/**
 	 * Deze methode geeft de huidige hoeveelheid energie terug.
 	 * 
-	 * @return	this.amount
+	 * @return	|this.amount
 	 */
 	@Basic
 	public double getEnergy(){
@@ -51,7 +51,7 @@ public class Energy {
 	 * @pre		De energie is niet negatief.
 	 * 			|amount >= 0
 	 * 
-	 * @post	new.amount == amount
+	 * @post	|new.amount == amount
 	 */
 	public void setEnergy(double amount){
 		this.amount = amount;
@@ -66,11 +66,29 @@ public class Energy {
 	 * @param 	e2
 	 * 			Eerste hoeveelheid energie.
 	 * 
-	 * @return	Energy
-	 * 			|new Energy(e1.getEnergy() + e2.getEnergy())
+	 * @return	|new Energy(e1.getEnergy() + e2.getEnergy())
 	 */
 	public static Energy energySum(Energy e1, Energy e2){
 		return new Energy(e1.getEnergy() + e2.getEnergy());
+	}
+	
+	/**
+	 * Deze methode geeft het verschil van 2 hoeveelheden energie.
+	 * 
+	 * @param	e1
+	 * 			De hoeveelheid energie waarvan vertrokken wordt.
+	 * 
+	 * @param 	e2
+	 * 			De hoeveelheid energie die van e1 afgetrokken wordt.
+	 * 
+	 * @return	|if((e1.getEnergy() - e2.getEnergy()) < 0)
+	 * 			|	new Energy(0)
+	 * 			|new Energy(e1.getEnergy() - e2.getEnergy())
+	 */
+	public static Energy energyDifference(Energy e1, Energy e2){
+		if((e1.getEnergy() - e2.getEnergy()) < 0)
+			return new Energy(0);
+		return new Energy(e1.getEnergy() - e2.getEnergy());
 	}
 	
 }

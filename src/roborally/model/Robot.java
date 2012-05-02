@@ -1,10 +1,8 @@
 package roborally.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
@@ -224,7 +222,7 @@ public class Robot extends Entity{
 	 * 			De robot waar naartoe moet bewogen worden.
 	 */
 	public void moveNextTo(Robot robot){
-
+		
 	}
 
 	/**
@@ -352,14 +350,21 @@ public class Robot extends Entity{
 	 * @param	battery
 	 * 			De batterij die gebruikt moet worden.
 	 * 
-	 * @post	
+	 * @post	//TODO
 	 */
 	public void use(Battery battery) {
 		if (this.getPossessions().contains(battery)){
-			this.getPossessions().remove(battery);
-			this.recharge(battery.getEnergy());
-			//TODO: batterij moet verwerkt worden
-			//TODO: post doc
+			if(battery.isDestroyed()){
+				this.getPossessions().remove(battery);
+			}else{
+				Energy toRecharge = Energy.energyDifference(battery.getEnergy(), Energy.energyDifference(Robot.MAXENERGY, this.getEnergy()));
+				battery.getEnergy().setEnergy(toRecharge.getEnergy());
+				this.getEnergy().setEnergy(Energy.energySum(this.getEnergy(), toRecharge).getEnergy());
+				if(battery.getEnergy().getEnergy() == 0){
+					this.getPossessions().remove(battery);
+					battery.destroy();
+				}
+			}
 		}
 		throw new IllegalArgumentException("Deze batterij is niet in het bezit van de robot."); 
 	}
