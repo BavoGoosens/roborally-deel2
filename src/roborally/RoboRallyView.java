@@ -35,9 +35,9 @@ public class RoboRallyView<Board, Robot, Wall, Battery> extends JPanel {
 	public RoboRallyView(final RoboRally<Board, Robot, Wall, Battery> roboRally) {
 		this.roboRally = roboRally;
 		try {
-			robotImage = ImageIO.read(getClass().getClassLoader().getResource("res/robot1.jpg"));
-			wallImage = ImageIO.read(getClass().getClassLoader().getResource("res/wall.jpg"));
-			batteryImage = ImageIO.read(getClass().getClassLoader().getResource("res/battery.png"));
+			this.robotImage = ImageIO.read(getClass().getClassLoader().getResource("res/robot1.jpg"));
+			this.wallImage = ImageIO.read(getClass().getClassLoader().getResource("res/wall.jpg"));
+			this.batteryImage = ImageIO.read(getClass().getClassLoader().getResource("res/battery.png"));
 		} catch(IOException e) {
 			System.out.println("error reading  images");
 			System.exit(ERROR);

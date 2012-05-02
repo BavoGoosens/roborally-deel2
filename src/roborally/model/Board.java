@@ -4,16 +4,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Random;
 import java.util.Set;
 
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 
-import roborally.basics.Energy;
-import roborally.basics.Orientation;
 import roborally.basics.Position;
-import roborally.utils.Calculator;
 
 /**
  * Een klasse om borden voor te stellen.
@@ -84,7 +80,7 @@ public class Board{
 	public Board (long height, long width){
 		this.height = height;
 		this.width = width;
-		this.map = new HashMap<String, HashSet<Entity>>();
+		this.map = new HashMap<>();
 	}
 
 	/**
@@ -186,14 +182,14 @@ public class Board{
 			if (entity instanceof Battery || entity instanceof Robot){
 				HashSet<Entity> set = this.getMap().get(key.toString());
 				if (set == null){
-					HashSet<Entity> input = new HashSet<Entity>();
+					HashSet<Entity> input = new HashSet<>();
 					input.add(entity);
 					this.getMap().put(key.toString(), input);
 				}else{
 					set.add(entity);
 				}
 			}else if(entity instanceof Wall){
-				HashSet<Entity> input = new HashSet<Entity>();
+				HashSet<Entity> input = new HashSet<>();
 				input.add(entity);
 				this.getMap().put(key.toString(), input);
 			}
@@ -209,7 +205,7 @@ public class Board{
 	 */
 	public Set<Robot> getRobots() {
 		Collection<HashSet<Entity>> c = this.getMap().values();
-		HashSet<Robot> rob = new HashSet<Robot>();
+		HashSet<Robot> rob = new HashSet<>();
 		for (Set<Entity> values : c ){
 			Iterator<Entity> i = values.iterator();
 			while (i.hasNext()){
@@ -231,7 +227,7 @@ public class Board{
 	 */
 	public Set<Battery> getBatteries() {
 		Collection<HashSet<Entity>> c = this.getMap().values();
-		HashSet<Battery> bat = new HashSet<Battery>();
+		HashSet<Battery> bat = new HashSet<>();
 		for (Set<Entity> values : c ){
 			Iterator<Entity> i = values.iterator();
 			while (i.hasNext()){
@@ -254,7 +250,7 @@ public class Board{
 	 */
 	public Set<Wall> getWalls() {
 		Collection<HashSet<Entity>> c = this.getMap().values();
-		HashSet<Wall> wall = new HashSet<Wall>();
+		HashSet<Wall> wall = new HashSet<>();
 		for (Set<Entity> values : c ){
 			Iterator<Entity> i = values.iterator();
 			while (i.hasNext()){
