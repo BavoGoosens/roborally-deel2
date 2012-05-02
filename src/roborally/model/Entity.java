@@ -41,7 +41,8 @@ public class Entity {
 	 * 			Het object is getermineerd.
 	 * 			|this.isDestroyed()
 	 * 
-	 * @post	new.board == board
+	 * @post	Het opgegeven bord is nu ingesteld voor dit object.
+	 * 			|new.board == board
 	 */
 	@Raw
 	private void setBoard(Board board) throws IllegalStateException{
@@ -54,8 +55,8 @@ public class Entity {
 	/**
 	 * Methode die het board teruggeeft waarop dit object zich bevindt. Deze methode kan ook null teruggeven wat wil zeggen dat het object zich niet op een board bevindt.
 	 * 
-	 * @return	this.board
-	 * 			Het board waarop dit object zich bevindt of null als het object niet op een board staat;
+	 * @return	Het board waarop dit object zich bevindt of null als het object niet op een board staat.
+	 * 			|this.board
 	 */
 	@Basic
 	public Board getBoard(){
@@ -84,6 +85,9 @@ public class Entity {
 	 * @throws	IllegalStateException 
 	 * 			Deze positie is niet geldig voor het huidige bord of het object bestaat is getermineerd.
 	 * 			|(this.getBoard().isValidBoardPosition(position) && position != null) || this.isDestroyed()
+	 * 
+	 * @post	De positie van dit object is nu gelijk aan de gegeven positie.
+	 * 			|new.getPosition() == position
 	 */
 	@Raw
 	public void setPosition(Position position) throws IllegalArgumentException, IllegalStateException{
@@ -104,8 +108,10 @@ public class Entity {
 	 * 
 	 * @post	Het object heeft geen positie meer.
 	 * 			|new.getPosition() == null
+	 * 
 	 * @post	Het object is vernietigd.
 	 * 			|new.isDestroyed()
+	 * 
 	 * @post	Het object staat niet meer op een bord.
 	 * 			|new.getBoard() == null
 	 */
@@ -118,7 +124,8 @@ public class Entity {
 	/**
 	 * Deze methode geeft true indien het object vernietigd is, anders false.
 	 * 
-	 * @return	|this.isTerminated
+	 * @return	Een boolean die true is indien het object vernietigd is, anders false.
+	 * 			|this.isTerminated
 	 */
 	@Basic
 	public boolean isDestroyed(){
@@ -134,29 +141,24 @@ public class Entity {
 	 * @param	position
 	 * 			De plaats waar het object moet komen.
 	 * 
-	 * @throws	IllegalArgumentException
-	 * 			|board.isValidBoardPosition(position) ^ board.isPlacableOnPosition(position)
+	 * @post	Het object staat nu op het gegeven bord.
+	 * 			|new.getBoard() == board
 	 * 
-	 * @post	|new.getBoard() == board
-	 * @post	|new.getPosition() == position
-	 * 			
+	 * @post	Het object staat nu op de gegeven positie.
+	 * 			|new.getPosition() == position
 	 */
 	@Raw
-	public void putOnBoard(Board board, Position position) throws IllegalArgumentException{
-		if(board.isValidBoardPosition(position) && board.isPlacableOnPosition(position)){
-			this.setBoard(board);
-			this.setPosition(position);
-			board.putEntity(position, this);
-		}else{
-			throw new IllegalArgumentException("Het is niet mogelijk om het object op deze positie in het bord te zetten.");
-		}
+	public void putOnBoard(Board board, Position position){
+		board.putEntity(position, this);
+		this.setBoard(board);
+		this.setPosition(position);
 	}
 
 	/**
 	 * Verwijdert het object van een bord en haalt de opgeslagen positie weg.
 	 * 
-	 * @post	|new.getBoard() == null
-	 * @post	|new.getPosition() == null
+	 * @post	Het object bevindt zich niet langer op een bord.
+	 * 			|new.isOnBoard() == false
 	 */
 	@Raw
 	public void removeFromBoard(){
@@ -166,12 +168,13 @@ public class Entity {
 	}
 
 	/**
-	 * Kijkt na of het object op het bord staat met een geldige positie.
+	 * Kijkt na of het object op het bord staat.
 	 * 
-	 * @return	(this.getPosition() != null && this.getBoard() != null)
+	 * @return	Boolean die true is als het object op een bord staat.
+	 * 			|(this.getBoard() != null && this.isValid())
 	 */
 	public boolean isOnBoard(){
-		return (this.getBoard() != null && this.getPosition() != null);
+		return (this.getBoard() != null && this.isValid());
 	}
 
 	/**
