@@ -57,11 +57,7 @@ public class Calculator {
 	public static HashMap<String,Node> getReachables(Robot robot){
 		Energy upperbound = robot.getEnergy();
 		ArrayList<String> explorable = new ArrayList<String>();
-		ArrayList<Position> start = robot.getPosition().getNeighbours(robot.getBoard());
-		ArrayList<Position> startneighbours = removeWalls(start,robot.getBoard());
-		for(Position neighbour: startneighbours){
-			explorable.add(neighbour.toString());
-		}
+		explorable.add(robot.getPosition().toString());
 		HashMap<String,Node> reachables = new HashMap<String,Node>();
 
 		while(!explorable.isEmpty()){
@@ -74,7 +70,7 @@ public class Calculator {
 				ArrayList<Position> preNeighbours = currentPos.getNeighbours(robot.getBoard());
 				ArrayList<Position> neighbours = removeWalls(preNeighbours,robot.getBoard());
 				for(Position neighbour: neighbours){
-					if(neighbour.toString() != currentPos.toString())
+					if(!reachables.containsKey(neighbour))
 						explorable.add(neighbour.toString());
 				}
 			}			
