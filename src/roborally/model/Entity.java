@@ -87,15 +87,16 @@ public class Entity {
 	 */
 	@Raw
 	public void setPosition(Position position) throws IllegalArgumentException, IllegalStateException{
-		if(this.getBoard() == null && position != null){
-			throw new IllegalStateException("Het object staat niet op een bord.");
-		}else if(this.isDestroyed()){
+		if(this.isDestroyed()){
 			throw new IllegalStateException("Het object is getermineerd.");
-		}else if(!this.getBoard().isValidBoardPosition(position) && position != null){
-			throw new IllegalArgumentException("De gegeven positie is ongeldig voor dit bord.");
-		}else{
-			this.position = position;
+		}else if(position != null){
+			if(this.getBoard() == null){
+				throw new IllegalStateException("Het object staat niet op een bord.");
+			}else if(!this.getBoard().isValidBoardPosition(position)){
+				throw new IllegalArgumentException("De gegeven positie is ongeldig voor dit bord.");
+			}
 		}
+		this.position = position;
 	}
 
 	/**
@@ -161,6 +162,7 @@ public class Entity {
 	public void removeFromBoard(){
 		this.getBoard().removeEntity(this);
 		this.setBoard(null);
+		this.setPosition(null);
 	}
 
 	/**
@@ -169,7 +171,7 @@ public class Entity {
 	 * @return	(this.getPosition() != null && this.getBoard() != null)
 	 */
 	public boolean isOnBoard(){
-		return (this.getBoard() != null);
+		return (this.getBoard() != null && this.getPosition() != null);
 	}
 
 	/**
