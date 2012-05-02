@@ -7,8 +7,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
@@ -65,6 +63,8 @@ public class Robot extends Entity{
 	private Orientation orientation;
 	/**
 	 * De lijst van batterijen die de robot bezit.
+	 * 
+	 * @note	Gebruik altijd Collections.sort met een BatteryComparator() wanneer deze lijst gewijzigd wordt.
 	 */
 	private ArrayList<Battery> Possessions = new ArrayList<Battery>();
 	/**
@@ -340,9 +340,9 @@ public class Robot extends Entity{
 	 */
 	public Weight getTotalWeight(){
 		int totalWeight = 0;
-		Iterator<Battery> itr = this.getPossessions().iterator();
-		while(itr.hasNext())
-			totalWeight += itr.next().getWeight().getWeight();
+		for(Battery batt: this.getPossessions()){
+			totalWeight += batt.getWeight().getWeight();
+		}
 		return new Weight(totalWeight);
 	}
 
@@ -386,6 +386,7 @@ public class Robot extends Entity{
 		}else{
 			battery.removeFromBoard();
 			this.getPossessions().add(battery);
+			Collections.sort(this.getPossessions(), new BatteryComparator());
 		}
 	}
 
@@ -407,6 +408,7 @@ public class Robot extends Entity{
 				this.getEnergy().setEnergy(Energy.energySum(this.getEnergy(), toRecharge).getEnergy());
 				if(battery.getEnergy().getEnergy() == 0){
 					this.getPossessions().remove(battery);
+					Collections.sort(this.getPossessions(), new BatteryComparator());
 					battery.destroy();
 				}
 			}
@@ -435,6 +437,7 @@ public class Robot extends Entity{
 		}else{
 			this.getPossessions().remove(battery);
 			battery.putOnBoard(this.getBoard(), this.getPosition());
+			Collections.sort(this.getPossessions(), new BatteryComparator());
 		}
 	}
 
