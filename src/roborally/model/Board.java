@@ -348,7 +348,22 @@ public class Board{
 
 	public void merge(Board board2) {
 		// TODO methode om 2 borden samen te voegen
-
+		HashMap<String, HashSet<Entity>> possessions = board2.getMap();
+		Set<String> keys = possessions.keySet();
+		for (String key : keys){
+			HashSet<Entity> pos = possessions.get(key);
+			if (this.map.containsKey(key)){
+				HashSet<Entity> mapset = this.map.get(key);
+				if ((mapset == null) || (mapset.size() == 0)){
+					this.getMap().put(key, pos);
+				} else if (mapset.size() == 1){
+					Entity ent = mapset.iterator().next();
+					if (!(ent instanceof Wall)){
+						this.getMap().put(key, pos);
+					}
+				}
+			}
+		}
 	}
 
 	public boolean isTerminated(){
