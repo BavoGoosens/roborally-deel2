@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import roborally.model.Board;
 
 /**
- * Deze klasse houdt een positie bij. Deze bestaat uit een x- en een y-coordinaat.
+ * Deze klasse houdt een positie bij. Deze bestaat uit een x- en een y-coördinaat.
  * 
  * @invar	Een positie is altijd geldig (de coördinaten liggen op of tussen hun minima en maxima).
  * 			|isValidPosition(new.getX(), new.getY())
@@ -53,9 +53,12 @@ public class Position {
 	 * 			Y-waarde van de in te stellen positie
 	 * 
 	 * @throws	IllegalArgumentException
+	 * 			De gegeven positie is ongeldig.
 	 * 			|!isValidPosition(xpos, ypos)
 	 * 
-	 * @post	|new.x == xpos
+	 * @post	De x-waarde van de nieuwe positie is gelijk aan de gegeven x-waarde.
+	 * 			|new.x == xpos
+	 * @post	De y-waarde van de nieuwe positie is gelijk aan de gegeven y-waarde.
 	 * 			|new.y == ypos
 	 */
 	public Position(long xpos, long ypos) throws IllegalArgumentException{
@@ -95,7 +98,7 @@ public class Position {
 	 * @param	ypos
 	 * 			Y-waarde van de positie die nagekeken moet worden.
 	 * 
-	 * @return	boolean
+	 * @return	Boolean die true is als de positie geldig is.
 	 * 			|if(xpos > UPPER_BOUND_X || xpos < LOWER_BOUND_X || ypos > UPPER_BOUND_Y || ypos < LOWER_BOUND_Y)
 	 * 			|	false
 	 * 			|true
@@ -111,34 +114,40 @@ public class Position {
 	 * Deze methode dient om de posities te vinden naast de huidige positie.
 	 * 
 	 * @param	board
-	 * 			Het bord is nodig om na te kijken of de posities erond geldig zijn voor dit bord.
+	 * 			Het bord is nodig om na te kijken of de posities ernaast geldig zijn voor dit bord.
 	 * 
-	 * @return	ArrayList<Position>
-	 * 			Dit is een lijst van posities rond de huidige positie.
+	 * @return	Dit is een lijst van posities rond de huidige positie.
 	 */
 	public ArrayList<Position> getNeighbours(Board board){
 		ArrayList<Position> positions = new ArrayList<Position>();
+		ArrayList<Position> validPositions = new ArrayList<Position>();
 		try{
 			positions.add(new Position(this.getX() - 1, this.getY()));
-		}catch(IllegalArgumentException e){}
-		try{
-			positions.add(new Position(this.getX() + 1, this.getY()));
-		}catch(IllegalArgumentException e){}
-		try{
-			positions.add(new Position(this.getX(), this.getY() - 1));
-		}catch(IllegalArgumentException e){}
-		try{
-			positions.add(new Position(this.getX(), this.getY() + 1));
-		}catch(IllegalArgumentException e){}
-		for(Position pos: positions){
-			if(!board.isValidBoardPosition(pos)){
-				positions.remove(pos);
+		}finally{
+			try{
+				positions.add(new Position(this.getX() + 1, this.getY()));
+			}finally{
+				try{
+					positions.add(new Position(this.getX(), this.getY() - 1));
+				}finally{
+					try{
+						positions.add(new Position(this.getX(), this.getY() + 1));
+					}finally{
+						for(Position pos: positions){
+							if(board.isValidBoardPosition(pos)){
+								validPositions.add(pos);
+							}
+						}
+					}
+				}
+				
 			}
 		}
-		return positions;
+		return validPositions;
 	}
 
-	/* Deze methode maakt een String op basis van een Position.
+	/* 
+	 * Deze methode maakt een String op basis van een Position.
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
