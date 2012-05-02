@@ -145,7 +145,7 @@ public class Calculator {
 	private static Orientation getNodeOrientation(Node currentNode, Position pos) {
 		Position previousPosition = currentNode.getPosition();
 		if (previousPosition.getX() == pos.getX()){
-			if (previousPosition.getY() > pos.getY())
+			if (previousPosition.getY() < pos.getY())
 				return Orientation.DOWN;
 			return Orientation.UP;
 		}
