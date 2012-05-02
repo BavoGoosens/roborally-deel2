@@ -17,7 +17,7 @@ import roborally.model.Board;
  * @version 1.0
  */
 public class Position {
-	
+
 	/**
 	 * X-coördinaat van de positie.
 	 */
@@ -42,7 +42,7 @@ public class Position {
 	 * Minimale y-waarde.
 	 */
 	private final static long LOWER_BOUND_Y = 0;
-	
+
 	/**
 	 * Initialiseer een positie.
 	 * 
@@ -110,7 +110,7 @@ public class Position {
 			return false;
 		return true;
 	}
-	
+
 	/**
 	 * Deze methode dient om de posities te vinden naast de huidige positie.
 	 * 
@@ -124,24 +124,19 @@ public class Position {
 		ArrayList<Position> validPositions = new ArrayList<Position>();
 		try{
 			positions.add(new Position(this.getX() - 1, this.getY()));
-		}finally{
-			try{
-				positions.add(new Position(this.getX() + 1, this.getY()));
-			}finally{
-				try{
-					positions.add(new Position(this.getX(), this.getY() - 1));
-				}finally{
-					try{
-						positions.add(new Position(this.getX(), this.getY() + 1));
-					}finally{
-						for(Position pos: positions){
-							if(board.isValidBoardPosition(pos)){
-								validPositions.add(pos);
-							}
-						}
-					}
-				}
-				
+		}catch(IllegalArgumentException e){}
+		try{
+			positions.add(new Position(this.getX() + 1, this.getY()));
+		}catch(IllegalArgumentException e){}
+		try{
+			positions.add(new Position(this.getX(), this.getY() - 1));
+		}catch(IllegalArgumentException e){}
+		try{
+			positions.add(new Position(this.getX(), this.getY() + 1));
+		}catch(IllegalArgumentException e){}
+		for(Position pos: positions){
+			if(board.isValidBoardPosition(pos)){
+				validPositions.add(pos);
 			}
 		}
 		return validPositions;

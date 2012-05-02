@@ -63,12 +63,11 @@ public class Robot extends Entity{
 	 * De oriëntatie van de robot.
 	 */
 	private Orientation orientation;
-
 	/**
 	 * De set van batterijen die de robot bezit.
 	 */
 	private SortedSet<Battery> Possessions = new TreeSet<Battery>(new BatteryComparator());
-
+	//TODO: probleem: wanneer een batterij wordt toegevoegd die hetzelfde gewicht en energie heeft als een batterij die de robot al heeft, wordt deze niet toegevoegd aan deze SortedSet.
 	/**
 	 * Deze methode maakt een nieuwe robot aan.
 	 * 

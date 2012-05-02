@@ -4,13 +4,20 @@ import roborally.basics.Energy;
 import roborally.basics.Orientation;
 import roborally.basics.Position;
 
+/**
+ * Deze klasse stelt een paar bestemmingen voor die gebruikt worden door de functie moveNextTo() in de klasse Robot.
+ * 
+ * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
+ * 
+ * @version 1.0
+ */
 public class PositionPair{
 	private final Position pos1;
 	private final Position pos2;
 	private final long manhattanDistance;
 	private final Energy cost1;
 	private final Energy cost2;
-	private final Energy totalCost ;
+	private final Energy totalCost;
 	private final Orientation or1;
 	private final Orientation or2;
 	

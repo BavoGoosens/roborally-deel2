@@ -11,7 +11,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery>{
 
 
 	public Facade(){}
-	//TODO: alle exceptions catchen en volledig nakijken
+	//TODO: alle exceptions catchen en volledig nakijken - dit doen we beter samen
 
 	@Override
 	public Board createBoard(long width, long height) {

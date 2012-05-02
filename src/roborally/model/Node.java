@@ -2,7 +2,6 @@ package roborally.model;
 
 import roborally.basics.Energy;
 import roborally.basics.Position;
-
 import roborally.basics.Orientation;
 
 //mag parent moet ten alle tijden naar een andere node wijzen => geen selfreferenties 
