@@ -32,7 +32,7 @@ public class Energy {
 	 * 			|new.getEnergy() == amount
 	 */
 	public Energy(double amount){
-		this.setEnergy(amount);
+		this.amount = amount;
 	}
 	
 	/**
@@ -44,22 +44,6 @@ public class Energy {
 	@Basic
 	public double getEnergy(){
 		return this.amount;
-	}
-	
-	/**
-	 * Deze methode wijzigt de energie naar de gegeven waarde.
-	 * 
-	 * @param 	amount
-	 * 			De hoeveelheid energie
-	 * 
-	 * @pre		De energie is niet negatief.
-	 * 			|amount >= 0
-	 * 
-	 * @post	De nieuwe hoeveelheid energie is gelijk aan die in de parameter.
-	 * 			|new.amount == amount
-	 */
-	public void setEnergy(double amount){
-		this.amount = amount;
 	}
 	
 	/**

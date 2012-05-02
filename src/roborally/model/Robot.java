@@ -11,11 +11,7 @@ import java.util.Set;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
 import roborally.basics.*;
-import roborally.utils.BatteryComparator;
-import roborally.utils.Calculator;
-import roborally.utils.PositionPair;
-import roborally.utils.PositionPairComparatorDistance;
-import roborally.utils.PositionPairComparatorEnergy;
+import roborally.utils.*;
 
 /**
  * Een klasse om robots voor te stellen.
@@ -56,7 +52,7 @@ public class Robot extends Entity{
 	/**
 	 * De energie van de robot.
 	 */
-	private final Energy energy;
+	private Energy energy;
 	/**
 	 * De oriëntatie van de robot.
 	 */
@@ -77,14 +73,27 @@ public class Robot extends Entity{
 	 * 			De initiële oriëntatie van de robot.
 	 * 
 	 * @post	De energie van de robot is gelijk aan de opgegeven energie.
-	 * 			|new.getEnergy().equals(energy)
+	 * 			|new.getEnergy().equals(energy) == true
 	 * 
 	 * @post	De oriëntatie van de robot is gelijk aan de opgegeven oriëntatie.
-	 * 			|new.getOrientation().equals(orientation)
+	 * 			|new.getOrientation().equals(orientation) == true
 	 */
 	public Robot(Orientation orientation, Energy energy){
-		this.energy = energy;
+		this.setEnergy(energy);
 		setOrientation(orientation);
+	}
+	
+	/**
+	 * Deze methode wijzigt de energie van de robot.
+	 * 
+	 * @param	energy
+	 * 			De nieuwe energie die de robot moet krijgen.
+	 * 
+	 * @post	De energie van de robot is gelijk aan de gegeven energie.
+	 * 			|new.getEnergy().equals(energy) == true
+	 */
+	private void setEnergy(Energy energy) {
+		this.energy = energy;
 	}
 
 	/**
@@ -149,16 +158,17 @@ public class Robot extends Entity{
 	 * Draait de robot 1 keer in wijzerzin.
 	 * 
 	 * @post	De nieuwe oriëntatie van de robot is gelijk aan de volgende oriëntatie in wijzerzin.
-	 * 			|if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST.getEnergy())))
+	 * 			|if(isValidRobotEnergyAmount(new Energy(Energy.energyDifference(this.getEnergy(), TURN_COST).getEnergy())))
 	 * 			|	new.getOrientation() == this.getOrienation().getClockwiseOrientation()
+	 * 
 	 * @post	De energie van de robot is verminderd met benodigde energie voor een draai.
-	 * 			|if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST.getEnergy())))
-	 * 			|	new.getEnergy().getEnergy().equals(this.getEnergy().getEnergy() - TURN_COST.getEnergy())
+	 * 			|if(isValidRobotEnergyAmount(new Energy(Energy.energyDifference(this.getEnergy(), TURN_COST).getEnergy())))
+	 * 			|	new.getEnergy().getEnergy().equals(Energy.energyDifference(this.getEnergy(), TURN_COST).getEnergy())
 	 */
 	public void turnClockWise(){
 		if(this.canTurn()){
 			this.setOrientation(this.getOrientation().getClockwiseOrientation());
-			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST.getEnergy());
+			this.getEnergy().setEnergy(Energy.energyDifference(this.getEnergy(), TURN_COST).getEnergy());
 		}
 	}
 
@@ -166,16 +176,17 @@ public class Robot extends Entity{
 	 * Draait de robot 1 keer in tegenwijzerzin.
 	 * 
 	 * @post	De nieuwe oriëntatie van de robot is gelijk aan de volgende oriëntatie in wijzerzin.
-	 * 			|if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST.getEnergy())))
+	 * 			|if(isValidRobotEnergyAmount(new Energy(Energy.energyDifference(this.getEnergy(), TURN_COST).getEnergy())))
 	 * 			|	new.getOrientation() == this.getOrienation().getCounterClockwiseOrientation()
+	 * 
 	 * @post	De energie van de robot is verminderd met benodigde energie voor een draai.
-	 * 			|if(isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST.getEnergy())))
-	 * 			|	new.getEnergy().getEnergy().equals(this.getEnergy().getEnergy() - TURN_COST.getEnergy())
+	 * 			|if(isValidRobotEnergyAmount(new Energy(Energy.energyDifference(this.getEnergy(), TURN_COST).getEnergy())))
+	 * 			|	new.getEnergy().getEnergy().equals(Energy.energyDifference(this.getEnergy(), TURN_COST).getEnergy())
 	 */
 	public void turnCounterClockWise(){
 		if(this.canTurn()){
 			this.setOrientation(this.getOrientation().getCounterClockwiseOrientation());
-			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - TURN_COST.getEnergy());
+			this.getEnergy().setEnergy(Energy.energyDifference(this.getEnergy(), TURN_COST).getEnergy());
 		}
 	}
 
@@ -183,10 +194,14 @@ public class Robot extends Entity{
 	 * Deze methode beweegt de robot een stap vooruit indien mogelijk.
 	 * 
 	 * @throws 	IllegalStateException
-	 * 			De robot heeft onvoldoende energie om te bewegen.
-	 * 			|!this.canMove() || !Position.isValidPosition(this.getOrientation().getNextPosition(this.getPosition()))
+	 * 			De robot heeft onvoldoende energie om te bewegen of de positie waarnaar bewogen moet worden is ongeldig of reeds bezet.
+	 * 			|!this.canMove() || !Position.isValidPosition(this.getOrientation().getNextPosition(this.getPosition())) || !this.getBoard().isPlacableOnPosition(Calculator.getNextPosition(this.getPosition(), this.getOrientation()))
 	 * 
-	 * @effect	De positie van de robot is veranderd (indien het mogelijk was om te bewegen).
+	 * @post	De robot staat een plaats verder.
+	 * 			|new.getPosition() == Calculator.getNextPosition(this.getPosition(), this.getOrientation())
+	 * 
+	 * @post	De robot heeft energie verbruikt.
+	 * 			|new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), moveCost(this))) == true
 	 */
 	public void move() throws IllegalStateException{
 		if(!this.canMove()){
@@ -200,7 +215,7 @@ public class Robot extends Entity{
 		}
 		if(this.getBoard().isPlacableOnPosition(destination)){
 			this.setPosition(destination);
-			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - moveCost(this).getEnergy());
+			this.setEnergy(Energy.energyDifference(this.getEnergy(), moveCost(this)));
 		}else{
 			throw new IllegalStateException("De positie is al bezet.");
 		}
@@ -213,6 +228,7 @@ public class Robot extends Entity{
 	 * 			De plaats die bereikt moet worden.
 	 * 
 	 * @return	De energie die nodig is om de plaats te bereiken.
+	 * 			|Calculator.aStarOnTo(this, position).get(position.toString()).getGCost()
 	 */
 	public Energy getEnergyRequiredToReach(Position position){
 		HashMap<String, Node> resultpad = Calculator.aStarOnTo(this, position);
@@ -225,6 +241,9 @@ public class Robot extends Entity{
 	 * 
 	 * @param	robot
 	 * 			De robot waar naartoe moet bewogen worden.
+	 * 
+	 * @post	De robot staat zo dicht mogelijk bij de gegeven robot met een zo laag mogelijk energieverbruik.
+	 * 			|TODO: formele post doc bij moveNextTo()
 	 */
 	public void moveNextTo(Robot robot){
 		HashMap<String,Node> thisReachables = Calculator.getReachables(this);
@@ -233,12 +252,10 @@ public class Robot extends Entity{
 		Set<String> otherKeys = otherReachables.keySet();
 		ArrayList<PositionPair> posPairs = new ArrayList<>();
 		for(String thisPosString: thisKeys){
-			Position thisPos = Calculator.getPositionFromString(thisPosString);
 			for(String otherPosString: otherKeys){
-				Position otherPos = Calculator.getPositionFromString(otherPosString);
-				Node thisNode = thisReachables.get(thisPos.toString());
-				Node otherNode = otherReachables.get(otherPos.toString());
-				PositionPair toAdd = new PositionPair(thisPos, otherPos,thisNode.getGCost(),
+				Node thisNode = thisReachables.get(thisPosString);
+				Node otherNode = otherReachables.get(otherPosString);
+				PositionPair toAdd = new PositionPair(Calculator.getPositionFromString(thisPosString), Calculator.getPositionFromString(otherPosString),thisNode.getGCost(),
 						otherNode.getGCost(), thisNode.getOrientation(),otherNode.getOrientation());
 				posPairs.add(toAdd);
 			}
@@ -262,15 +279,13 @@ public class Robot extends Entity{
 			robot.setPosition(thePair.getPos2());
 			this.setOrientation(thePair.getOr1());
 			robot.setOrientation(thePair.getOr2());
-			this.getEnergy().setEnergy(Energy.energyDifference(this.getEnergy(),thePair.getCost1()).getEnergy());
-			robot.getEnergy().setEnergy(Energy.energyDifference(robot.getEnergy(),thePair.getCost2()).getEnergy());	
+			this.setEnergy(Energy.energyDifference(this.getEnergy(),thePair.getCost1()));
+			robot.setEnergy(Energy.energyDifference(robot.getEnergy(),thePair.getCost2()));	
 		}
 	}
 
 	/**
 	 * Deze methode doet een robot schieten met zijn laser.
-	 * 
-	 * @effect	Mogelijks wordt een object op het bord geraakt en verwijderd.
 	 * 
 	 * @throws	IllegalStateException
 	 * 			De robot staat niet op een bord.
@@ -278,6 +293,9 @@ public class Robot extends Entity{
 	 * 
 	 * @post	De robot verliest energie. De hoeveelheid is bepaald in de constante SHOOT_COST.
 	 * 			|new.getEnergy() == new Energy(this.getEnergy().getEnergy() - SHOOT_COST.getEnergy())
+	 * 
+	 * @post	Mogelijks wordt een object geraakt en vernietigd.
+	 * 			|TODO: formele post doc bij shoot()
 	 */
 	public void shoot() throws IllegalStateException{
 		if(this.isOnBoard()){	
@@ -293,7 +311,7 @@ public class Robot extends Entity{
 					found = true;
 				}
 			}
-			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - SHOOT_COST.getEnergy());
+			this.getEnergy().setEnergy(Energy.energyDifference(this.getEnergy(), SHOOT_COST).getEnergy());
 		}else{
 			throw new IllegalStateException("De robot staat niet op een bord.");
 		}
@@ -317,7 +335,7 @@ public class Robot extends Entity{
 		Energy newEnergy = Energy.energySum(this.getEnergy(), energy);
 		if(!isValidRobotEnergyAmount(newEnergy))
 			newEnergy = MAXENERGY;
-		this.getEnergy().setEnergy(newEnergy.getEnergy());
+		this.setEnergy(newEnergy);
 	}
 
 	/**
