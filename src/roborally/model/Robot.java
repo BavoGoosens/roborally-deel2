@@ -234,6 +234,7 @@ public class Robot extends Entity{
 				posPairs.add(new PositionPair(thisPos, otherPos, manhattanDistance));
 			}
 		}
+		
 	}
 
 	/**
