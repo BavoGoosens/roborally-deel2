@@ -244,26 +244,28 @@ public class Robot extends Entity{
 				posPairs.add(toAdd);
 			}
 		}
-		ArrayList<PositionPair> semivalidPosPairs = new ArrayList<PositionPair>();
+		ArrayList<PositionPair> semiValidPosPairs = new ArrayList<PositionPair>();
 		for(PositionPair pp: posPairs){
 			if((pp.getManhattanDistance() != 0) && !(pp.getPos1().toString().equals(pp.getPos2().toString())))
-				semivalidPosPairs.add(pp);
+				semiValidPosPairs.add(pp);
 		}
-		Collections.sort(semivalidPosPairs, new PositionPairComparatorDistance());
-		PositionPair firstpp = semivalidPosPairs.get(0);
-		ArrayList<PositionPair> validPosPairs = new ArrayList<PositionPair>();
-		for(PositionPair pp: semivalidPosPairs){
-			if((pp.getManhattanDistance() == firstpp.getManhattanDistance()))
-				validPosPairs.add(pp);
+		if(!semiValidPosPairs.isEmpty()){
+			Collections.sort(semiValidPosPairs, new PositionPairComparatorDistance());
+			PositionPair firstpp = semiValidPosPairs.get(0);
+			ArrayList<PositionPair> validPosPairs = new ArrayList<PositionPair>();
+			for(PositionPair pp: semiValidPosPairs){
+				if((pp.getManhattanDistance() == firstpp.getManhattanDistance()))
+					validPosPairs.add(pp);
+			}
+			Collections.sort(validPosPairs, new PositionPairComparatorEnergy());
+			PositionPair thePair = validPosPairs.get(0);
+			this.setPosition(thePair.getPos1());
+			robot.setPosition(thePair.getPos2());
+			this.setOrientation(thePair.getOr1());
+			robot.setOrientation(thePair.getOr2());
+			this.getEnergy().setEnergy(Energy.energyDifference(this.getEnergy(),thePair.getCost1()).getEnergy());
+			robot.getEnergy().setEnergy(Energy.energyDifference(robot.getEnergy(),thePair.getCost2()).getEnergy());	
 		}
-		Collections.sort(validPosPairs, new PositionPairComparatorEnergy());
-		PositionPair thePair = validPosPairs.get(0);
-		this.setPosition(thePair.getPos1());
-		robot.setPosition(thePair.getPos2());
-		this.setOrientation(thePair.getOr1());
-		robot.setOrientation(thePair.getOr2());
-		this.getEnergy().setEnergy(Energy.energyDifference(this.getEnergy(),thePair.getCost1()).getEnergy());
-		robot.getEnergy().setEnergy(Energy.energyDifference(robot.getEnergy(),thePair.getCost2()).getEnergy());		
 	}
 
 	/**
