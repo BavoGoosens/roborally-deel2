@@ -78,6 +78,7 @@ public Energy getGCost(){
 public Orientation getOrientation(){
 	return this.orientation;
 }
+
 }
 
 	

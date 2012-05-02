@@ -37,7 +37,7 @@ public class BatteryComparator implements Comparator<Battery>{
 		
 		if(w1 > w2){
 			return 1;
-		}else if(w2 < w1){
+		}else if(w1 < w2){
 			return -1;
 		}else{
 			return 0;

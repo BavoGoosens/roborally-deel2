@@ -12,6 +12,8 @@ import be.kuleuven.cs.som.annotate.Raw;
 import roborally.basics.*;
 import roborally.utils.BatteryComparator;
 import roborally.utils.Calculator;
+import roborally.utils.PositionPair;
+import roborally.utils.PositionPairComparator;
 
 /**
  * Een klasse om robots voor te stellen.
@@ -57,14 +59,11 @@ public class Robot extends Entity{
 	 * De oriëntatie van de robot.
 	 */
 	private Orientation orientation;
-	/**
-	 * Een instance van de comparator waarmee batterijen vergeleken kunnen worden op basis van gewicht.
-	 */
-	private BatteryComparator bc;
+	
 	/**
 	 * De set van batterijen die de robot bezit.
 	 */
-	private Set<Battery> Possessions = new TreeSet<Battery>(this.bc);
+	private Set<Battery> Possessions = new TreeSet<Battery>(new BatteryComparator());
 
 	/**
 	 * Deze methode maakt een nieuwe robot aan.
@@ -225,8 +224,15 @@ public class Robot extends Entity{
 		HashMap<String,Node> thisReachables = Calculator.getReachables(this);
 		HashMap<String,Node> otherReachables = Calculator.getReachables(robot);
 		Set<String> thisKeys = thisReachables.keySet();
-		for(String posString: thisKeys){
-			
+		Set<String> otherKeys = otherReachables.keySet();
+		Set<PositionPair> posPairs = new TreeSet<PositionPair>(new PositionPairComparator());
+		for(String thisPosString: thisKeys){
+			Position thisPos = Calculator.getPositionFromString(thisPosString);
+			for(String otherPosString: otherKeys){
+				Position otherPos = Calculator.getPositionFromString(otherPosString);
+				long manhattanDistance = Calculator.calculateManhattan(thisPos, otherPos);
+				posPairs.add(new PositionPair(thisPos, otherPos, manhattanDistance));
+			}
 		}
 	}
 
