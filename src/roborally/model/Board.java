@@ -352,8 +352,8 @@ public class Board{
 		Set<String> keys = possessions.keySet();
 		for (String key : keys){
 			HashSet<Entity> pos = possessions.get(key);
-			if (this.map.containsKey(key)){
-				HashSet<Entity> mapset = this.map.get(key);
+			if (this.getMap().containsKey(key)){
+				HashSet<Entity> mapset = this.getMap().get(key);
 				if ((mapset == null) || (mapset.size() == 0)){
 					this.getMap().put(key, pos);
 				} else if (mapset.size() == 1){
@@ -362,8 +362,13 @@ public class Board{
 						this.getMap().put(key, pos);
 					}
 				}
+			}else{
+				if ((this.getWidth() >= pos.iterator().next().getPosition().getX()) || (this.getHeight() >= pos.iterator().next().getPosition().getY())){
+					this.getMap().put(key, pos);
+				}
 			}
 		}
+		board2.terminate();
 	}
 
 	public boolean isTerminated(){
@@ -371,6 +376,14 @@ public class Board{
 	}
 	public void terminate(){
 		this.isTerminated = true;
-		//TODO: this.map = null;
+		Collection<HashSet<Entity>> c = this.getMap().values();
+		for (HashSet<Entity> ents : c){
+			for (Entity ent : ents){
+				Position pos = ent.getPosition();
+				ent.destroy();
+				this.cleanBoardPosition(pos);
+			}
+		}
+		
 	}
 }
