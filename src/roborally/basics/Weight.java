@@ -22,7 +22,7 @@ public class Weight {
 	/**
 	 * Gewicht van dit object.
 	 */
-	private int weight;
+	private final int weight;
 
 	/**
 	 * Deze methode maakt een nieuwe massa aan.
@@ -38,7 +38,12 @@ public class Weight {
 	 * 			|new.getWeight() == newWeight
 	 */
 	public Weight(int newWeight){
-		this.setWeight(newWeight);
+		int tmp = Math.abs(newWeight);
+		if(newWeight < MINWEIGHT)
+			tmp = MINWEIGHT;
+		if(newWeight > MAXWEIGHT)
+			tmp = MAXWEIGHT;
+		this.weight = tmp;
 	}
 
 	/**
@@ -50,27 +55,5 @@ public class Weight {
 	@Basic
 	public int getWeight() {
 		return this.weight;
-	}
-	
-	/**
-	 * Deze methode wijzigt het gewicht.
-	 * 
-	 * @param	newWeight
-	 * 			Het nieuwe gewicht.
-	 * 
-	 * @post	Het nieuwe gewicht is gelijk aan het opgegeven gewicht mits foutverwerking.
-	 * 			|if(newWeight < MINWEIGHT)
-	 * 			|	new.getWeight() == MINWEIGHT
-	 * 			|if(newWeight > MAXWEIGHT)
-	 * 			|	new.getWeight() == MAXWEIGHT
-	 * 			|new.getWeight() == newWeight
-	 */
-	public void setWeight(int newWeight){
-		int tmp = Math.abs(newWeight);
-		if(newWeight < MINWEIGHT)
-			tmp = MINWEIGHT;
-		if(newWeight > MAXWEIGHT)
-			tmp = MAXWEIGHT;
-		this.weight = tmp;
 	}
 }
