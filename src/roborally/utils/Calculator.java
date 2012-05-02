@@ -70,7 +70,7 @@ public class Calculator {
 				ArrayList<Position> preNeighbours = currentPos.getNeighbours(robot.getBoard());
 				ArrayList<Position> neighbours = removeWalls(preNeighbours,robot.getBoard());
 				for(Position neighbour: neighbours){
-					if(!reachables.containsKey(neighbour))
+					if((!reachables.containsKey(neighbour.toString())) && (!explorable.contains(neighbour.toString())))
 						explorable.add(neighbour.toString());
 				}
 			}			
