@@ -230,7 +230,7 @@ public class Board{
 	}
 
 	/**
-	 * Deze methode geeft alle Batteries terug die op dit board staan.
+	 * Deze methode geeft alle batterijen terug die op dit bord staan.
 	 * 
 	 * @return	Set<Battery>
 	 * 			Voor iedere batterij die een element is van this.getMap() geldt dat deze op het einde van deze methode in de set zal zitten die teruggegeven wordt. Deze set is null als er geen batterijen op het bord staan.
@@ -247,13 +247,12 @@ public class Board{
 					bat.add((Battery) obj);
 				}
 			}
-
 		}
 		return bat;
 	}
 
 	/**
-	 * Deze methode geeft alle Walls terug die op dit board staan.
+	 * Deze methode geeft alle muren terug die op dit bord staan.
 	 * 
 	 * @return	Set<Wall>
 	 * 			Voor iedere muur die een element is van this.getMap() geldt dat deze op het einde van deze methode in de set zal zitten die teruggegeven wordt. Deze set is null als er geen muren op het bord staan.
@@ -270,7 +269,6 @@ public class Board{
 					wall.add((Wall) obj);
 				}
 			}
-
 		}
 		return wall;
 	}
@@ -279,9 +277,10 @@ public class Board{
 	 * Deze inspector geeft een boolean die true is wanneer de hoogte toegestaan is en in het andere geval false.
 	 * 
 	 * @param 	height
+	 * 			De hoogte die nagekeken moet worden.
 	 * 	
-	 * @return	boolean 
-	 * 			|if ((height > Board.LOWER_BOUND_HEIGHT) && (height < Board.UPPER_BOUND_HEIGHT))
+	 * @return	Boolean die true is wanneer de hoogte toegestaan is en in het andere geval false.
+	 * 			|if((height > Board.LOWER_BOUND_HEIGHT) && (height < Board.UPPER_BOUND_HEIGHT))
 	 * 			|	true
 	 */
 	@Basic
@@ -290,12 +289,13 @@ public class Board{
 	}
 
 	/**
-	 * Inspector om na te gaan of een gegeven breedte width een toegstane waarde is.
+	 * Inspector om na te gaan of een gegeven breedte width een toegestane waarde is.
 	 * 
 	 * @param 	width
+	 * 			De breedte die nagekeken moet worden.
 	 * 		
-	 * @return	boolean
-	 * 			|((width > Board.LOWER_BOUND_WIDTH) && (width < Board.UPPER_BOUND_WIDTH))
+	 * @return	Boolean die true is wanneer de breedte toegestaan is en in het andere geval false.
+	 * 			|if((width > Board.LOWER_BOUND_WIDTH) && (width < Board.UPPER_BOUND_WIDTH))
 	 * 			|	true
 	 */
 	@Basic
@@ -306,10 +306,10 @@ public class Board{
 	/**
 	 * Inspector die de breedte van dit bord teruggeeft.
 	 * 
-	 * @return	|this.width
+	 * @return	De breedte van dit bord.
+	 * 			|this.width
 	 */
-	@Basic
-	@Immutable
+	@Basic @Immutable
 	public long getWidth() {
 		return this.width;
 	}
@@ -317,10 +317,10 @@ public class Board{
 	/**
 	 * Inspector die de hoogte van dit bord teruggeeft.
 	 * 
-	 * @return	|this.height
+	 * @return	De hoogte van dit bord.
+	 * 			|this.height
 	 */
-	@Basic
-	@Immutable
+	@Basic @Immutable
 	public long getHeight() {
 		return this.height;
 	}
@@ -331,11 +331,11 @@ public class Board{
 	 * @param	position
 	 * 			De positie waarop nagekeken moet worden.
 	 * 
-	 * @return	|if (position.getX() > this.getWidth() || position.getX() < LOWER_BOUND_WIDTH || position.getY() > this.getHeight() || position.getY() < LOWER_BOUND_HEIGHT)
+	 * @return	Boolean die true is als de positie geldig is, false indien niet.
+	 * 			|if (position.getX() > this.getWidth() || position.getX() < LOWER_BOUND_WIDTH || position.getY() > this.getHeight() || position.getY() < LOWER_BOUND_HEIGHT)
 	 * 			|	false
 	 * 			|true
 	 */
-	@Basic
 	public boolean isValidBoardPosition(Position position){
 		if(position == null)
 			return false;
@@ -343,12 +343,14 @@ public class Board{
 			return false;
 		return true;
 	}
-	
+
 	/**
-	 * Deze methode geeft de map terug waarop dit bord gebaseerd is.
+	 * Deze methode geeft de HashMap terug waarop dit bord gebaseerd is.
 	 * 
-	 * @return	|this.map
+	 * @return	De HashMap waarop dit bord gebaseerd is.
+	 * 			|this.map
 	 */
+	@Basic @Immutable
 	public HashMap<String, HashSet<Entity>> getMap() {
 		return this.map;
 	}
@@ -378,19 +380,38 @@ public class Board{
 		board2.terminate();
 	}
 
+	/**
+	 * Deze methode kijkt na of het bord getermineerd is of niet.
+	 * 
+	 * @return	Boolean die true is als het bord getermineerd is.
+	 * 			|this.isTerminated
+	 */
 	public boolean isTerminated(){
 		return this.isTerminated;
 	}
+
+	/**
+	 * Deze methode termineert het bord en alle objecten op het bord.
+	 * 
+	 * @post	Het bord is getermineerd.
+	 * 			|new.isTerminated() == true
+	 * 
+	 * @post	Het bord is leeg.
+	 * 			|new.getMap().values() == null
+	 */
 	public void terminate(){
 		this.isTerminated = true;
 		Collection<HashSet<Entity>> c = this.getMap().values();
-		for (HashSet<Entity> ents : c){
-			for (Entity ent : ents){
-				Position pos = ent.getPosition();
-				ent.destroy();
-				this.cleanBoardPosition(pos);
+		if(c != null){
+			for (HashSet<Entity> ents : c){
+				if(ents != null){
+					Position pos = ents.iterator().next().getPosition();
+					for (Entity ent : ents){
+						ent.destroy();
+					}
+					this.cleanBoardPosition(pos);
+				}
 			}
 		}
-		
 	}
 }
