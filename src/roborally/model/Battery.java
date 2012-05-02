@@ -47,6 +47,7 @@ public class Battery extends Entity{
 	 * 
 	 * @post	De energie van de nieuwe batterij is gelijk aan de gegeven energie.
 	 * 			|new.getEnergy() == energy
+	 * 
 	 * @post	Het gewicht van de nieuwe batterij is gelijk aan het gegeven gewicht.
 	 * 			|new.getWeight() == weight
 	 */

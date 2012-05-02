@@ -58,6 +58,7 @@ public class Position {
 	 * 
 	 * @post	De x-waarde van de nieuwe positie is gelijk aan de gegeven x-waarde.
 	 * 			|new.x == xpos
+	 * 
 	 * @post	De y-waarde van de nieuwe positie is gelijk aan de gegeven y-waarde.
 	 * 			|new.y == ypos
 	 */

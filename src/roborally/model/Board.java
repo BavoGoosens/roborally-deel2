@@ -88,7 +88,7 @@ public class Board{
 	 * 			De positie waar gekeken moet worden.
 	 * 
 	 * @return	De HashSet met alle objecten op deze positie.
-	 * 			|this.getMap().get(pos)
+	 * 			|this.getMap().get(pos.toString())
 	 */
 	public HashSet<Entity> getEntityOnPosition(Position pos){
 		return this.getMap().get(pos.toString());
@@ -103,6 +103,9 @@ public class Board{
 	 * @throws	IllegalStateException
 	 * 			Het object bevindt zich niet op een juiste positie in dit bord.
 	 * 			|ent.getBoard().isValidBoardPosition(ent.getPosition())
+	 * 
+	 * @post	De gegeven entity bevindt zich niet langer op een bord.
+	 * 			|new.getEntityOnPosition(ent.getPosition()) == null || new.getMap().containsKey(pos.toString()) == false
 	 */
 	public void removeEntity(Entity ent) throws IllegalStateException{
 		Position pos = ent.getPosition();
@@ -138,6 +141,8 @@ public class Board{
 	 * 			De positie die moet nagekeken worden.
 	 * 
 	 * @return	Boolean die true is als de positie niet door een muur ingenomen is.
+	 * 			|if(!this.isValidBoardPosition(pos))
+	 * 			|	false
 	 * 			|if(!this.getMap().containsKey(pos.toString()))
 	 * 			|	true
 	 * 			|if(this.getMap().get(pos.toString()).isEmpty())
@@ -149,6 +154,8 @@ public class Board{
 	 * 			
 	 */
 	public boolean isPlacableOnPosition(Position pos){
+		if(!this.isValidBoardPosition(pos))
+			return false;
 		if (!this.getMap().containsKey(pos.toString()))
 			return true;
 		if (this.getMap().get(pos.toString()).isEmpty())
@@ -170,12 +177,16 @@ public class Board{
 	 * @param 	entity
 	 * 			Het object dat op het bord geplaatst moet worden.
 	 * 
+	 * @throws 	IllegalArgumentException
+	 * 			De plaats in het bord is niet beschikbaar.
+	 * 			|!this.isPlacableOnPosition(key)
+	 * 
 	 * @post	Als de positie op het bord beschikbaar was staat het object op deze positie.
 	 * 			|if(this.isPlacableOnPosition(key))
 	 * 			|	new.get(key.toString()) == entity
 	 * 			
 	 */
-	public void putEntity(Position key, Entity entity){
+	public void putEntity(Position key, Entity entity) throws IllegalArgumentException{
 		if (this.isPlacableOnPosition(key)){
 			if (entity instanceof Battery || entity instanceof Robot){
 				HashSet<Entity> set = this.getMap().get(key.toString());
@@ -191,6 +202,8 @@ public class Board{
 				input.add(entity);
 				this.getMap().put(key.toString(), input);
 			}
+		}else{
+			throw new IllegalArgumentException("Op deze plaats in het bord kan geen object meer geplaatst worden.");
 		}
 	}
 
