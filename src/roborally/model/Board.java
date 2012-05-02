@@ -363,15 +363,10 @@ public class Board{
 			HashSet<Entity> pos = possessions.get(key);
 			if (this.getMap().containsKey(key)){
 				HashSet<Entity> mapset = this.getMap().get(key);
-				if ((mapset == null) || (mapset.size() == 0)){
-					this.getMap().put(key, pos);
-				} else if (mapset.size() == 1){
-					Entity ent = mapset.iterator().next();
-					if (!(ent instanceof Wall)){
-						this.getMap().put(key, pos);
-					}
-				}
+				//TODO: isPlacableOnPosition gebruiken
+				//TODO: putEntityOnPosition gebruiken
 			}else{
+				//TODO: isValidBoardPosition gebruiken
 				if ((this.getWidth() >= pos.iterator().next().getPosition().getX()) || (this.getHeight() >= pos.iterator().next().getPosition().getY())){
 					this.getMap().put(key, pos);
 				}
