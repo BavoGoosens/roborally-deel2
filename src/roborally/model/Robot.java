@@ -1,5 +1,7 @@
 package roborally.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,6 +16,8 @@ import roborally.basics.*;
 import roborally.utils.BatteryComparator;
 import roborally.utils.Calculator;
 import roborally.utils.PositionPair;
+import roborally.utils.PositionPairComparatorDistance;
+import roborally.utils.PositionPairComparatorEnergy;
 
 /**
  * Een klasse om robots voor te stellen.
@@ -63,7 +67,7 @@ public class Robot extends Entity{
 	/**
 	 * De set van batterijen die de robot bezit.
 	 */
-	private Set<Battery> Possessions = new TreeSet<Battery>(new BatteryComparator());
+	private SortedSet<Battery> Possessions = new TreeSet<Battery>(new BatteryComparator());
 
 	/**
 	 * Deze methode maakt een nieuwe robot aan.
@@ -225,20 +229,25 @@ public class Robot extends Entity{
 		HashMap<String,Node> otherReachables = Calculator.getReachables(robot);
 		Set<String> thisKeys = thisReachables.keySet();
 		Set<String> otherKeys = otherReachables.keySet();
-		SortedSet<PositionPair> posPairs = new TreeSet<PositionPair>();
+		ArrayList<PositionPair> posPairs = new ArrayList<PositionPair>();
 		for(String thisPosString: thisKeys){
 			Position thisPos = Calculator.getPositionFromString(thisPosString);
 			for(String otherPosString: otherKeys){
 				Position otherPos = Calculator.getPositionFromString(otherPosString);
-				PositionPair toAdd = new PositionPair(thisPos, otherPos, Energy.energySum(thisReachables.get(thisPosString).getHCost(), otherReachables.get(otherPosString).getHCost()));
+				PositionPair toAdd = new PositionPair(thisPos, otherPos, Energy.energySum(thisReachables.get(thisPosString).getGCost(), otherReachables.get(otherPosString).getGCost()));
 				posPairs.add(toAdd);
 			}
 		}
-		SortedSet<PositionPair> validPosPairs = new TreeSet<PositionPair>();
-		for(PositionPair posPair: posPairs){
-			
-			int result = posPair.compareTo(posPairs.first());
+		Collections.sort(posPairs, new PositionPairComparatorDistance());
+		ArrayList<PositionPair> validPosPairs = new ArrayList<PositionPair>();
+		PositionPair firstpp = posPairs.get(0);
+		for(PositionPair pp: posPairs){
+			if(pp.getManhattanDistance() == firstpp.getManhattanDistance())
+				validPosPairs.add(pp);
 		}
+		Collections.sort(validPosPairs, new PositionPairComparatorEnergy());
+		
+		
 	}
 
 	/**

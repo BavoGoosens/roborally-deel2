@@ -3,7 +3,7 @@ package roborally.utils;
 import roborally.basics.Energy;
 import roborally.basics.Position;
 
-public class PositionPair implements Comparable{
+public class PositionPair{
 	private final Position pos1;
 	private final Position pos2;
 	private final long manhattanDistance;
@@ -39,16 +39,5 @@ public class PositionPair implements Comparable{
 
 	public Energy getCost() {
 		return this.cost;
-	}
-
-	@Override
-	public int compareTo(Object pp2) {
-		if(this.getManhattanDistance() > ((PositionPair) pp2).getManhattanDistance()){
-			return 1;
-		}else if(this.getManhattanDistance() < ((PositionPair) pp2).getManhattanDistance()){
-			return -1;
-		}else{
-			return 0;
-		}
 	}
 }
