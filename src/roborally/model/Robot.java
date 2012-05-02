@@ -381,7 +381,7 @@ public class Robot extends Entity{
 			throw new IllegalStateException("De robot staat niet op een bord.");
 		}else if(!this.getBoard().equals(battery.getBoard())){
 			throw new IllegalArgumentException("De robot staat niet op hetzelfde bord als de batterij.");
-		}else if(!this.getPosition().equals(battery.getPosition())){
+		}else if(!this.getPosition().toString().equals(battery.getPosition().toString())){
 			throw new IllegalArgumentException("De robot staat niet op dezelfde positie als de batterij.");
 		}else{
 			battery.removeFromBoard();
