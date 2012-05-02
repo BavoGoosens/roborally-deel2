@@ -92,14 +92,14 @@ public class Calculator {
 	public static HashMap<String,Node> aStarOnTo(Robot a, Position pos){
 		//deze gaat direct naar de positie die opgegeven wordt
 
-		HashMap<String,Node> open = new HashMap<String,Node>(); 
+		HashMap<String,Node> open = new HashMap<>(); 
 		// de experimentele posities die nog geëvalueerd moeten/kunnen worden
 		Node startNode = new Node(a.getPosition(), a.getBoard(), new Energy(0) , 
 				getHCost(a.getPosition(), a.getOrientation(),pos, a),a.getOrientation(), null);
 
 		open.put(a.getPosition().toString(), startNode);
 		// de startPositie aan de open list toevoegen
-		HashMap<String,Node> closed = new HashMap<String, Node>(); 
+		HashMap<String,Node> closed = new HashMap<>(); 
 		// de lijst met al geëvalueerde posities
 		Board board = a.getBoard();
 
