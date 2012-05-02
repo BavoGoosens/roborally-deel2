@@ -234,7 +234,10 @@ public class Robot extends Entity{
 			Position thisPos = Calculator.getPositionFromString(thisPosString);
 			for(String otherPosString: otherKeys){
 				Position otherPos = Calculator.getPositionFromString(otherPosString);
-				PositionPair toAdd = new PositionPair(thisPos, otherPos, Energy.energySum(thisReachables.get(thisPosString).getGCost(), otherReachables.get(otherPosString).getGCost()));
+				Node thisNode = thisReachables.get(thisPos.toString());
+				Node otherNode = otherReachables.get(otherPos.toString());
+				PositionPair toAdd = new PositionPair(thisPos, otherPos,thisNode.getGCost(),
+						otherNode.getGCost(), thisNode.getOrientation(),otherNode.getOrientation());
 				posPairs.add(toAdd);
 			}
 		}
@@ -242,12 +245,19 @@ public class Robot extends Entity{
 		ArrayList<PositionPair> validPosPairs = new ArrayList<PositionPair>();
 		PositionPair firstpp = posPairs.get(0);
 		for(PositionPair pp: posPairs){
-			if(pp.getManhattanDistance() == firstpp.getManhattanDistance())
+			if((pp.getManhattanDistance() == firstpp.getManhattanDistance()) && 
+					((pp.getPos1().getX() != pp.getPos2().getX()) ||
+				(pp.getPos1().getY() != pp.getPos2().getY())))
 				validPosPairs.add(pp);
 		}
 		Collections.sort(validPosPairs, new PositionPairComparatorEnergy());
-		
-		
+		PositionPair thePair = validPosPairs.get(0);
+		this.setPosition(thePair.getPos1());
+		robot.setPosition(thePair.getPos2());
+		this.setOrientation(thePair.getOr1());
+		robot.setOrientation(thePair.getOr2());
+		this.getEnergy().setEnergy(thePair.getCost1().getEnergy());
+		robot.getEnergy().setEnergy(thePair.getCost2().getEnergy());		
 	}
 
 	/**
