@@ -31,7 +31,7 @@ public class Battery extends Entity{
 	/**
 	 * Gewicht van de batterij.
 	 */
-	private Weight weight;
+	private final Weight weight;
 	
 	/**
 	 * Maakt een nieuwe batterij aan.
@@ -44,10 +44,15 @@ public class Battery extends Entity{
 	 * 
 	 * @pre		Energie moet geldige hoeveelheid zijn.
 	 * 			|isValidBatteryEnergyAmount(energy)
+	 * 
+	 * @post	De energie van de nieuwe batterij is gelijk aan de gegeven energie.
+	 * 			|new.getEnergy() == energy
+	 * @post	Het gewicht van de nieuwe batterij is gelijk aan het gegeven gewicht.
+	 * 			|new.getWeight() == weight
 	 */
 	public Battery(Energy energy, Weight weight){
 		this.energy = energy;
-		this.setWeight(weight);
+		this.weight = weight;
 	}
 
 	/**
@@ -72,17 +77,6 @@ public class Battery extends Entity{
 		return this.weight;
 	}
 
-	/**
-	 * Wijzigt het gewicht van de batterij.
-	 * 
-	 * @param	weight
-	 * 			Het nieuwe gewicht van de batterij.
-	 */
-	@Basic
-	public void setWeight(Weight weight) {
-		this.weight = weight;
-	}
-	
 	/**
 	 * Geeft terug of de hoeveelheid energie een geldige hoeveelheid is voor deze batterij.
 	 * 
