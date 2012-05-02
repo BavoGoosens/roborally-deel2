@@ -230,7 +230,8 @@ public class Robot extends Entity{
 			Position thisPos = Calculator.getPositionFromString(thisPosString);
 			for(String otherPosString: otherKeys){
 				Position otherPos = Calculator.getPositionFromString(otherPosString);
-				posPairs.add(new PositionPair(thisPos, otherPos, Energy.energySum(thisReachables.get(thisPosString).getHCost(), otherReachables.get(otherPosString).getHCost())));
+				PositionPair toAdd = new PositionPair(thisPos, otherPos, Energy.energySum(thisReachables.get(thisPosString).getHCost(), otherReachables.get(otherPosString).getHCost()));
+				posPairs.add(toAdd);
 			}
 		}
 		SortedSet<PositionPair> validPosPairs = new TreeSet<PositionPair>();

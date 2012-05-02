@@ -65,7 +65,7 @@ public class Calculator {
 			HashMap<String,Node> pad = aStarOnTo(robot,currentPos);
 			Node currentNode = pad.get(currentPos.toString());
 			explorable.remove(0);
-			if(currentNode.getHCost().getEnergy() < upperbound.getEnergy()){
+			if(currentNode.getGCost().getEnergy() <= upperbound.getEnergy()){
 				reachables.put(currentPos.toString(),currentNode);
 				ArrayList<Position> preNeighbours = currentPos.getNeighbours(robot.getBoard());
 				ArrayList<Position> neighbours = removeWalls(preNeighbours,robot.getBoard());
