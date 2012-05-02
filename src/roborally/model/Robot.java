@@ -200,16 +200,11 @@ public class Robot extends Entity{
 		}catch (IllegalStateException e){
 			throw new IllegalStateException("De positie waarnaar bewogen moet worden is ongeldig.");
 		}
-		HashSet<Entity> ents = this.getBoard().getEntityOnPosition(destination);
-		if (ents.size() == 1){
-			Entity ent = ents.iterator().next();
-			if (ent instanceof Wall)
-				throw new IllegalStateException("Er staat een muur in de weg.");
-			this.setPosition(destination);
-			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - moveCost(this).getEnergy());
+		if(this.getBoard().isPlacableOnPosition(destination)){
+		this.setPosition(destination);
+		this.getEnergy().setEnergy(this.getEnergy().getEnergy() - moveCost(this).getEnergy());
 		}else{
-			this.setPosition(destination);
-			this.getEnergy().setEnergy(this.getEnergy().getEnergy() - moveCost(this).getEnergy());
+			throw new IllegalStateException("De positie is al bezet.");
 		}
 	}
 
