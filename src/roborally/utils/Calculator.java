@@ -28,7 +28,31 @@ public class Calculator {
 	 */
 	public static long calculateManhattan(Position pos1, Position pos2){
 		return (Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY()));
-	} 
+	}
+	
+	public static Position getPositionFromString(String posString) throws IllegalArgumentException{
+		if(posString.indexOf("c") == -1)
+			throw new IllegalArgumentException("De String is niet geformatteerd als een positie.");
+		String[] split = posString.split(",");
+		long x, y;
+		try{
+			x = Long.parseLong(split[0]);
+		}catch(NumberFormatException e){
+			throw new IllegalArgumentException(e.getMessage());
+		}
+		try{
+			y = Long.parseLong(split[1]);
+		}catch(NumberFormatException e){
+			throw new IllegalArgumentException(e.getMessage());
+		}
+		Position result;
+		try{
+			result = new Position(x, y);
+		}catch(IllegalArgumentException e){
+			throw new IllegalArgumentException(e.getMessage());
+		}
+		return result;		
+	}
 	
 	public static HashMap<String,Node> getReachables(Robot robot){
 		Energy upperbound = robot.getEnergy();

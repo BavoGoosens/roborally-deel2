@@ -222,7 +222,12 @@ public class Robot extends Entity{
 	 * 			De robot waar naartoe moet bewogen worden.
 	 */
 	public void moveNextTo(Robot robot){
-		
+		HashMap<String,Node> thisReachables = Calculator.getReachables(this);
+		HashMap<String,Node> otherReachables = Calculator.getReachables(robot);
+		Set<String> thisKeys = thisReachables.keySet();
+		for(String posString: thisKeys){
+			
+		}
 	}
 
 	/**
