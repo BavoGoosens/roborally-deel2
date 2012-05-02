@@ -1,17 +1,20 @@
 package roborally.model;
 
 import be.kuleuven.cs.som.annotate.Basic;
-import be.kuleuven.cs.som.annotate.Immutable;
 import roborally.basics.Energy;
 import roborally.basics.Position;
 import roborally.basics.Orientation;
 
-//mag parent moet ten alle tijden naar een andere node wijzen => geen selfreferenties 
-//niet altyd de eerste node heeft gewoon geen parent u startnode heeft dus null als parent
-//position zal altyd naar een geldige pos verwijzen 
-//de cost moet altijd groter zijn dan 0 
-//hoe da combinere me die interpretatie van energie me die omzettingen 
-
+/**
+ * Klasse om nodes op het spelbord voor te stellen.
+ * 
+ * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
+ * 
+ * @version 1.0
+ * 
+ * @invar	...
+ * 			| isValidParent(this.getParent())
+ */
 public class Node extends Entity{
 
 
@@ -184,6 +187,18 @@ public class Node extends Entity{
 		return this.orientation;
 	}
 
+	/**
+	 * Methode om na te gaan of een node een toegestane parent is van deze node.
+	 * 
+	 * @param 	node
+	 * 
+	 * @return 	boolean result 
+	 * 			| if ((node == null) || (node != this ))
+	 * 			|	result == true
+	 * 			|result == false 
+	 */
+	public boolean isValidParent(Node node){
+		return ((node == null) || (node != this ));
+	}
 }
-
 
