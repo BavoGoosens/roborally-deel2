@@ -12,19 +12,17 @@ import be.kuleuven.cs.som.annotate.Immutable;
 import roborally.basics.Position;
 
 /**
- * Een klasse om borden voor te stellen.
+ * Een klasse om een bord voor te stellen.
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
- * @invar 	Een board moet ten alle tijden een geldige hoogte en breedte hebben/
- * 			| isValidHeight(getHeight())
- *  		| isValidWidth(getWidth())
+ * @invar 	Een bord moet ten alle tijden een geldige hoogte en breedte hebben.
+ * 			|isValidHeight(getHeight())
+ *  		|isValidWidth(getWidth())
  *  
  * @version 1.1
  */
 public class Board{
-	//TODO: documentatie en annotations
-	//TODO:	kan getermineerd worden moet de map dan op null gezet worden (bavo)
 
 	/**
 	 * De breedte van het bord.

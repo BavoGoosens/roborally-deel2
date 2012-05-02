@@ -27,6 +27,9 @@ public class Energy {
 	 * 
 	 * @pre		De hoeveelheid mag niet negatief zijn.
 	 * 			|amount >= 0
+	 * 
+	 * @post	De nieuwe hoeveelheid energie moet gelijk zijn aan de gegeven hoeveelheid energie.
+	 * 			|new.getEnergy() == amount
 	 */
 	public Energy(double amount){
 		this.setEnergy(amount);
