@@ -27,7 +27,7 @@ public class Battery extends Entity{
 	/**
 	 * Energie in de batterij.
 	 */
-	private final Energy energy;
+	private Energy energy;
 	/**
 	 * Gewicht van de batterij.
 	 */
@@ -52,8 +52,8 @@ public class Battery extends Entity{
 	 * 			|new.getWeight() == weight
 	 */
 	public Battery(Energy energy, Weight weight){
-		this.energy = energy;
 		this.weight = weight;
+		this.setEnergy(energy);
 	}
 
 	/**
@@ -91,6 +91,15 @@ public class Battery extends Entity{
 		return (energy.getEnergy() >= MINBATTERYENERGY.getEnergy() && energy.getEnergy() <= MAXBATTERYENERGY.getEnergy());
 	}
 
+	/**
+	 * Deze methode wijzigt de energie van de batterij.
+	 * 
+	 * @param	energy
+	 * 			De nieuwe energie die de batterij moet krijgen.
+	 * 
+	 * @post	De batterij heeft nu de nieuwe hoeveelheid energie.
+	 * 			|new.getEnergy().equals(energy) == true
+	 */
 	public void setEnergy(Energy energy) {
 		this.energy = energy;
 		
