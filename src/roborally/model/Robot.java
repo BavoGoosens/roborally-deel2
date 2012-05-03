@@ -158,17 +158,17 @@ public class Robot extends Entity{
 	 * Draait de robot 1 keer in wijzerzin.
 	 * 
 	 * @post	De nieuwe oriëntatie van de robot is gelijk aan de volgende oriëntatie in wijzerzin.
-	 * 			|if(isValidRobotEnergyAmount(new Energy(Energy.energyDifference(this.getEnergy(), TURN_COST).getEnergy())))
+	 * 			|if(isValidRobotEnergyAmount(Energy.energyDifference(this.getEnergy(), TURN_COST)))
 	 * 			|	new.getOrientation() == this.getOrienation().getClockwiseOrientation()
 	 * 
 	 * @post	De energie van de robot is verminderd met benodigde energie voor een draai.
-	 * 			|if(isValidRobotEnergyAmount(new Energy(Energy.energyDifference(this.getEnergy(), TURN_COST).getEnergy())))
-	 * 			|	new.getEnergy().getEnergy().equals(Energy.energyDifference(this.getEnergy(), TURN_COST).getEnergy())
+	 * 			|if(isValidRobotEnergyAmount(Energy.energyDifference(this.getEnergy(), TURN_COST)))
+	 * 			|	new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), TURN_COST))
 	 */
 	public void turnClockWise(){
 		if(this.canTurn()){
 			this.setOrientation(this.getOrientation().getClockwiseOrientation());
-			this.getEnergy().setEnergy(Energy.energyDifference(this.getEnergy(), TURN_COST).getEnergy());
+			this.setEnergy(Energy.energyDifference(this.getEnergy(), TURN_COST));
 		}
 	}
 
@@ -176,17 +176,17 @@ public class Robot extends Entity{
 	 * Draait de robot 1 keer in tegenwijzerzin.
 	 * 
 	 * @post	De nieuwe oriëntatie van de robot is gelijk aan de volgende oriëntatie in wijzerzin.
-	 * 			|if(isValidRobotEnergyAmount(new Energy(Energy.energyDifference(this.getEnergy(), TURN_COST).getEnergy())))
+	 * 			|if(isValidRobotEnergyAmount(Energy.energyDifference(this.getEnergy(), TURN_COST)))
 	 * 			|	new.getOrientation() == this.getOrienation().getCounterClockwiseOrientation()
 	 * 
 	 * @post	De energie van de robot is verminderd met benodigde energie voor een draai.
-	 * 			|if(isValidRobotEnergyAmount(new Energy(Energy.energyDifference(this.getEnergy(), TURN_COST).getEnergy())))
-	 * 			|	new.getEnergy().getEnergy().equals(Energy.energyDifference(this.getEnergy(), TURN_COST).getEnergy())
+	 * 			|if(isValidRobotEnergyAmount(Energy.energyDifference(this.getEnergy(), TURN_COST)))
+	 * 			|	new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), TURN_COST))
 	 */
 	public void turnCounterClockWise(){
 		if(this.canTurn()){
 			this.setOrientation(this.getOrientation().getCounterClockwiseOrientation());
-			this.getEnergy().setEnergy(Energy.energyDifference(this.getEnergy(), TURN_COST).getEnergy());
+			this.setEnergy(Energy.energyDifference(this.getEnergy(), TURN_COST));
 		}
 	}
 
@@ -198,7 +198,7 @@ public class Robot extends Entity{
 	 * 			|!this.canMove() || !Position.isValidPosition(this.getOrientation().getNextPosition(this.getPosition())) || !this.getBoard().isPlacableOnPosition(Calculator.getNextPosition(this.getPosition(), this.getOrientation()))
 	 * 
 	 * @post	De robot staat een plaats verder.
-	 * 			|new.getPosition() == Calculator.getNextPosition(this.getPosition(), this.getOrientation())
+	 * 			|new.getPosition().equals(Calculator.getNextPosition(this.getPosition(), this.getOrientation())) == true
 	 * 
 	 * @post	De robot heeft energie verbruikt.
 	 * 			|new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), moveCost(this))) == true
@@ -292,7 +292,7 @@ public class Robot extends Entity{
 	 * 			|!this.isOnBoard()
 	 * 
 	 * @post	De robot verliest energie. De hoeveelheid is bepaald in de constante SHOOT_COST.
-	 * 			|new.getEnergy() == new Energy(this.getEnergy().getEnergy() - SHOOT_COST.getEnergy())
+	 * 			|new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), SHOOT_COST)) == true
 	 * 
 	 * @post	Mogelijks wordt een object geraakt en vernietigd.
 	 * 			|TODO: formele post doc bij shoot()
@@ -311,7 +311,7 @@ public class Robot extends Entity{
 					found = true;
 				}
 			}
-			this.getEnergy().setEnergy(Energy.energyDifference(this.getEnergy(), SHOOT_COST).getEnergy());
+			this.setEnergy(Energy.energyDifference(this.getEnergy(), SHOOT_COST));
 		}else{
 			throw new IllegalStateException("De robot staat niet op een bord.");
 		}
@@ -345,16 +345,21 @@ public class Robot extends Entity{
 	 * 			De robot waarvoor de berekening moet uitgevoerd worden.
 	 * 
 	 * @return	de kost terug van 1 move
-	 * 			|new Energy(MOVE_COST.getEnergy() + MOVE_COST_PER_KG.getEnergy()*(robot.getTotalWeight().getWeight() / 1000))
+	 * 			|Energy.energySum(MOVE_COST, new Energy(MOVE_COST_PER_KG.getEnergy()*(robot.getTotalWeight().getWeight() / 1000)))
 	 */
 	public static Energy moveCost(Robot robot){
-		return new Energy(MOVE_COST.getEnergy() + MOVE_COST_PER_KG.getEnergy()*(robot.getTotalWeight().getWeight() / 1000));
+		return Energy.energySum(MOVE_COST, new Energy(MOVE_COST_PER_KG.getEnergy()*(robot.getTotalWeight().getWeight() / 1000)));
 	}
 
 	/**
 	 * Geeft het totale gewicht van alles wat de robot draagt.
 	 * 
 	 * @return	Het totale gewicht van alles wat de robot draagt.
+	 * 			|int totalWeight = 0;
+	 * 			|for(Battery batt: this.getPossessions()){
+	 * 			|	totalWeight += batt.getWeight().getWeight();
+	 * 			|}
+	 * 			|new Weight(totalWeight)
 	 */
 	public Weight getTotalWeight(){
 		int totalWeight = 0;
@@ -422,8 +427,8 @@ public class Robot extends Entity{
 				this.getPossessions().remove(battery);
 			}else{
 				Energy toRecharge = Energy.energyDifference(battery.getEnergy(), Energy.energyDifference(Robot.MAXENERGY, this.getEnergy()));
-				battery.getEnergy().setEnergy(toRecharge.getEnergy());
-				this.getEnergy().setEnergy(Energy.energySum(this.getEnergy(), toRecharge).getEnergy());
+				battery.setEnergy(toRecharge);
+				this.setEnergy(Energy.energySum(this.getEnergy(), toRecharge));
 				if(battery.getEnergy().getEnergy() == 0){
 					this.getPossessions().remove(battery);
 					Collections.sort(this.getPossessions(), new BatteryComparator());
@@ -446,6 +451,15 @@ public class Robot extends Entity{
 	 * 
 	 * @throws 	IllegalStateException
 	 * 			De robot staat niet op een bord.
+	 * 
+	 * @post	De batterij is niet langer in het bezit van de robot.
+	 * 			|new.getPossessions().contains(battery) == false
+	 * 
+	 * @post	De batterij bevindt zich op dezelfde positie als de robot.
+	 * 			|(new battery).getPosition().equals(new.getPosition()) == true
+	 * 
+	 * @post	De batterij bevindt zich op hetzelfde bord als de robot.
+	 * 			|(new battery).getBoard().equals(new.getBoard()) == true
 	 */
 	public void drop(Battery battery) throws IllegalArgumentException, IllegalStateException{
 		if(!this.isOnBoard()){
@@ -465,13 +479,13 @@ public class Robot extends Entity{
 	 * @return	Boolean die true is als de robot voldoende energie heeft om te draaien.
 	 * 			|if(this.getEnergy().getEnergy() - TURN_COST.getEnergy() < 0)
 	 * 			|	false
-	 * 			|isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST.getEnergy()))
+	 * 			|true
 	 */
 	@Raw
 	public boolean canTurn(){
 		if(this.getEnergy().getEnergy() - TURN_COST.getEnergy() < 0)
 			return false;
-		return isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - TURN_COST.getEnergy()));
+		return true;
 	}
 
 	/**
@@ -480,7 +494,7 @@ public class Robot extends Entity{
 	 * @return	Boolean die true is als de robot voldoende energie heeft om te moven.
 	 * 			|if(this.getEnergy().getEnergy() - moveCost(this).getEnergy() < 0)
 	 * 			|	false
-	 * 			|isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - moveCost(this).getEnergy()))
+	 * 			|true
 	 * 
 	 * @note	Deze methode houdt enkel rekening met de minimale energie en niet met de positie.
 	 */
@@ -488,7 +502,7 @@ public class Robot extends Entity{
 	public boolean canMove(){
 		if(this.getEnergy().getEnergy() - moveCost(this).getEnergy() < 0)
 			return false;
-		return isValidRobotEnergyAmount(new Energy(this.getEnergy().getEnergy() - moveCost(this).getEnergy()));
+		return true;
 	}
 
 	/*
@@ -501,12 +515,10 @@ public class Robot extends Entity{
 	 */
 	@Override
 	public void destroy() {
-		Iterator<Battery> itr = this.getPossessions().iterator();
-		while(itr.hasNext()){
-			Battery current = itr.next();
-			current.destroy();
-			this.getPossessions().remove(current);
+		for(Battery batt: this.getPossessions()){
+			batt.destroy();
 		}
+		this.getPossessions().clear();
 		super.destroy();
 	}
 

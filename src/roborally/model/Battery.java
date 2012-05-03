@@ -90,4 +90,9 @@ public class Battery extends Entity{
 	public static boolean isValidBatteryEnergyAmount(Energy energy){
 		return (energy.getEnergy() >= MINBATTERYENERGY.getEnergy() && energy.getEnergy() <= MAXBATTERYENERGY.getEnergy());
 	}
+
+	public void setEnergy(Energy energy) {
+		this.energy = energy;
+		
+	}
 }
