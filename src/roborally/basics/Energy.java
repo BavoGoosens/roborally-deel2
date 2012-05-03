@@ -10,14 +10,14 @@ import be.kuleuven.cs.som.annotate.Basic;
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
- * @version 1.0
+ * @version 1.1
  */
 public class Energy {
 	
 	/**
 	 * Hoeveelheid energie opgeslagen in dit object.
 	 */
-	private double amount;
+	private final double amount;
 	
 	/**
 	 * Deze methode maakt een nieuwe hoeveelheid energie aan.
@@ -81,5 +81,6 @@ public class Energy {
 			return new Energy(0);
 		return new Energy(e1.getEnergy() - e2.getEnergy());
 	}
+	//TODO: nakijken of deze methode nergens verkeerdelijk gebruikt wordt.
 	
 }

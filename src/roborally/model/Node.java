@@ -12,7 +12,7 @@ import roborally.basics.Orientation;
  * 
  * @version 1.0
  * 
- * @invar	...
+ * @invar	TODO: informele doc (niet per se)
  * 			| isValidParent(this.getParent())
  */
 public class Node extends Entity{

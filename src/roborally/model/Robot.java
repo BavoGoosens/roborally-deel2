@@ -419,7 +419,11 @@ public class Robot extends Entity{
 	 * @param	battery
 	 * 			De batterij die gebruikt moet worden.
 	 * 
-	 * @post	//TODO
+	 * @post	De robot is opgeladen met een hoeveelheid energie uit de batterij (dit kan onveranderd blijven).
+	 * 			|new.getEnergy().equals(Energy.energySum(this.getEnergy(), Energy.energyDifference(battery.getEnergy(), Energy.energyDifference(Robot.MAXENERGY, this.getEnergy())))) == true
+	 * 
+	 * @post	De batterij heeft mogelijks energie verloren.
+	 * 			|(new battery).getEnergy().equals(Energy.energyDifference(battery.getEnergy(), Energy.energyDifference(Robot.MAXENERGY, this.getEnergy()))) == true
 	 */
 	public void use(Battery battery) {
 		if (this.getPossessions().contains(battery)){
