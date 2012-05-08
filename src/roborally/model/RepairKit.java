@@ -1,5 +1,5 @@
 package roborally.model;
 
-public class RepairKit {
+public class RepairKit extends Item{
 
 }

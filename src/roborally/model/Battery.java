@@ -14,7 +14,7 @@ import roborally.basics.Weight;
  * 
  * @version 1.1
  */
-public class Battery extends Entity{
+public class Battery extends Item{
 	
 	/**
 	 * Maximale energie die een batterij kan hebben.

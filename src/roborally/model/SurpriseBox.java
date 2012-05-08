@@ -1,5 +1,5 @@
 package roborally.model;
 
-public class SurpriseBox {
+public class SurpriseBox extends Item{
 
 }
