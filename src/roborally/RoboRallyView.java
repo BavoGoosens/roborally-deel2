@@ -13,12 +13,12 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 
-public class RoboRallyView<Board, Robot, Wall, Battery> extends JPanel {
+public class RoboRallyView<Board, Robot, Wall, Battery, RepairKit, SurpriseBox> extends JPanel {
 	
 	private static final long serialVersionUID = -5412856771873196193L;
 	private final static int TILE_SIZE = 50;
 	
-	private final RoboRally<Board, Robot, Wall, Battery> roboRally;
+	private final RoboRally<Board, Robot, Wall, Battery, RepairKit, SurpriseBox> roboRally;
 	private boolean showGrid = true;
 	
 	private int prePressOriginX = 0;
@@ -31,13 +31,17 @@ public class RoboRallyView<Board, Robot, Wall, Battery> extends JPanel {
 	private Image robotImage;
 	private Image wallImage;
 	private Image batteryImage;
+	private Image repairkitImage;
+	private Image surpriseboxImage;
 	
-	public RoboRallyView(final RoboRally<Board, Robot, Wall, Battery> roboRally) {
+	public RoboRallyView(final RoboRally<Board, Robot, Wall, Battery, RepairKit, SurpriseBox> roboRally) {
 		this.roboRally = roboRally;
 		try {
-			this.robotImage = ImageIO.read(getClass().getClassLoader().getResource("res/robot1.jpg"));
-			this.wallImage = ImageIO.read(getClass().getClassLoader().getResource("res/wall.jpg"));
-			this.batteryImage = ImageIO.read(getClass().getClassLoader().getResource("res/battery.png"));
+			robotImage = ImageIO.read(getClass().getClassLoader().getResource("res/robot1.jpg"));
+			wallImage = ImageIO.read(getClass().getClassLoader().getResource("res/wall.jpg"));
+			batteryImage = ImageIO.read(getClass().getClassLoader().getResource("res/battery.png"));
+			repairkitImage = ImageIO.read(getClass().getClassLoader().getResource("res/repairkit.jpg"));
+			surpriseboxImage = ImageIO.read(getClass().getClassLoader().getResource("res/surprisebox.jpg"));
 		} catch(IOException e) {
 			System.out.println("error reading  images");
 			System.exit(ERROR);
@@ -74,7 +78,7 @@ public class RoboRallyView<Board, Robot, Wall, Battery> extends JPanel {
 				Point point = e.getPoint();
 				int x = (int) ((-originX + point.getX()) / (TILE_SIZE + 1));
 				int y = (int) ((-originY + point.getY()) / (TILE_SIZE + 1));
-				IFacade<Board, Robot, Wall, Battery> facade = roboRally.getFacade();
+				IFacade<Board, Robot, Wall, Battery, RepairKit, SurpriseBox> facade = roboRally.getFacade();
 				for(Robot robot : facade.getRobots(roboRally.getBoard())) {
 					long xr, yr;
 					xr = facade.getRobotX(robot);
@@ -125,7 +129,43 @@ public class RoboRallyView<Board, Robot, Wall, Battery> extends JPanel {
 				g.drawLine(0, y, width - 1, y);
 			}
 		}
-		IFacade<Board, Robot, Wall, Battery> facade = roboRally.getFacade();
+		IFacade<Board, Robot, Wall, Battery, RepairKit, SurpriseBox> facade = roboRally.getFacade();
+		for(Battery battery : facade.getBatteries(roboRally.getBoard())) {
+			long x = facade.getBatteryX(battery);
+			long y = facade.getBatteryY(battery);
+			if(x < Integer.MIN_VALUE + 2 * TILE_SIZE || x > Integer.MAX_VALUE - 2 * TILE_SIZE || y < Integer.MIN_VALUE + 2 * TILE_SIZE || y > Integer.MAX_VALUE - 2 * TILE_SIZE)
+				continue;
+			int tileXRoot = (int) (originX + x * (TILE_SIZE + 1) + 1);
+			int tileYRoot = (int) (originY + y * (TILE_SIZE + 1) + 1);
+			// draw item
+			g.drawImage(batteryImage, tileXRoot, tileYRoot, null);
+			// draw name
+			g.drawString(roboRally.getBatteryName(battery), tileXRoot + 2, tileYRoot + g.getFontMetrics().getAscent() - 2);
+		}
+		for(RepairKit repairKit : facade.getRepairKits(roboRally.getBoard())) {
+			long x = facade.getRepairKitX(repairKit);
+			long y = facade.getRepairKitY(repairKit);
+			if(x < Integer.MIN_VALUE + 2 * TILE_SIZE || x > Integer.MAX_VALUE - 2 * TILE_SIZE || y < Integer.MIN_VALUE + 2 * TILE_SIZE || y > Integer.MAX_VALUE - 2 * TILE_SIZE)
+				continue;
+			int tileXRoot = (int) (originX + x * (TILE_SIZE + 1) + 1);
+			int tileYRoot = (int) (originY + y * (TILE_SIZE + 1) + 1);
+			// draw item
+			g.drawImage(repairkitImage, tileXRoot, tileYRoot, null);
+			// draw name
+			g.drawString(roboRally.getRepairKitName(repairKit), tileXRoot + 2, tileYRoot + g.getFontMetrics().getAscent() - 2);
+		}
+		for(SurpriseBox surpriseBox : facade.getSurpriseBoxes(roboRally.getBoard())) {
+			long x = facade.getSurpriseBoxX(surpriseBox);
+			long y = facade.getSurpriseBoxY(surpriseBox);
+			if(x < Integer.MIN_VALUE + 2 * TILE_SIZE || x > Integer.MAX_VALUE - 2 * TILE_SIZE || y < Integer.MIN_VALUE + 2 * TILE_SIZE || y > Integer.MAX_VALUE - 2 * TILE_SIZE)
+				continue;
+			int tileXRoot = (int) (originX + x * (TILE_SIZE + 1) + 1);
+			int tileYRoot = (int) (originY + y * (TILE_SIZE + 1) + 1);
+			// draw item
+			g.drawImage(surpriseboxImage, tileXRoot, tileYRoot, null);
+			// draw name
+			g.drawString(roboRally.getSurpriseBoxName(surpriseBox), tileXRoot + 2, tileYRoot + g.getFontMetrics().getAscent() - 2);
+		}
 		for(Battery battery : facade.getBatteries(roboRally.getBoard())) {
 			long x = facade.getBatteryX(battery);
 			long y = facade.getBatteryY(battery);

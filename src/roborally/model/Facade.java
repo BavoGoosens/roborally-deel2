@@ -1,215 +1,318 @@
 package roborally.model;
 
+import java.io.Writer;
+import java.util.Set;
+
 import roborally.IFacade;
 import roborally.basics.*;
 
-import java.util.HashSet;
-import java.util.Set;
 
-
-public class Facade implements IFacade<Board, Robot, Wall, Battery>{
-
-
-	public Facade(){}
-	//TODO: alle exceptions catchen en volledig nakijken - dit doen we beter samen
+public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, SurpriseBox>{
 
 	@Override
 	public Board createBoard(long width, long height) {
-		Board board = new Board(width,height);
-		return board;
-	}
-
-	@Override
-	public void merge(Board board1, Board board2) {
-		board1.merge(board2);	
-	}
-
-	@Override
-	public Battery createBattery(double initialEnergy, int weight){
-		Battery battery = new Battery(new Energy((int)initialEnergy), new Weight(weight));
-		return battery;
-	}
-
-	@Override
-	public void putBattery(Board board, long x, long y, Battery battery) {
-		Position pos = new Position(x,y);
-		battery.putOnBoard(board, pos);
-	}
-
-	@Override
-	public long getBatteryX(Battery battery) throws IllegalStateException {
-		try {return battery.getPosition().getX();} catch (IllegalArgumentException esc) {
-			throw new IllegalStateException("not on a board");
-		}
-	}
-
-	@Override
-	public long getBatteryY(Battery battery) throws IllegalStateException {
-		try {return battery.getPosition().getY();} catch (IllegalArgumentException esc) {
-			throw new IllegalStateException("not on a board");
-		}
-	}
-
-	public static Orientation getOrientationEnum(int i ){
-		int tmp = Math.abs(i % 4);
-		if(i < 0){
-			if(tmp == 1){
-				return Orientation.LEFT;
-			}else if(tmp == 3){
-				return Orientation.RIGHT;
-			}
-		}
-		switch(tmp){
-		case 0:
-			return Orientation.UP;
-		case 1:
-			return Orientation.RIGHT;
-		case 2:
-			return Orientation.DOWN;
-		case 3:
-			return Orientation.LEFT;
-		}
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
+	public void merge(Board board1, Board board2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Battery createBattery(double initialEnergy, int weight) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void putBattery(Board board, long x, long y, Battery battery) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public long getBatteryX(Battery battery) throws IllegalStateException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long getBatteryY(Battery battery) throws IllegalStateException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public RepairKit createRepairKit(double repairAmount, int weight) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void putRepairKit(Board board, long x, long y, RepairKit repairKit) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public long getRepairKitX(RepairKit repairKit) throws IllegalStateException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long getRepairKitY(RepairKit repairKit) throws IllegalStateException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public SurpriseBox createSurpriseBox(int weight) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void putSurpriseBox(Board board, long x, long y,
+			SurpriseBox surpriseBox) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public long getSurpriseBoxX(SurpriseBox surpriseBox)
+			throws IllegalStateException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long getSurpriseBoxY(SurpriseBox surpriseBox)
+			throws IllegalStateException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
 	public Robot createRobot(int orientation, double initialEnergy) {
-		Robot robot = new Robot(getOrientationEnum(orientation),new Energy((int)initialEnergy));
-		return robot;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public void putRobot(Board board, long x, long y, Robot robot) {
-		Position pos = new Position(x , y);
-		robot.putOnBoard(board, pos);
-
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public long getRobotX(Robot robot) throws IllegalStateException {
-		try {return robot.getPosition().getX();} catch (IllegalArgumentException esc) {
-			throw new IllegalStateException("not on a board");
-		}
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public long getRobotY(Robot robot) throws IllegalStateException {
-		try {return robot.getPosition().getY();} catch (IllegalArgumentException esc) {
-			throw new IllegalStateException("not on a board");
-		}
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public int getOrientation(Robot robot) {
-		return robot.getOrientation().ordinal();
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public double getEnergy(Robot robot) {
-		return robot.getEnergy().getEnergy();
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public void move(Robot robot) {
-		robot.move();	
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void turn(Robot robot) {
-		robot.turnClockWise();
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public Set<Battery> getPossessions(Robot robot) {
-		return robot.getPossessions();
+	public void pickUpBattery(Robot robot, Battery battery) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void pickUp(Robot robot, Battery battery) {
-		robot.pickUp(battery);
+	public void useBattery(Robot robot, Battery battery) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void use(Robot robot, Battery battery) {
-		robot.use(battery);
+	public void dropBattery(Robot robot, Battery battery) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void drop(Robot robot, Battery battery) {
-		robot.drop(battery);
+	public void pickUpRepairKit(Robot robot, RepairKit repairKit) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void useRepairKit(Robot robot, RepairKit repairKit) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dropRepairKit(Robot robot, RepairKit repairKit) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pickUpSurpriseBox(Robot robot, SurpriseBox surpriseBox) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void useSurpriseBox(Robot robot, SurpriseBox surpriseBox) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dropSurpriseBox(Robot robot, SurpriseBox surpriseBox) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void transferItems(Robot from, Robot to) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public int isMinimalCostToReach17Plus() {
-		return 1;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public double getMinimalCostToReach(Robot robot, long x, long y) {
-		double result = robot.getEnergyRequiredToReach(new Position(x, y)).getEnergy();
-		if(robot.getEnergy().getEnergy() < result)
-			return -1;
-		return result;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public int isMoveNextTo18Plus() {
-		// TODO einde
+		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void moveNextTo(Robot robot, Robot other) {
-		robot.moveNextTo(other);
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void shoot(Robot robot) throws UnsupportedOperationException {
-		robot.shoot();
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public Wall createWall() throws UnsupportedOperationException {
-		return new Wall();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public void putWall(Board board, long x, long y, Wall wall)
 			throws UnsupportedOperationException {
-		Position pos = new Position(x , y);
-		wall.putOnBoard(board, pos);
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public long getWallX(Wall wall) throws IllegalStateException,
-	UnsupportedOperationException {
-		try {return wall.getPosition().getX();} catch (IllegalArgumentException esc) {
-			throw new IllegalStateException("not on a board");
-		}
+			UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public long getWallY(Wall wall) throws IllegalStateException,
-	UnsupportedOperationException {
-		try {return wall.getPosition().getY();} catch (IllegalArgumentException esc) {
-			throw new IllegalStateException("not on a board");
-		}
+			UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public Set<Robot> getRobots(Board board) {
-		return board.getRobots();
-	}
-
-	@Override
-	public Set<Battery> getBatteries(Board board) {
-		return board.getBatteries();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Set<Wall> getWalls(Board board) throws UnsupportedOperationException {
-		return board.getWalls();
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public Set<RepairKit> getRepairKits(Board board) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<SurpriseBox> getSurpriseBoxes(Board board) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<Battery> getBatteries(Board board) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int loadProgramFromFile(Robot robot, String path) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int saveProgramToFile(Robot robot, String path) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void prettyPrintProgram(Robot robot, Writer writer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void stepn(Robot robot, int n) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }
-
-
