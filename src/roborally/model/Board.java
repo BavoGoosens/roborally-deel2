@@ -76,7 +76,7 @@ public class Board{
 	 * @post	Het bord heeft een breedte gekregen.
 	 * 			|new.getWidth() == width
 	 */
-	public Board (long height, long width){
+	public Board (long width , long height){
 		this.height = height;
 		this.width = width;
 		this.map = new HashMap<>();

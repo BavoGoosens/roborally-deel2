@@ -7,48 +7,45 @@ import roborally.IFacade;
 import roborally.basics.*;
 
 
-public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, SurpriseBox>{
+public class Facade implements IFacade<Board, Robot<Item> , Wall, Battery, RepairKit, SurpriseBox>{
 
 	@Override
 	public Board createBoard(long width, long height) {
-		// TODO Auto-generated method stub
-		return null;
+		Board result = new Board(width,height);
+		return result;
 	}
 
 	@Override
 	public void merge(Board board1, Board board2) {
-		// TODO Auto-generated method stub
-		
+		// TODO merge maken zodat dingen ernaast uitkomen
+		board1.merge(board2);		
 	}
 
 	@Override
 	public Battery createBattery(double initialEnergy, int weight) {
-		// TODO Auto-generated method stub
-		return null;
+		Battery battery = new Battery(new Energy(initialEnergy), new Weight(weight));
+		return battery;
 	}
 
 	@Override
 	public void putBattery(Board board, long x, long y, Battery battery) {
-		// TODO Auto-generated method stub
-		
+		board.putEntity(new Position(x,y), battery);
 	}
 
 	@Override
 	public long getBatteryX(Battery battery) throws IllegalStateException {
-		// TODO Auto-generated method stub
-		return 0;
+		return battery.getPosition().getX(); 
 	}
 
 	@Override
 	public long getBatteryY(Battery battery) throws IllegalStateException {
-		// TODO Auto-generated method stub
-		return 0;
+		return battery.getPosition().getY(); 
 	}
 
 	@Override
 	public RepairKit createRepairKit(double repairAmount, int weight) {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO repairkit maken
+		
 	}
 
 	@Override
@@ -262,7 +259,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 	}
 
 	@Override
-	public Set<Robot> getRobots(Board board) {
+	public Set<Robot<Item>> getRobots(Board board) {
 		// TODO Auto-generated method stub
 		return null;
 	}
