@@ -18,9 +18,9 @@ import roborally.basics.Orientation;
 public class Node extends Entity{
 
 
-	private final Energy gCost = new Energy(0);
-	private final Energy hCost = new Energy(0);
-	private final Energy fCost = new Energy(0);
+	private Energy gCost = new Energy(0);
+	private Energy hCost = new Energy(0);
+	private Energy fCost = new Energy(0);
 	private Orientation orientation;
 	private Node parent;
 
@@ -35,8 +35,8 @@ public class Node extends Entity{
 	 * @param 	parent
 	 */
 	public Node(Position position,Board board, Energy g, Energy h,Orientation orientation, Node parent){
-		this.setPosition(position);
 		this.setBoard(board);
+		this.setPosition(position);
 		setGCost(g);
 		setHCost(h);
 		setOrientation(orientation);
@@ -90,7 +90,7 @@ public class Node extends Entity{
 	 * 			| (new this).getFCost().getEnergy() == g.getEnergy() + this.getHCost().getEnergy()
 	 */
 	public void setGCost(Energy g){
-		this.gCost.setEnergy(g.getEnergy());
+		this.gCost = g;
 		this.calcFCost();
 	}
 
@@ -105,7 +105,7 @@ public class Node extends Entity{
 	 * 			| (new this).getFCost().getEnergy() == h.getEnergy() + this.getGCost().getEnergy()
 	 */
 	public void setHCost(Energy h){
-		this.hCost.setEnergy(h.getEnergy());
+		this.hCost = h;
 		this.calcFCost();
 	}
 
@@ -129,7 +129,7 @@ public class Node extends Entity{
 	 * 			| (new this).getFcost.getEnergy() == f.getEnergy()
 	 */
 	private void setFCost(Energy f){
-		this.fCost.setEnergy(f.getEnergy());
+		this.fCost = f;
 	}
 
 	/**
