@@ -45,6 +45,7 @@ public class Facade implements IFacade<Board, Robot<Item> , Wall, Battery, Repai
 	@Override
 	public RepairKit createRepairKit(double repairAmount, int weight) {
 		// TODO repairkit maken
+		RepairKit repair = new RepairKit(new Energy(repairAmount),new Weight(weight));
 		
 	}
 
