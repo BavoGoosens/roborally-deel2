@@ -7,7 +7,7 @@ import roborally.IFacade;
 import roborally.basics.*;
 
 
-public class Facade implements IFacade<Board, Robot<Item> , Wall, Battery, RepairKit, SurpriseBox>{
+public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, SurpriseBox>{
 
 	@Override
 	public Board createBoard(long width, long height) {
