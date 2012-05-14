@@ -1,6 +1,7 @@
 package roborally.basics;
 
 import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Value;
 
 /**
  * Deze klasse stelt een hoeveelheid energie voor.
@@ -12,8 +13,9 @@ import be.kuleuven.cs.som.annotate.Basic;
  * 
  * @version 1.2
  */
-public class Energy {
-	
+@Value
+public class Energy implements Comparable<Energy>{
+
 	/**
 	 * Hoeveelheid energie opgeslagen in dit object.
 	 */
@@ -115,5 +117,42 @@ public class Energy {
 		return new Energy(e1.getEnergy() - e2.getEnergy());
 	}
 	//TODO: nakijken of deze methode nergens verkeerdelijk gebruikt wordt.
+	
+	
+	
+	/**
+	 * Deze methode vergelijkt 2 hoeveelheden energie.
+	 * 
+	 * @param	other
+	 * 			De hoeveelheid energie waarmee this moet vergeleken worden.
+	 * 
+	 * @throws	IllegalArgumentException
+	 * 			De 2de hoeveelheid energie is null.
+	 * 			|other == null
+	 * 
+	 * @return	|(int) (this.getEnergy() - other.getEnergy())	
+	 */
+	@Override
+	public int compareTo(Energy other) throws IllegalArgumentException{
+		if(other == null)
+			throw new IllegalArgumentException("Andere hoeveelheid energie mag niet null zijn.");
+		return (int) (this.getEnergy() - other.getEnergy());
+	}
+	
+	/*
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object other) {
+		return ((Double) this.getEnergy()).equals(((Energy) other).getEnergy());
+	}
+
+	/*
+	 * @see java.lang.Double#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return ((Double) this.getEnergy()).hashCode();
+	}
 	
 }
