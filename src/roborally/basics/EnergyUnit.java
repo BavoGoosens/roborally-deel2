@@ -9,11 +9,42 @@ package roborally.basics;
  */
 public enum EnergyUnit{
 	
-	WS(1), J(1), KJ(1000);
+	/**
+	 * Watt-seconde, de standaardeenheid.
+	 */
+	WS(1), /**
+	 * Joule, gelijk aan 1 x de standaardeenheid.
+	 */
+	J(1), /**
+	 * KiloJoule, gelijk aan 1000 x de standaardeenheid.
+	 */
+	KJ(1000);
 	
+	/**
+	 * In deze integer wordt bijgehouden wat de factor is van de huidige eenheid ten opzichte van de standaardeenheid.
+	 */
 	private final int factor;
 	
+	/**
+	 * Met deze constructor wordt een nieuwe energie-eenheid aangemaakt.
+	 * 
+	 * @param	factor
+	 * 			De factor ten opzichte van de standaardeenheid.
+	 * 
+	 * @post	De factor ten opzichte van de standaardeenheid is nu gelijk aan de gegeven parameter.
+	 * 			|new.factor == factor
+	 */
 	EnergyUnit(int factor){
 		this.factor = factor;
+	}
+	
+	/**
+	 * Deze methode geeft de factor terug van de huidige energie-eenheid ten opzichte van de standaardeenheid.
+	 * 
+	 * @return	De factor ten opzichte van de standaardeenheid.
+	 * 			|this.factor
+	 */
+	public int getFactor(){
+		return this.factor;
 	}
 }
