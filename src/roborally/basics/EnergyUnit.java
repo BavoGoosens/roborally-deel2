@@ -1,7 +1,7 @@
 package roborally.basics;
 
 /**
- * Een enumeratie met alle mogelijke eenheiden voor een hoeveelheid energie. Momenteel Watt-seconde, Joule en KiloJoule.
+ * Een enumeratie met alle mogelijke eenheden voor een hoeveelheid energie. Momenteel Watt-seconde, Joule en KiloJoule.
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
