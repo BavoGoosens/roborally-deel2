@@ -10,7 +10,7 @@ import be.kuleuven.cs.som.annotate.Basic;
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
- * @version 1.1
+ * @version 1.2
  */
 public class Energy {
 	
@@ -36,6 +36,25 @@ public class Energy {
 	}
 	
 	/**
+	 * Deze methode maakt een nieuwe hoeveelheid energie aan.
+	 * 
+	 * @param 	amount
+	 * 			De hoeveelheid energie
+	 * 
+	 * @param	unit
+	 * 			De eenheid waarin de energie gegeven wordt.
+	 * 
+	 * @pre		De hoeveelheid mag niet negatief zijn.
+	 * 			|amount >= 0
+	 * 
+	 * @post	De nieuwe hoeveelheid energie moet gelijk zijn aan de gegeven hoeveelheid energie.
+	 * 			|new.getEnergy(unit) == amount
+	 */
+	public Energy(double amount, EnergyUnit unit){
+		this.amount = amount * unit.getFactor();
+	}
+	
+	/**
 	 * Deze methode geeft de huidige hoeveelheid energie terug.
 	 * 
 	 * @return	De huidige hoeveelheid energie.
@@ -44,6 +63,20 @@ public class Energy {
 	@Basic
 	public double getEnergy(){
 		return this.amount;
+	}
+	
+	/**
+	 * Deze methode geeft de huidige hoeveelheid energie terug in de opgegeven eenheid.
+	 * 
+	 * @param	unit
+	 * 			De eenheid waarin de energie teruggegeven moet worden.
+	 * 
+	 * @return	De huidige hoeveelheid energie in de opgegeven eenheid.
+	 * 			|this.amount * unit.getFactor()
+	 */
+	@Basic
+	public double getEnergy(EnergyUnit unit){
+		return this.amount * unit.getFactor();
 	}
 	
 	/**
