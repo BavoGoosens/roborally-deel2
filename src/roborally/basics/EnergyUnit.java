@@ -23,7 +23,7 @@ public enum EnergyUnit{
 	/**
 	 * In deze integer wordt bijgehouden wat de factor is van de huidige eenheid ten opzichte van de standaardeenheid.
 	 */
-	private final int factor;
+	private final double factor;
 	
 	/**
 	 * Met deze constructor wordt een nieuwe energie-eenheid aangemaakt.
@@ -34,7 +34,7 @@ public enum EnergyUnit{
 	 * @post	De factor ten opzichte van de standaardeenheid is nu gelijk aan de gegeven parameter.
 	 * 			|new.factor == factor
 	 */
-	EnergyUnit(int factor){
+	EnergyUnit(double factor){
 		this.factor = factor;
 	}
 	
@@ -44,7 +44,7 @@ public enum EnergyUnit{
 	 * @return	De factor ten opzichte van de standaardeenheid.
 	 * 			|this.factor
 	 */
-	public int getFactor(){
+	public double getFactor(){
 		return this.factor;
 	}
 }
