@@ -22,7 +22,7 @@ public class Item extends Entity{
 		this.weight = weight;
 	}
 
-	public void setEnergy(Energy energy) {
+	protected void setEnergy(Energy energy) {
 		this.energy = energy;
 	}
 	

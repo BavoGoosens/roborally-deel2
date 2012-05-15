@@ -20,7 +20,7 @@ public class Energy implements Comparable<Energy>{
 	 * Hoeveelheid energie opgeslagen in dit object.
 	 */
 	private final double amount;
-	
+
 	/**
 	 * Deze methode maakt een nieuwe hoeveelheid energie aan.
 	 * 
@@ -36,7 +36,7 @@ public class Energy implements Comparable<Energy>{
 	public Energy(double amount){
 		this.amount = amount;
 	}
-	
+
 	/**
 	 * Deze methode maakt een nieuwe hoeveelheid energie aan.
 	 * 
@@ -55,7 +55,7 @@ public class Energy implements Comparable<Energy>{
 	public Energy(double amount, EnergyUnit unit){
 		this.amount = amount * unit.getFactor();
 	}
-	
+
 	/**
 	 * Deze methode geeft de huidige hoeveelheid energie terug.
 	 * 
@@ -66,7 +66,7 @@ public class Energy implements Comparable<Energy>{
 	public double getEnergy(){
 		return this.amount;
 	}
-	
+
 	/**
 	 * Deze methode geeft de huidige hoeveelheid energie terug in de opgegeven eenheid.
 	 * 
@@ -80,7 +80,7 @@ public class Energy implements Comparable<Energy>{
 	public double getEnergy(EnergyUnit unit){
 		return this.amount * unit.getFactor();
 	}
-	
+
 	/**
 	 * Deze methode geeft de som van 2 hoeveelheden energie.
 	 * 
@@ -96,7 +96,7 @@ public class Energy implements Comparable<Energy>{
 	public static Energy energySum(Energy e1, Energy e2){
 		return new Energy(e1.getEnergy() + e2.getEnergy());
 	}
-	
+
 	/**
 	 * Deze methode geeft het verschil van 2 hoeveelheden energie.
 	 * 
@@ -116,7 +116,7 @@ public class Energy implements Comparable<Energy>{
 			return new Energy(0);
 		return new Energy(e1.getEnergy() - e2.getEnergy());
 	}
-	
+
 	/**
 	 * Deze methode vergelijkt 2 hoeveelheden energie.
 	 * 
@@ -135,7 +135,7 @@ public class Energy implements Comparable<Energy>{
 			throw new IllegalArgumentException("Andere hoeveelheid energie mag niet null zijn.");
 		return (int) (this.getEnergy() - other.getEnergy());
 	}
-	
+
 	/*
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -155,7 +155,7 @@ public class Energy implements Comparable<Energy>{
 	public int hashCode() {
 		return ((Double) this.getEnergy()).hashCode();
 	}
-	
+
 	/*
 	 * @see java.lang.Object#toString()
 	 */
@@ -163,5 +163,5 @@ public class Energy implements Comparable<Energy>{
 	public String toString() {
 		return Double.toString(this.getEnergy()) + " " + EnergyUnit.WS.toString();
 	}
-	
+
 }

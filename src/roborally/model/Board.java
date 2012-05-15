@@ -60,6 +60,11 @@ public class Board{
 
 	/**
 	 * Deze constructor maakt een nieuw bord aan.
+	 * @pre 	...
+	 * 			| isValidWidth(width)
+	 * 
+	 * @pre 	...
+	 * 			| isValidHeight(height) 
 	 * 
 	 * @param	height
 	 * 			De hoogte van het nieuwe bord.
