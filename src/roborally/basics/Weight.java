@@ -9,7 +9,7 @@ import be.kuleuven.cs.som.annotate.Basic;
  * 
  * @version 1.0
  */
-public class Weight {
+public class Weight implements Comparable<Weight>{
 
 	/**
 	 * Het maximale gewicht van een object.
@@ -56,4 +56,29 @@ public class Weight {
 	public int getWeight() {
 		return this.weight;
 	}
+
+	@Override
+	public int compareTo(Weight o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	/*
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object other) {
+		return false;
+		//TODO: trolololo
+	}
+
+	/*
+	 * @see java.lang.Double#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return weight;
+		//TODO: trolololo
+	}
+	
 }

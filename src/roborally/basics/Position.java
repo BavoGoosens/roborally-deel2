@@ -16,7 +16,7 @@ import roborally.model.Board;
  * 
  * @version 1.0
  */
-public class Position {
+public class Position implements Comparable<Position>{
 
 	/**
 	 * X-coördinaat van de positie.
@@ -150,5 +150,29 @@ public class Position {
 	@Override
 	public String toString() {
 		return this.getX() + "," + this.getY();
+	}
+
+	@Override
+	public int compareTo(Position arg0) {
+		// TODO Auto-generated method stub
+		return 0;
 	}	
+
+	/*
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object other) {
+		return false;
+		//TODO: trolololoo	
+	}
+
+	/*
+	 * @see java.lang.Double#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return 0;
+		//TODO: trolololoo	
+	}
 }

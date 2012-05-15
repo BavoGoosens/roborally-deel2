@@ -23,7 +23,7 @@ import roborally.utils.*;
  * 
  * @version 2.1
  */
-public class Robot <Item> extends Entity{
+public class Robot extends Entity{
 
 	/**
 	 * De energiekost van 1 move (geen rekening houdend met bezittingen).

@@ -1,5 +1,7 @@
 package roborally.model;
 
+import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Raw;
 import roborally.basics.Energy;
 import roborally.basics.Weight;
 
@@ -22,5 +24,27 @@ public class Item extends Entity{
 
 	private void setEnergy(Energy energy) {
 		this.energy = energy;
+	}
+	
+	/**
+	 * Geeft de energie van het item.
+	 * 
+	 * @return	Energie van het item.
+	 * 			|this.energy
+	 */
+	@Basic @Raw
+	public Energy getEnergy() {
+		return this.energy;
+	}
+	
+	/**
+	 * Geeft het gewicht terug van het item.
+	 * 
+	 * @return	Het gewicht van het item.
+	 * 			|this.weight
+	 */
+	@Basic @Raw
+	public Weight getWeight() {
+		return this.weight;
 	}
 }

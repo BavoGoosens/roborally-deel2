@@ -1,6 +1,5 @@
 package roborally.model;
 
-import be.kuleuven.cs.som.annotate.Basic;
 import roborally.basics.Energy;
 import roborally.basics.Weight;
 
@@ -24,14 +23,6 @@ public class Battery extends Item{
 	 * Minimale energie die een batterij kan hebben.
 	 */
 	public final static Energy MINBATTERYENERGY = new Energy(0);
-	/**
-	 * Energie in de batterij.
-	 */
-	private Energy energy;
-	/**
-	 * Gewicht van de batterij.
-	 */
-	private final Weight weight;
 	
 	/**
 	 * Maakt een nieuwe batterij aan.
@@ -52,30 +43,7 @@ public class Battery extends Item{
 	 * 			|new.getWeight() == weight
 	 */
 	public Battery(Energy energy, Weight weight){
-		this.weight = weight;
-		this.setEnergy(energy);
-	}
-
-	/**
-	 * Geeft de energie van de batterij.
-	 * 
-	 * @return	Energie van de batterij.
-	 * 			|this.energy
-	 */
-	@Basic
-	public Energy getEnergy() {
-		return this.energy;
-	}
-
-	/**
-	 * Geeft het gewicht terug van de batterij.
-	 * 
-	 * @return	Het gewicht van de batterij.
-	 * 			|this.weight
-	 */
-	@Basic
-	public Weight getWeight() {
-		return this.weight;
+		super( energy, weight);
 	}
 
 	/**
@@ -89,19 +57,5 @@ public class Battery extends Item{
 	 */
 	public static boolean isValidBatteryEnergyAmount(Energy energy){
 		return (energy.getEnergy() >= MINBATTERYENERGY.getEnergy() && energy.getEnergy() <= MAXBATTERYENERGY.getEnergy());
-	}
-
-	/**
-	 * Deze methode wijzigt de energie van de batterij.
-	 * 
-	 * @param	energy
-	 * 			De nieuwe energie die de batterij moet krijgen.
-	 * 
-	 * @post	De batterij heeft nu de nieuwe hoeveelheid energie.
-	 * 			|new.getEnergy().equals(energy) == true
-	 */
-	public void setEnergy(Energy energy) {
-		this.energy = energy;
-		
 	}
 }
