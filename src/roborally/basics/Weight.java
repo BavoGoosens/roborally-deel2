@@ -1,6 +1,7 @@
 package roborally.basics;
 
 import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Value;
 
 /**
  * Deze klasse stelt een gewicht voor.
@@ -9,6 +10,7 @@ import be.kuleuven.cs.som.annotate.Basic;
  * 
  * @version 1.0
  */
+@Value
 public class Weight implements Comparable<Weight>{
 
 	/**
@@ -56,11 +58,24 @@ public class Weight implements Comparable<Weight>{
 	public int getWeight() {
 		return this.weight;
 	}
-
+	
+	/**
+	 * Deze methode vergelijkt 2 gewichten.
+	 * 
+	 * @param	other
+	 * 			Het gewicht waarmee vergeleken moet worden.
+	 * 
+	 * @throws	IllegalArgumentException
+	 * 			Het 2de gewicht is null.
+	 * 			|other == null
+	 * 
+	 * @return	|this.getWeight() - other.getWeight()
+	 */
 	@Override
-	public int compareTo(Weight o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Weight other) throws IllegalArgumentException{
+		if(other == null)
+			throw new IllegalArgumentException("Ander gewicht mag niet null zijn.");
+		return this.getWeight() - other.getWeight();
 	}
 	
 	/*
@@ -68,17 +83,27 @@ public class Weight implements Comparable<Weight>{
 	 */
 	@Override
 	public boolean equals(Object other) {
-		return false;
-		//TODO: trolololo
+		if(other == null)
+			return false;
+		if(this.getClass() != other.getClass())
+			return false;
+		return (this.getWeight() == ((Weight) other).getWeight());
 	}
 
 	/*
-	 * @see java.lang.Double#hashCode()
+	 * @see java.lang.Integer#hashCode()
 	 */
 	@Override
 	public int hashCode() {
-		return weight;
-		//TODO: trolololo
+		return this.getWeight();
+	}
+
+	/*
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return Integer.toString(this.getWeight());
 	}
 	
 }

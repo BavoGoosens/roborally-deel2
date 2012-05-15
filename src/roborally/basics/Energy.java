@@ -118,8 +118,6 @@ public class Energy implements Comparable<Energy>{
 	}
 	//TODO: nakijken of deze methode nergens verkeerdelijk gebruikt wordt.
 	
-	
-	
 	/**
 	 * Deze methode vergelijkt 2 hoeveelheden energie.
 	 * 
@@ -157,6 +155,14 @@ public class Energy implements Comparable<Energy>{
 	@Override
 	public int hashCode() {
 		return ((Double) this.getEnergy()).hashCode();
+	}
+	
+	/*
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return Double.toString(this.getEnergy()) + " " + EnergyUnit.WS.toString();
 	}
 	
 }

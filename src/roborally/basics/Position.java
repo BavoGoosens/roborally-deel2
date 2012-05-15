@@ -2,6 +2,8 @@ package roborally.basics;
 
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
+import be.kuleuven.cs.som.annotate.Value;
+
 import java.util.ArrayList;
 
 import roborally.model.Board;
@@ -16,6 +18,7 @@ import roborally.model.Board;
  * 
  * @version 1.0
  */
+@Value
 public class Position implements Comparable<Position>{
 
 	/**
@@ -149,30 +152,49 @@ public class Position implements Comparable<Position>{
 	 */
 	@Override
 	public String toString() {
-		return this.getX() + "," + this.getY();
+		return this.getX() + ", " + this.getY();
 	}
-
+	
+	/**
+	 * Deze methode vergelijkt 2 posities.
+	 * 
+	 * @param	other
+	 * 			De positie waarmee vergeleken moet worden.
+	 * 
+	 * @throws	IllegalArgumentException
+	 * 			De 2de positie is null.
+	 * 			|other == null
+	 * 
+	 * @return	|if(this.getX() == other.getX())
+	 *			|	(int) (this.getY() - other.getY())
+	 *			|(int) (this.getX() - other.getX())
+	 */
 	@Override
-	public int compareTo(Position arg0) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Position other) throws	IllegalArgumentException{
+		if(other == null)
+			throw new IllegalArgumentException("Andere positie mag niet null zijn.");
+		if(this.getX() == other.getX())
+			return (int) (this.getY() - other.getY());
+		return (int) (this.getX() - other.getX()); 
 	}	
 
 	/*
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object other) {
-		return false;
-		//TODO: trolololoo	
+	public boolean equals(Object other){
+		if(other == null)
+			return false;
+		if(this.getClass() != other.getClass())
+			return false;
+		return (this.getX() == ((Position) other).getX() && this.getY() == ((Position) other).getY());
 	}
 
 	/*
-	 * @see java.lang.Double#hashCode()
+	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
-		return 0;
-		//TODO: trolololoo	
+		return Integer.parseInt(Long.toString(this.getX()) + Long.toString(this.getY()));
 	}
 }
