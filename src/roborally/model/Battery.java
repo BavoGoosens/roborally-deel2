@@ -43,7 +43,7 @@ public class Battery extends Item{
 	 * 			|new.getWeight() == weight
 	 */
 	public Battery(Energy energy, Weight weight){
-		super( energy, weight);
+		super(energy, weight);
 	}
 
 	/**

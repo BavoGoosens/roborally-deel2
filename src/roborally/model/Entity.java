@@ -24,7 +24,7 @@ public class Entity {
 	/**
 	 * Indien het object vernietigd is wordt dit true.
 	 */
-	private boolean isTerminated = false;
+	private boolean isTerminated;
 
 	/**
 	 * Het board waarop dit object staat (niet noodzakelijk).

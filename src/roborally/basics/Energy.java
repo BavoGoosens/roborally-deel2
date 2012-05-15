@@ -34,6 +34,7 @@ public class Energy implements Comparable<Energy>{
 	 * 			|new.getEnergy() == amount
 	 */
 	public Energy(double amount){
+		assert(amount >= 0);
 		this.amount = amount;
 	}
 
@@ -53,6 +54,7 @@ public class Energy implements Comparable<Energy>{
 	 * 			|new.getEnergy(unit) == amount
 	 */
 	public Energy(double amount, EnergyUnit unit){
+		assert(amount >= 0);
 		this.amount = amount * unit.getFactor();
 	}
 
