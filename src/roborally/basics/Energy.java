@@ -1,6 +1,7 @@
 package roborally.basics;
 
 import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Value;
 
 /**
@@ -64,7 +65,7 @@ public class Energy implements Comparable<Energy>{
 	 * @return	De huidige hoeveelheid energie.
 	 * 			|this.amount
 	 */
-	@Basic
+	@Basic @Immutable
 	public double getEnergy(){
 		return this.amount;
 	}
@@ -78,9 +79,9 @@ public class Energy implements Comparable<Energy>{
 	 * @return	De huidige hoeveelheid energie in de opgegeven eenheid.
 	 * 			|this.amount * unit.getFactor()
 	 */
-	@Basic
+	@Immutable
 	public double getEnergy(EnergyUnit unit){
-		return this.amount * unit.getFactor();
+		return this.getEnergy() * unit.getFactor();
 	}
 
 	/**

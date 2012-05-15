@@ -1,6 +1,7 @@
 package roborally.basics;
 
 import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Immutable;
 
 /**
  * Een enumeratie met alle mogelijke eenheden voor een hoeveelheid energie. Momenteel Watt-seconde, Joule en KiloJoule.
@@ -46,7 +47,7 @@ public enum EnergyUnit{
 	 * @return	De factor ten opzichte van de standaardeenheid.
 	 * 			|this.factor
 	 */
-	@Basic
+	@Basic @Immutable
 	public double getFactor(){
 		return this.factor;
 	}
