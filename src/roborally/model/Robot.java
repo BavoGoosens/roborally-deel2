@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
@@ -62,7 +61,7 @@ public class Robot extends Entity{
 	 * 
 	 * @note	Gebruik altijd Collections.sort met een BatteryComparator() wanneer deze lijst gewijzigd wordt.
 	 */
-	private ArrayList<Battery> Possessions = new ArrayList<Battery>();
+	private ArrayList<Battery> Possessions = new ArrayList<>();
 	/**
 	 * Deze methode maakt een nieuwe robot aan.
 	 * 
@@ -260,7 +259,7 @@ public class Robot extends Entity{
 				posPairs.add(toAdd);
 			}
 		}
-		ArrayList<PositionPair> semiValidPosPairs = new ArrayList<PositionPair>();
+		ArrayList<PositionPair> semiValidPosPairs = new ArrayList<>();
 		for(PositionPair pp: posPairs){
 			if((pp.getManhattanDistance() != 0) && !(pp.getPos1().toString().equals(pp.getPos2().toString())))
 				semiValidPosPairs.add(pp);
@@ -268,7 +267,7 @@ public class Robot extends Entity{
 		if(!semiValidPosPairs.isEmpty()){
 			Collections.sort(semiValidPosPairs, new PositionPairComparatorDistance());
 			PositionPair firstpp = semiValidPosPairs.get(0);
-			ArrayList<PositionPair> validPosPairs = new ArrayList<PositionPair>();
+			ArrayList<PositionPair> validPosPairs = new ArrayList<>();
 			for(PositionPair pp: semiValidPosPairs){
 				if((pp.getManhattanDistance() == firstpp.getManhattanDistance()))
 					validPosPairs.add(pp);
