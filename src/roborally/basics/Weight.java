@@ -1,6 +1,7 @@
 package roborally.basics;
 
 import be.kuleuven.cs.som.annotate.Basic;
+import be.kuleuven.cs.som.annotate.Immutable;
 import be.kuleuven.cs.som.annotate.Value;
 
 /**
@@ -54,7 +55,7 @@ public class Weight implements Comparable<Weight>{
 	 * @return 	Het gewicht dat in dit object opgeslagen is.
 	 * 			|this.weight
 	 */
-	@Basic
+	@Basic @Immutable
 	public int getWeight() {
 		return this.weight;
 	}
