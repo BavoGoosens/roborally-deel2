@@ -161,17 +161,30 @@ public class Board{
 	 * 			|true
 	 * 			
 	 */
-	public boolean isPlacableOnPosition(Position pos){
-		if(!this.isValidBoardPosition(pos))
+	public boolean isPlacableOnPosition(Position pos, Entity entity){
+		if (!isValidBoardPosition(pos))
 			return false;
-		if (!this.getMap().containsKey(pos.toString()))
-			return true;
-		if (this.getMap().get(pos.toString()).isEmpty())
-			return true;
-		if (this.getEntityOnPosition(pos).size() == 1){
-			Entity obj = this.getEntityOnPosition(pos).iterator().next();
-			if (obj instanceof Wall)
+		if (entity instanceof Wall){
+			try{
+				HashSet<Entity> place = this.getEntityOnPosition(pos);
 				return false;
+			}catch (NullPointerException esc){
+				return true;
+			}
+		}
+		if (entity instanceof Robot){
+			try {
+				HashSet<Entity> place = this.getEntityOnPosition(pos);
+				if(place.size() == 1){
+					Entity ent = place.iterator().next();
+					if (ent instanceof Robot || ent instanceof Wall)
+						return false;
+					return true;
+				}
+				return true;
+			} catch (NullPointerException esc){
+				return true;
+			}
 		}
 		return true;
 	}
@@ -195,7 +208,7 @@ public class Board{
 	 * 			
 	 */
 	public void putEntity(Position key, Entity entity) throws IllegalArgumentException{
-		if (this.isPlacableOnPosition(key)){
+		if (this.isPlacableOnPosition(key, entity)){
 			if (entity instanceof Battery || entity instanceof Robot){
 				HashSet<Entity> set = this.getMap().get(key.toString());
 				if (set == null){
@@ -379,7 +392,7 @@ public class Board{
 			if(this.isValidBoardPosition(b2Pos)){
 				HashSet<Entity> b2EntitiesOnPos = board2.getEntityOnPosition(b2Pos);
 				for(Entity ent: b2EntitiesOnPos){
-					if(this.isPlacableOnPosition(b2Pos)){
+					if(this.isPlacableOnPosition(b2Pos, ent)){
 						ent.removeFromBoard();
 						ent.putOnBoard(this, b2Pos);
 					}
