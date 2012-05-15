@@ -116,7 +116,6 @@ public class Energy implements Comparable<Energy>{
 			return new Energy(0);
 		return new Energy(e1.getEnergy() - e2.getEnergy());
 	}
-	//TODO: nakijken of deze methode nergens verkeerdelijk gebruikt wordt.
 	
 	/**
 	 * Deze methode vergelijkt 2 hoeveelheden energie.
