@@ -144,7 +144,11 @@ public class Energy implements Comparable<Energy>{
 	 */
 	@Override
 	public boolean equals(Object other) {
-		return ((Double) this.getEnergy()).equals(((Energy) other).getEnergy());
+		if(other == null)
+			return false;
+		if(this.getClass() != other.getClass())
+			return false;
+		return (this.getEnergy()) == ((Energy) other).getEnergy();
 	}
 
 	/*
