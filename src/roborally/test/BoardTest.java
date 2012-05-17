@@ -31,8 +31,8 @@ public class BoardTest {
 		this.board2 = new Board (700,1400);
 		this.robot1 = new Robot(Orientation.LEFT, new Energy(12000));
 		this.battery1 = new Battery(new Energy(500), new Weight(5));
-		this.battery1.putOnBoard(board1, new Position( 5, 5));
-		this.robot1.putOnBoard(board1, new Position( 5, 5));
+		this.battery1.putOnBoard(this.board1, new Position( 5, 5));
+		this.robot1.putOnBoard(this.board1, new Position( 5, 5));
 		this.board1.putEntity(new Position( 5, 5), this.battery1);
 		this.board1.putEntity(new Position( 5, 5), this.robot1);
 	}

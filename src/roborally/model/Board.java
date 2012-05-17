@@ -167,6 +167,8 @@ public class Board{
 		if (entity instanceof Wall){
 			try{
 				HashSet<Entity> place = this.getEntityOnPosition(pos);
+				if (place.isEmpty())
+					return true;
 				return false;
 			}catch (NullPointerException esc){
 				return true;
@@ -385,6 +387,8 @@ public class Board{
 	 * @post	Het 2de bord is getermineerd.
 	 * 			|(new board2).isTerminated() == true
 	 */
+	//TODO: hier moeten we alles opnieuw doen aangezien ze nu naast elkaar moeten uitkomen.
+	
 	public void merge(Board board2) {
 		Set<String> b2PosStrings = board2.getMap().keySet();
 		for (String b2PosString : b2PosStrings){
