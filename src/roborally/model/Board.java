@@ -440,4 +440,18 @@ public class Board{
 			}
 		}
 	}
+
+	public boolean containsWall(Position pos) {
+		try{
+			HashSet<Entity> ents = this.getEntityOnPosition(pos);
+			boolean containsRobotsOrWalls = false;
+			for (Entity ent : ents){
+				if (ent instanceof Robot || ent instanceof Wall)
+					containsRobotsOrWalls = true;
+			}
+			return containsRobotsOrWalls;
+		}catch (NullPointerException esc){
+			return true;
+		}
+	}
 }

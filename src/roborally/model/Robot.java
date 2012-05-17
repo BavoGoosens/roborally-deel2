@@ -61,7 +61,7 @@ public class Robot extends Entity{
 	 * 
 	 * @note	Gebruik altijd Collections.sort met een BatteryComparator() wanneer deze lijst gewijzigd wordt.
 	 */
-	private ArrayList<Battery> Possessions = new ArrayList<>();
+	private ArrayList<Item> possessions = new ArrayList<>();
 	/**
 	 * Deze methode maakt een nieuwe robot aan.
 	 * 
@@ -81,7 +81,7 @@ public class Robot extends Entity{
 		this.setEnergy(energy);
 		setOrientation(orientation);
 	}
-	
+
 	/**
 	 * Deze methode wijzigt de energie van de robot.
 	 * 
@@ -212,7 +212,7 @@ public class Robot extends Entity{
 		}catch (IllegalStateException e){
 			throw new IllegalStateException("De positie waarnaar bewogen moet worden is ongeldig.");
 		}
-		if(this.getBoard().isPlacableOnPosition(destination)){
+		if(this.getBoard().isPlacableOnPosition(destination,this)){
 			this.setPosition(destination);
 			this.setEnergy(Energy.energyDifference(this.getEnergy(), moveCost(this)));
 		}else{
@@ -228,7 +228,9 @@ public class Robot extends Entity{
 	 * 
 	 * @return	De energie die nodig is om de plaats te bereiken.
 	 * 			|Calculator.aStarOnTo(this, position).get(position.toString()).getGCost()
+	 *
 	 */
+	//TODO: Moet een negatief getal terugeven indien niet bereikbaar of te weinig energie
 	public Energy getEnergyRequiredToReach(Position position){
 		HashMap<String, Node> resultpad = Calculator.aStarOnTo(this, position);
 		Node n = resultpad.get(position.toString());
@@ -369,13 +371,13 @@ public class Robot extends Entity{
 	}
 
 	/**
-	 * Geeft een lijst terug van alle batterijen die de robot momenteel draagt.
+	 * Geeft een lijst terug van alle items die de robot momenteel draagt.
 	 * 
 	 * @return	De lijst van batterijen
 	 * 			|this.Possessions
 	 */
-	public ArrayList<Battery> getPossessions(){
-		return this.Possessions;
+	public ArrayList<Item> getPossessions(){
+		return this.possessions;
 	}
 
 	/**
@@ -398,19 +400,20 @@ public class Robot extends Entity{
 	 * @post	De batterij staat niet meer op een bord.
 	 * 			|!battery.isOnBoard()
 	 */
-	public void pickUp(Battery battery) throws IllegalArgumentException, IllegalStateException{
+	public void pickUp(Item item) throws IllegalArgumentException, IllegalStateException{
 		if(!this.isOnBoard()){
 			throw new IllegalStateException("De robot staat niet op een bord.");
-		}else if(!this.getBoard().equals(battery.getBoard())){
+		}else if(!this.getBoard().equals(item.getBoard())){
 			throw new IllegalArgumentException("De robot staat niet op hetzelfde bord als de batterij.");
-		}else if(!this.getPosition().toString().equals(battery.getPosition().toString())){
+		}else if(!this.getPosition().toString().equals(item.getPosition().toString())){
 			throw new IllegalArgumentException("De robot staat niet op dezelfde positie als de batterij.");
 		}else{
-			battery.removeFromBoard();
-			this.getPossessions().add(battery);
-			Collections.sort(this.getPossessions(), new BatteryComparator());
+			item.removeFromBoard();
+			this.getPossessions().add(item);
+			Collections.sort(this.getPossessions(), new ItemComparator());
 		}
 	}
+
 
 	/**
 	 * Deze methode laadt de robot op met de energie in een batterij die hij bij zich heeft.
@@ -424,18 +427,21 @@ public class Robot extends Entity{
 	 * @post	De batterij heeft mogelijks energie verloren.
 	 * 			|(new battery).getEnergy().equals(Energy.energyDifference(battery.getEnergy(), Energy.energyDifference(Robot.MAXENERGY, this.getEnergy()))) == true
 	 */
-	public void use(Battery battery) {
-		if (this.getPossessions().contains(battery)){
-			if(battery.isDestroyed()){
-				this.getPossessions().remove(battery);
+	//TODO: afmaken voor iedere subklasse van item
+	public void use(Item item) {
+		if (this.getPossessions().contains(item)){
+			if(item.isDestroyed()){
+				this.getPossessions().remove(item);
 			}else{
-				Energy toRecharge = Energy.energyDifference(battery.getEnergy(), Energy.energyDifference(Robot.MAXENERGY, this.getEnergy()));
-				battery.setEnergy(toRecharge);
-				this.setEnergy(Energy.energySum(this.getEnergy(), toRecharge));
-				if(battery.getEnergy().getEnergy() == 0){
-					this.getPossessions().remove(battery);
-					Collections.sort(this.getPossessions(), new BatteryComparator());
-					battery.destroy();
+				if (item instanceof Battery){
+					Energy toRecharge = Energy.energyDifference(item.getEnergy(), Energy.energyDifference(Robot.MAXENERGY, this.getEnergy()));
+					item.setEnergy(toRecharge);
+					this.setEnergy(Energy.energySum(this.getEnergy(), toRecharge));
+					if(item.getEnergy().getEnergy() == 0){
+						this.getPossessions().remove(item);
+						Collections.sort(this.getPossessions(), new ItemComparator());
+						item.destroy();
+					}
 				}
 			}
 		}else{
@@ -444,35 +450,35 @@ public class Robot extends Entity{
 	}
 
 	/**
-	 * Deze methode plaats een batterij uit de bezittingen van de robot op de huidige positie van de robot in het bord van de robot.
+	 * Deze methode plaats een Item uit de bezittingen van de robot op de huidige positie van de robot in het bord van de robot.
 	 * 
-	 * @param	battery
+	 * @param	item
 	 * 			De batterij die op het bord geplaatst moet worden.
 	 * 
 	 * @throws 	IllegalArgumentException
-	 * 			De batterij is niet in het bezit van de robot.
+	 * 			Het item is niet in het bezit van de robot.
 	 * 
 	 * @throws 	IllegalStateException
-	 * 			De robot staat niet op een bord.
+	 * 		 	Het item staat niet op een bord.
 	 * 
-	 * @post	De batterij is niet langer in het bezit van de robot.
-	 * 			|new.getPossessions().contains(battery) == false
+	 * @post	Het item is niet langer in het bezit van de robot.
+	 * 			|new.getPossessions().contains(item) == false
 	 * 
-	 * @post	De batterij bevindt zich op dezelfde positie als de robot.
-	 * 			|(new battery).getPosition().equals(new.getPosition()) == true
+	 * @post	Het item bevindt zich op dezelfde positie als de robot.
+	 * 			|(new item).getPosition().equals(new.getPosition()) == true
 	 * 
-	 * @post	De batterij bevindt zich op hetzelfde bord als de robot.
-	 * 			|(new battery).getBoard().equals(new.getBoard()) == true
+	 * @post	Het item bevindt zich op hetzelfde bord als de robot.
+	 * 			|(new item).getBoard().equals(new.getBoard()) == true
 	 */
-	public void drop(Battery battery) throws IllegalArgumentException, IllegalStateException{
+	public void drop(Item item) throws IllegalArgumentException, IllegalStateException{
 		if(!this.isOnBoard()){
 			throw new IllegalStateException("De robot staat niet op een bord.");
-		}else if(!this.getPossessions().contains(battery)){
-			throw new IllegalArgumentException("De robot heeft deze batterij niet.");
+		}else if(!this.getPossessions().contains(item)){
+			throw new IllegalArgumentException("De robot heeft dit item niet.");
 		}else{
-			this.getPossessions().remove(battery);
-			battery.putOnBoard(this.getBoard(), this.getPosition());
-			Collections.sort(this.getPossessions(), new BatteryComparator());
+			this.getPossessions().remove(item);
+			item.putOnBoard(this.getBoard(), this.getPosition());
+			Collections.sort(this.getPossessions(), new ItemComparator());
 		}
 	}
 
@@ -518,8 +524,8 @@ public class Robot extends Entity{
 	 */
 	@Override
 	public void destroy() {
-		for(Battery batt: this.getPossessions()){
-			batt.destroy();
+		for(Item item: this.getPossessions()){
+			item.destroy();
 		}
 		this.getPossessions().clear();
 		super.destroy();

@@ -79,9 +79,9 @@ public class Calculator {
 	 */
 	public static HashMap<String,Node> getReachables(Robot robot){
 		Energy upperbound = robot.getEnergy();
-		ArrayList<String> explorable = new ArrayList<String>();
+		ArrayList<String> explorable = new ArrayList<>();
 		explorable.add(robot.getPosition().toString());
-		HashMap<String,Node> reachables = new HashMap<String,Node>();
+		HashMap<String,Node> reachables = new HashMap<>();
 
 		while(!explorable.isEmpty()){
 			Position currentPos = Calculator.getPositionFromString(explorable.get(0));
@@ -102,15 +102,19 @@ public class Calculator {
 	}
 
 	/**
+	 * Deze methode gaat posities waar een wall op staat uit de ArrayList gaan verwijderen.
 	 * 
-	 * @param neighbours
-	 * @param board
-	 * @return
+	 * @param 	neighbours
+	 * 
+	 * @param 	board
+	 * 
+	 * @return	
+	 * 			
 	 */
 	private static ArrayList<Position> removeWalls(ArrayList<Position> neighbours, Board board) {
-		ArrayList<Position> result = new ArrayList<Position>();
+		ArrayList<Position> result = new ArrayList<>();
 		for (Position pos : neighbours){
-			if (board.isPlacableOnPosition(pos)){
+			if (!board.containsWall(pos)){
 				result.add(pos);
 			}
 		}
@@ -118,10 +122,15 @@ public class Calculator {
 	}
 	
 	/**
+	 * Deze methode gaat op basis van het A* algorithme het optimale pad naar een gegeven positie teruggeven.
 	 * 
-	 * @param a
-	 * @param pos
+	 * @param 	a
+	 * 
+	 * @param 	pos
+	 * 
 	 * @return
+	 * 
+	 * 	
 	 */
 	public static HashMap<String,Node> aStarOnTo(Robot a, Position pos){
 		//deze gaat direct naar de positie die opgegeven wordt
@@ -163,7 +172,7 @@ public class Calculator {
 					open.get(neighbour.toString()).setParent(currentNode);
 				}
 				else{
-					if (board.isPlacableOnPosition(neighbour)){
+					if (board.isPlacableOnPosition(neighbour,a)){
 						open.put(neighbour.toString(), new Node(neighbour,board, new Energy(gCostNeighbour),
 								getHCost(neighbour,getNodeOrientation(currentNode,neighbour) , pos, a),
 								getNodeOrientation(currentNode,neighbour),currentNode));
@@ -177,10 +186,14 @@ public class Calculator {
 	}
 
 	/**
+	 * Deze methode gaat de orientatie bepalen die een node op een positie volgend op de currentnode zou krijgen.
+	 *   
+	 * @param 	currentNode
 	 * 
-	 * @param currentNode
-	 * @param pos
+	 * @param 	pos
+	 * 
 	 * @return
+	 * 
 	 */
 	private static Orientation getNodeOrientation(Node currentNode, Position pos) {
 		Position previousPosition = currentNode.getPosition();
@@ -195,7 +208,7 @@ public class Calculator {
 	}
 
 	/**
-	 * Deze methode gaat de heuristiek kost naar een gegeven positie vanuit de meegegeven node berekenen.
+	 * Deze methode gaat de heuristieke kost naar een gegeven positie vanuit de meegegeven node berekenen.
 	 * 
 	 * @param 	position
 	 * 			
