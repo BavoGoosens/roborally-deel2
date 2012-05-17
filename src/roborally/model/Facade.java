@@ -32,24 +32,12 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public long getBatteryX(Battery battery) throws IllegalStateException {
-		try{
-			return battery.getPosition().getX();
-		}catch (IllegalStateException esc){
-			System.err.println(esc.getMessage());
-			//gaat altyd juist returnen
-			return -1;
-		}
+		return battery.getPosition().getX();
 	}
 
 	@Override
 	public long getBatteryY(Battery battery) throws IllegalStateException {
-		try{
-			return battery.getPosition().getY();
-		}catch (IllegalStateException esc){
-			System.err.println(esc.getMessage());
-			//gaat altyd juist returnen
-			return -1;
-		}
+		return battery.getPosition().getY();
 	}
 
 	@Override
@@ -64,24 +52,12 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public long getRepairKitX(RepairKit repairKit) throws IllegalStateException {
-		try{
-			return repairKit.getPosition().getX();
-		}catch (IllegalStateException esc){
-			System.err.println(esc.getMessage());
-			//gaat altyd juist returnen
-			return -1;
-		}
+		return repairKit.getPosition().getX();
 	}
 
 	@Override
 	public long getRepairKitY(RepairKit repairKit) throws IllegalStateException {
-		try{
-			return repairKit.getPosition().getY();
-		}catch (IllegalStateException esc){
-			System.err.println(esc.getMessage());
-			//gaat altyd juist returnen
-			return -1;
-		}
+		return repairKit.getPosition().getY();
 	}
 
 	@Override
@@ -98,25 +74,14 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 	@Override
 	public long getSurpriseBoxX(SurpriseBox surpriseBox)
 			throws IllegalStateException {
-		try{
-			return surpriseBox.getPosition().getX();
-		}catch (IllegalStateException esc){
-			System.err.println(esc.getMessage());
-			//gaat altyd juist returnen
-			return -1;
-		}
+		return surpriseBox.getPosition().getX();
+
 	}
 
 	@Override
 	public long getSurpriseBoxY(SurpriseBox surpriseBox)
 			throws IllegalStateException {
-		try{
-			return surpriseBox.getPosition().getY();
-		}catch (IllegalStateException esc){
-			System.err.println(esc.getMessage());
-			//gaat altyd juist returnen
-			return -1;
-		}
+		return surpriseBox.getPosition().getY();
 	}
 
 	public static Orientation getOrientationEnum(int i ){
@@ -153,24 +118,12 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public long getRobotX(Robot robot) throws IllegalStateException {
-		try{
-			return robot.getPosition().getX();
-		}catch (IllegalStateException esc){
-			System.err.println(esc.getMessage());
-			//gaat altyd juist returnen
-			return -1;
-		}
+		return robot.getPosition().getX();
 	}
 
 	@Override
 	public long getRobotY(Robot robot) throws IllegalStateException {
-		try{
-			return robot.getPosition().getY();
-		}catch (IllegalStateException esc){
-			System.err.println(esc.getMessage());
-			//gaat altyd juist returnen
-			return -1;
-		}
+		return robot.getPosition().getY();
 	}
 
 	@Override
@@ -231,37 +184,64 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public void pickUpRepairKit(Robot robot, RepairKit repairKit) {
-		robot.pickUp(repairKit);
+		try{
+			robot.pickUp(repairKit);
+		}catch(IllegalArgumentException esc){
+			System.err.println(esc.getMessage());
+		}catch(IllegalStateException esc){
+			System.err.println(esc.getMessage());
+		}
 	}
 
 	@Override
 	public void useRepairKit(Robot robot, RepairKit repairKit) {
-		// TODO Auto-generated method stub
-
+		try{
+			robot.use(repairKit);
+		}catch(IllegalArgumentException esc){
+			System.err.println(esc.getMessage());
+		}	
 	}
 
 	@Override
 	public void dropRepairKit(Robot robot, RepairKit repairKit) {
-		// TODO Auto-generated method stub
-
+		try{
+			robot.drop(repairKit);
+		}catch (IllegalArgumentException esc){
+			System.err.println(esc.getMessage());
+		}catch (IllegalStateException esc ){
+			System.err.println(esc.getMessage());
+		}
 	}
 
 	@Override
 	public void pickUpSurpriseBox(Robot robot, SurpriseBox surpriseBox) {
-		// TODO Auto-generated method stub
-
+		try{
+			robot.pickUp(surpriseBox);
+		}catch(IllegalArgumentException esc){
+			System.err.println(esc.getMessage());
+		}catch(IllegalStateException esc){
+			System.err.println(esc.getMessage());
+		}
 	}
 
 	@Override
 	public void useSurpriseBox(Robot robot, SurpriseBox surpriseBox) {
-		// TODO Auto-generated method stub
-
+		try{
+			robot.use(surpriseBox);
+		}catch(IllegalArgumentException esc){
+			System.err.println(esc.getMessage());
+		}
 	}
 
 	@Override
 	public void dropSurpriseBox(Robot robot, SurpriseBox surpriseBox) {
-		// TODO Auto-generated method stub
-
+		try{
+			robot.drop(surpriseBox);
+		}catch (IllegalArgumentException esc){
+			System.err.println(esc.getMessage());
+		}catch (IllegalStateException esc ){
+			System.err.println(esc.getMessage());
+		}
 	}
 
 	@Override
@@ -278,8 +258,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public double getMinimalCostToReach(Robot robot, long x, long y) {
-		// TODO Auto-generated method stub
-		return 0;
+		return robot.getEnergyRequiredToReach(new Position(x, y)).getEnergy();
 	}
 
 	@Override
@@ -290,71 +269,60 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public void moveNextTo(Robot robot, Robot other) {
-		// TODO Auto-generated method stub
-
+		robot.moveNextTo(other);
 	}
 
 	@Override
 	public void shoot(Robot robot) throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-
+		robot.shoot();
 	}
 
 	@Override
 	public Wall createWall() throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
+		return new Wall();
 	}
 
 	@Override
 	public void putWall(Board board, long x, long y, Wall wall)
 			throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-
+		board.putEntity(new Position(x, y), wall);
 	}
 
 	@Override
 	public long getWallX(Wall wall) throws IllegalStateException,
 	UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return 0;
+		return wall.getPosition().getX();
 	}
 
 	@Override
 	public long getWallY(Wall wall) throws IllegalStateException,
 	UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return 0;
+		return wall.getPosition().getY();
 	}
 
 	@Override
 	public Set<Robot> getRobots(Board board) {
-		// TODO Auto-generated method stub
-		return null;
+		return board.getRobots();
 	}
 
 	@Override
 	public Set<Wall> getWalls(Board board) throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
+		return board.getWalls();
 	}
 
 	@Override
 	public Set<RepairKit> getRepairKits(Board board) {
-		// TODO Auto-generated method stub
-		return null;
+		return board.getRepairkits();
 	}
 
 	@Override
 	public Set<SurpriseBox> getSurpriseBoxes(Board board) {
-		// TODO Auto-generated method stub
-		return null;
+		return board.getSurpriseBoxes();
 	}
 
 	@Override
 	public Set<Battery> getBatteries(Board board) {
-		// TODO Auto-generated method stub
-		return null;
+		return board.getBatteries();
 	}
 
 	@Override

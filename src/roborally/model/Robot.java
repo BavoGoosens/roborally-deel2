@@ -41,17 +41,23 @@ public class Robot extends Entity{
 	 */
 	public final static Energy MINENERGY = new Energy(0);
 	/**
-	 * De maximale energie van een robot.
+	 * De maximale bovengrens van de energie van een robot.
 	 */
 	public final static Energy MAXENERGY = new Energy(20000);
 	/**
 	 * De kost van 1 schot met zijn laser.
 	 */
 	public final static Energy SHOOT_COST = new Energy(1000);
+
+	public final static Energy SHOOT_DAMAGE = new Energy(4000);
 	/**
 	 * De energie van de robot.
 	 */
 	private Energy energy;
+	/**
+	 * Het maxima van de energy 
+	 */
+	private Energy maxEnergy;
 	/**
 	 * De oriëntatie van de robot.
 	 */
@@ -80,6 +86,7 @@ public class Robot extends Entity{
 	public Robot(Orientation orientation, Energy energy){
 		this.setEnergy(energy);
 		setOrientation(orientation);
+		setMaxEnergy(energy);
 	}
 
 	/**
@@ -128,6 +135,29 @@ public class Robot extends Entity{
 	@Basic
 	public Energy getEnergy(){
 		return this.energy;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	//TODO: doc
+	@Basic
+	public Energy getMaxEnergy() {
+		return this.maxEnergy;
+	}
+
+	/**
+	 * Deze methode stelt de bovengrens in van de nergie van de robot
+	 * 
+	 * @param currentMaxEnergy
+	 */
+	//TODO: doc + hoe uitgewerkt? nom def of tot?
+	@Basic
+	public void setMaxEnergy(Energy currentMaxEnergy) {
+		if (currentMaxEnergy.getEnergy() < Robot.MAXENERGY.getEnergy())
+			this.maxEnergy = currentMaxEnergy;
+		this.maxEnergy = Robot.MAXENERGY;
 	}
 
 	/**
@@ -427,7 +457,7 @@ public class Robot extends Entity{
 	 * @post	De batterij heeft mogelijks energie verloren.
 	 * 			|(new battery).getEnergy().equals(Energy.energyDifference(battery.getEnergy(), Energy.energyDifference(Robot.MAXENERGY, this.getEnergy()))) == true
 	 */
-	//TODO: afmaken voor iedere subklasse van item
+	//TODO: neke checke
 	public void use(Item item) {
 		if (this.getPossessions().contains(item)){
 			if(item.isDestroyed()){
@@ -442,11 +472,79 @@ public class Robot extends Entity{
 						Collections.sort(this.getPossessions(), new ItemComparator());
 						item.destroy();
 					}
+				} else if (item instanceof SurpriseBox){
+					getSurpriseBoxAction(item);
+				}else {
+					// item instanceof Repairkit
 				}
 			}
 		}else{
 			throw new IllegalArgumentException("Deze batterij is niet in het bezit van de robot."); 
 		}
+	}
+
+	public void getSurpriseBoxAction(Item item){
+		Random rand = new Random();
+		int choice = 1 + rand.nextInt(3);
+		if (choice == 1){
+			//explosion
+			this.setMaxEnergy(new Energy(this.getMaxEnergy().getEnergy()- SHOOT_DAMAGE.getEnergy()));
+			if (this.getEnergy().getEnergy() < this.getMaxEnergy().getEnergy()){
+				this.setEnergy(this.getMaxEnergy());
+			}
+			item.destroy();
+		}else if (choice == 2){
+			//teleport
+			Position teleport = getRandomBoardPosition();
+			this.setPosition(teleport);
+			item.destroy();
+		}else{
+			//random new item
+			choice = 1 + rand.nextInt(3);
+			if (choice == 1){
+				//SurpriseBox
+				SurpriseBox box = new SurpriseBox(item.getWeight());
+				this.getPossessions().add(box);
+				item.destroy();
+			}else if (choice == 2){
+				//Battery
+				Battery bat = new Battery(new Energy(rand.nextInt((int)Battery.MAXBATTERYENERGY.getEnergy()) + 1),item.getWeight());
+				this.getPossessions().add(bat);
+				item.destroy();
+			}else{
+				//Repairkit
+				RepairKit kit = new RepairKit(new Energy(rand.nextInt((int)RepairKit.MAX_ENERGY.getEnergy()) + 1) ,item.getWeight());
+				this.getPossessions().add(kit);
+				item.destroy();
+			}
+		}
+	}
+
+	private Position getRandomBoardPosition() {
+		long height = this.getBoard().getHeight();
+		long width = this.getBoard().getHeight();
+		Random rand = new Random();
+		long randomX = 0;
+		long randomY = 0;
+		boolean xfound = false;
+		boolean yfound = false;		
+		while (!xfound){
+			randomX = rand.nextLong();
+			if (randomX >= 0 && randomX <= width){
+				xfound = true;
+			}
+		}
+		while (!yfound){
+			randomY = rand.nextLong();
+			if (randomY >= 0 && randomY <= height){
+				xfound = true;
+			}
+		}
+		Position teleport = new Position(randomX, randomY);
+		if (this.getBoard().isPlacableOnPosition(teleport, this)){
+			return teleport;		
+		}
+		return getRandomBoardPosition();
 	}
 
 	/**

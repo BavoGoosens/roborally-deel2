@@ -454,4 +454,34 @@ public class Board{
 			return true;
 		}
 	}
+
+	public Set<SurpriseBox> getSurpriseBoxes() {
+		Collection<HashSet<Entity>> c = this.getMap().values();
+		HashSet<SurpriseBox> surp = new HashSet<>();
+		for (Set<Entity> values : c ){
+			Iterator<Entity> i = values.iterator();
+			while (i.hasNext()){
+				Entity obj = i.next();
+				if (obj instanceof SurpriseBox){
+					surp.add((SurpriseBox)obj);
+				}
+			}
+		}
+		return surp;
+	}
+
+	public Set<RepairKit> getRepairkits() {
+		Collection<HashSet<Entity>> c = this.getMap().values();
+		HashSet<RepairKit> rep = new HashSet<>();
+		for (Set<Entity> values : c ){
+			Iterator<Entity> i = values.iterator();
+			while (i.hasNext()){
+				Entity obj = i.next();
+				if (obj instanceof RepairKit){
+					rep.add((RepairKit)obj);
+				}
+			}
+		}
+		return rep;
+	}
 }
