@@ -394,8 +394,8 @@ public class Robot extends Entity{
 	 */
 	public Weight getTotalWeight(){
 		int totalWeight = 0;
-		for(Battery batt: this.getPossessions()){
-			totalWeight += batt.getWeight().getWeight();
+		for(Item item: this.getPossessions()){
+			totalWeight += item.getWeight().getWeight();
 		}
 		return new Weight(totalWeight);
 	}
