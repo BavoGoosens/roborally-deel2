@@ -24,11 +24,6 @@ public enum EnergyUnit{
 	KJ(1000);
 	
 	/**
-	 * In deze integer wordt bijgehouden wat de factor is van de huidige eenheid ten opzichte van de standaardeenheid.
-	 */
-	private final double factor;
-	
-	/**
 	 * Met deze constructor wordt een nieuwe energie-eenheid aangemaakt.
 	 * 
 	 * @param	factor
@@ -45,10 +40,16 @@ public enum EnergyUnit{
 	 * Deze methode geeft de factor terug van de huidige energie-eenheid ten opzichte van de standaardeenheid.
 	 * 
 	 * @return	De factor ten opzichte van de standaardeenheid.
-	 * 			|this.factor
+	 * 			|factor
 	 */
 	@Basic @Immutable
 	public double getFactor(){
-		return this.factor;
+		return factor;
 	}
+	
+	/**
+	 * In deze integer wordt bijgehouden wat de factor is van de huidige eenheid ten opzichte van de standaardeenheid.
+	 */
+	private final double factor;
+	
 }
