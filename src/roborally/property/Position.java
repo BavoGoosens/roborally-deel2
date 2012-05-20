@@ -7,6 +7,7 @@ import be.kuleuven.cs.som.annotate.Value;
 import java.util.ArrayList;
 
 import roborally.model.Board;
+import roborally.utils.IllegalPositionException;
 
 /**
  * Deze klasse houdt een positie bij. Deze bestaat uit een x- en een y-coördinaat.
@@ -16,35 +17,10 @@ import roborally.model.Board;
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
- * @version 1.0
+ * @version 2.0
  */
 @Value
 public class Position implements Comparable<Position>{
-
-	/**
-	 * X-coördinaat van de positie.
-	 */
-	private final long x;
-	/**
-	 * Y-coördinaat van de positie.
-	 */
-	private final long y;
-	/**
-	 * Maximale x-waarde.
-	 */
-	private final static long UPPER_BOUND_X = Long.MAX_VALUE;
-	/**
-	 * Minimale x-waarde.
-	 */
-	private final static long LOWER_BOUND_X = 0;
-	/**
-	 * Maximale y-waarde
-	 */
-	private final static long UPPER_BOUND_Y = Long.MAX_VALUE;
-	/**
-	 * Minimale y-waarde.
-	 */
-	private final static long LOWER_BOUND_Y = 0;
 
 	/**
 	 * Initialiseer een positie.
@@ -55,7 +31,7 @@ public class Position implements Comparable<Position>{
 	 * @param 	ypos
 	 * 			Y-waarde van de in te stellen positie
 	 * 
-	 * @throws	IllegalArgumentException
+	 * @throws	IllegalPositionException
 	 * 			De gegeven positie is ongeldig.
 	 * 			|!isValidPosition(xpos, ypos)
 	 * 
@@ -65,33 +41,42 @@ public class Position implements Comparable<Position>{
 	 * @post	De y-waarde van de nieuwe positie is gelijk aan de gegeven y-waarde.
 	 * 			|new.y == ypos
 	 */
-	public Position(long xpos, long ypos) throws IllegalArgumentException{
-		if(!isValidPosition(xpos, ypos)) throw new IllegalArgumentException("Gegeven positie is ongeldig!");
-		this.x = xpos;
-		this.y = ypos;
+	public Position(long xpos, long ypos) throws IllegalPositionException{
+		if(!isValidPosition(xpos, ypos)) throw new IllegalPositionException(xpos, ypos);
+		x = xpos;
+		y = ypos;
 	}
 
 	/**
 	 * Deze methode geeft de x-coördinaat van de positie terug.
 	 * 
 	 * @return 	x-waarde van deze positie
-	 * 			|this.x
+	 * 			|x
 	 */
 	@Basic @Immutable
 	public long getX() {
-		return this.x;
+		return x;
 	}
 
 	/**
 	 * Deze methode geeft de y-coördinaat van de positie terug.
 	 * 
 	 * @return 	y-waarde van deze positie
-	 * 			|this.y
+	 * 			|y
 	 */
 	@Basic @Immutable
 	public long getY() {
-		return this.y;
+		return y;
 	}
+	
+	/**
+	 * X-coördinaat van de positie.
+	 */
+	private final long x;
+	/**
+	 * Y-coördinaat van de positie.
+	 */
+	private final long y;
 
 	/**
 	 * Kijkt na of de positie een geldige positie is.
@@ -113,6 +98,23 @@ public class Position implements Comparable<Position>{
 			return false;
 		return true;
 	}
+	
+	/**
+	 * Maximale x-waarde.
+	 */
+	private final static long UPPER_BOUND_X = Long.MAX_VALUE;
+	/**
+	 * Minimale x-waarde.
+	 */
+	private final static long LOWER_BOUND_X = 0;
+	/**
+	 * Maximale y-waarde
+	 */
+	private final static long UPPER_BOUND_Y = Long.MAX_VALUE;
+	/**
+	 * Minimale y-waarde.
+	 */
+	private final static long LOWER_BOUND_Y = 0;
 
 	/**
 	 * Deze methode dient om de posities te vinden naast de huidige positie.
@@ -126,17 +128,25 @@ public class Position implements Comparable<Position>{
 		ArrayList<Position> positions = new ArrayList<Position>();
 		ArrayList<Position> validPositions = new ArrayList<Position>();
 		try{
-			positions.add(new Position(this.getX() - 1, this.getY()));
-		}catch(IllegalArgumentException e){}
+			positions.add(new Position(getX() - 1, getY()));
+		}catch(IllegalPositionException e){
+			// NOP
+		}
 		try{
-			positions.add(new Position(this.getX() + 1, this.getY()));
-		}catch(IllegalArgumentException e){}
+			positions.add(new Position(getX() + 1, getY()));
+		}catch(IllegalPositionException e){
+			// NOP
+		}
 		try{
-			positions.add(new Position(this.getX(), this.getY() - 1));
-		}catch(IllegalArgumentException e){}
+			positions.add(new Position(getX(), getY() - 1));
+		}catch(IllegalPositionException e){
+			// NOP
+		}
 		try{
-			positions.add(new Position(this.getX(), this.getY() + 1));
-		}catch(IllegalArgumentException e){}
+			positions.add(new Position(getX(), getY() + 1));
+		}catch(IllegalPositionException e){
+			// NOP
+		}
 		for(Position pos: positions){
 			if(board.isValidBoardPosition(pos)){
 				validPositions.add(pos);
@@ -148,11 +158,12 @@ public class Position implements Comparable<Position>{
 	/* 
 	 * Deze methode maakt een String op basis van een Position.
 	 * 
-	 * @see java.lang.Object#toString()
+	 * @return	Een textuele representatie van dit object waarbij duidelijk wordt welke positie dit object bevat.
+	 * 			|getX() + ", " + getY()
 	 */
 	@Override
 	public String toString() {
-		return this.getX() + ", " + this.getY();
+		return getX() + ", " + getY();
 	}
 	
 	/**
@@ -165,36 +176,49 @@ public class Position implements Comparable<Position>{
 	 * 			De 2de positie is null.
 	 * 			|other == null
 	 * 
-	 * @return	|if(this.getX() == other.getX())
-	 *			|	(int) (this.getY() - other.getY())
-	 *			|(int) (this.getX() - other.getX())
+	 * @return	|if(getX() == other.getX())
+	 *			|	(int) (getY() - other.getY())
+	 *			|(int) (getX() - other.getX())
 	 */
 	@Override
 	public int compareTo(Position other) throws	IllegalArgumentException{
 		if(other == null)
 			throw new IllegalArgumentException("Andere positie mag niet null zijn.");
-		if(this.getX() == other.getX())
-			return (int) (this.getY() - other.getY());
-		return (int) (this.getX() - other.getX()); 
+		if(getX() == other.getX())
+			return (int) (getY() - other.getY());
+		return (int) (getX() - other.getX()); 
 	}	
 
 	/*
-	 * @see java.lang.Object#equals(java.lang.Object)
+	 * Deze methode kijk na of 2 posities aan elkaar gelijk zijn.
+	 * 
+	 * @param	other
+	 * 			De andere positie waarmee vergeleken moet worden.
+	 * 
+	 * @return	Dit is true wanneer de 2 objecten dezelfde positie bevatten.
+	 * 			|if(other == null)
+	 * 			|	false
+	 * 			|if(getClass() != other.getClass())
+	 * 			|	false
+	 * 			|(this.getX() == ((Position) other).getX() && this.getY() == ((Position) other).getY())
 	 */
 	@Override
 	public boolean equals(Object other){
 		if(other == null)
 			return false;
-		if(this.getClass() != other.getClass())
+		if(getClass() != other.getClass())
 			return false;
 		return (this.getX() == ((Position) other).getX() && this.getY() == ((Position) other).getY());
 	}
 
 	/*
-	 * @see java.lang.Object#hashCode()
+	 * Deze methode berekent de hashcode van een object van deze klasse.
+	 * 
+	 * @return	De hashcode van dit object.
+	 * 			|Integer.parseInt(Long.toString(getX()) + Long.toString(getY()))
 	 */
 	@Override
 	public int hashCode() {
-		return Integer.parseInt(Long.toString(this.getX()) + Long.toString(this.getY()));
+		return Integer.parseInt(Long.toString(getX()) + Long.toString(getY()));
 	}
 }
