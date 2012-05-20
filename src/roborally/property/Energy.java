@@ -8,7 +8,7 @@ import be.kuleuven.cs.som.annotate.Value;
  * Deze klasse stelt een hoeveelheid energie voor.
  * 
  * @invar	De energie mag niet negatief zijn.
- * 			|this.getEnergy() >= 0
+ * 			|getEnergy() >= 0
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
@@ -16,11 +16,6 @@ import be.kuleuven.cs.som.annotate.Value;
  */
 @Value
 public class Energy implements Comparable<Energy>{
-
-	/**
-	 * Hoeveelheid energie opgeslagen in dit object.
-	 */
-	private final double amount;
 
 	/**
 	 * Deze methode maakt een nieuwe hoeveelheid energie aan.
@@ -58,7 +53,7 @@ public class Energy implements Comparable<Energy>{
 		assert(amount >= 0);
 		this.amount = amount * unit.getFactor();
 	}
-
+	
 	/**
 	 * Deze methode geeft de huidige hoeveelheid energie terug.
 	 * 
@@ -67,8 +62,13 @@ public class Energy implements Comparable<Energy>{
 	 */
 	@Basic @Immutable
 	public double getEnergy(){
-		return this.amount;
+		return amount;
 	}
+	
+	/**
+	 * Hoeveelheid energie opgeslagen in dit object.
+	 */
+	private final double amount;
 
 	/**
 	 * Deze methode geeft de huidige hoeveelheid energie terug in de opgegeven eenheid.
@@ -77,11 +77,11 @@ public class Energy implements Comparable<Energy>{
 	 * 			De eenheid waarin de energie teruggegeven moet worden.
 	 * 
 	 * @return	De huidige hoeveelheid energie in de opgegeven eenheid.
-	 * 			|this.amount * unit.getFactor()
+	 * 			|this.getEnergy() * unit.getFactor()
 	 */
 	@Immutable
 	public double getEnergy(EnergyUnit unit){
-		return this.getEnergy() * unit.getFactor();
+		return getEnergy() * unit.getFactor();
 	}
 
 	/**
@@ -130,41 +130,57 @@ public class Energy implements Comparable<Energy>{
 	 * 			De 2de hoeveelheid energie is null.
 	 * 			|other == null
 	 * 
-	 * @return	|(int) (this.getEnergy() - other.getEnergy())	
+	 * @return	|(int) (getEnergy() - other.getEnergy())	
 	 */
 	@Override
 	public int compareTo(Energy other) throws IllegalArgumentException{
 		if(other == null)
 			throw new IllegalArgumentException("Andere hoeveelheid energie mag niet null zijn.");
-		return (int) (this.getEnergy() - other.getEnergy());
+		return (int) (getEnergy() - other.getEnergy());
 	}
 
 	/*
-	 * @see java.lang.Object#equals(java.lang.Object)
+	 * Kijk na of de hoeveelheid energie gelijk is aan een andere hoeveelheid energie.
+	 * 
+	 * @param	other
+	 * 			De hoeveelheid energie waarmee vergeleken moet worden.
+	 * 
+	 * @return	Dit is true wanneer de 2 objecten dezelfde hoeveelheid energie bevatten.
+	 * 			|if(other == null)
+	 * 			|	false
+	 * 			|if(getClass() != other.getClass())
+	 * 			|	false
+	 * 			|(getEnergy()) == ((Energy) other).getEnergy()
 	 */
 	@Override
 	public boolean equals(Object other) {
 		if(other == null)
 			return false;
-		if(this.getClass() != other.getClass())
+		if(getClass() != other.getClass())
 			return false;
-		return (this.getEnergy()) == ((Energy) other).getEnergy();
+		return (getEnergy()) == ((Energy) other).getEnergy();
 	}
 
 	/*
-	 * @see java.lang.Object#hashCode()
+	 * Deze methode berekent de hashcode van een object van deze klasse.
+	 * 
+	 * @return	De hashcode van dit object.
+	 * 			|((Double) getEnergy()).hashCode()
 	 */
 	@Override
 	public int hashCode() {
-		return ((Double) this.getEnergy()).hashCode();
+		return ((Double) getEnergy()).hashCode();
 	}
 
 	/*
-	 * @see java.lang.Object#toString()
+	 * Deze methode zet het object om naar een String.
+	 * 
+	 * @return	Een textuele representatie van dit object waarbij duidelijk wordt hoeveel energie dit object bevat.
+	 * 			|Double.toString(getEnergy()) + " " + EnergyUnit.WS.toString()
 	 */
 	@Override
 	public String toString() {
-		return Double.toString(this.getEnergy()) + " " + EnergyUnit.WS.toString();
+		return Double.toString(getEnergy()) + " " + EnergyUnit.WS.toString();
 	}
-
+	
 }
