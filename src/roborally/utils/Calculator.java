@@ -5,12 +5,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import roborally.basics.Energy;
-import roborally.basics.Orientation;
-import roborally.basics.Position;
 import roborally.model.Board;
 import roborally.model.Node;
 import roborally.model.Robot;
+import roborally.property.Energy;
+import roborally.property.Orientation;
+import roborally.property.Position;
 
 public class Calculator {
 

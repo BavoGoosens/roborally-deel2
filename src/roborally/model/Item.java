@@ -2,8 +2,8 @@ package roborally.model;
 
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
-import roborally.basics.Energy;
-import roborally.basics.Weight;
+import roborally.property.Energy;
+import roborally.property.Weight;
 
 /**
  * Deze klasse houdt een object bij dat op een board kan staan en een positie kan hebben. Daarnaast kan dit object ook door een robot gedragen worden en heeft het energie en een gewicht.

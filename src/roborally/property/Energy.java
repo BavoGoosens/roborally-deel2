@@ -1,4 +1,4 @@
-package roborally.basics;
+package roborally.property;
 
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
@@ -152,7 +152,7 @@ public class Energy implements Comparable<Energy>{
 	}
 
 	/*
-	 * @see java.lang.Double#hashCode()
+	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {

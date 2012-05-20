@@ -1,7 +1,7 @@
 package roborally.model;
 
-import roborally.basics.Position;
 import roborally.model.Board;
+import roborally.property.Position;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
 

@@ -1,9 +1,9 @@
 package roborally.model;
 
 import be.kuleuven.cs.som.annotate.Basic;
-import roborally.basics.Energy;
-import roborally.basics.Position;
-import roborally.basics.Orientation;
+import roborally.property.Energy;
+import roborally.property.Orientation;
+import roborally.property.Position;
 
 /**
  * Klasse om nodes op het spelbord voor te stellen.

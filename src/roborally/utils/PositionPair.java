@@ -1,8 +1,8 @@
 package roborally.utils;
 
-import roborally.basics.Energy;
-import roborally.basics.Orientation;
-import roborally.basics.Position;
+import roborally.property.Energy;
+import roborally.property.Orientation;
+import roborally.property.Position;
 
 /**
  * Deze klasse stelt een paar bestemmingen voor die gebruikt worden door de functie moveNextTo() in de klasse Robot.

@@ -9,7 +9,7 @@ import java.util.Set;
 
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
-import roborally.basics.*;
+import roborally.property.*;
 import roborally.utils.*;
 
 /**

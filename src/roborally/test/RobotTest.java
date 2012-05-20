@@ -3,11 +3,11 @@ package roborally.test;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import roborally.basics.Energy;
-import roborally.basics.Orientation;
-import roborally.basics.Position;
 import roborally.model.Board;
 import roborally.model.Robot;
+import roborally.property.Energy;
+import roborally.property.Orientation;
+import roborally.property.Position;
 
 public class RobotTest {
 	

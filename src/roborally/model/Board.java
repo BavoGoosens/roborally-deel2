@@ -9,7 +9,7 @@ import java.util.Set;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 
-import roborally.basics.Position;
+import roborally.property.Position;
 import roborally.utils.Calculator;
 
 /**

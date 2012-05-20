@@ -1,4 +1,4 @@
-package roborally.basics;
+package roborally.property;
 
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;

@@ -4,7 +4,7 @@ import java.io.Writer;
 import java.util.Set;
 
 import roborally.IFacade;
-import roborally.basics.*;
+import roborally.property.*;
 
 
 public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, SurpriseBox>{

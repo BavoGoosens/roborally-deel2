@@ -7,15 +7,15 @@ import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
 
-import roborally.basics.Energy;
-import roborally.basics.Orientation;
-import roborally.basics.Position;
-import roborally.basics.Weight;
 import roborally.model.Battery;
 import roborally.model.Board;
 import roborally.model.Entity;
 import roborally.model.Robot;
 import roborally.model.Wall;
+import roborally.property.Energy;
+import roborally.property.Orientation;
+import roborally.property.Position;
+import roborally.property.Weight;
 
 public class BoardTest {
 

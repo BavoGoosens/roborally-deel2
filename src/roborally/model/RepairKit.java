@@ -1,7 +1,7 @@
 package roborally.model;
 
-import roborally.basics.Energy;
-import roborally.basics.Weight;
+import roborally.property.Energy;
+import roborally.property.Weight;
 
 public class RepairKit extends Item{
 	

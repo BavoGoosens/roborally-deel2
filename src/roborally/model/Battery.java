@@ -1,7 +1,7 @@
 package roborally.model;
 
-import roborally.basics.Energy;
-import roborally.basics.Weight;
+import roborally.property.Energy;
+import roborally.property.Weight;
 
 /**
  * Deze klasse houdt een batterij bij. Deze heeft een positie en een hoeveelheid energie.
