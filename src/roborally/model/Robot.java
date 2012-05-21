@@ -630,3 +630,13 @@ public class Robot extends Entity{
 	}
 
 }
+
+// hier ga ik de Random todo's zetten dus dingen die volgens mij ng moeten gebeuren.
+//TODO: Inputstream met scanner om die programmas deftig te kunnen inlezen.
+//TODO: Private shit beginnen maken.
+//TODO: merge aanpassen.
+//TODO: Alles van die programma's. 
+//TODO: GetEnergyRequiredToReach aanpassen om de juiste dingen terug te geven.
+//TODO: Testen veel testen.
+//TODO: Interfaces definiëren voor alle entity's zorgt blijkbaar voor ng ne ganse hoop probleme bij 
+//		sebastiaan en co.

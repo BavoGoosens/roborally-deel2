@@ -16,7 +16,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public void merge(Board board1, Board board2) {
-		// TODO Auto-generated method stub
+		// TODO: Methode afwerken en aanpassen aan de nieuwe normen 
 
 	}
 
@@ -246,13 +246,13 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public void transferItems(Robot from, Robot to) {
-		// TODO Auto-generated method stub
+		// TODO: nieuwe methode? moet nog voll gemaakt worden. limiet van gewicht?
 
 	}
 
 	@Override
 	public int isMinimalCostToReach17Plus() {
-		// TODO Auto-generated method stub
+		// TODO: Aanpassen in de methode op mijn manier? via nieuwe exceptions 
 		return 0;
 	}
 
@@ -263,7 +263,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public int isMoveNextTo18Plus() {
-		// TODO Auto-generated method stub
+		// TODO: geen idee hoe we dees juist moeten impl.
 		return 0;
 	}
 
@@ -327,25 +327,25 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public int loadProgramFromFile(Robot robot, String path) {
-		// TODO Auto-generated method stub
+		// TODO: programma's beginnen maken.
 		return 0;
 	}
 
 	@Override
 	public int saveProgramToFile(Robot robot, String path) {
-		// TODO Auto-generated method stub
+		// TODO: programma's beginnen maken.
 		return 0;
 	}
 
 	@Override
 	public void prettyPrintProgram(Robot robot, Writer writer) {
-		// TODO Auto-generated method stub
+		// TODO: programma's beginnen maken.
 
 	}
 
 	@Override
 	public void stepn(Robot robot, int n) {
-		// TODO Auto-generated method stub
+		// TODO: programma's beginnen maken.
 
 	}
 
