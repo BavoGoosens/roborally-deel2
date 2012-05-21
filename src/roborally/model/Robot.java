@@ -258,13 +258,22 @@ public class Robot extends Entity{
 	 * 
 	 * @return	De energie die nodig is om de plaats te bereiken.
 	 * 			|Calculator.aStarOnTo(this, position).get(position.toString()).getGCost()
+	 * @throws TargetNotReachableException 
 	 *
 	 */
 	//TODO: Moet een negatief getal terugeven indien niet bereikbaar of te weinig energie
-	public Energy getEnergyRequiredToReach(Position position){
-		HashMap<String, Node> resultpad = Calculator.aStarOnTo(this, position);
-		Node n = resultpad.get(position.toString());
-		return n.getGCost();
+	public Energy getEnergyRequiredToReach(Position position) throws TargetNotReachableException{
+		try { 
+			HashMap<String, Node> resultpad = Calculator.aStarOnTo(this, position);
+			Node n = resultpad.get(position.toString());
+			Energy cost = n.getGCost();
+			if (cost.getEnergy() > this.getEnergy().getEnergy()){
+				throw new TargetNotReachableException("De Robot heeft te weinig Energie om tot aan de positie te geraken.");
+			}
+			return cost;
+		}catch (NullPointerException esc){
+			throw new TargetNotReachableException("De robot is onbereikbaar door obstakels");
+		}
 	}
 
 	/**

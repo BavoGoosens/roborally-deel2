@@ -5,6 +5,7 @@ import java.util.Set;
 
 import roborally.IFacade;
 import roborally.property.*;
+import roborally.utils.TargetNotReachableException;
 
 
 public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, SurpriseBox>{
@@ -252,13 +253,18 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public int isMinimalCostToReach17Plus() {
-		// TODO: Aanpassen in de methode op mijn manier? via nieuwe exceptions 
+		// TODO: Aanpassen in de methode op mijn manier? via nieuwe exceptions zie heironder. Hoe hier implementeren? 
 		return 0;
 	}
 
 	@Override
 	public double getMinimalCostToReach(Robot robot, long x, long y) {
-		return robot.getEnergyRequiredToReach(new Position(x, y)).getEnergy();
+		try {
+			return robot.getEnergyRequiredToReach(new Position(x, y)).getEnergy();
+		}catch (TargetNotReachableException esc){
+			System.err.println(esc.getMessage());
+			return -1;
+		}
 	}
 
 	@Override
