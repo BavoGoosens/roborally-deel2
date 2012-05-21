@@ -6,7 +6,7 @@ package roborally.utils;
  * 
  * @version 1.0
  */
-public class TargetNotReachableException extends Exception {
+public class TargetNotReachableException extends RuntimeException {
 
 	/**
 	 * Constructor om de default message in te stellen die teruggeven dient te worden.
