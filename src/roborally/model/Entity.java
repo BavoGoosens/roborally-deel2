@@ -2,6 +2,7 @@ package roborally.model;
 
 import roborally.model.Board;
 import roborally.property.Position;
+import roborally.utils.EntityNotOnBoardException;
 import roborally.utils.IllegalPositionException;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
@@ -86,19 +87,23 @@ public abstract class Entity {
 	 * 			|isOnBoard() && position != null
 	 * 
 	 * @throws	IllegalStateException 
-	 * 			Deze positie is niet geldig voor het huidige bord of het object bestaat is getermineerd.
-	 * 			|(getBoard().isValidBoardPosition(position) && position != null) || isTerminated()
+	 * 			Het object is getermineerd.
+	 * 			|isTerminated()
+	 * 
+	 * @throws	EntityNotOnBoardException
+	 * 			Deze positie is niet geldig voor het huidige bord.
+	 * 			|(getBoard().isValidBoardPosition(position) && position != null)
 	 * 
 	 * @post	De positie van dit object is nu gelijk aan de gegeven positie.
 	 * 			|new.getPosition() == position
 	 */
 	@Raw
-	public void setPosition(Position position) throws IllegalPositionException, IllegalStateException{
+	public void setPosition(Position position) throws IllegalPositionException, IllegalStateException, EntityNotOnBoardException{
 		if(isTerminated()){
 			throw new IllegalStateException("Het object is getermineerd.");
 		}else if(position != null){
 			if(getBoard() == null){
-				throw new IllegalStateException("Het object staat niet op een bord.");
+				throw new EntityNotOnBoardException();
 			}else if(!getBoard().isValidBoardPosition(position)){
 				throw new IllegalPositionException(position);
 			}
