@@ -265,17 +265,14 @@ public class Robot extends Entity{
 	 */
 	//TODO: Moet een negatief getal terugeven indien niet bereikbaar of te weinig energie
 	public Energy getEnergyRequiredToReach(Position position) throws TargetNotReachableException{
-		try { 
+		HashMap<String,Node> reachables = getReachables(this);
+		if (reachables.containsKey(position.toString())){
 			HashMap<String, Node> resultpad = aStarOnTo(this, position);
 			Node n = resultpad.get(position.toString());
 			Energy cost = n.getGCost();
-			if (cost.getEnergy() > this.getEnergy().getEnergy()){
-				throw new TargetNotReachableException("De Robot heeft te weinig Energie om tot aan de positie te geraken.");
-			}
 			return cost;
-		}catch (NullPointerException esc){
-			throw new TargetNotReachableException("De robot is onbereikbaar door obstakels");
 		}
+		throw new TargetNotReachableException();
 	}
 
 	/**
@@ -1068,5 +1065,7 @@ public static long calculateManhattan(Position pos1, Position pos2){
 //TODO: Alles van die programma's. 
 //TODO: GetEnergyRequiredToReach aanpassen om de juiste dingen terug te geven.
 //TODO: Testen veel testen.
-//TODO: Interfaces definiëren voor alle entity's zorgt blijkbaar voor ng ne ganse hoop probleme bij 
-//		sebastiaan en co.
+//TODO: Interfaces moet nimeer dagtek
+//TODO: Error gevonden voor pick up 
+//TODO: Error ge kunt geen 2 robots op 1 positie aanmaken 
+//		maar als ge et via ne moveto doet kunnen ze uiteindelijk wel op dez pos uitkomen.
