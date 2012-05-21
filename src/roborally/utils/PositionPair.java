@@ -1,5 +1,6 @@
 package roborally.utils;
 
+import roborally.model.Robot;
 import roborally.property.Energy;
 import roborally.property.Orientation;
 import roborally.property.Position;
@@ -24,7 +25,7 @@ public class PositionPair{
 	public PositionPair(Position pos1, Position pos2, Energy cost1 , Energy cost2, Orientation or1, Orientation or2){
 		this.pos1 = pos1;
 		this.pos2 = pos2;
-		this.manhattanDistance = Calculator.calculateManhattan(pos1, pos2);
+		this.manhattanDistance = Robot.calculateManhattan(pos1, pos2);
 		this.cost1 = cost1;
 		this.cost2 = cost2;
 		this.totalCost = Energy.energySum(cost1,cost2);

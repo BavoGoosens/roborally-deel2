@@ -10,7 +10,6 @@ import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 
 import roborally.property.Position;
-import roborally.utils.Calculator;
 
 /**
  * Een klasse om een bord voor te stellen.
@@ -392,7 +391,7 @@ public class Board{
 	public void merge(Board board2) {
 		Set<String> b2PosStrings = board2.getMap().keySet();
 		for (String b2PosString : b2PosStrings){
-			Position b2Pos = Calculator.getPositionFromString(b2PosString);
+			Position b2Pos = Robot.getPositionFromString(b2PosString);
 			if(this.isValidBoardPosition(b2Pos)){
 				HashSet<Entity> b2EntitiesOnPos = board2.getEntityOnPosition(b2Pos);
 				for(Entity ent: b2EntitiesOnPos){
