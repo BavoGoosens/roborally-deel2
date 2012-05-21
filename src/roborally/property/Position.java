@@ -159,11 +159,11 @@ public class Position implements Comparable<Position>{
 	 * Deze methode maakt een String op basis van een Position.
 	 * 
 	 * @return	Een textuele representatie van dit object waarbij duidelijk wordt welke positie dit object bevat.
-	 * 			|getX() + ", " + getY()
+	 * 			|getX() + "," + getY()
 	 */
 	@Override
 	public String toString() {
-		return getX() + ", " + getY();
+		return getX() + "," + getY();
 	}
 	
 	/**

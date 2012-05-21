@@ -219,7 +219,7 @@ public class Board{
 					this.getMap().put(key.toString(), input);
 				}else{
 					set.add(entity);
-				}
+					}
 			}else if(entity instanceof Wall){
 				HashSet<Entity> input = new HashSet<>();
 				input.add(entity);

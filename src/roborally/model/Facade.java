@@ -28,7 +28,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public void putBattery(Board board, long x, long y, Battery battery) {
-		board.putEntity(new Position (x , y), battery);
+		battery.putOnBoard(board, new Position(x, y));
 	}
 
 	@Override
@@ -48,8 +48,8 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public void putRepairKit(Board board, long x, long y, RepairKit repairKit) {
-		board.putEntity(new Position(x, y), repairKit);
-	}
+repairKit.putOnBoard(board, new Position(x, y));
+}
 
 	@Override
 	public long getRepairKitX(RepairKit repairKit) throws IllegalStateException {
@@ -114,7 +114,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public void putRobot(Board board, long x, long y, Robot robot) {
-		board.putEntity(new Position(x, y), robot);
+	robot.putOnBoard(board, new Position(x, y));
 	}
 
 	@Override
@@ -291,7 +291,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 	@Override
 	public void putWall(Board board, long x, long y, Wall wall)
 			throws UnsupportedOperationException {
-		board.putEntity(new Position(x, y), wall);
+		wall.putOnBoard(board, new Position(x, y));
 	}
 
 	@Override
