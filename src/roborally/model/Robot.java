@@ -471,7 +471,7 @@ public class Robot extends Entity{
 	//TODO: neke checke
 	public void use(Item item) {
 		if (this.getPossessions().contains(item)){
-			if(item.isDestroyed()){
+			if(item.isTerminated()){
 				this.getPossessions().remove(item);
 			}else{
 				if (item instanceof Battery){
