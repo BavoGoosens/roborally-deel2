@@ -15,19 +15,6 @@ import be.kuleuven.cs.som.annotate.Value;
 public class Weight implements Comparable<Weight>{
 
 	/**
-	 * Het maximale gewicht van een object.
-	 */
-	public final static int MAXWEIGHT = Integer.MAX_VALUE;
-	/**
-	 * Het minimale gewicht van een object.
-	 */
-	public final static int MINWEIGHT = 0;
-	/**
-	 * Gewicht van dit object.
-	 */
-	private final int weight;
-
-	/**
 	 * Deze methode maakt een nieuwe massa aan.
 	 * 
 	 * @param	newWeight
@@ -46,8 +33,17 @@ public class Weight implements Comparable<Weight>{
 			tmp = MINWEIGHT;
 		if(newWeight > MAXWEIGHT)
 			tmp = MAXWEIGHT;
-		this.weight = tmp;
+		weight = tmp;
 	}
+	
+	/**
+	 * Het maximale gewicht van een object.
+	 */
+	public final static int MAXWEIGHT = Integer.MAX_VALUE;
+	/**
+	 * Het minimale gewicht van een object.
+	 */
+	public final static int MINWEIGHT = 0;
 
 	/**
 	 * Geeft het gewicht terug.
@@ -59,6 +55,11 @@ public class Weight implements Comparable<Weight>{
 	public int getWeight() {
 		return this.weight;
 	}
+	
+	/**
+	 * Gewicht van dit object.
+	 */
+	private final int weight;
 	
 	/**
 	 * Deze methode vergelijkt 2 gewichten.
@@ -76,35 +77,51 @@ public class Weight implements Comparable<Weight>{
 	public int compareTo(Weight other) throws IllegalArgumentException{
 		if(other == null)
 			throw new IllegalArgumentException("Ander gewicht mag niet null zijn.");
-		return this.getWeight() - other.getWeight();
+		return getWeight() - other.getWeight();
 	}
 	
 	/*
-	 * @see java.lang.Object#equals(java.lang.Object)
+	 * Kijk na of het gewicht gelijk is aan een ander gewicht.
+	 * 
+	 * @param	other
+	 * 			Het gewicht waarmee vergeleken moet worden.
+	 * 
+	 * @return	Dit is true wanneer de 2 objecten hetzelfde gewicht bevatten.
+	 * 			|if(other == null)
+	 * 			|	false
+	 * 			|if(getClass() != other.getClass())
+	 * 			|	false
+	 * 			|(getWeight() == ((Weight) other).getWeight())
 	 */
 	@Override
 	public boolean equals(Object other) {
 		if(other == null)
 			return false;
-		if(this.getClass() != other.getClass())
+		if(getClass() != other.getClass())
 			return false;
-		return (this.getWeight() == ((Weight) other).getWeight());
+		return (getWeight() == ((Weight) other).getWeight());
 	}
 
 	/*
-	 * @see java.lang.Integer#hashCode()
+	 * Deze methode berekent de hashcode van een object van deze klasse.
+	 * 
+	 * @return	De hashcode van dit object.
+	 * 			|getWeight()
 	 */
 	@Override
 	public int hashCode() {
-		return this.getWeight();
+		return getWeight();
 	}
 
 	/*
-	 * @see java.lang.Object#toString()
+	 * Deze methode zet het object om naar een String.
+	 * 
+	 * @return	Een textuele representatie van dit object waarbij duidelijk wordt welk gewicht dit object bevat.
+	 * 			|Integer.toString(getWeight())
 	 */
 	@Override
 	public String toString() {
-		return Integer.toString(this.getWeight());
+		return Integer.toString(getWeight());
 	}
 	
 }
