@@ -286,41 +286,43 @@ public class Robot extends Entity{
 	 * 			|TODO: formele post doc bij moveNextTo()
 	 */
 	public void moveNextTo(Robot robot){
-		HashMap<String,Node> thisReachables = Calculator.getReachables(this);
-		HashMap<String,Node> otherReachables = Calculator.getReachables(robot);
-		Set<String> thisKeys = thisReachables.keySet();
-		Set<String> otherKeys = otherReachables.keySet();
-		ArrayList<PositionPair> posPairs = new ArrayList<>();
-		for(String thisPosString: thisKeys){
-			for(String otherPosString: otherKeys){
-				Node thisNode = thisReachables.get(thisPosString);
-				Node otherNode = otherReachables.get(otherPosString);
-				PositionPair toAdd = new PositionPair(Calculator.getPositionFromString(thisPosString), Calculator.getPositionFromString(otherPosString),thisNode.getGCost(),
-						otherNode.getGCost(), thisNode.getOrientation(),otherNode.getOrientation());
-				posPairs.add(toAdd);
+		if (!this.equals(robot) && robot != null && this.getBoard().equals(robot.getBoard())) {
+			HashMap<String,Node> thisReachables = Calculator.getReachables(this);
+			HashMap<String,Node> otherReachables = Calculator.getReachables(robot);
+			Set<String> thisKeys = thisReachables.keySet();
+			Set<String> otherKeys = otherReachables.keySet();
+			ArrayList<PositionPair> posPairs = new ArrayList<>();
+			for(String thisPosString: thisKeys){
+				for(String otherPosString: otherKeys){
+					Node thisNode = thisReachables.get(thisPosString);
+					Node otherNode = otherReachables.get(otherPosString);
+					PositionPair toAdd = new PositionPair(Calculator.getPositionFromString(thisPosString), Calculator.getPositionFromString(otherPosString),thisNode.getGCost(),
+							otherNode.getGCost(), thisNode.getOrientation(),otherNode.getOrientation());
+					posPairs.add(toAdd);
+				}
 			}
-		}
-		ArrayList<PositionPair> semiValidPosPairs = new ArrayList<>();
-		for(PositionPair pp: posPairs){
-			if((pp.getManhattanDistance() != 0) && !(pp.getPos1().toString().equals(pp.getPos2().toString())))
-				semiValidPosPairs.add(pp);
-		}
-		if(!semiValidPosPairs.isEmpty()){
-			Collections.sort(semiValidPosPairs, new PositionPairComparatorDistance());
-			PositionPair firstpp = semiValidPosPairs.get(0);
-			ArrayList<PositionPair> validPosPairs = new ArrayList<>();
-			for(PositionPair pp: semiValidPosPairs){
-				if((pp.getManhattanDistance() == firstpp.getManhattanDistance()))
-					validPosPairs.add(pp);
+			ArrayList<PositionPair> semiValidPosPairs = new ArrayList<>();
+			for(PositionPair pp: posPairs){
+				if((pp.getManhattanDistance() != 0) && !(pp.getPos1().toString().equals(pp.getPos2().toString())))
+					semiValidPosPairs.add(pp);
 			}
-			Collections.sort(validPosPairs, new PositionPairComparatorEnergy());
-			PositionPair thePair = validPosPairs.get(0);
-			this.setPosition(thePair.getPos1());
-			robot.setPosition(thePair.getPos2());
-			this.setOrientation(thePair.getOr1());
-			robot.setOrientation(thePair.getOr2());
-			this.setEnergy(Energy.energyDifference(this.getEnergy(),thePair.getCost1()));
-			robot.setEnergy(Energy.energyDifference(robot.getEnergy(),thePair.getCost2()));	
+			if(!semiValidPosPairs.isEmpty()){
+				Collections.sort(semiValidPosPairs, new PositionPairComparatorDistance());
+				PositionPair firstpp = semiValidPosPairs.get(0);
+				ArrayList<PositionPair> validPosPairs = new ArrayList<>();
+				for(PositionPair pp: semiValidPosPairs){
+					if((pp.getManhattanDistance() == firstpp.getManhattanDistance()))
+						validPosPairs.add(pp);
+				}
+				Collections.sort(validPosPairs, new PositionPairComparatorEnergy());
+				PositionPair thePair = validPosPairs.get(0);
+				this.setPosition(thePair.getPos1());
+				robot.setPosition(thePair.getPos2());
+				this.setOrientation(thePair.getOr1());
+				robot.setOrientation(thePair.getOr2());
+				this.setEnergy(Energy.energyDifference(this.getEnergy(),thePair.getCost1()));
+				robot.setEnergy(Energy.energyDifference(robot.getEnergy(),thePair.getCost2()));	
+			}
 		}
 	}
 

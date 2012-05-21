@@ -451,7 +451,7 @@ public class Board{
 			}
 			return containsRobotsOrWalls;
 		}catch (NullPointerException esc){
-			return true;
+			return false;
 		}
 	}
 

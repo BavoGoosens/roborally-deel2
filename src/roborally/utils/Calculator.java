@@ -47,7 +47,7 @@ public class Calculator {
 	public static Position getPositionFromString(String posString) throws IllegalArgumentException{
 		if(posString.indexOf(",") == -1)
 			throw new IllegalArgumentException("De String is niet geformatteerd als een positie.");
-		String[] split = posString.split(",");
+		String[] split = posString.split(", ");
 		long x, y;
 		try{
 			x = Long.parseLong(split[0]);
