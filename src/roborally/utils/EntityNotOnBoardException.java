@@ -13,16 +13,19 @@ public class EntityNotOnBoardException extends Exception{
 	 * 
 	 */
 	public EntityNotOnBoardException(){
-		super("Deze Robot bevindt zich niet op een Board");
+		super("Dit object bevindt zich niet op een bord.");
 	}
 	
 	/**
 	 * Constructor om een message in te stellen die teruggeven dient te worden.
 	 * 
-	 * @param 	msg
+	 * @param 	message
 	 * 			De tekst die teruggeven moet worden bij deze error.
+	 * 
+	 * @post	Het bericht is ingesteld op het gegeven bericht.
+	 * 			|new.getMessage() = message
 	 */
-	public EntityNotOnBoardException(String msg){
-		super(msg);
+	public EntityNotOnBoardException(String message){
+		super(message);
 	}
 }
