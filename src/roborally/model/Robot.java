@@ -283,6 +283,8 @@ public class Robot extends Entity{
 	 * 
 	 * @post	De robot staat zo dicht mogelijk bij de gegeven robot met een zo laag mogelijk energieverbruik.
 	 * 			|TODO: formele post doc bij moveNextTo()
+	 * 			Het is niet het geval dat er een positie P bestaat op dit board die bereikbaar is door beide robots waarvoor geldt dat zowel 
+	 * 			de manhattan als de energy om er te geraken minimaal is. (dees omzetten naar logica)
 	 */
 	public void moveNextTo(Robot robot){
 		if (!this.equals(robot) && robot != null && this.getBoard().equals(robot.getBoard())) {
@@ -315,8 +317,16 @@ public class Robot extends Entity{
 				}
 				Collections.sort(validPosPairs, new PositionPairComparatorEnergy());
 				PositionPair thePair = validPosPairs.get(0);
-				this.setPosition(thePair.getPos1());
-				robot.setPosition(thePair.getPos2());
+				if (!this.getPosition().equals(thePair.getPos1())){
+					this.getBoard().removeEntity(this);
+					this.getBoard().cleanBoardPosition(this.getPosition());
+					this.putOnBoard(this.getBoard(), thePair.getPos1());
+				}
+				if (!robot.getPosition().equals(thePair.getPos2())){
+					robot.getBoard().removeEntity(robot);
+					robot.getBoard().cleanBoardPosition(robot.getPosition());
+					robot.putOnBoard(this.getBoard(), thePair.getPos2());
+				}
 				this.setOrientation(thePair.getOr1());
 				robot.setOrientation(thePair.getOr2());
 				this.setEnergy(Energy.energyDifference(this.getEnergy(),thePair.getCost1()));
@@ -939,122 +949,122 @@ public class Robot extends Entity{
 					open.get(neighbour.toString()).setParent(currentNode);
 				}
 				else if (board.isPlacableOnPosition(neighbour,a)){
-						open.put(neighbour.toString(), new Node(neighbour,board, new Energy(gCostNeighbour),
-								getHCost(neighbour,getNodeOrientation(currentNode,neighbour) , pos, a),
-								getNodeOrientation(currentNode,neighbour),currentNode));
+					open.put(neighbour.toString(), new Node(neighbour,board, new Energy(gCostNeighbour),
+							getHCost(neighbour,getNodeOrientation(currentNode,neighbour) , pos, a),
+							getNodeOrientation(currentNode,neighbour),currentNode));
 				} else 
 					open.remove(neighbour);
 			} 
 		}
-	return closed;
-}
-
-/**
- * Deze methode gaat posities waar een wall op staat uit de ArrayList gaan verwijderen.
- * 
- * @param 	neighbours
- * 
- * @param 	board
- * 
- * @return	
- * 			
- */
-private ArrayList<Position> removeWalls(ArrayList<Position> neighbours, Board board) {
-	ArrayList<Position> result = new ArrayList<>();
-	for (Position pos : neighbours){
-		if (!board.containsWall(pos)){
-			result.add(pos);
-		}
+		return closed;
 	}
-	return result;
-}
 
-/**
- * Deze methode gaat alle nodes teruggeven waar deze robot zou kunnen geraken.
- * 
- * @param 	robot
- * 			De robot waarvan je de haalbare posities wilt weten.
- * 
- * @return	HashMap<String,Node> 
- * 			
- */
-private HashMap<String,Node> getReachables(Robot robot){
-	Energy upperbound = robot.getEnergy();
-	ArrayList<String> explorable = new ArrayList<>();
-	explorable.add(robot.getPosition().toString());
-	HashMap<String,Node> reachables = new HashMap<>();
-
-	while(!explorable.isEmpty()){
-		Position currentPos = getPositionFromString(explorable.get(0));
-		HashMap<String,Node> pad = aStarOnTo(robot,currentPos);
-		Node currentNode = pad.get(currentPos.toString());
-		explorable.remove(0);
-		if(currentNode.getGCost().getEnergy() <= upperbound.getEnergy()){
-			reachables.put(currentPos.toString(),currentNode);
-			ArrayList<Position> preNeighbours = currentPos.getNeighbours(robot.getBoard());
-			ArrayList<Position> neighbours = removeWalls(preNeighbours,robot.getBoard());
-			for(Position neighbour: neighbours){
-				if((!reachables.containsKey(neighbour.toString())) && (!explorable.contains(neighbour.toString())))
-					explorable.add(neighbour.toString());
+	/**
+	 * Deze methode gaat posities waar een wall of een andere robot op staat uit de ArrayList gaan verwijderen.
+	 * 
+	 * @param 	neighbours
+	 * 
+	 * @param 	board
+	 * 
+	 * @return	
+	 * 			
+	 */
+	private ArrayList<Position> removeOccupied(ArrayList<Position> neighbours, Board board) {
+		ArrayList<Position> result = new ArrayList<>();
+		for (Position pos : neighbours){
+			if (board.isPlacableOnPosition(pos, this)){
+				result.add(pos);
 			}
-		}			
+		}
+		return result;
 	}
-	return reachables;
-}
 
-/**
- * Deze methode gaat van een string van de vorm long1,long2 een object maken met die longs als positions.
- * 
- * @param 	posString
- * 			De string waarvan je het Positie object wil maken.
- * 
- * @return	Position 
- * 			|result.getX() = Long.parseLong(posString.split(",")[0])
- * 			|result.getY() = Long.parseLong(posString.split(",")[1])
- *
- * @throws IllegalArgumentException
- */
-public static Position getPositionFromString(String posString) throws IllegalArgumentException{
-	if(posString.indexOf(",") == -1)
-		throw new IllegalArgumentException("De String is niet geformatteerd als een positie.");
-	String[] split = posString.split(", ");
-	long x, y;
-	try{
-		x = Long.parseLong(split[0]);
-	}catch(NumberFormatException e){
-		throw new IllegalArgumentException(e.getMessage());
-	}
-	try{
-		y = Long.parseLong(split[1]);
-	}catch(NumberFormatException e){
-		throw new IllegalArgumentException(e.getMessage());
-	}
-	Position result;
-	try{
-		result = new Position(x, y);
-	}catch(IllegalArgumentException e){
-		throw new IllegalArgumentException(e.getMessage());
-	}
-	return result;		
-}
+	/**
+	 * Deze methode gaat alle nodes teruggeven waar deze robot zou kunnen geraken.
+	 * 
+	 * @param 	robot
+	 * 			De robot waarvan je de haalbare posities wilt weten.
+	 * 
+	 * @return	HashMap<String,Node> 
+	 * 			
+	 */
+	private HashMap<String,Node> getReachables(Robot robot){
+		Energy upperbound = robot.getEnergy();
+		ArrayList<String> explorable = new ArrayList<>();
+		explorable.add(robot.getPosition().toString());
+		HashMap<String,Node> reachables = new HashMap<>();
 
-/**
- * Deze Methode gaat de manhattandistance van punt A met pos pos1 tot punt B met pos pos2 berekenen.
- * 
- * @param 	pos1
- * 			Het eerste coördinatenkoppel.
- * 
- * @param 	pos2
- * 	 		Het tweede coördinatenkoppel.
- * 
- *@return 	long 
- *			Een long die de manhattan teruggeeft.
- *			|return result = (Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY()))
- * 
- */
-public static long calculateManhattan(Position pos1, Position pos2){
-	return (Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY()));
-}
+		while(!explorable.isEmpty()){
+			Position currentPos = getPositionFromString(explorable.get(0));
+			HashMap<String,Node> pad = aStarOnTo(robot,currentPos);
+			Node currentNode = pad.get(currentPos.toString());
+			explorable.remove(0);
+			if(currentNode.getGCost().getEnergy() <= upperbound.getEnergy()){
+				reachables.put(currentPos.toString(),currentNode);
+				ArrayList<Position> preNeighbours = currentPos.getNeighbours(robot.getBoard());
+				ArrayList<Position> neighbours = removeOccupied(preNeighbours,robot.getBoard());
+				for(Position neighbour: neighbours){
+					if((!reachables.containsKey(neighbour.toString())) && (!explorable.contains(neighbour.toString())))
+						explorable.add(neighbour.toString());
+				}
+			}			
+		}
+		return reachables;
+	}
+
+	/**
+	 * Deze methode gaat van een string van de vorm long1,long2 een object maken met die longs als positions.
+	 * 
+	 * @param 	posString
+	 * 			De string waarvan je het Positie object wil maken.
+	 * 
+	 * @return	Position 
+	 * 			|result.getX() = Long.parseLong(posString.split(",")[0])
+	 * 			|result.getY() = Long.parseLong(posString.split(",")[1])
+	 *
+	 * @throws IllegalArgumentException
+	 */
+	public static Position getPositionFromString(String posString) throws IllegalArgumentException{
+		if(posString.indexOf(",") == -1)
+			throw new IllegalArgumentException("De String is niet geformatteerd als een positie.");
+		String[] split = posString.split(", ");
+		long x, y;
+		try{
+			x = Long.parseLong(split[0]);
+		}catch(NumberFormatException e){
+			throw new IllegalArgumentException(e.getMessage());
+		}
+		try{
+			y = Long.parseLong(split[1]);
+		}catch(NumberFormatException e){
+			throw new IllegalArgumentException(e.getMessage());
+		}
+		Position result;
+		try{
+			result = new Position(x, y);
+		}catch(IllegalArgumentException e){
+			throw new IllegalArgumentException(e.getMessage());
+		}
+		return result;		
+	}
+
+	/**
+	 * Deze Methode gaat de manhattandistance van punt A met pos pos1 tot punt B met pos pos2 berekenen.
+	 * 
+	 * @param 	pos1
+	 * 			Het eerste coördinatenkoppel.
+	 * 
+	 * @param 	pos2
+	 * 	 		Het tweede coördinatenkoppel.
+	 * 
+	 *@return 	long 
+	 *			Een long die de manhattan teruggeeft.
+	 *			|return result = (Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY()))
+	 * 
+	 */
+	public static long calculateManhattan(Position pos1, Position pos2){
+		return (Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY()));
+	}
 
 }
 
@@ -1069,3 +1079,4 @@ public static long calculateManhattan(Position pos1, Position pos2){
 //TODO: Error gevonden voor pick up 
 //TODO: Error ge kunt geen 2 robots op 1 positie aanmaken 
 //		maar als ge et via ne moveto doet kunnen ze uiteindelijk wel op dez pos uitkomen.
+//TODO: bij movenextto eenmaal een verplaatsing gemaakt is moet in board die pos trg vrij komen.

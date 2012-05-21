@@ -147,7 +147,7 @@ public class Board{
 	 * @param	pos
 	 * 			De positie die moet nagekeken worden.
 	 * 
-	 * @return	Boolean die true is als de positie niet door een muur ingenomen is.
+	 * @return	Boolean die true is als de positie niet door een muur of een robot ingenomen is.
 	 * 			|if(!this.isValidBoardPosition(pos))
 	 * 			|	false
 	 * 			|if(!this.getMap().containsKey(pos.toString()))
@@ -155,7 +155,8 @@ public class Board{
 	 * 			|if(this.getMap().get(pos.toString()).isEmpty())
 	 * 			|	true
 	 * 			|if (this.getEntityOnPosition(pos).size() == 1){
-	 * 			|	if(this.getEntityOnPosition(pos).iterator().next() instanceof Wall)
+	 * 			|	if(this.getEntityOnPosition(pos).iterator().next() instanceof Wall || 
+	 * 			|											this.getEntityOnPosition(pos).iterator().next() instanceof Robot)
 	 * 			|		false
 	 * 			|true
 	 * 			
@@ -183,7 +184,7 @@ public class Board{
 					return true;
 				}
 				return true;
-			} catch (NullPointerException esc){
+			}catch (NullPointerException esc){
 				return true;
 			}
 		}
