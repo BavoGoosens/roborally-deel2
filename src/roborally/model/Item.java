@@ -1,7 +1,8 @@
 package roborally.model;
 
 import be.kuleuven.cs.som.annotate.Basic;
-import be.kuleuven.cs.som.annotate.Raw;
+import be.kuleuven.cs.som.annotate.Model;
+
 import roborally.property.Energy;
 import roborally.property.Weight;
 
@@ -12,18 +13,8 @@ import roborally.property.Weight;
  * 
  * @version 1.0
  */
-public class Item extends Entity{
+public abstract class Item extends Entity{
 
-	/**
-	 * Energie in het item.
-	 */
-	private Energy energy;
-	
-	/**
-	 * Gewicht van het item.
-	 */
-	private final Weight weight;
-	
 	/**
 	 * Deze constructor maakt een nieuw item aan.
 	 * 
@@ -39,8 +30,9 @@ public class Item extends Entity{
 	 * @post	Het nieuwe item heeft het gegeven gewicht.
 	 * 			|new.getWeight() == weight
 	 */
-	public Item (Energy energy , Weight weight){
-		this.setEnergy(energy);
+	@Model
+	protected Item (Energy energy , Weight weight){
+		setEnergy(energy);
 		this.weight = weight;
 	}
 
@@ -61,21 +53,31 @@ public class Item extends Entity{
 	 * Geeft de energie van het item.
 	 * 
 	 * @return	Energie van het item.
-	 * 			|this.energy
+	 * 			|energy
 	 */
-	@Basic @Raw
+	@Basic
 	public Energy getEnergy() {
-		return this.energy;
+		return energy;
 	}
+	
+	/**
+	 * Energie in het item.
+	 */
+	private Energy energy;
 	
 	/**
 	 * Geeft het gewicht terug van het item.
 	 * 
 	 * @return	Het gewicht van het item.
-	 * 			|this.weight
+	 * 			|weight
 	 */
-	@Basic @Raw
+	@Basic
 	public Weight getWeight() {
-		return this.weight;
+		return weight;
 	}
+	
+	/**
+	 * Gewicht van het item.
+	 */
+	private final Weight weight;
 }
