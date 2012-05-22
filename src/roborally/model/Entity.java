@@ -196,11 +196,11 @@ public abstract class Entity {
 	 * 			|true
 	 */
 	public boolean isValidEntity(){
-		if((getBoard() == null ^ getPosition() == null))
-			return false;
+		if(!(getBoard() == null ^ getPosition() == null))
+			return true;
 		if(getBoard() != null && getBoard().isValidPosition(getPosition()))
-			return false;
-		return true;
+			return true;
+		return false;
 	}
 
 	/**
