@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class Program {
 
-	private ArrayList<String> program = new ArrayList<>();
+	private ArrayList<Command> program = new ArrayList<>();
 
 	private String prettyPrintLine = "";
 
@@ -32,8 +32,10 @@ public class Program {
 	}
 
 	private void readProgram() {
-		String[] words = this.getPrettyPrint().split("^[a-zA-Z]");
-		
+		for(int i = 0; i < this.getPrettyPrint().length();i++){
+			char currChar = this.getPrettyPrint().charAt(i);
+			
+		}
 	}
 
 	public String getPrettyPrint(){
