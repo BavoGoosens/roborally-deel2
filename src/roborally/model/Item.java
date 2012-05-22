@@ -22,7 +22,7 @@ public abstract class Item extends Entity{
 	 * 			Het gewicht dat het nieuwe item moet krijgen.
 	 * 
 	 * @post	Het nieuwe item heeft het gegeven gewicht.
-	 * 			|new.getWeight() == weight
+	 * 			|new.getWeight().equals(weight)
 	 */
 	@Model
 	protected Item (Weight weight){
