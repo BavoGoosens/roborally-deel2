@@ -28,53 +28,6 @@ import roborally.util.*;
 public class Robot extends Entity{
 
 	/**
-	 * De energiekost van 1 move (geen rekening houdend met bezittingen).
-	 */
-	private final static Energy MOVE_COST = new Energy(500);
-	/**
-	 * De energiekost van 1 draai.
-	 */
-	public final static Energy TURN_COST = new Energy(100);
-	/**
-	 * De energiekost die bij een move bijkomt per kg gewicht in bezittingen.
-	 */
-	private final static Energy MOVE_COST_PER_KG = new Energy(50);
-	/**
-	 * De maximale bovengrens van de energie van een robot.
-	 */
-	public final static Energy MAX_ENERGY = new Energy(20000);
-	/**
-	 * De kost van 1 schot met zijn laser.
-	 */
-	public final static Energy SHOOT_COST = new Energy(1000);
-	/**
-	 * De energie die afgetrokken wordt van de maximale energie wanneer de robot geraakt wordt.
-	 */
-	public final static Energy SHOOT_DAMAGE = new Energy(4000);
-	/**
-	 * De energie van de robot.
-	 */
-	private Energy energy;
-	/**
-	 * Het maxima van de energy 
-	 */
-	private Energy maxEnergy;
-	/**
-	 * De oriëntatie van de robot.
-	 */
-	private Orientation orientation;
-	/**
-	 * De lijst van voorwerpen die de robot bezit.
-	 * 
-	 * @note	Gebruik altijd Collections.sort met een ItemComparator() wanneer deze lijst gewijzigd wordt.
-	 */
-	private ArrayList<Item> possessions = new ArrayList<>();
-	/**
-	 * De robot kan een programma laden en uitvoeren.
-	 */
-	private Program program;
-
-	/**
 	 * Deze methode maakt een nieuwe robot aan.
 	 * 
 	 * @param	orientation
@@ -97,20 +50,7 @@ public class Robot extends Entity{
 		setEnergy(energy);
 		setOrientation(orientation);
 	}
-
-	/**
-	 * Deze methode wijzigt de energie van de robot.
-	 * 
-	 * @param	energy
-	 * 			De nieuwe energie die de robot moet krijgen.
-	 * 
-	 * @post	De energie van de robot is gelijk aan de gegeven energie.
-	 * 			|new.getEnergy().equals(energy)
-	 */
-	private void setEnergy(Energy energy) {
-		this.energy = energy;
-	}
-
+	
 	/**
 	 * Methode om de oriëntatie van een robot te wijzigen.
 	 *  
@@ -123,7 +63,7 @@ public class Robot extends Entity{
 	private void setOrientation(Orientation or) {
 		orientation = or;
 	}
-
+	
 	/**
 	 * Methode om de oriëntatie van de robot te verkrijgen.
 	 * 
@@ -134,28 +74,11 @@ public class Robot extends Entity{
 	public Orientation getOrientation(){
 		return orientation;
 	}
-
+	
 	/**
-	 * Methode om de energie van de robot te verkrijgen.
-	 * 
-	 * @return 	De energie van de robot.
-	 * 			|energy
+	 * De oriëntatie van de robot.
 	 */
-	@Basic
-	public Energy getEnergy(){
-		return energy;
-	}
-
-	/**
-	 * Deze methode geeft de maximale energie van de robot terug.
-	 * 
-	 * @return	De maximale energie van de robot.
-	 * 			|maxEnergy
-	 */
-	@Basic
-	public Energy getMaxEnergy() {
-		return maxEnergy;
-	}
+	private Orientation orientation;
 
 	/**
 	 * Deze methode stelt de bovengrens in van de energie van de robot
@@ -171,6 +94,56 @@ public class Robot extends Entity{
 	public void setMaxEnergy(Energy maxEnergy) {
 		this.maxEnergy = maxEnergy;
 	}
+	
+	/**
+	 * Deze methode geeft de maximale energie van de robot terug.
+	 * 
+	 * @return	De maximale energie van de robot.
+	 * 			|maxEnergy
+	 */
+	@Basic
+	public Energy getMaxEnergy() {
+		return maxEnergy;
+	}
+	
+	/**
+	 * Het maxima van de energy 
+	 */
+	private Energy maxEnergy;
+	
+	/**
+	 * De maximale bovengrens van de energie van een robot.
+	 */
+	public final static Energy MAX_ENERGY = new Energy(20000);
+	
+	/**
+	 * Deze methode wijzigt de energie van de robot.
+	 * 
+	 * @param	energy
+	 * 			De nieuwe energie die de robot moet krijgen.
+	 * 
+	 * @post	De energie van de robot is gelijk aan de gegeven energie.
+	 * 			|new.getEnergy().equals(energy)
+	 */
+	private void setEnergy(Energy energy) {
+		this.energy = energy;
+	}
+
+	/**
+	 * Methode om de energie van de robot te verkrijgen.
+	 * 
+	 * @return 	De energie van de robot.
+	 * 			|energy
+	 */
+	@Basic
+	public Energy getEnergy(){
+		return energy;
+	}
+	
+	/**
+	 * De energie van de robot.
+	 */
+	private Energy energy;
 
 	/**
 	 * Methode die controleert of de opgegeven hoeveelheid energie een geldige hoeveelheid is.
@@ -239,6 +212,11 @@ public class Robot extends Entity{
 		setOrientation(getOrientation().getCounterClockwiseOrientation());
 		setEnergy(Energy.energyDifference(getEnergy(), TURN_COST));
 	}
+	
+	/**
+	 * De energiekost van 1 draai.
+	 */
+	public final static Energy TURN_COST = new Energy(100);
 
 	/**
 	 * Deze methode beweegt de robot een stap vooruit indien mogelijk.
@@ -364,6 +342,11 @@ public class Robot extends Entity{
 		if(target != null)
 			target.damage();
 	}
+	
+	/**
+	 * De kost van 1 schot met zijn laser.
+	 */
+	public final static Energy SHOOT_COST = new Energy(1000);
 
 	/**
 	 * Deze methode geeft het doelwit terug dat geraakt kan worden wanneer de robot schiet.
@@ -433,6 +416,11 @@ public class Robot extends Entity{
 			destroy();
 		}
 	}
+	
+	/**
+	 * De energie die afgetrokken wordt van de maximale energie wanneer de robot geraakt wordt.
+	 */
+	public final static Energy SHOOT_DAMAGE = new Energy(4000);
 
 	/**
 	 * Deze methode kijkt na of de energie van de robot groter is dan de huidige maximale energie van de robot. Indien deze groter is dan wordt de energie van de robot ingesteld op zijn maximale energie.
@@ -457,6 +445,15 @@ public class Robot extends Entity{
 	public static Energy moveCost(Robot robot){
 		return Energy.energySum(MOVE_COST, new Energy(MOVE_COST_PER_KG.getEnergy()*(robot.getTotalWeight().getWeight() / 1000)));
 	}
+	
+	/**
+	 * De energiekost van 1 move (geen rekening houdend met bezittingen).
+	 */
+	private final static Energy MOVE_COST = new Energy(500);
+	/**
+	 * De energiekost die bij een move bijkomt per kg gewicht in bezittingen.
+	 */
+	private final static Energy MOVE_COST_PER_KG = new Energy(50);
 
 	/**
 	 * Geeft het totale gewicht van alles wat de robot draagt.
@@ -485,6 +482,13 @@ public class Robot extends Entity{
 	public ArrayList<Item> getPossessions(){
 		return possessions;
 	}
+	
+	/**
+	 * De lijst van voorwerpen die de robot bezit.
+	 * 
+	 * @note	Gebruik altijd Collections.sort met een ItemComparator() wanneer deze lijst gewijzigd wordt.
+	 */
+	private ArrayList<Item> possessions = new ArrayList<>();
 
 	/**
 	 * Deze methode neemt een voorwerp op in de bezittingen van de robot.
@@ -698,32 +702,55 @@ public class Robot extends Entity{
 		this.getPossessions().clear();
 		super.destroy();
 	}
-
-	public int loadProgramFromFile(String path) throws FileNotFoundException {
-
-		Program prog = new Program(path);
-		this.setProgram(prog);
-		return 0;
-
-
+	
+	/**
+	 * Deze methode laadt een programma in voor de robot.
+	 * 
+	 * @param	path
+	 * 			Het bestandspad van het programma dat moet ingeladen worden.
+	 * 
+	 * @throws	FileNotFoundException
+	 * 			Het pad van 
+	 */
+	public void loadProgramFromFile(String path) throws FileNotFoundException {
+		this.setProgram(new Program(path));
 	}
 
 	private void setProgram(Program program) {
 		this.program = program;
 	}
 
+	public Program getProgram() {
+		return program;
+	}
+	
+	/**
+	 * De robot kan een programma laden en uitvoeren.
+	 */
+	private Program program;
+	
 	public int saveProgramToFile(String path) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public Program getProgram() {
-		return program;
-	}
-
 	public void stepn(int n) {
 		// TODO Auto-generated method stub
-
 	}
+
+	/*
+	 * Deze methode zet het object om naar een String.
+	 * 
+	 * @return	Een textuele representatie van dit object waarbij duidelijk wordt wat de eigenschappen van dit object zijn.
+	 * 			|super.toString() + ", energie: " + getEnergy().toString() + ", oriëntatie: " + getOrientation().toString() + ", gewicht: " + getTotalWeight().toString()
+	 * 
+	 * @see		roborally.model.Entity#toString()
+	 */
+	@Override
+	public String toString() {
+		return super.toString() + ", energie: " + getEnergy().toString() + ", oriëntatie: " + getOrientation().toString() + ", gewicht: " + getTotalWeight().toString();
+	}
+	
+	
 
 }

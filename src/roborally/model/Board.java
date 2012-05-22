@@ -11,6 +11,7 @@ import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 
 import roborally.property.Position;
+import roborally.util.IllegalPositionException;
 
 /**
  * Een klasse om een bord voor te stellen.
@@ -38,9 +39,9 @@ public class Board{
 	 */
 	private boolean isTerminated = false;
 	/**
-	 * Deze HashMap houdt een lijst van HashSets bij per Position (als String) met in elke HashSet alle objecten op die plaats.
+	 * Deze HashMap houdt een lijst van HashSets bij per Position met in elke HashSet alle objecten op die plaats.
 	 */
-	private final HashMap <String, HashSet<Entity>> map;
+	private final HashMap <Position, HashSet<Entity>> map;
 	/**
 	 * De maximale breedte die een bord kan hebben.
 	 */
@@ -60,11 +61,12 @@ public class Board{
 
 	/**
 	 * Deze constructor maakt een nieuw bord aan.
-	 * @pre 	...
-	 * 			| isValidWidth(width)
 	 * 
 	 * @pre 	...
-	 * 			| isValidHeight(height) 
+	 * 			|isValidWidth(width)
+	 * 
+	 * @pre 	...
+	 * 			|isValidHeight(height) 
 	 * 
 	 * @param	height
 	 * 			De hoogte van het nieuwe bord.
@@ -73,7 +75,7 @@ public class Board{
 	 * 			De breedte van het nieuwe bord.
 	 * 
 	 * @post	Het bord heeft een map gekregen.
-	 * 			|new.getMap() != null
+	 * 			|new.map != null
 	 * 
 	 * @post	Het bord heeft een hoogte gekregen.
 	 * 			|new.getHeight() == height
@@ -84,7 +86,7 @@ public class Board{
 	public Board (long width , long height){
 		this.height = height;
 		this.width = width;
-		this.map = new HashMap<>();
+		this.map = new HashMap<Position, HashSet<Entity>>();
 	}
 
 	/**
@@ -94,10 +96,10 @@ public class Board{
 	 * 			De positie waar gekeken moet worden.
 	 * 
 	 * @return	De HashSet met alle objecten op deze positie.
-	 * 			|this.getMap().get(pos.toString())
+	 * 			|map.get(pos)
 	 */
 	public HashSet<Entity> getEntityOnPosition(Position pos){
-		return this.getMap().get(pos.toString());
+		return map.get(pos);
 	}
 
 	/**
@@ -106,20 +108,20 @@ public class Board{
 	 * @param 	ent
 	 * 			De entity die verwijderd moet worden.
 	 * 
-	 * @throws	IllegalStateException
+	 * @throws	IllegalPositionException
 	 * 			Het object bevindt zich niet op een juiste positie in dit bord.
 	 * 			|ent.getBoard().isValidPosition(ent.getPosition())
 	 * 
 	 * @post	De gegeven entity bevindt zich niet langer op een bord.
-	 * 			|new.getEntityOnPosition(ent.getPosition()) == null || new.getMap().containsKey(pos.toString()) == false
+	 * 			|new.getEntityOnPosition(ent.getPosition()) == null || new.map.containsKey(pos) == false
 	 */
-	public void removeEntity(Entity ent) throws IllegalStateException{
+	public void removeEntity(Entity ent) throws IllegalPositionException{
 		Position pos = ent.getPosition();
 		if(!ent.getBoard().isValidPosition(pos)){
-			throw new IllegalStateException("Dit object bevindt zich niet op een geldige positie.");
+			throw new IllegalPositionException(pos);
 		}
-		this.getMap().get(pos.toString()).remove(ent);
-		this.cleanBoardPosition(pos);
+		map.get(pos).remove(ent);
+		cleanBoardPosition(pos);
 	}
 
 	/**
@@ -129,15 +131,15 @@ public class Board{
 	 * 			De positie in het bord die moet nagekeken worden.
 	 * 
 	 * @post	De positie is leeg indien er geen objecten meer stonden.
-	 * 			|if(this.getMap().containsKey(pos.toString()) && !this.getMap().get(pos.toString()).isEmpty() && this.getMap().get(pos.toString()) != null)
-	 * 			|	new.getMap().containsKey(pos.toString()) == false
+	 * 			|if(map.containsKey(pos) && !map.get(pos).isEmpty() && map.get(pos) != null)
+	 * 			|	new.map.containsKey(pos) == false
 	 */
 	public void cleanBoardPosition(Position pos){
-		if(this.getMap().containsKey(pos.toString())){
-			if(this.getMap().get(pos.toString()) == null){
-				this.getMap().remove(pos.toString());
-			}else if(this.getMap().get(pos.toString()).isEmpty()){
-				this.getMap().remove(pos.toString());
+		if(map.containsKey(pos)){
+			if(map.get(pos) == null){
+				map.remove(pos);
+			}else if(map.get(pos).isEmpty()){
+				map.remove(pos);
 			}
 		}
 	}
@@ -149,15 +151,15 @@ public class Board{
 	 * 			De positie die moet nagekeken worden.
 	 * 
 	 * @return	Boolean die true is als de positie niet door een muur of een robot ingenomen is.
-	 * 			|if(!this.isValidPosition(pos))
+	 * 			|if(!isValidPosition(pos))
 	 * 			|	false
-	 * 			|if(!this.getMap().containsKey(pos.toString()))
+	 * 			|if(!map.containsKey(pos))
 	 * 			|	true
-	 * 			|if(this.getMap().get(pos.toString()).isEmpty())
+	 * 			|if(map.get(pos).isEmpty())
 	 * 			|	true
-	 * 			|if (this.getEntityOnPosition(pos).size() == 1){
-	 * 			|	if(this.getEntityOnPosition(pos).iterator().next() instanceof Wall || 
-	 * 			|											this.getEntityOnPosition(pos).iterator().next() instanceof Robot)
+	 * 			|if (getEntityOnPosition(pos).size() == 1){
+	 * 			|	if(getEntityOnPosition(pos).iterator().next() instanceof Wall || 
+	 * 			|											getEntityOnPosition(pos).iterator().next() instanceof Robot)
 	 * 			|		false
 	 * 			|true
 	 * 			
@@ -167,7 +169,7 @@ public class Board{
 			return false;
 		if (entity instanceof Wall){
 			try{
-				HashSet<Entity> place = this.getEntityOnPosition(pos);
+				HashSet<Entity> place = getEntityOnPosition(pos);
 				if (place.isEmpty())
 					return true;
 				return false;
@@ -177,7 +179,7 @@ public class Board{
 		}
 		if (entity instanceof Robot){
 			try {
-				HashSet<Entity> place = this.getEntityOnPosition(pos);
+				HashSet<Entity> place = getEntityOnPosition(pos);
 				if(place.size() == 1){
 					Entity ent = place.iterator().next();
 					if (ent instanceof Robot || ent instanceof Wall)
@@ -203,28 +205,28 @@ public class Board{
 	 * 
 	 * @throws 	IllegalArgumentException
 	 * 			De plaats in het bord is niet beschikbaar.
-	 * 			|!this.isPlacableOnPosition(key)
+	 * 			|!isPlacableOnPosition(key)
 	 * 
 	 * @post	Als de positie op het bord beschikbaar was staat het object op deze positie.
-	 * 			|if(this.isPlacableOnPosition(key))
-	 * 			|	new.get(key.toString()) == entity
+	 * 			|if(isPlacableOnPosition(key))
+	 * 			|	new.get(key) == entity
 	 * 			
 	 */
 	public void putEntity(Position key, Entity entity) throws IllegalArgumentException{
-		if (this.isPlacableOnPosition(key, entity)){
+		if (isPlacableOnPosition(key, entity)){
 			if (entity instanceof Battery || entity instanceof Robot){
-				HashSet<Entity> set = this.getMap().get(key.toString());
+				HashSet<Entity> set = map.get(key);
 				if (set == null){
 					HashSet<Entity> input = new HashSet<>();
 					input.add(entity);
-					this.getMap().put(key.toString(), input);
+					map.put(key, input);
 				}else{
 					set.add(entity);
 					}
 			}else if(entity instanceof Wall){
 				HashSet<Entity> input = new HashSet<>();
 				input.add(entity);
-				this.getMap().put(key.toString(), input);
+				map.put(key, input);
 			}
 		}else{
 			throw new IllegalArgumentException("Op deze plaats in het bord kan geen object meer geplaatst worden.");
@@ -235,11 +237,11 @@ public class Board{
 	 * Deze methode geeft alle robots terug die op dit bord staan.
 	 * 
 	 * @return	Set<Robot>
-	 * 			Voor iedere robot die een element is van this.getMap() geldt dat deze op het einde van deze methode in de set zal zitten die teruggegeven wordt. Deze set is null als er geen robots op het bord staan.
+	 * 			Voor iedere robot die een element is van map geldt dat deze op het einde van deze methode in de set zal zitten die teruggegeven wordt. Deze set is null als er geen robots op het bord staan.
 	 * 			
 	 */
 	public Set<Robot> getRobots() {
-		Collection<HashSet<Entity>> c = this.getMap().values();
+		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Robot> rob = new HashSet<>();
 		for (Set<Entity> values : c ){
 			Iterator<Entity> i = values.iterator();
@@ -257,11 +259,11 @@ public class Board{
 	 * Deze methode geeft alle batterijen terug die op dit bord staan.
 	 * 
 	 * @return	Set<Battery>
-	 * 			Voor iedere batterij die een element is van this.getMap() geldt dat deze op het einde van deze methode in de set zal zitten die teruggegeven wordt. Deze set is null als er geen batterijen op het bord staan.
+	 * 			Voor iedere batterij die een element is van map geldt dat deze op het einde van deze methode in de set zal zitten die teruggegeven wordt. Deze set is null als er geen batterijen op het bord staan.
 	 * 			
 	 */
 	public Set<Battery> getBatteries() {
-		Collection<HashSet<Entity>> c = this.getMap().values();
+		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Battery> bat = new HashSet<>();
 		for (Set<Entity> values : c ){
 			Iterator<Entity> i = values.iterator();
@@ -279,11 +281,11 @@ public class Board{
 	 * Deze methode geeft alle muren terug die op dit bord staan.
 	 * 
 	 * @return	Set<Wall>
-	 * 			Voor iedere muur die een element is van this.getMap() geldt dat deze op het einde van deze methode in de set zal zitten die teruggegeven wordt. Deze set is null als er geen muren op het bord staan.
+	 * 			Voor iedere muur die een element is van map geldt dat deze op het einde van deze methode in de set zal zitten die teruggegeven wordt. Deze set is null als er geen muren op het bord staan.
 	 * 			
 	 */
 	public Set<Wall> getWalls() {
-		Collection<HashSet<Entity>> c = this.getMap().values();
+		Collection<HashSet<Entity>> c = map.values();
 		HashSet<Wall> wall = new HashSet<>();
 		for (Set<Entity> values : c ){
 			Iterator<Entity> i = values.iterator();
@@ -331,22 +333,22 @@ public class Board{
 	 * Inspector die de breedte van dit bord teruggeeft.
 	 * 
 	 * @return	De breedte van dit bord.
-	 * 			|this.width
+	 * 			|width
 	 */
 	@Basic @Immutable
 	public long getWidth() {
-		return this.width;
+		return width;
 	}
 
 	/**
 	 * Inspector die de hoogte van dit bord teruggeeft.
 	 * 
 	 * @return	De hoogte van dit bord.
-	 * 			|this.height
+	 * 			|height
 	 */
 	@Basic @Immutable
 	public long getHeight() {
-		return this.height;
+		return height;
 	}
 
 	/**
@@ -356,27 +358,16 @@ public class Board{
 	 * 			De positie waarop nagekeken moet worden.
 	 * 
 	 * @return	Boolean die true is als de positie geldig is, false indien niet.
-	 * 			|if (position.getX() > this.getWidth() || position.getX() < LOWER_BOUND_WIDTH || position.getY() > this.getHeight() || position.getY() < LOWER_BOUND_HEIGHT)
+	 * 			|if (position.getX() > getWidth() || position.getX() < LOWER_BOUND_WIDTH || position.getY() > getHeight() || position.getY() < LOWER_BOUND_HEIGHT)
 	 * 			|	false
 	 * 			|true
 	 */
 	public boolean isValidPosition(Position position){
 		if(position == null)
 			return false;
-		if (position.getX() > this.getWidth() || position.getX() < LOWER_BOUND_WIDTH || position.getY() > this.getHeight() || position.getY() < LOWER_BOUND_HEIGHT)
+		if (position.getX() > getWidth() || position.getX() < LOWER_BOUND_WIDTH || position.getY() > getHeight() || position.getY() < LOWER_BOUND_HEIGHT)
 			return false;
 		return true;
-	}
-
-	/**
-	 * Deze methode geeft de HashMap terug waarop dit bord gebaseerd is.
-	 * 
-	 * @return	De HashMap waarop dit bord gebaseerd is.
-	 * 			|this.map
-	 */
-	@Basic @Immutable
-	public HashMap<String, HashSet<Entity>> getMap() {
-		return this.map;
 	}
 
 	/**
@@ -413,10 +404,10 @@ public class Board{
 	 * Deze methode kijkt na of het bord getermineerd is of niet.
 	 * 
 	 * @return	Boolean die true is als het bord getermineerd is.
-	 * 			|this.isTerminated
+	 * 			|isTerminated
 	 */
 	public boolean isTerminated(){
-		return this.isTerminated;
+		return isTerminated;
 	}
 
 	/**
@@ -426,11 +417,11 @@ public class Board{
 	 * 			|new.isTerminated() == true
 	 * 
 	 * @post	Het bord is leeg.
-	 * 			|new.getMap().values() == null
+	 * 			|new.map.values() == null
 	 */
 	public void terminate(){
-		this.isTerminated = true;
-		Collection<HashSet<Entity>> c = this.getMap().values();
+		isTerminated = true;
+		Collection<HashSet<Entity>> c = map.values();
 		if(c != null){
 			for (HashSet<Entity> ents : c){
 				if(ents != null){
@@ -438,7 +429,7 @@ public class Board{
 					for (Entity ent : ents){
 						ent.destroy();
 					}
-					this.cleanBoardPosition(pos);
+					cleanBoardPosition(pos);
 				}
 			}
 		}
@@ -446,7 +437,7 @@ public class Board{
 
 	public boolean containsWall(Position pos) {
 		try{
-			HashSet<Entity> ents = this.getEntityOnPosition(pos);
+			HashSet<Entity> ents = getEntityOnPosition(pos);
 			boolean containsRobotsOrWalls = false;
 			for (Entity ent : ents){
 				if (ent instanceof Robot || ent instanceof Wall)
@@ -459,7 +450,7 @@ public class Board{
 	}
 
 	public Set<SurpriseBox> getSurpriseBoxes() {
-		Collection<HashSet<Entity>> c = this.getMap().values();
+		Collection<HashSet<Entity>> c = map.values();
 		HashSet<SurpriseBox> surp = new HashSet<>();
 		for (Set<Entity> values : c ){
 			Iterator<Entity> i = values.iterator();
@@ -474,7 +465,7 @@ public class Board{
 	}
 
 	public Set<RepairKit> getRepairkits() {
-		Collection<HashSet<Entity>> c = this.getMap().values();
+		Collection<HashSet<Entity>> c = map.values();
 		HashSet<RepairKit> rep = new HashSet<>();
 		for (Set<Entity> values : c ){
 			Iterator<Entity> i = values.iterator();

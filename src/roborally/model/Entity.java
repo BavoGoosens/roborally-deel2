@@ -220,7 +220,7 @@ public abstract class Entity {
 	 */
 	@Override
 	public String toString() {
-		if(!isOnBoard())
+		if(isOnBoard())
 			return "positie: " + getPosition().toString();
 		return "positie: staat niet op een bord";
 	}

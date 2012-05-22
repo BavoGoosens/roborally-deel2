@@ -344,7 +344,8 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 	@Override
 	public int loadProgramFromFile(Robot robot, String path) {
 		try {
-			return robot.loadProgramFromFile(path);
+			robot.loadProgramFromFile(path);
+			return 0;
 		}catch (FileNotFoundException exc){
 			System.err.println(exc.getMessage());
 			return -1;

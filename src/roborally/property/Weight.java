@@ -121,7 +121,7 @@ public class Weight implements Comparable<Weight>{
 	 */
 	@Override
 	public String toString() {
-		return Integer.toString(getWeight());
+		return Integer.toString(getWeight()) + " gr";
 	}
 	
 }
