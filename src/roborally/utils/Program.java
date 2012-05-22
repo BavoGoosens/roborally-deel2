@@ -32,10 +32,8 @@ public class Program {
 	}
 
 	private void readProgram() {
-		String prettyPrintCopy = this.prettyPrintLine;
-		while (Pattern.matches("[a-zA-Z]", prettyPrintCopy)){
-			
-		}
+		String[] words = this.getPrettyPrint().split("^[a-zA-Z]");
+		
 	}
 
 	public String getPrettyPrint(){
