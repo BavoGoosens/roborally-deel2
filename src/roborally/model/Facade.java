@@ -1,5 +1,6 @@
 package roborally.model;
 
+import java.io.IOException;
 import java.io.Writer;
 import java.util.Set;
 
@@ -351,7 +352,11 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public void prettyPrintProgram(Robot robot, Writer writer) {
-		robot.prettyPrintProgram(writer);
+		try {
+			writer.write(robot.prettyPrintProgram());
+		} catch (IOException e) {
+			System.err.println("Er is nog geen geldig programma ingelezen.");
+		}
 	}
 
 	@Override

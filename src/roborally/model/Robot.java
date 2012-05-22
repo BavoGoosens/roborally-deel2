@@ -19,12 +19,12 @@ import roborally.utils.*;
 /**
  * Een klasse om robots voor te stellen.
  * 
- * @invar	De hoeveelheid energie van een batterij moet altijd geldig zijn.
+ * @invar	De hoeveelheid energie van een robot moet altijd geldig zijn.
  * 			|isValidRobotEnergy(getEnergy())
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
- * @version 2.1
+ * @version 3.0
  */
 public class Robot extends Entity{
 
@@ -74,7 +74,7 @@ public class Robot extends Entity{
 	 * De robot kan een programma laden en uitvoeren.
 	 */
 	private Program program;
-	
+
 	/**
 	 * Deze methode maakt een nieuwe robot aan.
 	 * 
@@ -85,15 +85,15 @@ public class Robot extends Entity{
 	 * 			De initiële oriëntatie van de robot.
 	 * 
 	 * @post	De energie van de robot is gelijk aan de opgegeven energie.
-	 * 			|new.getEnergy().equals(energy) == true
+	 * 			|new.getEnergy().equals(energy)
 	 * 
 	 * @post	De oriëntatie van de robot is gelijk aan de opgegeven oriëntatie.
-	 * 			|new.getOrientation().equals(orientation) == true
+	 * 			|new.getOrientation().equals(orientation)
 	 */
 	public Robot(Orientation orientation, Energy energy){
 		this.setEnergy(energy);
 		setOrientation(orientation);
-		setMaxEnergy(energy);
+		setMaxEnergy(MAX_ENERGY);
 	}
 
 	/**
@@ -119,52 +119,53 @@ public class Robot extends Entity{
 	 * 			|new.getOrientation() == or
 	 */
 	private void setOrientation(Orientation or) {
-		this.orientation = or;
+		orientation = or;
 	}
 
 	/**
 	 * Methode om de oriëntatie van de robot te verkrijgen.
 	 * 
 	 * @return 	De oriëntatie van de robot.
-	 * 			|this.orientation 			
+	 * 			|orientation 			
 	 */
 	@Basic
 	public Orientation getOrientation(){
-		return this.orientation;
+		return orientation;
 	}
 
 	/**
 	 * Methode om de energie van de robot te verkrijgen.
 	 * 
 	 * @return 	De energie van de robot.
-	 * 			|this.energy
+	 * 			|energy
 	 */
 	@Basic
 	public Energy getEnergy(){
-		return this.energy;
+		return energy;
 	}
 
 	/**
+	 * Deze methode geeft de maximale energie van de robot terug.
 	 * 
-	 * @return
+	 * @return	De maximale energie van de robot.
+	 * 			|maxEnergy
 	 */
-	//TODO: doc
 	@Basic
 	public Energy getMaxEnergy() {
-		return this.maxEnergy;
+		return maxEnergy;
 	}
 
 	/**
-	 * Deze methode stelt de bovengrens in van de nergie van de robot
+	 * Deze methode stelt de bovengrens in van de energie van de robot
 	 * 
-	 * @param currentMaxEnergy
+	 * @param	currentMaxEnergy
+	 * 			De nieuwe waarde die de maximale energie van de robot moet worden.
+	 * 
+	 * @post	De energie is kleiner of gelijk aan de maximale energie.
+	 * 			|this.getMaxEnergy().equals(currentMaxEnergy)
 	 */
-	//TODO: doc + hoe uitgewerkt? nom def of tot?
-	@Basic
 	public void setMaxEnergy(Energy currentMaxEnergy) {
-		if (currentMaxEnergy.getEnergy() < Robot.MAXENERGY.getEnergy())
-			this.maxEnergy = currentMaxEnergy;
-		this.maxEnergy = Robot.MAXENERGY;
+		this.maxEnergy = currentMaxEnergy;
 	}
 
 	/**
@@ -405,6 +406,7 @@ public class Robot extends Entity{
 			if (this.getEnergy().getEnergy() > newEnergy.getEnergy())
 				this.setEnergy(newEnergy);
 			this.setMaxEnergy(newEnergy);
+			verifyEnergy();
 		} else {
 			this.destroy();
 		}
@@ -1085,12 +1087,12 @@ public class Robot extends Entity{
 	public static long calculateManhattan(Position pos1, Position pos2){
 		return (Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY()));
 	}
-	
+
 	@Override
 	public String toString(){
 		return "Position: " + this.getPosition().toString() + " Energy: " + this.getEnergy().toString() + " MaxEnergy : " +
-			this.getMaxEnergy().toString();
-			}
+				this.getMaxEnergy().toString();
+	}
 
 	public int loadProgramFromFile(String path) {
 		try {
@@ -1101,7 +1103,7 @@ public class Robot extends Entity{
 			System.err.println(exc.getMessage());
 			return -1;
 		}
-		
+
 	}
 
 	private void setProgram(Program prog) {
@@ -1113,14 +1115,17 @@ public class Robot extends Entity{
 		return 0;
 	}
 
-	public void prettyPrintProgram(Writer writer) {
-		// TODO Auto-generated method stub
-		
+	public String prettyPrintProgram() {
+		getProgram().getPrettyPrint();
+	}
+
+	private Program getProgram() {
+		return program;
 	}
 
 	public void stepn(int n) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
