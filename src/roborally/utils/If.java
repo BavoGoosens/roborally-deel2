@@ -2,6 +2,10 @@ package roborally.utils;
 
 public class If extends Special{
 	
+	public If(String substring) {
+		// TODO Auto-generated constructor stub
+	}
+
 	private Conditie conditie;
 	
 	private Command if_clause;

@@ -1,15 +1,15 @@
 package roborally.utils;
 
-public class Conditie extends Command {
+public class SpecialeConditie {
 	
 	private ConditieEnum conditie; 
 
-	public Conditie(ConditieEnum cnd) {
-		setConditie(cnd);
-	}
+	private Conditie cond1;
+	
+	private Conditie cond2;
 
-	public Conditie(ConditieEnum energyAtLeast, double amountEnergy) {
-		// TODO Auto-generated constructor stub
+	public SpecialeConditie(ConditieEnum or, String andOrSbStr) {
+		setConditie(or);
 	}
 
 	public ConditieEnum getConditie() {

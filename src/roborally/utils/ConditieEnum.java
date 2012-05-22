@@ -10,7 +10,13 @@ public enum ConditieEnum {
 	
 	CAN_HIT_ROBOT,
 	
-	WALL;
+	WALL,
+	
+	AND,
+	
+	OR,
+	
+	NOT;
 
 
 }
