@@ -82,10 +82,16 @@ public class RepairKit extends Item{
 	 * De maximale energie van een repair kit.
 	 */
 	public final static Energy MAX_ENERGY = new Energy(Double.MAX_VALUE);
-
+	
+	/**
+	 * Deze methode wordt opgeroepen wanneer de repair kit geraakt wordt door een laser of een surprise box.
+	 * 
+	 * @post	De nieuwe energie van de repair kit is gelijk aan het maximum of aan 500 meer dan wat hij ervoor had.
+	 * 			|new.getEnergy() == MAX_ENERGY || new.getEnergy() == Energy.energySum(getEnergy(), HIT_ENERGY)
+	 */
 	@Override
 	protected void damage(){
-		Energy newEnergy = new Energy(getEnergy().getEnergy() + HIT_ENERGY.getEnergy());
+		Energy newEnergy = Energy.energySum(getEnergy(), HIT_ENERGY);
 		if (newEnergy.getEnergy() > MAX_ENERGY.getEnergy())
 			setEnergy(MAX_ENERGY);
 		setEnergy(newEnergy);

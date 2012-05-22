@@ -205,5 +205,10 @@ public abstract class Entity {
 		return true;
 	}
 
-	protected void damage() {}
+	/**
+	 * Wanneer het object geraakt wordt door een robot die schiet of door een surprise box wordt deze methode opgeroepen.
+	 */
+	protected void damage() {
+		//NOP
+	}
 }
