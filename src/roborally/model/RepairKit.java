@@ -14,6 +14,8 @@ public class RepairKit extends Item{
 	
 	public final static Energy MAX_ENERGY = new Energy(Double.MAX_VALUE);
 	
+	public final static Energy HIT_ENERGY = new Energy(500);
+	
 	public RepairKit(Energy energy, Weight weight){
 		super(energy,weight);
 	}
@@ -27,4 +29,12 @@ public class RepairKit extends Item{
 		return (energy.getEnergy() <= MAX_ENERGY.getEnergy());
 	}
 
+	@Override
+	protected void damage(){
+		Energy newEnergy = new Energy(super.getEnergy().getEnergy() + HIT_ENERGY.getEnergy());
+		if (newEnergy.getEnergy() > MAX_ENERGY.getEnergy())
+			super.setEnergy(MAX_ENERGY);
+		super.setEnergy(newEnergy);
+	}
+	
 }

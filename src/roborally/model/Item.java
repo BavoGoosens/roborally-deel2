@@ -80,4 +80,6 @@ public abstract class Item extends Entity{
 	 * Gewicht van het item.
 	 */
 	private final Weight weight;
+	
+	
 }
