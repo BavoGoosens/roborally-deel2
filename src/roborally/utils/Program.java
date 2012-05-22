@@ -17,7 +17,7 @@ public class Program {
 	public Program(String path) throws FileNotFoundException{
 		File file = new File(path);
 		procesFile(file);
-	}
+	} 
 
 	private void procesFile(File file) throws FileNotFoundException {
 		try{
@@ -34,7 +34,35 @@ public class Program {
 	}
 
 	private void readProgram(){
+		extractBody(this.prettyPrintLine);
 		
+	}
+
+	private String[] extractBody(String prettyPrintLine) {
+		int openHaakskesCount = 0;
+		int closedHaakskesCount = 0;
+		int beginIdx = 0;
+		int eindIdx = 0;
+		for (int i = 0; i < prettyPrintLine.length(); i++){
+			char currChar = prettyPrintLine.charAt(i);
+			if (currChar == '(' && openHaakskesCount == 0){
+				beginIdx = i;
+				openHaakskesCount++;
+			} else if (currChar == '('){
+				openHaakskesCount++;
+			}else if (currChar == ')'){
+				closedHaakskesCount++;
+				if (openHaakskesCount == closedHaakskesCount){
+					eindIdx = i;
+					break;
+				}
+				
+			}
+		}
+		String result [] = new String[2];
+		result[0] = prettyPrintLine.substring(beginIdx + 1, eindIdx);
+		result[1] = prettyPrintLine.substring(eindIdx,prettyPrintLine.length());
+		return result;
 	}
 
 	public String getPrettyPrint(){
