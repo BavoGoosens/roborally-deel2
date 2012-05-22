@@ -240,16 +240,18 @@ public class Robot extends Entity{
 	/**
 	 * Deze methode beweegt de robot een stap vooruit indien mogelijk.
 	 * 
+	 * 
 	 * @throws 	IllegalStateException
 	 * 			De robot heeft onvoldoende energie om te bewegen of de positie waarnaar bewogen moet worden is ongeldig of reeds bezet.
 	 * 			|!this.canMove() || !Position.isValidPosition(this.getOrientation().getNextPosition(this.getPosition())) || !this.getBoard().isPlacableOnPosition(Calculator.getNextPosition(this.getPosition(), this.getOrientation()))
 	 * 
 	 * @post	De robot staat een plaats verder.
-	 * 			|new.getPosition().equals(Calculator.getNextPosition(this.getPosition(), this.getOrientation())) == true
+	 * 			|new.getPosition().equals(getNextPosition(this.getPosition(), this.getOrientation())) == true
 	 * 
 	 * @post	De robot heeft energie verbruikt.
 	 * 			|new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), moveCost(this))) == true
 	 */
+	//TODO: Exceptions en doc.
 	public void move() throws IllegalStateException{
 		if(!this.canMove()){
 			throw new IllegalStateException("De robot heeft onvoldoende energie om te bewegen.");
@@ -275,19 +277,16 @@ public class Robot extends Entity{
 	 * 			De plaats die bereikt moet worden.
 	 * 
 	 * @return	De energie die nodig is om de plaats te bereiken.
-	 * 			|Calculator.aStarOnTo(this, position).get(position.toString()).getGCost()
-	 * @throws TargetNotReachableException 
-	 *
+	 * 			|aStarOnTo(this, position).get(position.toString()).getGCost()
+	 * 
+	 * @throws 	TargetNotReachableException
+	 * 			Het doel is niet bereikbaar.
+	 * 			|!getReachables(this).containsKey(position.toString())
 	 */
 	public Energy getEnergyRequiredToReach(Position position) throws TargetNotReachableException{
-		HashMap<String,Node> reachables = getReachables(this);
-		if (reachables.containsKey(position.toString())){
-			HashMap<String, Node> resultpad = aStarOnTo(this, position);
-			Node n = resultpad.get(position.toString());
-			Energy cost = n.getGCost();
-			return cost;
-		}
-		throw new TargetNotReachableException();
+		if (getReachables(this).containsKey(position.toString()))
+			return aStarOnTo(this, position).get(position.toString()).getGCost();
+		throw new TargetNotReachableException(position);
 	}
 
 	/**
@@ -302,6 +301,7 @@ public class Robot extends Entity{
 	 * 			de manhattan als de energy om er te geraken minimaal is. (dees omzetten naar logica)
 	 */
 	public void moveNextTo(Robot robot){
+		//TODO: nakijken
 		if (!this.equals(robot) && robot != null && this.getBoard().equals(robot.getBoard())) {
 			HashMap<String,Node> thisReachables = getReachables(this);
 			HashMap<String,Node> otherReachables = getReachables(robot);
@@ -353,36 +353,47 @@ public class Robot extends Entity{
 	/**
 	 * Deze methode doet een robot schieten met zijn laser.
 	 * 
-	 * @throws	IllegalStateException
-	 * 			De robot staat niet op een bord.
-	 * 			|!this.isOnBoard()
+	 * @throws 	EntityNotOnBoardException
+	 * 			De robot staat niet op een bord en kan bijgevolg niet schieten.
+	 * 			|!isOnBoard()
 	 * 
 	 * @post	De robot verliest energie. De hoeveelheid is bepaald in de constante SHOOT_COST.
-	 * 			|new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), SHOOT_COST)) == true
+	 * 			|new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), SHOOT_COST))
 	 * 
-	 * @post	Mogelijks wordt een object geraakt en vernietigd.
-	 * 			|TODO: formele post doc bij shoot()
+	 * @effect	Mogelijks wordt een object geraakt en vernietigd.
+	 * 			|if(getShootTarget() != null)
+	 * 			|	getShootTarget().damage()
+	 * 
+	 * @post	De robot is energie kwijt die bepaald werd in SHOOT_COST.
+	 * 			|new.getEnergy().equals((Energy.energyDifference(this.getEnergy(), SHOOT_COST)))
 	 */
-	public void shoot() throws IllegalStateException{
-		if(this.isOnBoard()){	
-			Position beginpos = this.getPosition();
-			Orientation beginor = this.getOrientation();
-			Entity hit = null;
-			boolean found = false;
-			while(this.getBoard().isValidBoardPosition(getNextPosition(beginpos, beginor)) && !found){
-				beginpos = getNextPosition(beginpos, beginor);
-				HashSet<Entity> content = this.getBoard().getEntityOnPosition(beginpos);
-				if(content != null){
-					Random rndm = new Random();
-					hit = (Entity) content.toArray()[rndm.nextInt(content.toArray().length)];
-					hit.damage();
-					found = true;
-				}
-			}
-			this.setEnergy(Energy.energyDifference(this.getEnergy(), SHOOT_COST));
-		}else{
-			throw new IllegalStateException("De robot staat niet op een bord.");
+	public void shoot() throws EntityNotOnBoardException{
+		if(!isOnBoard()){
+			throw new EntityNotOnBoardException();
 		}
+		this.setEnergy(Energy.energyDifference(this.getEnergy(), SHOOT_COST));
+		Entity target = getShootTarget();
+		if(target != null)
+			target.damage();
+	}
+
+	/**
+	 * Deze methode geeft het doelwit terug dat geraakt kan worden wanneer de robot schiet.
+	 * 
+	 * @return	Het doelwit dat geraakt kan worden wanneer de robot schiet.
+	 */
+	private Entity getShootTarget(){
+		Position beginpos = this.getPosition();
+		while(this.getBoard().isValidBoardPosition(getNextPosition(beginpos, this.getOrientation()))){
+			beginpos = getNextPosition(beginpos, this.getOrientation());
+			HashSet<Entity> content = this.getBoard().getEntityOnPosition(beginpos);
+			if(content != null){
+				Random rndm = new Random();
+				Entity[] results = (Entity[]) content.toArray();
+				return results[rndm.nextInt(results.length)];
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -392,17 +403,17 @@ public class Robot extends Entity{
 	 * 			Energie waarmee moet opgeladen worden.
 	 * 
 	 * @post	De robot is opgeladen met de opgegeven hoeveelheid energie.
-	 * 			|if(!isValidRobotEnergyAmount(Energy.energySum(this.getEnergy(), energy).getEnergy())){
-	 * 			|	new.getEnergy() == new Energy(MAXENERGY)
+	 * 			|if(!isValidRobotEnergy(Energy.energySum(this.getEnergy(), energy).getEnergy(), this)){
+	 * 			|	new.getEnergy().equals(this.getMaxEnergy())
 	 * 			|}else{
-	 * 			|	new.getEnergy() == Energy.energySum(this.getEnergy(), energy)
+	 * 			|	new.getEnergy().equals(Energy.energySum(this.getEnergy(), energy))
 	 * 			|}
 	 * 			
 	 */
 	public void recharge(Energy energy){
 		Energy newEnergy = Energy.energySum(this.getEnergy(), energy);
-		if(!isValidRobotEnergyAmount(newEnergy))
-			newEnergy = MAXENERGY;
+		if(!isValidRobotEnergy(newEnergy, this))
+			newEnergy = getMaxEnergy();
 		this.setEnergy(newEnergy);
 	}
 
