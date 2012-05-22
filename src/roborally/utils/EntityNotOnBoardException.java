@@ -6,7 +6,7 @@ package roborally.utils;
  * 
  * @version 1.0
  */
-public class EntityNotOnBoardException extends RuntimeException{
+public class EntityNotOnBoardException extends IllegalStateException{
 
 	/**
 	 * Constructor om de default message in te stellen die teruggeven dient te worden.
