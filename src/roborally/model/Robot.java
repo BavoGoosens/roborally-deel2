@@ -1,5 +1,6 @@
 package roborally.model;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -164,6 +165,8 @@ public class Robot extends Entity{
 	 * 
 	 * @post	De energie is kleiner of gelijk aan de maximale energie.
 	 * 			|this.getMaxEnergy().equals(currentMaxEnergy)
+	 * 
+	 * @note	Wanneer deze gewijzigd wordt is het aangeraden om verifyEnergy() op te roepen.
 	 */
 	public void setMaxEnergy(Energy currentMaxEnergy) {
 		this.maxEnergy = currentMaxEnergy;
@@ -540,9 +543,9 @@ public class Robot extends Entity{
 			}else{
 				if (item instanceof Battery){
 					Energy toRecharge = Energy.energyDifference(item.getEnergy(), Energy.energyDifference(Robot.MAXENERGY, this.getEnergy()));
-					item.setEnergy(toRecharge);
+					((Battery) item).setEnergy(toRecharge);
 					this.setEnergy(Energy.energySum(this.getEnergy(), toRecharge));
-					if(item.getEnergy().getEnergy() == 0){
+					if(((Battery) item).getEnergy().getEnergy() == 0){
 						this.getPossessions().remove(item);
 						Collections.sort(this.getPossessions(), new ItemComparator());
 						item.destroy();
@@ -583,7 +586,7 @@ public class Robot extends Entity{
 				item.destroy();
 			}else if (choice == 2){
 				//Battery
-				Battery bat = new Battery(new Energy(rand.nextInt((int)Battery.MAXBATTERYENERGY.getEnergy()) + 1),item.getWeight());
+				Battery bat = new Battery(new Energy(rand.nextInt((int)Battery.MAX_ENERGY.getEnergy()) + 1),item.getWeight());
 				this.getPossessions().add(bat);
 				item.destroy();
 			}else{
@@ -1127,15 +1130,12 @@ public class Robot extends Entity{
 				this.getMaxEnergy().toString();
 	}
 
-	public int loadProgramFromFile(String path) {
-		try {
+	public int loadProgramFromFile(String path) throws FileNotFoundException {
+
 			Program prog = new Program(path);
 			this.setProgram(prog);
 			return 0;
-		}catch (FileNotFoundException exc){
-			System.err.println(exc.getMessage());
-			return -1;
-		}
+
 
 	}
 
