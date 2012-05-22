@@ -8,11 +8,6 @@ package roborally.model;
  * @version 1.1
  */
 public class Wall extends Entity{
-
-	@Override
-	public String toString() {
-		return "Position: " + this.getPosition().toString();
-	}
 	//NOP
 	
 	
