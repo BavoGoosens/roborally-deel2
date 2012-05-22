@@ -26,10 +26,10 @@ public class Battery extends Item{
 	 * 			Massa van de batterij.
 	 * 
 	 * @post	De energie van de nieuwe batterij is gelijk aan de gegeven energie.
-	 * 			|new.getEnergy() == energy
+	 * 			|new.getEnergy().equals(energy)
 	 * 
 	 * @post	Het gewicht van de nieuwe batterij is gelijk aan het gegeven gewicht.
-	 * 			|new.getWeight() == weight
+	 * 			|new.getWeight().equals(weight)
 	 */
 	public Battery(Energy energy, Weight weight){
 		super(weight);
@@ -46,7 +46,7 @@ public class Battery extends Item{
 	 * 			|isValidBatteryEnergy(energy)
 	 * 
 	 * @post	De energie van het item is gelijk aan de gegeven energie.
-	 * 			|new.getEnergy() == energy
+	 * 			|new.getEnergy().equals(energy)
 	 */
 	private void setEnergy(Energy energy) {
 		this.energy = energy;
@@ -90,7 +90,7 @@ public class Battery extends Item{
 	 * Deze methode wordt opgeroepen wanneer de batterij geraakt wordt door een laser of een surprise box.
 	 * 
 	 * @post	De nieuwe energie van de batterij is gelijk aan het maximum of aan 500 meer dan wat hij ervoor had.
-	 * 			|new.getEnergy() == MAX_ENERGY || new.getEnergy() == Energy.energySum(getEnergy(), HIT_ENERGY)
+	 * 			|new.getEnergy().equals(MAX_ENERGY) || new.getEnergy().equals(Energy.energySum(getEnergy(), HIT_ENERGY))
 	 */
 	@Override
 	protected void damage(){

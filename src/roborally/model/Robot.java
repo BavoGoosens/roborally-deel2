@@ -20,7 +20,7 @@ import roborally.utils.*;
  * Een klasse om robots voor te stellen.
  * 
  * @invar	De hoeveelheid energie van een batterij moet altijd geldig zijn.
- * 			|isValidRobotEnergyAmount(getEnergy())
+ * 			|isValidRobotEnergy(getEnergy())
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
@@ -41,18 +41,16 @@ public class Robot extends Entity{
 	 */
 	private final static Energy MOVE_COST_PER_KG = new Energy(50);
 	/**
-	 * De minimale energie van een robot.
-	 */
-	public final static Energy MINENERGY = new Energy(0);
-	/**
 	 * De maximale bovengrens van de energie van een robot.
 	 */
-	public final static Energy MAXENERGY = new Energy(20000);
+	public final static Energy MAX_ENERGY = new Energy(20000);
 	/**
 	 * De kost van 1 schot met zijn laser.
 	 */
 	public final static Energy SHOOT_COST = new Energy(1000);
-
+	/**
+	 * De energie die afgetrokken wordt van de maximale energie wanneer de robot geraakt wordt.
+	 */
 	public final static Energy SHOOT_DAMAGE = new Energy(4000);
 	/**
 	 * De energie van de robot.
@@ -72,7 +70,9 @@ public class Robot extends Entity{
 	 * @note	Gebruik altijd Collections.sort met een BatteryComparator() wanneer deze lijst gewijzigd wordt.
 	 */
 	private ArrayList<Item> possessions = new ArrayList<>();
-	
+	/**
+	 * De robot kan een programma laden en uitvoeren.
+	 */
 	private Program program;
 	
 	/**
@@ -103,7 +103,7 @@ public class Robot extends Entity{
 	 * 			De nieuwe energie die de robot moet krijgen.
 	 * 
 	 * @post	De energie van de robot is gelijk aan de gegeven energie.
-	 * 			|new.getEnergy().equals(energy) == true
+	 * 			|new.getEnergy().equals(energy)
 	 */
 	private void setEnergy(Energy energy) {
 		this.energy = energy;
