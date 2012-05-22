@@ -35,7 +35,7 @@ public class While extends Command {
 			sbstr = sbstr.trim();
 			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.AND, getAndOrCond(sbstr));
 			this.setCondition(cnd);
-			int beginIdx = sbstr.indexOf(cnd.toString())+cnd.toString().length()- 3 ;
+			int beginIdx = sbstr.indexOf(cnd.toString())+cnd.toString().length();
 			makeBody(sbstr.substring(beginIdx));
 		}else if (words[0].equals("or")){
 			sbstr = sbstr.substring(4);
@@ -54,7 +54,11 @@ public class While extends Command {
 		}
 	}
 
-	private void makeBody(String substr) {
+	private void makeBody(String sbstr) {
+		String substr =sbstr;
+		for (int i = 0;i <= substr.indexOf('('); i++){
+			
+		}
 		String[] words = substr.split("[^a-z]");
 		if (words[0].equals("while")){
 			While whl = new While(substr.substring(5, substr.length()));
