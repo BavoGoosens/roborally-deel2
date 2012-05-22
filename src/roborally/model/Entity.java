@@ -163,7 +163,7 @@ public abstract class Entity {
 	 * 			|new.getBoard() == board
 	 * 
 	 * @post	Het object staat nu op de gegeven positie.
-	 * 			|new.getPosition() == position
+	 * 			|new.getPosition().equals(position)
 	 */
 	@Raw
 	public void putOnBoard(Board board, Position position){
