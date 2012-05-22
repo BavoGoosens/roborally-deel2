@@ -182,7 +182,7 @@ public class Robot extends Entity{
 	 * 			|this.getEnergy().getEnergy()/MAXENERGY.getEnergy()
 	 */
 	public double getEnergyFraction(){
-		return this.getEnergy().getEnergy()/MAXENERGY.getEnergy();
+		return this.getEnergy().getEnergy()/this.getMaxEnergy().getEnergy();
 	}
 
 	/**
@@ -263,7 +263,6 @@ public class Robot extends Entity{
 	 * @throws TargetNotReachableException 
 	 *
 	 */
-	//TODO: Moet een negatief getal terugeven indien niet bereikbaar of te weinig energie
 	public Energy getEnergyRequiredToReach(Position position) throws TargetNotReachableException{
 		HashMap<String,Node> reachables = getReachables(this);
 		if (reachables.containsKey(position.toString())){
@@ -352,13 +351,15 @@ public class Robot extends Entity{
 		if(this.isOnBoard()){	
 			Position beginpos = this.getPosition();
 			Orientation beginor = this.getOrientation();
+			Entity hit = null;
 			boolean found = false;
 			while(this.getBoard().isValidBoardPosition(getNextPosition(beginpos, beginor)) && !found){
 				beginpos = getNextPosition(beginpos, beginor);
 				HashSet<Entity> content = this.getBoard().getEntityOnPosition(beginpos);
 				if(content != null){
 					Random rndm = new Random();
-					((Entity) content.toArray()[rndm.nextInt(content.toArray().length)]).destroy();
+					hit = (Entity) content.toArray()[rndm.nextInt(content.toArray().length)];
+					hit.damage();
 					found = true;
 				}
 			}
@@ -390,6 +391,20 @@ public class Robot extends Entity{
 	}
 
 	/**
+	 * 
+	 */
+	@Override
+	protected void damage(){
+		if (this.getMaxEnergy().getEnergy() > SHOOT_DAMAGE.getEnergy()){
+			Energy newEnergy = new Energy(this.getMaxEnergy().getEnergy() - SHOOT_DAMAGE.getEnergy());
+			if (this.getEnergy().getEnergy() > newEnergy.getEnergy())
+				this.setEnergy(newEnergy);
+			this.setMaxEnergy(newEnergy);
+		} else {
+			this.destroy();
+		}
+	}
+	/**
 	 * Deze methode berekent de kost van 1 move.
 	 * 
 	 * @param	robot
@@ -398,7 +413,7 @@ public class Robot extends Entity{
 	 * @return	de kost terug van 1 move
 	 * 			|Energy.energySum(MOVE_COST, new Energy(MOVE_COST_PER_KG.getEnergy()*(robot.getTotalWeight().getWeight() / 1000)))
 	 */
-	public static Energy moveCost(Robot robot){
+	private static Energy moveCost(Robot robot){
 		return Energy.energySum(MOVE_COST, new Energy(MOVE_COST_PER_KG.getEnergy()*(robot.getTotalWeight().getWeight() / 1000)));
 	}
 
@@ -1073,10 +1088,5 @@ public class Robot extends Entity{
 //TODO: Private shit beginnen maken.
 //TODO: merge aanpassen.
 //TODO: Alles van die programma's. 
-//TODO: GetEnergyRequiredToReach aanpassen om de juiste dingen terug te geven.
 //TODO: Testen veel testen.
-//TODO: Interfaces moet nimeer dagtek
 //TODO: Error gevonden voor pick up 
-//TODO: Error ge kunt geen 2 robots op 1 positie aanmaken 
-//		maar als ge et via ne moveto doet kunnen ze uiteindelijk wel op dez pos uitkomen.
-//TODO: bij movenextto eenmaal een verplaatsing gemaakt is moet in board die pos trg vrij komen.
