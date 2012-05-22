@@ -1116,7 +1116,7 @@ public class Robot extends Entity{
 	}
 
 	public String prettyPrintProgram() {
-		getProgram().getPrettyPrint();
+		return getProgram().getPrettyPrint();
 	}
 
 	private Program getProgram() {
