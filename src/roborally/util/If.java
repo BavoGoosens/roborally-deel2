@@ -1,6 +1,6 @@
 package roborally.util;
 
-public class If extends Special{
+public class If extends Command{
 	
 	public If(String substring) {
 		// TODO Auto-generated constructor stub

@@ -2,7 +2,7 @@ package roborally.util;
 
 import java.util.ArrayList;
 
-public class While extends Special {
+public class While extends Command {
 
 	public While(String substring) {
 		extractConditionBody(substring);		
@@ -27,6 +27,7 @@ public class While extends Special {
 		}else if (words[0].equals("energy-at-least")){
 			sbstr = sbstr.substring(16);
 			sbstr = sbstr.trim();
+			@SuppressWarnings("boxing")
 			Conditie cnd = new Conditie(ConditieEnum.ENERGY_AT_LEAST, getAmountEnergy(sbstr));
 			this.setCondition(cnd);
 		}else if (words[0].equals("wall")){
@@ -63,9 +64,12 @@ public class While extends Special {
 		
 	}
 
-	private double getAmountEnergy(String sbstr) {
-		// TODO Auto-generated method stub
-		return 0;
+	@SuppressWarnings("boxing")
+	private Double getAmountEnergy(String sbstr) {
+		int eindIdx = sbstr.indexOf(')');
+		String amount = sbstr.substring(0, eindIdx-1);
+		makeBody(sbstr.substring(eindIdx));
+		return Double.parseDouble(amount);
 	}
 
 	private String getNotSbStr(String sbstr) {
