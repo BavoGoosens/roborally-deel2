@@ -1,5 +1,6 @@
 package roborally.model;
 
+import be.kuleuven.cs.som.annotate.Basic;
 import roborally.property.Energy;
 import roborally.property.Weight;
 
@@ -17,13 +18,25 @@ public class RepairKit extends Item{
 	public final static Energy HIT_ENERGY = new Energy(500);
 	
 	public RepairKit(Energy energy, Weight weight){
-		super(energy,weight);
+		super(weight);
+		this.energy = energy;
 	}
 
-	@Override
-	protected void setEnergy(Energy energy) {
-		super.setEnergy(energy);
+	/**
+	 * Geeft de energie van het item.
+	 * 
+	 * @return	Energie van het item.
+	 * 			|energy
+	 */
+	@Basic
+	public Energy getEnergy() {
+		return energy;
 	}
+	
+	/**
+	 * Energie in het item.
+	 */
+	private final Energy energy;
 	
 	public boolean isValidRepairKitEnergy(Energy energy){
 		return (energy.getEnergy() <= MAX_ENERGY.getEnergy());
