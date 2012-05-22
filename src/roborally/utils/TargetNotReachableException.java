@@ -1,4 +1,7 @@
 package roborally.utils;
+
+import roborally.property.Position;
+
 /**
  * Deze Exception beschrijft een exception die optreedt wanneer het doel niet bereikbaar is.
  * 
@@ -6,23 +9,19 @@ package roborally.utils;
  * 
  * @version 1.0
  */
-public class TargetNotReachableException extends RuntimeException {
+public class TargetNotReachableException extends IllegalStateException {
 
 	/**
-	 * Constructor om de default message in te stellen die teruggeven dient te worden.
-	 */
-	public TargetNotReachableException(){
-		super("Het doel dat je wilt bereiken is niet bereikbaar");
-	}
-	
-	/**
-	 * Constructor om een message in te stellen die teruggeven dient te worden.
+	 * Constructor om het bericht in te stellen dat teruggeven dient te worden.
 	 * 
-	 * @param 	msg
-	 * 			De tekst die teruggeven moet worden bij deze error.
+	 * @param	pos
+	 * 			De positie die bereikt moet worden.
+	 * 
+	 * @post	Het bericht is ingesteld op met meer informatie over de fout.
+	 * 			|new.getMessage().equals("Het doel met positie " + pos.toString() + " dat je wilt bereiken is niet bereikbaar.")
 	 */
-	public TargetNotReachableException(String msg){
-		super(msg);
+	public TargetNotReachableException(Position pos){
+		super("Het doel met positie " + pos.toString() + " dat je wilt bereiken is niet bereikbaar.");
 	}
 	
 }

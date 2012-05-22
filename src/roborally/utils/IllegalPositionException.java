@@ -21,7 +21,7 @@ public class IllegalPositionException extends IllegalArgumentException{
 	 * 			Het ongeldige y-coördinaat.
 	 * 
 	 * @post	Er is een nieuw bericht ingesteld voor deze Exception met de gegeven coördinaten.
-	 * 			|new.getMessage() == "De positie met coördinaten " + x + ", " + y + " bestaat niet of is reeds bezet."
+	 * 			|new.getMessage().equals("De positie met coördinaten " + x + ", " + y + " bestaat niet of is reeds bezet.")
 	 */
 	public IllegalPositionException(long x, long y){
 		super("De positie met coördinaten " + x + ", " + y + " is ongeldig.");
@@ -34,7 +34,7 @@ public class IllegalPositionException extends IllegalArgumentException{
 	 * 			De ongeldige positie.
 	 *  
 	 * @post	Er is een nieuw bericht ingesteld voor deze Exception met de gegeven coördinaten.
-	 * 			|new.getMessage() == "De positie met coördinaten " + position.toString() + " bestaat niet of is reeds bezet."
+	 * 			|new.getMessage().equals("De positie met coördinaten " + position.toString() + " bestaat niet of is reeds bezet.")
 	 */
 	public IllegalPositionException(Position position) {
 		super("De positie met coördinaten " + position.toString() + " bestaat niet in dit bord of is reeds bezet.");

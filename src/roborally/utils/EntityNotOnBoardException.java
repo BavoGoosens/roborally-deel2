@@ -1,4 +1,5 @@
 package roborally.utils;
+
 /**
  * Deze Exception beschrijft dat een robot niet op een board staat.
  * 
@@ -9,23 +10,13 @@ package roborally.utils;
 public class EntityNotOnBoardException extends IllegalStateException{
 
 	/**
-	 * Constructor om de default message in te stellen die teruggeven dient te worden.
+	 * Constructor om het bericht in te stellen dat teruggeven dient te worden.
 	 * 
+	 * @post	Het bericht is ingesteld op met meer informatie over de fout.
+	 * 			|new.getMessage().equals("Dit object bevindt zich niet op een bord.")
 	 */
 	public EntityNotOnBoardException(){
 		super("Dit object bevindt zich niet op een bord.");
 	}
-	
-	/**
-	 * Constructor om een message in te stellen die teruggeven dient te worden.
-	 * 
-	 * @param 	message
-	 * 			De tekst die teruggeven moet worden bij deze error.
-	 * 
-	 * @post	Het bericht is ingesteld op het gegeven bericht.
-	 * 			|new.getMessage() = message
-	 */
-	public EntityNotOnBoardException(String message){
-		super(message);
-	}
+
 }
