@@ -1,4 +1,4 @@
-package roborally.utils;
+package roborally.util;
 
 public enum ConditieEnum {
 	

@@ -1,4 +1,4 @@
-package roborally.utils;
+package roborally.util;
 
 /**
  * Deze Exception beschrijft dat een robot niet op een board staat.

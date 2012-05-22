@@ -13,7 +13,7 @@ import java.util.Set;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
 import roborally.property.*;
-import roborally.utils.*;
+import roborally.util.*;
 
 /**
  * Een klasse om robots voor te stellen.

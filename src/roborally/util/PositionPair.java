@@ -1,4 +1,4 @@
-package roborally.utils;
+package roborally.util;
 
 import roborally.model.Robot;
 import roborally.property.Energy;

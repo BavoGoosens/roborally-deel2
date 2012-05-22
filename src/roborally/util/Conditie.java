@@ -1,4 +1,4 @@
-package roborally.utils;
+package roborally.util;
 
 public class Conditie extends Command {
 	
