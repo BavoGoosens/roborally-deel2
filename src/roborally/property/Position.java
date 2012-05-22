@@ -148,7 +148,7 @@ public class Position implements Comparable<Position>{
 			// NOP
 		}
 		for(Position pos: positions){
-			if(board.isValidBoardPosition(pos)){
+			if(board.isValidPosition(pos)){
 				validPositions.add(pos);
 			}
 		}

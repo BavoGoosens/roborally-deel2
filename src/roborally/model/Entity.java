@@ -92,7 +92,7 @@ public abstract class Entity {
 	 * 
 	 * @throws	EntityNotOnBoardException
 	 * 			Deze positie is niet geldig voor het huidige bord.
-	 * 			|(getBoard().isValidBoardPosition(position) && position != null)
+	 * 			|(getBoard().isValidPosition(position) && position != null)
 	 * 
 	 * @post	De positie van dit object is nu gelijk aan de gegeven positie.
 	 * 			|new.getPosition() == position
@@ -104,7 +104,7 @@ public abstract class Entity {
 		}else if(position != null){
 			if(getBoard() == null){
 				throw new EntityNotOnBoardException();
-			}else if(!getBoard().isValidBoardPosition(position)){
+			}else if(!getBoard().isValidPosition(position)){
 				throw new IllegalPositionException(position);
 			}
 		}
@@ -189,16 +189,16 @@ public abstract class Entity {
 	 * Kijk na of het object geldig is.
 	 * 
 	 * @return 	Indien bord of positie null is, moet de andere van de 2 ook null zijn. Indien het object op een bord staat moet de positie geldig zijn voor dat bord.
-	 * 			|if(!(getBoard() == null ^ getPosition() == null))
+	 * 			|if((getBoard() == null ^ getPosition() == null))
 	 * 			|	false
-	 * 			|if(isOnBoard() && getBoard().isValidBoardPosition(getPosition()))
+	 * 			|if(isOnBoard() && getBoard().isValidPosition(getPosition()))
 	 * 			|	false
 	 * 			|true
 	 */
 	public boolean isValidEntity(){
-		if(!(getBoard() == null ^ getPosition() == null))
+		if((getBoard() == null ^ getPosition() == null))
 			return false;
-		if(isOnBoard() && getBoard().isValidBoardPosition(getPosition()))
+		if(isOnBoard() && getBoard().isValidPosition(getPosition()))
 			return false;
 		return true;
 	}

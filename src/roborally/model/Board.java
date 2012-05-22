@@ -108,14 +108,14 @@ public class Board{
 	 * 
 	 * @throws	IllegalStateException
 	 * 			Het object bevindt zich niet op een juiste positie in dit bord.
-	 * 			|ent.getBoard().isValidBoardPosition(ent.getPosition())
+	 * 			|ent.getBoard().isValidPosition(ent.getPosition())
 	 * 
 	 * @post	De gegeven entity bevindt zich niet langer op een bord.
 	 * 			|new.getEntityOnPosition(ent.getPosition()) == null || new.getMap().containsKey(pos.toString()) == false
 	 */
 	public void removeEntity(Entity ent) throws IllegalStateException{
 		Position pos = ent.getPosition();
-		if(!ent.getBoard().isValidBoardPosition(pos)){
+		if(!ent.getBoard().isValidPosition(pos)){
 			throw new IllegalStateException("Dit object bevindt zich niet op een geldige positie.");
 		}
 		this.getMap().get(pos.toString()).remove(ent);
@@ -149,7 +149,7 @@ public class Board{
 	 * 			De positie die moet nagekeken worden.
 	 * 
 	 * @return	Boolean die true is als de positie niet door een muur of een robot ingenomen is.
-	 * 			|if(!this.isValidBoardPosition(pos))
+	 * 			|if(!this.isValidPosition(pos))
 	 * 			|	false
 	 * 			|if(!this.getMap().containsKey(pos.toString()))
 	 * 			|	true
@@ -163,7 +163,7 @@ public class Board{
 	 * 			
 	 */
 	public boolean isPlacableOnPosition(Position pos, Entity entity){
-		if (!isValidBoardPosition(pos))
+		if (!isValidPosition(pos))
 			return false;
 		if (entity instanceof Wall){
 			try{
@@ -360,7 +360,7 @@ public class Board{
 	 * 			|	false
 	 * 			|true
 	 */
-	public boolean isValidBoardPosition(Position position){
+	public boolean isValidPosition(Position position){
 		if(position == null)
 			return false;
 		if (position.getX() > this.getWidth() || position.getX() < LOWER_BOUND_WIDTH || position.getY() > this.getHeight() || position.getY() < LOWER_BOUND_HEIGHT)
@@ -394,7 +394,7 @@ public class Board{
 		Set<String> b2PosStrings = board2.getMap().keySet();
 		for (String b2PosString : b2PosStrings){
 			Position b2Pos = Robot.getPositionFromString(b2PosString);
-			if(this.isValidBoardPosition(b2Pos)){
+			if(this.isValidPosition(b2Pos)){
 				HashSet<Entity> b2EntitiesOnPos = board2.getEntityOnPosition(b2Pos);
 				for(Entity ent: b2EntitiesOnPos){
 					if(this.isPlacableOnPosition(b2Pos, ent)){
