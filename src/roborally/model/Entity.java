@@ -198,7 +198,7 @@ public abstract class Entity {
 	public boolean isValidEntity(){
 		if((getBoard() == null ^ getPosition() == null))
 			return false;
-		if(isOnBoard() && getBoard().isValidPosition(getPosition()))
+		if(getBoard() != null && getBoard().isValidPosition(getPosition()))
 			return false;
 		return true;
 	}
