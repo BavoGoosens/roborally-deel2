@@ -198,37 +198,43 @@ public class Robot extends Entity{
 	/**
 	 * Draait de robot 1 keer in wijzerzin.
 	 * 
+	 * @throws  NotEnoughEnergyException 
+	 * 			De robot heeft onvoldoende energie om te bewegen.
+	 * 			|!canTurn()
+	 * 
 	 * @post	De nieuwe oriëntatie van de robot is gelijk aan de volgende oriëntatie in wijzerzin.
-	 * 			|if(canTurn())
-	 * 			|	new.getOrientation() == this.getOrienation().getClockwiseOrientation()
+	 * 			|new.getOrientation() == this.getOrienation().getClockwiseOrientation()
 	 * 
 	 * @post	De energie van de robot is verminderd met benodigde energie voor een draai.
-	 * 			|if(canTurn())
-	 * 			|	new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), TURN_COST))
+	 * 			|new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), TURN_COST))
 	 */
-	public void turnClockWise(){
-		if(this.canTurn()){
-			this.setOrientation(this.getOrientation().getClockwiseOrientation());
-			this.setEnergy(Energy.energyDifference(this.getEnergy(), TURN_COST));
+	public void turnClockWise() throws NotEnoughEnergyException{
+		if(!this.canTurn()){
+			throw new NotEnoughEnergyException(getEnergy());
 		}
+		this.setOrientation(this.getOrientation().getClockwiseOrientation());
+		this.setEnergy(Energy.energyDifference(this.getEnergy(), TURN_COST));
 	}
 
 	/**
 	 * Draait de robot 1 keer in tegenwijzerzin.
 	 * 
+	 * @throws  NotEnoughEnergyException 
+	 * 			De robot heeft onvoldoende energie om te bewegen.
+	 * 			|!canTurn()
+	 * 
 	 * @post	De nieuwe oriëntatie van de robot is gelijk aan de volgende oriëntatie in wijzerzin.
-	 * 			|if(canTurn())
-	 * 			|	new.getOrientation() == this.getOrienation().getCounterClockwiseOrientation()
+	 * 			|new.getOrientation() == this.getOrienation().getCounterClockwiseOrientation()
 	 * 
 	 * @post	De energie van de robot is verminderd met benodigde energie voor een draai.
-	 * 			|if(canTurn())
-	 * 			|	new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), TURN_COST))
+	 * 			|new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), TURN_COST))
 	 */
-	public void turnCounterClockWise(){
-		if(this.canTurn()){
-			this.setOrientation(this.getOrientation().getCounterClockwiseOrientation());
-			this.setEnergy(Energy.energyDifference(this.getEnergy(), TURN_COST));
+	public void turnCounterClockWise() throws NotEnoughEnergyException{
+		if(!this.canTurn()){
+			throw new NotEnoughEnergyException(getEnergy());
 		}
+		this.setOrientation(this.getOrientation().getCounterClockwiseOrientation());
+		this.setEnergy(Energy.energyDifference(this.getEnergy(), TURN_COST));
 	}
 
 	/**
