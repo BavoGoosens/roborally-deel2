@@ -18,7 +18,7 @@ import be.kuleuven.cs.som.annotate.Raw;
  * @version 1.0
  */
 public abstract class Entity {
-	
+
 	/**
 	 * Methode die het board instelt waartoe dit object behoort.
 	 * 
@@ -50,12 +50,12 @@ public abstract class Entity {
 	public Board getBoard(){
 		return board;
 	}
-	
+
 	/**
 	 * Het bord waarop dit object staat (niet noodzakelijk).
 	 */
 	private Board board;
-	
+
 	/**
 	 * Kijkt na of het object op het bord staat.
 	 * 
@@ -65,7 +65,7 @@ public abstract class Entity {
 	public boolean isOnBoard(){
 		return (getBoard() != null && isValidEntity());
 	}
-	
+
 	/**
 	 * Geeft de positie van dit object terug.
 	 * 
@@ -110,7 +110,7 @@ public abstract class Entity {
 		}
 		this.position = position;
 	}
-	
+
 	/**
 	 * Positie van dit object (niet noodzakelijk).
 	 */
@@ -144,7 +144,7 @@ public abstract class Entity {
 	public boolean isTerminated(){
 		return isTerminated;
 	}
-	
+
 	/**
 	 * Indien het object vernietigd is wordt dit true.
 	 */
@@ -185,8 +185,6 @@ public abstract class Entity {
 		this.setPosition(null);
 	}
 
-	
-
 	/**
 	 * Kijk na of het object geldig is.
 	 * 
@@ -210,5 +208,20 @@ public abstract class Entity {
 	 */
 	protected void damage() {
 		//NOP
+	}
+	
+	/*
+	 * Deze methode zet het object om naar een String.
+	 * 
+	 * @return	Een textuele representatie van dit object waarbij duidelijk wordt wat de eigenschappen van dit object zijn.
+	 * 			|if(isOnBoard())
+	 * 			|	"positie: " + getPosition().toString()
+	 * 			|"positie: staat niet op een bord"
+	 */
+	@Override
+	public String toString() {
+		if(isOnBoard())
+			return "positie: " + getPosition().toString();
+		return "positie: staat niet op een bord";
 	}
 }

@@ -5,7 +5,7 @@ import roborally.property.Energy;
 import roborally.property.Weight;
 
 /**
- * Deze klasse houdt een batterij bij. Deze heeft een positie en een hoeveelheid energie.
+ * Deze klasse houdt een batterij bij. Deze heeft een positie, een gewicht en een hoeveelheid energie. Deze kan door een robot gedragen worden.
  * 
  * @invar	De hoeveelheid energie van een batterij moet altijd geldig zijn.
  * 			|isValidBatteryEnergyAmount(getEnergy())
@@ -104,5 +104,16 @@ public class Battery extends Item{
 	 * De hoeveelheid energie die een battery bij krijgt wanneer hij geraakt wordt.
 	 */
 	private final static Energy HIT_ENERGY = new Energy(500);
+
+	/*
+	 * Deze methode zet het object om naar een String.
+	 * 
+	 * @return	Een textuele representatie van dit object waarbij duidelijk wordt wat de eigenschappen van dit object zijn.
+	 * 			|super.toString() + ", energie: " + getEnergy().toString()
+	 */
+	@Override
+	public String toString() {
+		return super.toString() + ", energie: " + getEnergy().toString();
+	}
 	
 }

@@ -45,4 +45,15 @@ public abstract class Item extends Entity{
 	 */
 	private final Weight weight;
 	
+	/*
+	 * Deze methode zet het object om naar een String.
+	 * 
+	 * @return	Een textuele representatie van dit object waarbij duidelijk wordt wat de eigenschappen van dit object zijn.
+	 * 			|super.toString() + ", gewicht: " + getWeight().toString()
+	 */
+	@Override
+	public String toString() {
+		return super.toString() + ", gewicht: " + getWeight().toString();
+	}
+	
 }
