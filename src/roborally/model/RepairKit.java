@@ -7,9 +7,12 @@ import roborally.property.Weight;
 /**
  * Deze klasse houdt een repair kit bij dat op een bord kan staan. Dit kan een positie, een gewicht, energie en een positie kan hebben. Daarnaast kan dit object ook door een robot gedragen worden.
  * 
+ * @invar	Een repair kit heeft altijd een energie die geldig is voor een repair kit.
+ * 			|isValidRepairKitEnergy(getEnergy())
+ * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
- * @version 1.0
+ * @version 1.1
  */
 public class RepairKit extends Item{
 	
@@ -37,10 +40,10 @@ public class RepairKit extends Item{
 	}
 
 	/**
-	 * Deze methode wijzigt de energie van het item.
+	 * Deze methode wijzigt de energie van de repair kit.
 	 * 
 	 * @param	energy
-	 * 			De nieuwe energie van het item.
+	 * 			De nieuwe energie van de repair kit.
 	 * 
 	 * @post	De energie van het item is gelijk aan de gegeven energie.
 	 * 			|new.getEnergy() == energy
@@ -50,9 +53,9 @@ public class RepairKit extends Item{
 	}
 	
 	/**
-	 * Geeft de energie van het item.
+	 * Geeft de energie van de repair kit.
 	 * 
-	 * @return	Energie van het item.
+	 * @return	Energie van de repair kit.
 	 * 			|energy
 	 */
 	@Basic
@@ -61,7 +64,7 @@ public class RepairKit extends Item{
 	}
 	
 	/**
-	 * Energie in het item.
+	 * Energie in de repair kit.
 	 */
 	private Energy energy;
 	
