@@ -7,7 +7,7 @@ import roborally.property.Energy;
 import roborally.property.Weight;
 
 /**
- * Deze klasse houdt een object bij dat op een board kan staan en een positie kan hebben. Daarnaast kan dit object ook door een robot gedragen worden en heeft het energie en een gewicht.
+ * Deze klasse houdt een object bij dat op een bord kan staan en een positie kan hebben. Daarnaast kan dit object ook door een robot gedragen worden en heeft het energie en een gewicht.
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
