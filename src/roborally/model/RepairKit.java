@@ -19,9 +19,22 @@ public class RepairKit extends Item{
 	
 	public RepairKit(Energy energy, Weight weight){
 		super(weight);
-		this.energy = energy;
+		setEnergy(energy);
 	}
 
+	/**
+	 * Deze methode wijzigt de energie van het item.
+	 * 
+	 * @param	energy
+	 * 			De nieuwe energie van het item.
+	 * 
+	 * @post	De energie van het item is gelijk aan de gegeven energie.
+	 * 			|new.getEnergy() == energy
+	 */
+	private void setEnergy(Energy energy) {
+		this.energy = energy;
+	}
+	
 	/**
 	 * Geeft de energie van het item.
 	 * 
@@ -36,7 +49,7 @@ public class RepairKit extends Item{
 	/**
 	 * Energie in het item.
 	 */
-	private final Energy energy;
+	private Energy energy;
 	
 	public boolean isValidRepairKitEnergy(Energy energy){
 		return (energy.getEnergy() <= MAX_ENERGY.getEnergy());
@@ -44,10 +57,10 @@ public class RepairKit extends Item{
 
 	@Override
 	protected void damage(){
-		Energy newEnergy = new Energy(super.getEnergy().getEnergy() + HIT_ENERGY.getEnergy());
+		Energy newEnergy = new Energy(getEnergy().getEnergy() + HIT_ENERGY.getEnergy());
 		if (newEnergy.getEnergy() > MAX_ENERGY.getEnergy())
-			super.setEnergy(MAX_ENERGY);
-		super.setEnergy(newEnergy);
+			setEnergy(MAX_ENERGY);
+		setEnergy(newEnergy);
 	}
 	
 }
