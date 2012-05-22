@@ -2,10 +2,8 @@ package roborally.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
 
 import roborally.model.Board;
 import roborally.model.Node;
@@ -14,6 +12,13 @@ import roborally.property.Energy;
 import roborally.property.Orientation;
 import roborally.property.Position;
 
+/**
+ * Deze klasse voert berekeningen uit die nodig zijn om het paar posities te vinden bij moveNextTo in Robot.
+ * 
+ * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
+ * 
+ * @version 1.0
+ */
 public class AStarPath {
 	
 	public HashMap<Position,Node> path;
@@ -245,41 +250,6 @@ public class AStarPath {
 			}			
 		}
 		return reachables;
-	}
-	
-	public static PositionPair getRobotsPositionpair(Robot robot1, Robot robot2){
-		PositionPair thePair = null;
-		HashMap<Position,Node> robot1Reachables = getReachables(robot1);
-		HashMap<Position,Node> robot2Reachables = getReachables(robot2);
-		Set<Position> robot1Keys = robot1Reachables.keySet();
-		Set<Position> robot2Keys = robot2Reachables.keySet();
-		ArrayList<PositionPair> posPairs = new ArrayList<>();
-		for(Position robot1Pos: robot1Keys){
-			for(Position robot2Pos: robot2Keys){
-				Node robot1Node = robot1Reachables.get(robot1Pos);
-				Node robot2Node = robot2Reachables.get(robot2Pos);
-				PositionPair toAdd = new PositionPair(robot1Pos, robot2Pos,robot1Node.getGCost(),
-						robot2Node.getGCost(), robot1Node.getOrientation(),robot2Node.getOrientation());
-				posPairs.add(toAdd);
-			}
-		}
-		ArrayList<PositionPair> semiValidPosPairs = new ArrayList<>();
-		for(PositionPair pp: posPairs){
-			if((pp.getManhattanDistance() != 0) && !(pp.getPos1().equals(pp.getPos2())))
-				semiValidPosPairs.add(pp);
-		}
-		if(!semiValidPosPairs.isEmpty()){
-			Collections.sort(semiValidPosPairs, new PositionPairComparatorDistance());
-			PositionPair firstpp = semiValidPosPairs.get(0);
-			ArrayList<PositionPair> validPosPairs = new ArrayList<>();
-			for(PositionPair pp: semiValidPosPairs){
-				if((pp.getManhattanDistance() == firstpp.getManhattanDistance()))
-					validPosPairs.add(pp);
-			}
-			Collections.sort(validPosPairs, new PositionPairComparatorEnergy());
-			thePair = validPosPairs.get(0);
-		}
-		return thePair;
 	}
 	
 	/**

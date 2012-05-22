@@ -280,16 +280,16 @@ public class Robot extends Entity{
 	 * 			De plaats die bereikt moet worden.
 	 * 
 	 * @return	De energie die nodig is om de plaats te bereiken.
-	 * 			|aStarOnTo(this, position).get(position.toString()).getGCost()
+	 * 			|(new AStarPath(this, position)).path.get(position).getGCost()
 	 * 
 	 * @throws 	TargetNotReachableException
 	 * 			Het doel is niet bereikbaar.
-	 * 			|!getReachables(this).containsKey(position.toString())
+	 * 			|!AStarPath.getReachables(this).containsKey(position)
 	 */
 	public Energy getEnergyRequiredToReach(Position position) throws TargetNotReachableException{
-		if (AStarPath.getReachables(this).containsKey(position.toString())){
+		if (AStarPath.getReachables(this).containsKey(position)){
 			AStarPath aSPath = new AStarPath(this, position);
-			return aSPath.path.get(position.toString()).getGCost();
+			return aSPath.path.get(position).getGCost();
 		}
 		throw new TargetNotReachableException(position);
 	}
@@ -305,14 +305,21 @@ public class Robot extends Entity{
 	 * 			|this.equals(robot) || robot != null || this.getBoard() != (robot.getBoard())
 	 * 
 	 * @post	De robot staat zo dicht mogelijk bij de gegeven robot met een zo laag mogelijk energieverbruik.
-	 * 			Het is niet het geval dat er een positie P bestaat op dit board die bereikbaar is door beide robots waarvoor geldt dat zowel 
-	 * 			de manhattan als de energy om er te geraken minimaal is. (dees omzetten naar logica)
+	 * 			|if(PositionPair.getRobotsPositionpair(this, robot) != null)
+	 * 			|	new.getPosition() == PositionPair.getRobotsPositionpair(this, robot).getPos1()
+	 * 			|	(new robot).getPosition() == PositionPair.getRobotsPositionpair(this, robot).getPos2()
+	 * 			|	new.getOrientation() == PositionPair.getRobotsPositionpair(this, robot).getOr1()
+	 * 			|	(new robot).getOrientation() == PositionPair.getRobotsPositionpair(this, robot).getOr2()
+	 * 			|	new.getEnergy() == Energy.energyDifference(this.getEnergy(),PositionPair.getRobotsPositionpair(this, robot).getCost1())
+	 * 			|	(new robot).getEnergy() == Energy.energyDifference(robot.getEnergy(),PositionPair.getRobotsPositionpair(this, robot).getCost2())
+	 * 			|}
+	 * 
 	 */
 	public void moveNextTo(Robot robot) throws IllegalArgumentException{
 		if (this.equals(robot) || robot == null || this.getBoard() != (robot.getBoard())) {
 			throw new IllegalArgumentException("De opgegeven robot is ongeldig.");
 		}
-		PositionPair thePair = AStarPath.getRobotsPositionpair(this, robot);
+		PositionPair thePair = PositionPair.getRobotsPositionpair(this, robot);
 		if(thePair != null){
 			if (!this.getPosition().equals(thePair.getPos1())){
 				this.getBoard().removeEntity(this);
