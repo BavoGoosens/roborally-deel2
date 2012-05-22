@@ -29,10 +29,10 @@ public class RepairKit extends Item{
 	 * 			|isValidRepairKitEnergy(energy)
 	 * 
 	 * @post	De nieuwe energie moet gelijk zijn aan de gegeven energie.
-	 * 			|new.getEnergy() == energy
+	 * 			|new.getEnergy().equals(energy)
 	 * 
 	 * @post	Het gewicht van de nieuwe repair kit moet gelijk zijn aan het gegeven gewicht.
-	 * 			|new.getWeight == weight
+	 * 			|new.getWeight.equals(weight)
 	 */
 	public RepairKit(Energy energy, Weight weight){
 		super(weight);
@@ -46,7 +46,7 @@ public class RepairKit extends Item{
 	 * 			De nieuwe energie van de repair kit.
 	 * 
 	 * @post	De energie van het item is gelijk aan de gegeven energie.
-	 * 			|new.getEnergy() == energy
+	 * 			|new.getEnergy().equals(energy)
 	 */
 	private void setEnergy(Energy energy) {
 		this.energy = energy;
@@ -90,7 +90,7 @@ public class RepairKit extends Item{
 	 * Deze methode wordt opgeroepen wanneer de repair kit geraakt wordt door een laser of een surprise box.
 	 * 
 	 * @post	De nieuwe energie van de repair kit is gelijk aan het maximum of aan 500 meer dan wat hij ervoor had.
-	 * 			|new.getEnergy() == MAX_ENERGY || new.getEnergy() == Energy.energySum(getEnergy(), HIT_ENERGY)
+	 * 			|new.getEnergy().equals(MAX_ENERGY) || new.getEnergy().equals(Energy.energySum(getEnergy(), HIT_ENERGY))
 	 */
 	@Override
 	protected void damage(){
