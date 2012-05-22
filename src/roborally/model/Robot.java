@@ -734,38 +734,36 @@ public class Robot extends Entity{
 	 *			|	new Position(pos.getX() - 1, pos.getY())
 	 *			|null
 	 *
-	 * @throws	IllegalStateException
-	 * 			Er bestaat geen verdere positie meer met deze oriëntatie.
 	 */
-	private Position getNextPosition(Position pos, Orientation or) throws IllegalStateException{
+	private static Position getNextPosition(Position pos, Orientation or){
 		Position result = null;
 		switch(or){
 		case UP:
 			try {
 				result = new Position(pos.getX(), pos.getY() - 1);
-			} catch (IllegalArgumentException e) {
-				throw new IllegalStateException("Er bestaat geen verdere positie meer met deze oriëntatie.");
+			} catch (IllegalPositionException e) {
+				// NOP
 			}
 			break;
 		case RIGHT:
 			try {
 				result = new Position(pos.getX() + 1, pos.getY());
-			} catch (IllegalArgumentException e) {
-				throw new IllegalStateException("Er bestaat geen verdere positie meer met deze oriëntatie.");
+			} catch (IllegalPositionException e) {
+				// NOP
 			}
 			break;
 		case DOWN:
 			try {
 				result = new Position(pos.getX(), pos.getY() + 1);
-			} catch (IllegalArgumentException e) {
-				throw new IllegalStateException("Er bestaat geen verdere positie meer met deze oriëntatie.");
+			} catch (IllegalPositionException e) {
+				// NOP
 			}
 			break;
 		case LEFT:
 			try {
 				result = new Position(pos.getX() - 1, pos.getY());
-			} catch (IllegalArgumentException e) {
-				throw new IllegalStateException("Er bestaat geen verdere positie meer met deze oriëntatie.");
+			} catch (IllegalPositionException e) {
+				// NOP
 			}
 			break;
 		}
@@ -1146,8 +1144,8 @@ public class Robot extends Entity{
 
 	}
 
-	private void setProgram(Program prog) {
-		this.program = prog;
+	private void setProgram(Program program) {
+		this.program = program;
 	}
 
 	public int saveProgramToFile(String path) {
@@ -1155,11 +1153,7 @@ public class Robot extends Entity{
 		return 0;
 	}
 
-	public String prettyPrintProgram() {
-		return getProgram().getPrettyPrint();
-	}
-
-	private Program getProgram() {
+	public Program getProgram() {
 		return program;
 	}
 
@@ -1169,11 +1163,3 @@ public class Robot extends Entity{
 	}
 
 }
-
-// hier ga ik de Random todo's zetten dus dingen die volgens mij ng moeten gebeuren.
-//TODO: Inputstream met scanner om die programmas deftig te kunnen inlezen.
-//TODO: Private shit beginnen maken.
-//TODO: merge aanpassen.
-//TODO: Alles van die programma's. 
-//TODO: Testen veel testen.
-//TODO: Error gevonden voor pick up 

@@ -359,7 +359,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 	@Override
 	public void prettyPrintProgram(Robot robot, Writer writer) {
 		try {
-			writer.write(robot.prettyPrintProgram());
+			writer.write(robot.getProgram().getPrettyPrint());
 		} catch (IOException e) {
 			System.err.println("Er is nog geen geldig programma ingelezen.");
 		}
