@@ -12,7 +12,7 @@ public class Program {
 
 	private ArrayList<Command> program = new ArrayList<>();
 
-	private String prettyPrintLine = "";
+	private String prettyPrintLine;
 
 	public Program(String path) throws FileNotFoundException{
 		File file = new File(path);
@@ -21,21 +21,20 @@ public class Program {
 
 	private void procesFile(File file) throws FileNotFoundException {
 		try{
+			String result = "";
 			Scanner scan = new Scanner(file);
 			while (scan.hasNextLine()) {
-				this.prettyPrintLine.concat(scan.nextLine());
+				result = result + scan.nextLine();
 			}
+			this.prettyPrintLine = result;
 			readProgram();
 		}catch (FileNotFoundException esc){
 			throw new FileNotFoundException();
 		}
 	}
 
-	private void readProgram() {
-		for(int i = 0; i < this.getPrettyPrint().length();i++){
-			char currChar = this.getPrettyPrint().charAt(i);
-			
-		}
+	private void readProgram(){
+		
 	}
 
 	public String getPrettyPrint(){

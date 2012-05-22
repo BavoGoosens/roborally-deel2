@@ -1,5 +1,6 @@
 package roborally.model;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Set;
@@ -342,7 +343,12 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public int loadProgramFromFile(Robot robot, String path) {
-		return robot.loadProgramFromFile(path);
+		try {
+			return robot.loadProgramFromFile(path);
+		}catch (FileNotFoundException exc){
+			System.err.println(exc.getMessage());
+			return -1;
+		}
 	}
 
 	@Override
