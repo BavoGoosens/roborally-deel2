@@ -609,6 +609,9 @@ public class Robot extends Entity{
 	 * 
 	 * @param	item
 	 * 			De surprise box waarvoor een willekeurige actie uitgevoerd wordt.
+	 * 
+	 * @post	De robot is geraakt door een explosie, de robot is geteleporteerd naar een willekeurige positie (de nieuwe positie kan gelijk zijn aan de positie die de robot had) of de robot draagt een nieuw voorwerp.
+	 * 			|new.getMaxEnergy().equals(new Energy(0)) || new.getMaxEnergy().getEnergy() < this.getMaxEnergy().getEnergy() || new.getPosessions.size() == this.getPossessions.size() + 1
 	 */
 	public void doSurpriseBoxAction(Item item){
 		Random rand = new Random();
