@@ -23,6 +23,11 @@ public class Battery extends Item{
 	 * Minimale energie die een batterij kan hebben.
 	 */
 	public final static Energy MINBATTERYENERGY = new Energy(0);
+	/** 
+	 * De hoeveelheid energie die een battery bijkrijgt wanneer hij geraakt wordt.
+	 */
+	private final static Energy HIT_ENERGY = new Energy(500);
+
 	
 	/**
 	 * Maakt een nieuwe batterij aan.
@@ -44,6 +49,18 @@ public class Battery extends Item{
 	 */
 	public Battery(Energy energy, Weight weight){
 		super(energy, weight);
+	}
+	
+	/**
+	 * 
+	 */
+	//TODO: doc
+	@Override
+	protected void damage(){
+		Energy newEnergy = new Energy(super.getEnergy().getEnergy() + HIT_ENERGY.getEnergy());
+		if (newEnergy.getEnergy() > MAXBATTERYENERGY.getEnergy())
+			super.setEnergy(MAXBATTERYENERGY);
+		super.setEnergy(newEnergy);
 	}
 
 	/**
