@@ -110,6 +110,8 @@ public class Battery extends Item{
 	 * 
 	 * @return	Een textuele representatie van dit object waarbij duidelijk wordt wat de eigenschappen van dit object zijn.
 	 * 			|super.toString() + ", energie: " + getEnergy().toString()
+	 * 
+	 * @see		roborally.model.Item#toString()
 	 */
 	@Override
 	public String toString() {

@@ -50,6 +50,8 @@ public abstract class Item extends Entity{
 	 * 
 	 * @return	Een textuele representatie van dit object waarbij duidelijk wordt wat de eigenschappen van dit object zijn.
 	 * 			|super.toString() + ", gewicht: " + getWeight().toString()
+	 * 
+	 * @see		roborally.model.Entity#toString()
 	 */
 	@Override
 	public String toString() {

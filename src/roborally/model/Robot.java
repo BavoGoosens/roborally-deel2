@@ -642,35 +642,34 @@ public class Robot extends Entity{
 	}
 
 	/**
-	 * Deze methode plaatst een Item uit de bezittingen van de robot op de huidige positie van de robot in het bord van de robot.
+	 * Deze methode plaatst een voorwerp uit de bezittingen van de robot op de huidige positie van de robot in het bord van de robot.
 	 * 
 	 * @param	item
-	 * 			De batterij die op het bord geplaatst moet worden.
+	 * 			Het voorwerp dat op het bord geplaatst moet worden.
 	 * 
 	 * @throws 	IllegalArgumentException
 	 * 			Het item is niet in het bezit van de robot.
 	 * 
-	 * @throws 	IllegalStateException
-	 * 		 	Het item staat niet op een bord.
+	 * @throws 	EntityNotOnBoardException
+	 * 		 	De robot staat niet op een bord.
 	 * 
-	 * @post	Het item is niet langer in het bezit van de robot.
-	 * 			|new.getPossessions().contains(item) == false
+	 * @post	Het voorwerp is niet langer in het bezit van de robot.
+	 * 			|!new.getPossessions().contains(item)
 	 * 
-	 * @post	Het item bevindt zich op dezelfde positie als de robot.
-	 * 			|(new item).getPosition().equals(new.getPosition()) == true
+	 * @post	Het voorwerp bevindt zich op dezelfde positie als de robot.
+	 * 			|(new item).getPosition().equals(new.getPosition())
 	 * 
-	 * @post	Het item bevindt zich op hetzelfde bord als de robot.
-	 * 			|(new item).getBoard().equals(new.getBoard()) == true
+	 * @post	Het voorwerp bevindt zich op hetzelfde bord als de robot.
+	 * 			|(new item).getBoard() == new.getBoard()
 	 */
-	public void drop(Item item) throws IllegalArgumentException, IllegalStateException{
+	public void drop(Item item) throws IllegalArgumentException, EntityNotOnBoardException{
 		if(!isOnBoard()){
-			throw new IllegalStateException("De robot staat niet op een bord.");
+			throw new EntityNotOnBoardException();
 		}else if(!getPossessions().contains(item)){
 			throw new IllegalArgumentException("De robot heeft dit item niet.");
 		}else{
 			getPossessions().remove(item);
 			item.putOnBoard(getBoard(), getPosition());
-			Collections.sort(getPossessions(), new ItemComparator());
 		}
 	}
 
@@ -678,32 +677,24 @@ public class Robot extends Entity{
 	 * Deze methode kijkt na of de robot kan draaien.
 	 * 
 	 * @return	Boolean die true is als de robot voldoende energie heeft om te draaien.
-	 * 			|if(this.getEnergy().getEnergy() - TURN_COST.getEnergy() < 0)
-	 * 			|	false
-	 * 			|true
+	 * 			|(this.getEnergy().getEnergy() - TURN_COST.getEnergy() >= 0)
 	 */
 	@Raw
 	public boolean canTurn(){
-		if(this.getEnergy().getEnergy() - TURN_COST.getEnergy() < 0)
-			return false;
-		return true;
+		return (this.getEnergy().getEnergy() - TURN_COST.getEnergy() >= 0);
 	}
 
 	/**
-	 * Deze methode kijkt na of de robot kan moven.
+	 * Deze methode kijkt na of de robot kan bewegen.
 	 * 
 	 * @return	Boolean die true is als de robot voldoende energie heeft om te moven.
-	 * 			|if(this.getEnergy().getEnergy() - moveCost(this).getEnergy() < 0)
-	 * 			|	false
-	 * 			|true
+	 * 			|(this.getEnergy().getEnergy() - moveCost(this).getEnergy() >= 0)
 	 * 
 	 * @note	Deze methode houdt enkel rekening met de minimale energie en niet met de positie.
 	 */
 	@Raw
 	public boolean canMove(){
-		if(this.getEnergy().getEnergy() - moveCost(this).getEnergy() < 0)
-			return false;
-		return true;
+		return (this.getEnergy().getEnergy() - moveCost(this).getEnergy() >= 0);
 	}
 
 	/*
