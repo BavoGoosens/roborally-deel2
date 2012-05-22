@@ -94,7 +94,7 @@ public class Robot extends Entity{
 	 */
 	public Robot(Orientation orientation, Energy energy){
 		setMaxEnergy(MAX_ENERGY);
-		this.setEnergy(energy);
+		setEnergy(energy);
 		setOrientation(orientation);
 	}
 
@@ -160,16 +160,16 @@ public class Robot extends Entity{
 	/**
 	 * Deze methode stelt de bovengrens in van de energie van de robot
 	 * 
-	 * @param	currentMaxEnergy
+	 * @param	maxEnergy
 	 * 			De nieuwe waarde die de maximale energie van de robot moet worden.
 	 * 
 	 * @post	De energie is kleiner of gelijk aan de maximale energie.
-	 * 			|this.getMaxEnergy().equals(currentMaxEnergy)
+	 * 			|new.getMaxEnergy().equals(maxEnergy)
 	 * 
 	 * @note	Wanneer deze gewijzigd wordt is het aangeraden om verifyEnergy() op te roepen.
 	 */
-	public void setMaxEnergy(Energy currentMaxEnergy) {
-		this.maxEnergy = currentMaxEnergy;
+	public void setMaxEnergy(Energy maxEnergy) {
+		this.maxEnergy = maxEnergy;
 	}
 
 	/**
@@ -212,11 +212,11 @@ public class Robot extends Entity{
 	 * 			|new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), TURN_COST))
 	 */
 	public void turnClockWise() throws NotEnoughEnergyException{
-		if(!this.canTurn()){
+		if(!canTurn()){
 			throw new NotEnoughEnergyException(getEnergy());
 		}
-		this.setOrientation(this.getOrientation().getClockwiseOrientation());
-		this.setEnergy(Energy.energyDifference(this.getEnergy(), TURN_COST));
+		setOrientation(getOrientation().getClockwiseOrientation());
+		setEnergy(Energy.energyDifference(getEnergy(), TURN_COST));
 	}
 
 	/**
@@ -233,11 +233,11 @@ public class Robot extends Entity{
 	 * 			|new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), TURN_COST))
 	 */
 	public void turnCounterClockWise() throws NotEnoughEnergyException{
-		if(!this.canTurn()){
+		if(!canTurn()){
 			throw new NotEnoughEnergyException(getEnergy());
 		}
-		this.setOrientation(this.getOrientation().getCounterClockwiseOrientation());
-		this.setEnergy(Energy.energyDifference(this.getEnergy(), TURN_COST));
+		setOrientation(getOrientation().getCounterClockwiseOrientation());
+		setEnergy(Energy.energyDifference(getEnergy(), TURN_COST));
 	}
 
 	/**
@@ -246,7 +246,7 @@ public class Robot extends Entity{
 	 * 
 	 * @throws 	IllegalStateException
 	 * 			De robot heeft onvoldoende energie om te bewegen of de positie waarnaar bewogen moet worden is ongeldig of reeds bezet.
-	 * 			|!this.canMove() || !Position.isValidPosition(this.getOrientation().getNextPosition(this.getPosition())) || !this.getBoard().isPlacableOnPosition(Calculator.getNextPosition(this.getPosition(), this.getOrientation()))
+	 * 			|!canMove() || !Position.isValidPosition(getOrientation().getNextPosition(getPosition())) || !getBoard().isPlacableOnPosition(Calculator.getNextPosition(this.getPosition(), this.getOrientation()))
 	 * 
 	 * @post	De robot staat een plaats verder.
 	 * 			|new.getPosition().equals(getNextPosition(this.getPosition(), this.getOrientation())) == true
@@ -374,7 +374,7 @@ public class Robot extends Entity{
 		if(!isOnBoard()){
 			throw new EntityNotOnBoardException();
 		}
-		this.setEnergy(Energy.energyDifference(this.getEnergy(), SHOOT_COST));
+		setEnergy(Energy.energyDifference(getEnergy(), SHOOT_COST));
 		Entity target = getShootTarget();
 		if(target != null)
 			target.damage();
@@ -384,12 +384,22 @@ public class Robot extends Entity{
 	 * Deze methode geeft het doelwit terug dat geraakt kan worden wanneer de robot schiet.
 	 * 
 	 * @return	Het doelwit dat geraakt kan worden wanneer de robot schiet.
+	 * 			|
+	 * 			|
+	 * 			|
+	 * 			|
+	 * 			|
+	 * 			|
+	 * 			|
+	 * 			|
+	 * 			|
+	 * 			|
 	 */
 	private Entity getShootTarget(){
-		Position beginpos = this.getPosition();
-		while(this.getBoard().isValidBoardPosition(getNextPosition(beginpos, this.getOrientation()))){
-			beginpos = getNextPosition(beginpos, this.getOrientation());
-			HashSet<Entity> content = this.getBoard().getEntityOnPosition(beginpos);
+		Position beginpos = getPosition();
+		while(getBoard().isValidBoardPosition(getNextPosition(beginpos, getOrientation()))){
+			beginpos = getNextPosition(beginpos, getOrientation());
+			HashSet<Entity> content = getBoard().getEntityOnPosition(beginpos);
 			if(content != null){
 				Random rndm = new Random();
 				Entity[] results = (Entity[]) content.toArray();
@@ -406,7 +416,7 @@ public class Robot extends Entity{
 	 * 			Energie waarmee moet opgeladen worden.
 	 * 
 	 * @post	De robot is opgeladen met de opgegeven hoeveelheid energie.
-	 * 			|if(!isValidRobotEnergy(Energy.energySum(this.getEnergy(), energy).getEnergy(), this)){
+	 * 			|if(!isValidRobotEnergy(Energy.energySum(getEnergy(), energy).getEnergy(), this)){
 	 * 			|	new.getEnergy().equals(this.getMaxEnergy())
 	 * 			|}else{
 	 * 			|	new.getEnergy().equals(Energy.energySum(this.getEnergy(), energy))
@@ -414,25 +424,28 @@ public class Robot extends Entity{
 	 * 			
 	 */
 	public void recharge(Energy energy){
-		Energy newEnergy = Energy.energySum(this.getEnergy(), energy);
+		Energy newEnergy = Energy.energySum(getEnergy(), energy);
 		if(!isValidRobotEnergy(newEnergy, this))
 			newEnergy = getMaxEnergy();
-		this.setEnergy(newEnergy);
+		setEnergy(newEnergy);
 	}
 
 	/**
+	 * Deze methode wordt opgeroepen wanneer de robot geraakt wordt door een laser of een surprise box.
 	 * 
+	 * @post	De maximale energie van de robot is gedaald met de hoeveelheid gedefinieerd in SHOOT_DAMAGE.
+	 * 			|new.getMaxEnergy().equals(Energy.energyDifference(this.getMaxEnergy(), SHOOT_DAMAGE))
+	 * 
+	 * @effect	De huidige energie wordt nagekeken en indien nodig verbeterd.
+	 * 			|verifyEnergy()
 	 */
 	@Override
 	protected void damage(){
-		if (this.getMaxEnergy().getEnergy() > SHOOT_DAMAGE.getEnergy()){
-			Energy newEnergy = new Energy(this.getMaxEnergy().getEnergy() - SHOOT_DAMAGE.getEnergy());
-			if (this.getEnergy().getEnergy() > newEnergy.getEnergy())
-				this.setEnergy(newEnergy);
-			this.setMaxEnergy(newEnergy);
+		if (getMaxEnergy().getEnergy() > SHOOT_DAMAGE.getEnergy()){
+			setMaxEnergy(Energy.energyDifference(getMaxEnergy(), SHOOT_DAMAGE));
 			verifyEnergy();
 		} else {
-			this.destroy();
+			destroy();
 		}
 	}
 	
@@ -465,14 +478,14 @@ public class Robot extends Entity{
 	 * 
 	 * @return	Het totale gewicht van alles wat de robot draagt.
 	 * 			|int totalWeight = 0;
-	 * 			|for(Battery batt: this.getPossessions()){
-	 * 			|	totalWeight += batt.getWeight().getWeight();
+	 * 			|for(Item item: getPossessions()){
+	 * 			|	totalWeight += item.getWeight().getWeight();
 	 * 			|}
 	 * 			|new Weight(totalWeight)
 	 */
 	public Weight getTotalWeight(){
 		int totalWeight = 0;
-		for(Item item: this.getPossessions()){
+		for(Item item: getPossessions()){
 			totalWeight += item.getWeight().getWeight();
 		}
 		return new Weight(totalWeight);
@@ -481,11 +494,11 @@ public class Robot extends Entity{
 	/**
 	 * Geeft een lijst terug van alle items die de robot momenteel draagt.
 	 * 
-	 * @return	De lijst van batterijen
-	 * 			|this.Possessions
+	 * @return	De lijst van items.
+	 * 			|possessions
 	 */
 	public ArrayList<Item> getPossessions(){
-		return this.possessions;
+		return possessions;
 	}
 
 	/**
@@ -496,11 +509,11 @@ public class Robot extends Entity{
 	 * 
 	 * @throws 	IllegalArgumentException
 	 * 			De batterij staat niet op dezelfde plaats als de robot of niet op hetzelfde bord.
-	 * 			|!this.getBoard().equals(battery.getBoard()) || !this.getPosition().equals(battery.getPosition())
+	 * 			|!getBoard().equals(battery.getBoard()) || !getPosition().equals(battery.getPosition())
 	 * 
 	 * @throws 	IllegalStateException
 	 * 			De robot staat niet op een bord.
-	 * 			|!this.isOnBoard()
+	 * 			|!isOnBoard()
 	 * 
 	 * @post	De batterij zit in de bezittingen van de robot.
 	 * 			|new.getPossessions().contains(battery)
