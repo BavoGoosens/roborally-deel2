@@ -1,5 +1,6 @@
 package roborally.model;
 
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -1086,6 +1087,26 @@ public class Robot extends Entity{
 		return "Position: " + this.getPosition().toString() + " Energy: " + this.getEnergy().toString() + " MaxEnergy : " +
 			this.getMaxEnergy().toString();
 			}
+
+	public int loadProgramFromFile(String path) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public int saveProgramToFile(String path) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public void prettyPrintProgram(Writer writer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void stepn(int n) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
 

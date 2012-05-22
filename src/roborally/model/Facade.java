@@ -117,7 +117,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 		try{
 			robot.putOnBoard(board, new Position(x, y));
 		}catch (IllegalArgumentException esc){
-			System.out.println(esc.getMessage());
+			System.err.println(esc.getMessage());
 		}
 	}
 
@@ -298,7 +298,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 		try {
 			wall.putOnBoard(board, new Position(x, y));
 		}catch (IllegalArgumentException exc){
-			System.out.println(exc.getMessage());
+			System.err.println(exc.getMessage());
 		}
 	}
 
@@ -341,26 +341,22 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public int loadProgramFromFile(Robot robot, String path) {
-		// TODO: programma's beginnen maken.
-		return 0;
+		return robot.loadProgramFromFile(path);
 	}
 
 	@Override
 	public int saveProgramToFile(Robot robot, String path) {
-		// TODO: programma's beginnen maken.
-		return 0;
+		return robot.saveProgramToFile(path);
 	}
 
 	@Override
 	public void prettyPrintProgram(Robot robot, Writer writer) {
-		// TODO: programma's beginnen maken.
-
+		robot.prettyPrintProgram(writer);
 	}
 
 	@Override
 	public void stepn(Robot robot, int n) {
-		// TODO: programma's beginnen maken.
-
+		robot.stepn(n);
 	}
 
 }
