@@ -168,8 +168,8 @@ public abstract class Entity {
 	@Raw
 	public void putOnBoard(Board board, Position position){
 		board.putEntity(position, this);
-		setBoard(board);
-		setPosition(position);
+		this.setBoard(board);
+		this.setPosition(position);
 	}
 
 	/**
@@ -180,9 +180,9 @@ public abstract class Entity {
 	 */
 	@Raw
 	public void removeFromBoard(){
-		getBoard().removeEntity(this);
-		setBoard(null);
-		setPosition(null);
+		this.getBoard().removeEntity(this);
+		this.setBoard(null);
+		this.setPosition(null);
 	}
 
 	
@@ -204,4 +204,6 @@ public abstract class Entity {
 			return false;
 		return true;
 	}
+
+	protected void damage() {}
 }
