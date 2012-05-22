@@ -16,7 +16,7 @@ public class EntityNotOnBoardException extends IllegalStateException{
 	 * 			|new.getMessage().equals("Dit object bevindt zich niet op een bord.")
 	 */
 	public EntityNotOnBoardException(){
-		super("Dit object bevindt zich niet op een bord.");
+		super("Het object waarnaar verwezen werd bevindt zich niet op een bord.");
 	}
 
 }

@@ -48,7 +48,7 @@ public class RepairKit extends Item{
 	 * @post	De energie van het item is gelijk aan de gegeven energie.
 	 * 			|new.getEnergy().equals(energy)
 	 */
-	private void setEnergy(Energy energy) {
+	public void setEnergy(Energy energy) {
 		this.energy = energy;
 	}
 	

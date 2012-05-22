@@ -384,16 +384,16 @@ public class Robot extends Entity{
 	 * Deze methode geeft het doelwit terug dat geraakt kan worden wanneer de robot schiet.
 	 * 
 	 * @return	Het doelwit dat geraakt kan worden wanneer de robot schiet.
-	 * 			|
-	 * 			|
-	 * 			|
-	 * 			|
-	 * 			|
-	 * 			|
-	 * 			|
-	 * 			|
-	 * 			|
-	 * 			|
+	 * 			|Position beginpos = getPosition();
+	 * 			|while(getBoard().isValidBoardPosition(getNextPosition(beginpos, getOrientation()))){
+	 * 			|	beginpos = getNextPosition(beginpos, getOrientation());
+	 * 			|	HashSet<Entity> content = getBoard().getEntityOnPosition(beginpos);
+	 * 			|	if(content != null){
+	 * 			|		Random rndm = new Random();
+	 * 			|		Entity[] results = (Entity[]) content.toArray();
+	 * 			|		results[rndm.nextInt(results.length)]
+	 * 			|	}
+	 * 			|}
 	 */
 	private Entity getShootTarget(){
 		Position beginpos = getPosition();
@@ -448,7 +448,7 @@ public class Robot extends Entity{
 			destroy();
 		}
 	}
-	
+
 	/**
 	 * Deze methode kijkt na of de energie van de robot groter is dan de huidige maximale energie van de robot. Indien deze groter is dan wordt de energie van de robot ingesteld op zijn maximale energie.
 	 * 
@@ -459,7 +459,7 @@ public class Robot extends Entity{
 		if(getEnergy().getEnergy() > getMaxEnergy().getEnergy())
 			setEnergy(getMaxEnergy());
 	}
-	
+
 	/**
 	 * Deze methode berekent de kost van 1 move.
 	 * 
@@ -502,32 +502,32 @@ public class Robot extends Entity{
 	}
 
 	/**
-	 * Deze methode neemt een batterij op in de bezittingen van de robot.
+	 * Deze methode neemt een voorwerp op in de bezittingen van de robot.
 	 * 
-	 * @param 	battery
-	 * 			De batterij die moet opgenomen worden.
+	 * @param 	item
+	 * 			Het voorwerp dat moet opgenomen worden.
 	 * 
-	 * @throws 	IllegalArgumentException
-	 * 			De batterij staat niet op dezelfde plaats als de robot of niet op hetzelfde bord.
-	 * 			|!getBoard().equals(battery.getBoard()) || !getPosition().equals(battery.getPosition())
+	 * @throws 	IllegalPositionException
+	 * 			Het voorwerp staat niet op dezelfde positie als de robot.
+	 * 			|!getPosition().equals(item.getPosition())
 	 * 
-	 * @throws 	IllegalStateException
-	 * 			De robot staat niet op een bord.
-	 * 			|!isOnBoard()
+	 * @throws 	EntityNotOnBoardException
+	 * 			De robot staat niet op een bord of het voorwerp staat niet op hetzelfde bord als de robot.
+	 * 			|!isOnBoard() || (getBoard() != item.getBoard())
 	 * 
-	 * @post	De batterij zit in de bezittingen van de robot.
-	 * 			|new.getPossessions().contains(battery)
+	 * @post	Het voorwerp zit in de bezittingen van de robot.
+	 * 			|new.getPossessions().contains(item)
 	 * 
-	 * @post	De batterij staat niet meer op een bord.
-	 * 			|!battery.isOnBoard()
+	 * @post	Het voorwerp staat niet meer op een bord.
+	 * 			|!item.isOnBoard()
 	 */
-	public void pickUp(Item item) throws IllegalArgumentException, IllegalStateException{
-		if(!this.isOnBoard()){
-			throw new IllegalStateException("De robot staat niet op een bord.");
-		}else if(!this.getBoard().equals(item.getBoard())){
-			throw new IllegalArgumentException("De robot staat niet op hetzelfde bord als de batterij.");
-		}else if(!this.getPosition().toString().equals(item.getPosition().toString())){
-			throw new IllegalArgumentException("De robot staat niet op dezelfde positie als de batterij.");
+	public void pickUp(Item item) throws EntityNotOnBoardException, IllegalPositionException{
+		if(!isOnBoard()){
+			throw new EntityNotOnBoardException();
+		}else if(getBoard() != item.getBoard()){
+			throw new EntityNotOnBoardException();
+		}else if(!getPosition().equals(item.getPosition())){
+			throw new IllegalPositionException(item.getPosition());
 		}else{
 			item.removeFromBoard();
 			this.getPossessions().add(item);
@@ -535,60 +535,53 @@ public class Robot extends Entity{
 		}
 	}
 
-
 	/**
-	 * Deze methode laadt de robot op met de energie in een batterij die hij bij zich heeft.
+	 * Deze methode gebruikt een voorwerp dat de robot bezit.
 	 * 
-	 * @param	battery
-	 * 			De batterij die gebruikt moet worden.
-	 * 
-	 * @post	De robot is opgeladen met een hoeveelheid energie uit de batterij (dit kan onveranderd blijven).
-	 * 			|new.getEnergy().equals(Energy.energySum(this.getEnergy(), Energy.energyDifference(battery.getEnergy(), Energy.energyDifference(Robot.MAXENERGY, this.getEnergy())))) == true
-	 * 
-	 * @post	De batterij heeft mogelijks energie verloren.
-	 * 			|(new battery).getEnergy().equals(Energy.energyDifference(battery.getEnergy(), Energy.energyDifference(Robot.MAXENERGY, this.getEnergy()))) == true
+	 * @param	item
+	 * 			Het voorwerp dat gebruikt moet worden.
 	 */
-	//TODO: neke checke
-	public void use(Item item) {
-		if (this.getPossessions().contains(item)){
-			if(item.isTerminated()){
-				this.getPossessions().remove(item);
-			}else{
-				if (item instanceof Battery){
-					Energy toRecharge = Energy.energyDifference(item.getEnergy(), Energy.energyDifference(Robot.MAXENERGY, this.getEnergy()));
-					((Battery) item).setEnergy(toRecharge);
-					this.setEnergy(Energy.energySum(this.getEnergy(), toRecharge));
-					if(((Battery) item).getEnergy().getEnergy() == 0){
-						this.getPossessions().remove(item);
-						Collections.sort(this.getPossessions(), new ItemComparator());
-						item.destroy();
-					}
-				} else if (item instanceof SurpriseBox){
-					getSurpriseBoxAction(item);
-				}else {
-					// item instanceof Repairkit
-				}
-			}
+	public void use(Item item) throws IllegalArgumentException{
+		if(!getPossessions().contains(item))
+			throw new IllegalArgumentException("Dit voorwerp is niet in het bezit van de robot.");
+		if(item.isTerminated()){
+			getPossessions().remove(item);
 		}else{
-			throw new IllegalArgumentException("Deze batterij is niet in het bezit van de robot."); 
+			if (item instanceof Battery){
+				Battery batt = (Battery) item;
+				Energy canRecharge = Energy.energyDifference(getMaxEnergy(), getEnergy());
+				if(Energy.energyDifference(batt.getEnergy(), canRecharge).getEnergy() > 0){
+					// Er blijft energie over in de batterij en de robot is volledig opgeladen.
+					setEnergy(getMaxEnergy());
+					batt.setEnergy(Energy.energyDifference(batt.getEnergy(), canRecharge));
+				}else if(Energy.energyDifference(canRecharge, batt.getEnergy()).getEnergy() > 0){
+					// De robot is niet volledig opgeladen en de batterij is leeg.
+					setEnergy(Energy.energyDifference(canRecharge, batt.getEnergy()));
+					getPossessions().remove(batt);
+					batt.destroy();
+				}else{
+					// De robot is volledig opgeladen en de batterij is leeg.
+					setEnergy(getMaxEnergy());
+					getPossessions().remove(batt);
+					batt.destroy();
+				}
+			} else if (item instanceof SurpriseBox){
+				doSurpriseBoxAction(item);
+			}else if (item instanceof RepairKit){
+				
+			}
 		}
 	}
 
-	public void getSurpriseBoxAction(Item item){
+	public void doSurpriseBoxAction(Item item){
 		Random rand = new Random();
 		int choice = 1 + rand.nextInt(3);
 		if (choice == 1){
-			//explosion
-			this.setMaxEnergy(new Energy(this.getMaxEnergy().getEnergy()- SHOOT_DAMAGE.getEnergy()));
-			if (this.getEnergy().getEnergy() < this.getMaxEnergy().getEnergy()){
-				this.setEnergy(this.getMaxEnergy());
-			}
-			item.destroy();
+			//explosie
+			damage();
 		}else if (choice == 2){
-			//teleport
-			Position teleport = getRandomBoardPosition();
-			this.setPosition(teleport);
-			item.destroy();
+			//teleporteren
+			this.setPosition(getBoard().getRandomPosition(this));
 		}else{
 			//random new item
 			choice = 1 + rand.nextInt(3);
@@ -596,46 +589,19 @@ public class Robot extends Entity{
 				//SurpriseBox
 				SurpriseBox box = new SurpriseBox(item.getWeight());
 				this.getPossessions().add(box);
-				item.destroy();
 			}else if (choice == 2){
 				//Battery
 				Battery bat = new Battery(new Energy(rand.nextInt((int)Battery.MAX_ENERGY.getEnergy()) + 1),item.getWeight());
 				this.getPossessions().add(bat);
-				item.destroy();
 			}else{
 				//Repairkit
 				RepairKit kit = new RepairKit(new Energy(rand.nextInt((int)RepairKit.MAX_ENERGY.getEnergy()) + 1) ,item.getWeight());
 				this.getPossessions().add(kit);
-				item.destroy();
 			}
+			Collections.sort(this.getPossessions(), new ItemComparator());
 		}
-	}
-
-	private Position getRandomBoardPosition() {
-		long height = this.getBoard().getHeight();
-		long width = this.getBoard().getHeight();
-		Random rand = new Random();
-		long randomX = 0;
-		long randomY = 0;
-		boolean xfound = false;
-		boolean yfound = false;		
-		while (!xfound){
-			randomX = rand.nextLong();
-			if (randomX >= 0 && randomX <= width){
-				xfound = true;
-			}
-		}
-		while (!yfound){
-			randomY = rand.nextLong();
-			if (randomY >= 0 && randomY <= height){
-				xfound = true;
-			}
-		}
-		Position teleport = new Position(randomX, randomY);
-		if (this.getBoard().isPlacableOnPosition(teleport, this)){
-			return teleport;		
-		}
-		return getRandomBoardPosition();
+		getPossessions().remove(item);
+		item.destroy();
 	}
 
 	/**
@@ -1145,9 +1111,9 @@ public class Robot extends Entity{
 
 	public int loadProgramFromFile(String path) throws FileNotFoundException {
 
-			Program prog = new Program(path);
-			this.setProgram(prog);
-			return 0;
+		Program prog = new Program(path);
+		this.setProgram(prog);
+		return 0;
 
 
 	}

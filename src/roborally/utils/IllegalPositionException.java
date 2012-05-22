@@ -37,7 +37,7 @@ public class IllegalPositionException extends IllegalArgumentException{
 	 * 			|new.getMessage().equals("De positie met coördinaten " + position.toString() + " bestaat niet of is reeds bezet.")
 	 */
 	public IllegalPositionException(Position position) {
-		super("De positie met coördinaten " + position.toString() + " bestaat niet in dit bord of is reeds bezet.");
+		this(position.getX(), position.getY());
 	}
 	
 }

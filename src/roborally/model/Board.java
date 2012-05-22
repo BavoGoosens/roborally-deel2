@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Set;
 
 import be.kuleuven.cs.som.annotate.Basic;
@@ -484,4 +485,32 @@ public class Board{
 		}
 		return rep;
 	}
+	
+	protected Position getRandomPosition(Robot robot) {
+		long height = getHeight();
+		long width = getHeight();
+		Random rand = new Random();
+		long randomX = 0;
+		long randomY = 0;
+		boolean xfound = false;
+		boolean yfound = false;		
+		while (!xfound){
+			randomX = rand.nextLong();
+			if (randomX >= 0 && randomX <= width){
+				xfound = true;
+			}
+		}
+		while (!yfound){
+			randomY = rand.nextLong();
+			if (randomY >= 0 && randomY <= height){
+				xfound = true;
+			}
+		}
+		Position teleport = new Position(randomX, randomY);
+		if (isPlacableOnPosition(teleport, robot)){
+			return teleport;		
+		}
+		return getRandomPosition(robot);
+	}
+	
 }

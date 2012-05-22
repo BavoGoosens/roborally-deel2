@@ -48,7 +48,7 @@ public class Battery extends Item{
 	 * @post	De energie van het item is gelijk aan de gegeven energie.
 	 * 			|new.getEnergy().equals(energy)
 	 */
-	private void setEnergy(Energy energy) {
+	public void setEnergy(Energy energy) {
 		this.energy = energy;
 	}
 	
@@ -84,7 +84,7 @@ public class Battery extends Item{
 	/**
 	 * De maximale energie van een batterij.
 	 */
-	public final static Energy MAX_ENERGY = new Energy(Double.MAX_VALUE);
+	public final static Energy MAX_ENERGY = new Energy(5000);
 	
 	/**
 	 * Deze methode wordt opgeroepen wanneer de batterij geraakt wordt door een laser of een surprise box.
