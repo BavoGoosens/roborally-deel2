@@ -432,6 +432,18 @@ public class Robot extends Entity{
 			this.destroy();
 		}
 	}
+	
+	/**
+	 * Deze methode kijkt na of de energie van de robot groter is dan de huidige maximale energie van de robot. Indien deze groter is dan wordt de energie van de robot ingesteld op zijn maximale energie.
+	 * 
+	 * @post	De energie van de robot is kleiner of gelijk aan zijn maximale energie.
+	 * 			|new.getEnergy().getEnergy() <= new.getMaxEnergy().getEnergy()
+	 */
+	private void verifyEnergy(){
+		if(getEnergy().getEnergy() > getMaxEnergy().getEnergy())
+			setEnergy(getMaxEnergy());
+	}
+	
 	/**
 	 * Deze methode berekent de kost van 1 move.
 	 * 
