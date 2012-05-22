@@ -1,5 +1,6 @@
 package roborally.model;
 
+import java.io.FileNotFoundException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -71,6 +72,9 @@ public class Robot extends Entity{
 	 * @note	Gebruik altijd Collections.sort met een BatteryComparator() wanneer deze lijst gewijzigd wordt.
 	 */
 	private ArrayList<Item> possessions = new ArrayList<>();
+	
+	private Program program;
+	
 	/**
 	 * Deze methode maakt een nieuwe robot aan.
 	 * 
@@ -1089,8 +1093,19 @@ public class Robot extends Entity{
 			}
 
 	public int loadProgramFromFile(String path) {
-		// TODO Auto-generated method stub
+		try {
+			Program prog = new Program(path);
+			this.setProgram(prog);
+			return 0;
+		}catch (FileNotFoundException exc){
+			System.err.println(exc.getMessage());
+			return -1;
+		}
 		
+	}
+
+	private void setProgram(Program prog) {
+		this.program = prog;
 	}
 
 	public int saveProgramToFile(String path) {

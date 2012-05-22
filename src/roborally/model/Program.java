@@ -10,12 +10,12 @@ public class Program {
 
 	private ArrayList<Commands> program = new ArrayList<>();
 
-	public Program(String path){
+	public Program(String path) throws FileNotFoundException{
 		File file = new File(path);
 		procesFile(file);
 	}
 
-	private void procesFile(File file) {
+	private void procesFile(File file) throws FileNotFoundException {
 		try{
 			ArrayList<String> lines = new ArrayList<>();
 			Scanner scan = new Scanner(file);
@@ -23,7 +23,7 @@ public class Program {
 				lines.add(scan.nextLine());
 			}
 		}catch (FileNotFoundException esc){
-			System.err.println(esc.getMessage());
+			throw new FileNotFoundException();
 		}
 	}
 }
