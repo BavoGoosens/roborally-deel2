@@ -1080,6 +1080,12 @@ public class Robot extends Entity{
 	public static long calculateManhattan(Position pos1, Position pos2){
 		return (Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY()));
 	}
+	
+	@Override
+	public String toString(){
+		return "Position: " + this.getPosition().toString() + " Energy: " + this.getEnergy().toString() + " MaxEnergy : " +
+			this.getMaxEnergy().toString();
+			}
 
 }
 
