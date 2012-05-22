@@ -391,6 +391,7 @@ public class Board{
 	//TODO: hier moeten we alles opnieuw doen aangezien ze nu naast elkaar moeten uitkomen.
 	
 	public void merge(Board board2) {
+		/*
 		Set<String> b2PosStrings = board2.getMap().keySet();
 		for (String b2PosString : b2PosStrings){
 			Position b2Pos = Robot.getPositionFromString(b2PosString);
@@ -405,6 +406,7 @@ public class Board{
 			}
 		}
 		board2.terminate();
+		*/
 	}
 
 	/**
