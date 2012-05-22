@@ -8,91 +8,124 @@ public class While extends Command {
 		extractConditionBody(substring);		
 	}
 
+	@SuppressWarnings("boxing")
+	public Conditie getBasicConditie(String str){
+		String sbstr = str.trim();
+		sbstr = sbstr.substring(1);
+		String[] words = sbstr.split("[^a-z]");
+		if (words[0].equals("true")){
+			return new Conditie(ConditieEnum.TRUE);
+		}else if (words[0].equals("at")){
+			return  new Conditie(ConditieEnum.AT_ITEM);
+		}else if (words[0].equals("energy")){
+			return new Conditie(ConditieEnum.ENERGY_AT_LEAST, getAmountEnergy(sbstr));
+		}else if (words[0].equals("wall")){
+			return new Conditie(ConditieEnum.WALL);
+		}else{
+			return new Conditie(ConditieEnum.CAN_HIT_ROBOT);
+			}
+	}
+
 	private void extractConditionBody(String substring) {
 		String sbstr = substring.trim();
 		sbstr = sbstr.substring(1);
 		String[] words = sbstr.split("[^a-z]");
-		if (words[0].equals("true")){
-			Conditie cnd = new Conditie(ConditieEnum.TRUE);
-			this.setCondition(cnd);
-			sbstr = sbstr.substring(5);
-			sbstr = sbstr.trim();
-			makeBody(sbstr);
-		}else if (words[0].equals("at-item")){
-			Conditie cnd = new Conditie(ConditieEnum.AT_ITEM);
-			this.setCondition(cnd);
-			sbstr = sbstr.substring(8);
-			sbstr = sbstr.trim();
-			makeBody(sbstr);
-		}else if (words[0].equals("energy-at-least")){
-			sbstr = sbstr.substring(16);
-			sbstr = sbstr.trim();
-			@SuppressWarnings("boxing")
-			Conditie cnd = new Conditie(ConditieEnum.ENERGY_AT_LEAST, getAmountEnergy(sbstr));
-			this.setCondition(cnd);
-		}else if (words[0].equals("wall")){
-			Conditie cnd = new Conditie(ConditieEnum.WALL);
-			this.setCondition(cnd);
-			sbstr = sbstr.substring(5);
-			sbstr = sbstr.trim();
-		}else if (words[0].equals("and")){
+		if (words[0].equals("and")){
 			sbstr = sbstr.substring(4);
 			sbstr = sbstr.trim();
-			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.AND, getAndOrSbStr(sbstr));
+			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.AND, getAndOrCond(sbstr));
 			this.setCondition(cnd);
+			int beginIdx = sbstr.indexOf(cnd.toString())+cnd.toString().length()- 3 ;
+			makeBody(sbstr.substring(beginIdx));
 		}else if (words[0].equals("or")){
 			sbstr = sbstr.substring(4);
 			sbstr = sbstr.trim();
-			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.OR, getAndOrSbStr(sbstr));
+			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.OR, getAndOrCond(sbstr));
 			this.setCondition(cnd);
 		}else if (words[0].equals("not")){
 			sbstr = sbstr.substring(4);
 			sbstr = sbstr.trim();
-			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.NOT, getNotSbStr(sbstr));
+			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.NOT, getNotCond(sbstr));
 			this.setCondition(cnd);
 		}
 		else{
-			Conditie cnd = new Conditie(ConditieEnum.CAN_HIT_ROBOT);
-			this.setCondition(cnd);
-			sbstr = sbstr.substring(14);
-			sbstr = sbstr.trim();
+			setCondition(getBasicConditie(sbstr));
+			makeBody(sbstr.substring(words[0].length()));
 		}
 	}
 
-	private void makeBody(String sbstr) {
-		// TODO Auto-generated method stub
-		
+	private void makeBody(String substr) {
+		String[] words = substr.split("[^a-z]");
+		if (words[0].equals("while")){
+			While whl = new While(substr.substring(5, substr.length()));
+			this.setBody(whl);
+		} else if (words[0].equals("seq")){
+			Sequentie seq = new Sequentie(substr.substring(3, substr.length()));
+			this.setBody(seq);
+		} else if (words[0].equals("if")){
+			If ifs = new If(substr.substring(2, substr.length()));
+			this.setBody(ifs);
+		} else {
+			if (words[0].equals("shoot")){
+				Basic bas = new Basic(BasicEnum.SHOOT);
+				this.setBody(bas);
+			}else if (words[0].equals("move")){
+				Basic bas = new Basic(BasicEnum.MOVE);
+				this.setBody(bas);
+			}else if (words[0].equals("turn")){
+				Basic bas = new Basic(BasicEnum.TURN);
+				this.setBody(bas);
+			}else{
+				Basic bas = new Basic(BasicEnum.PICK_UP_AND_USE);
+				this.setBody(bas);
+			}
+		}
 	}
 
 	@SuppressWarnings("boxing")
 	private Double getAmountEnergy(String sbstr) {
+		int beginIdx = sbstr.indexOf(' ');
 		int eindIdx = sbstr.indexOf(')');
-		String amount = sbstr.substring(0, eindIdx-1);
-		makeBody(sbstr.substring(eindIdx));
+		String amount = sbstr.substring(beginIdx,eindIdx);
 		return Double.parseDouble(amount);
 	}
 
-	private String getNotSbStr(String sbstr) {
+	private Conditie getNotCond(String sbstr) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	private void setCondition(SpecialeConditie cnd) {
-		// TODO Auto-generated method stub
-		
+		this.conditieSpeciaal = cnd;
 	}
 
-	private String getAndOrSbStr(String sbstr) {
-		// TODO Auto-generated method stub
-		return null;
+	private Conditie[] getAndOrCond(String sbstr) {
+		String[] condIndeling = sbstr.split("\\) ");
+		Conditie cond1 = getBasicConditie(condIndeling[0]);
+		Conditie cond2 = getBasicConditie(condIndeling[1]);
+		Conditie [] result = new Conditie[2];
+		result[0] = cond1;
+		result[1] = cond2;
+		return result;
 	}
 
 	private void setCondition(Conditie cnd) {
 		this.conditie = cnd;	
 	}
 
-	private Conditie conditie;
+	public Command getBody() {
+		return body;
+	}
 
-	private ArrayList<Command> body = new ArrayList<>();
+	public void setBody(Command body) {
+		this.body = body;
+	}
+	
+	
+	private Conditie conditie;
+	
+	private SpecialeConditie conditieSpeciaal;
+
+	private Command body;
 
 }
