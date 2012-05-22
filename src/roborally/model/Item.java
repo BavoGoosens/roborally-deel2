@@ -45,9 +45,4 @@ public abstract class Item extends Entity{
 	 */
 	private final Weight weight;
 	
-	@Override
-	public String toString() {
-		return "Position: " + this.getPosition().toString() + " Energy: " + this.getEnergy().toString() + 
-				" Weight: " + this.getWeight().toString();
-	}
 }
