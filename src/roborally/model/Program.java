@@ -9,6 +9,8 @@ import java.util.Scanner;
 public class Program {
 
 	private ArrayList<Commands> program = new ArrayList<>();
+	
+	private String[] possibleCommands = Commands.ALL;
 
 	public Program(String path) throws FileNotFoundException{
 		File file = new File(path);
