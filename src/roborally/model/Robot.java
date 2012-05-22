@@ -1,7 +1,5 @@
 package roborally.model;
 
-import java.io.FileNotFoundException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,7 +18,7 @@ import roborally.utils.*;
  * Een klasse om robots voor te stellen.
  * 
  * @invar	De hoeveelheid energie van een robot moet altijd geldig zijn.
- * 			|isValidRobotEnergy(getEnergy())
+ * 			|isValidRobotEnergy(getEnergy(), this)
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
@@ -65,9 +63,9 @@ public class Robot extends Entity{
 	 */
 	private Orientation orientation;
 	/**
-	 * De lijst van batterijen die de robot bezit.
+	 * De lijst van voorwerpen die de robot bezit.
 	 * 
-	 * @note	Gebruik altijd Collections.sort met een BatteryComparator() wanneer deze lijst gewijzigd wordt.
+	 * @note	Gebruik altijd Collections.sort met een ItemComparator() wanneer deze lijst gewijzigd wordt.
 	 */
 	private ArrayList<Item> possessions = new ArrayList<>();
 	/**
@@ -89,11 +87,14 @@ public class Robot extends Entity{
 	 * 
 	 * @post	De oriëntatie van de robot is gelijk aan de opgegeven oriëntatie.
 	 * 			|new.getOrientation().equals(orientation)
+	 * 
+	 * @post	De maximale energie van deze robot is gelijk aan het gedefinieerde maximum voor alle robots.
+	 * 			|new.getMaxEnergy().equals(MAX_ENERGY)
 	 */
 	public Robot(Orientation orientation, Energy energy){
+		setMaxEnergy(MAX_ENERGY);
 		this.setEnergy(energy);
 		setOrientation(orientation);
-		setMaxEnergy(MAX_ENERGY);
 	}
 
 	/**
@@ -173,33 +174,36 @@ public class Robot extends Entity{
 	 * 
 	 * @param 	energy
 	 * 			De hoeveelheid energie.
+	 * 
+	 * @param 	robot
+	 * 			De robot waarvoor deze waarde nagekeken moet worden.
 	 *
 	 * @return	Boolean die weergeeft of de hoeveelheid energie geldig is.
-	 * 			|(energy.getEnergy() >= MINENERGY.getEnergy() && energy.getEnergy() <= MAXENERGY.getEnergy())
+	 * 			|(energy.getEnergy() <= robot.getMaxEnergy().getEnergy())
 	 */
-	public static boolean isValidRobotEnergyAmount(Energy energy){
-		return (energy.getEnergy() >= MINENERGY.getEnergy() && energy.getEnergy() <= MAXENERGY.getEnergy());
+	public static boolean isValidRobotEnergy(Energy energy, Robot robot){
+		return (energy.getEnergy() <= robot.getMaxEnergy().getEnergy());
 	}
 
 	/**
 	 * Deze methode berekent de verhouding tussen de huidige hoeveelheid energie en de maximale hoeveelheid energie.
 	 * 
 	 * @return	De verhouding tussen de huidige hoeveelheid energie en de maximale hoeveelheid energie.
-	 * 			|this.getEnergy().getEnergy()/MAXENERGY.getEnergy()
+	 * 			|getEnergy().getEnergy()/getMaxEnergy().getEnergy()
 	 */
 	public double getEnergyFraction(){
-		return this.getEnergy().getEnergy()/this.getMaxEnergy().getEnergy();
+		return getEnergy().getEnergy()/getMaxEnergy().getEnergy();
 	}
 
 	/**
 	 * Draait de robot 1 keer in wijzerzin.
 	 * 
 	 * @post	De nieuwe oriëntatie van de robot is gelijk aan de volgende oriëntatie in wijzerzin.
-	 * 			|if(isValidRobotEnergyAmount(Energy.energyDifference(this.getEnergy(), TURN_COST)))
+	 * 			|if(canTurn())
 	 * 			|	new.getOrientation() == this.getOrienation().getClockwiseOrientation()
 	 * 
 	 * @post	De energie van de robot is verminderd met benodigde energie voor een draai.
-	 * 			|if(isValidRobotEnergyAmount(Energy.energyDifference(this.getEnergy(), TURN_COST)))
+	 * 			|if(canTurn())
 	 * 			|	new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), TURN_COST))
 	 */
 	public void turnClockWise(){
@@ -213,11 +217,11 @@ public class Robot extends Entity{
 	 * Draait de robot 1 keer in tegenwijzerzin.
 	 * 
 	 * @post	De nieuwe oriëntatie van de robot is gelijk aan de volgende oriëntatie in wijzerzin.
-	 * 			|if(isValidRobotEnergyAmount(Energy.energyDifference(this.getEnergy(), TURN_COST)))
+	 * 			|if(canTurn())
 	 * 			|	new.getOrientation() == this.getOrienation().getCounterClockwiseOrientation()
 	 * 
 	 * @post	De energie van de robot is verminderd met benodigde energie voor een draai.
-	 * 			|if(isValidRobotEnergyAmount(Energy.energyDifference(this.getEnergy(), TURN_COST)))
+	 * 			|if(canTurn())
 	 * 			|	new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), TURN_COST))
 	 */
 	public void turnCounterClockWise(){
