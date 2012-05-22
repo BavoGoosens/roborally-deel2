@@ -6,7 +6,7 @@ import roborally.model.Battery;
 import roborally.model.Item;
 
 /**
- * Een comparator om batterijen te vergelijken op basis van gewicht.
+ * Een comparator om voorwerpen te vergelijken op basis van gewicht.
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
@@ -17,24 +17,24 @@ public class ItemComparator implements Comparator<Item>{
 	/**
 	 * Methode die de gewichten van 2 batterijen vergelijkt.
 	 * 
-	 * @param	b1
-	 * 			Eerste batterij om te vergelijken
+	 * @param	firstItem
+	 * 			Eerste voorwerp om te vergelijken
 	 * 
-	 * @param	b2
-	 * 			Tweede batterij om te vergelijken
+	 * @param	secondItem
+	 * 			Tweede voorwerp om te vergelijken
 	 * 
-	 * @return	|if(b1.getWeight().getWeight() > b2.getWeight().getWeight()){
+	 * @return	|if(firstItem.getWeight().getWeight() > secondItem.getWeight().getWeight()){
 	 * 			|	1
-	 * 			|}else if(b1.getWeight().getWeight() < b2.getWeight().getWeight()){
+	 * 			|}else if(firstItem.getWeight().getWeight() < secondItem.getWeight().getWeight()){
 	 * 			|	-1
 	 * 			|}else{
 	 * 			|	0
 	 * 			|}
 	 */
 	@Override
-	public int compare(Item b1, Item b2) {
-		int w1 = b1.getWeight().getWeight();
-		int w2 = b2.getWeight().getWeight();
+	public int compare(Item firstItem, Item secondItem) {
+		int w1 = firstItem.getWeight().getWeight();
+		int w2 = secondItem.getWeight().getWeight();
 		
 		if(w1 > w2){
 			return 1;

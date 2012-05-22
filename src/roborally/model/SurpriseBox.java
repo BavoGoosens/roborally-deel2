@@ -23,7 +23,7 @@ public class SurpriseBox extends Item{
 	 * 			Het gewicht dat de surprise box moet krijgen.
 	 * 
 	 * @post	De nieuwe surprise box heeft het opgegeven gewicht.
-	 * 			|new.getWeight() == weight
+	 * 			|new.getWeight().equals(weight)
 	 */
 	public SurpriseBox(Weight weight) {
 		super(weight);
