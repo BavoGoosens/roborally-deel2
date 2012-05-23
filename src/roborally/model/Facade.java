@@ -162,8 +162,10 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 	public void putRobot(Board board, long x, long y, Robot robot) {
 		try{
 			robot.putOnBoard(board, new Position(x, y));
-		}catch (IllegalArgumentException esc){
-			System.err.println(esc.getMessage());
+		}catch(IllegalPositionException e){
+			System.err.println(e.getMessage());
+		}catch(IllegalStateException e){
+			System.err.println(e.getMessage());
 		}
 	}
 
@@ -340,7 +342,11 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public void shoot(Robot robot) throws UnsupportedOperationException {
-		robot.shoot();
+		try{
+			robot.shoot();
+		}catch(EntityNotOnBoardException e){
+			System.err.println(e.getMessage());
+		}
 	}
 
 	@Override
@@ -353,8 +359,10 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 			throws UnsupportedOperationException {
 		try {
 			wall.putOnBoard(board, new Position(x, y));
-		}catch (IllegalArgumentException exc){
-			System.err.println(exc.getMessage());
+		}catch(IllegalPositionException e){
+			System.err.println(e.getMessage());
+		}catch(IllegalStateException e){
+			System.err.println(e.getMessage());
 		}
 	}
 
@@ -374,8 +382,10 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 	public Set<Robot> getRobots(Board board) {
 		Set<Entity> entities = board.getEntitiesOfType(Robot.class);
 		Set<Robot> result = new HashSet<Robot>();
+		if(entities != null){
 		for(Entity ent: entities)
 			result.add((Robot) ent);
+		}
 		return result;
 	}
 
@@ -383,8 +393,10 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 	public Set<Wall> getWalls(Board board) throws UnsupportedOperationException {
 		Set<Entity> entities = board.getEntitiesOfType(Wall.class);
 		Set<Wall> result = new HashSet<Wall>();
+		if(entities != null){
 		for(Entity ent: entities)
 			result.add((Wall) ent);
+		}
 		return result;
 	}
 
@@ -392,8 +404,10 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 	public Set<RepairKit> getRepairKits(Board board) {
 		Set<Entity> entities = board.getEntitiesOfType(RepairKit.class);
 		Set<RepairKit> result = new HashSet<RepairKit>();
+		if(entities != null){
 		for(Entity ent: entities)
 			result.add((RepairKit) ent);
+		}
 		return result;
 	}
 
@@ -401,8 +415,10 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 	public Set<SurpriseBox> getSurpriseBoxes(Board board) {
 		Set<Entity> entities = board.getEntitiesOfType(SurpriseBox.class);
 		Set<SurpriseBox> result = new HashSet<SurpriseBox>();
+		if(entities != null){
 		for(Entity ent: entities)
 			result.add((SurpriseBox) ent);
+		}
 		return result;
 	}
 
@@ -410,8 +426,10 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 	public Set<Battery> getBatteries(Board board) {
 		Set<Entity> entities = board.getEntitiesOfType(Battery.class);
 		Set<Battery> result = new HashSet<Battery>();
+		if(entities != null){
 		for(Entity ent: entities)
 			result.add((Battery) ent);
+		}
 		return result;
 	}
 
