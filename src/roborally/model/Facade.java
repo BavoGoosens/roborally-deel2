@@ -10,6 +10,7 @@ import java.util.Set;
 import roborally.IFacade;
 import roborally.property.*;
 import roborally.exception.IllegalPositionException;
+import roborally.exception.NotEnoughEnergyException;
 import roborally.exception.TargetNotReachableException;
 
 
@@ -190,14 +191,20 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 	public void move(Robot robot) {
 		try{
 			robot.move();
-		}catch (IllegalStateException esc){
+		}catch (NotEnoughEnergyException esc){
 			System.err.println(esc.getMessage());
+		}catch(IllegalPositionException e){
+			System.err.println(e.getMessage());
 		}
 	}
 
 	@Override
 	public void turn(Robot robot) {
-		robot.turnClockWise();
+		try{
+			robot.turnClockWise();
+		}catch (NotEnoughEnergyException esc){
+			System.err.println(esc.getMessage());
+		}
 	}
 
 	@Override
