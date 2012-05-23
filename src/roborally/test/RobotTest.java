@@ -18,6 +18,7 @@ import roborally.model.Board;
 import roborally.model.Entity;
 import roborally.model.RepairKit;
 import roborally.model.Robot;
+import roborally.model.SurpriseBox;
 import roborally.model.Wall;
 import roborally.property.Energy;
 import roborally.property.Orientation;
@@ -263,7 +264,44 @@ public class RobotTest {
 
 	@Test
 	public void testUse() {
-		fail("Not yet implemented");
+		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
+		robot_onBoard_20_20_down_1000.pickUp(batt);
+		robot_onBoard_20_20_down_1000.use(batt);
+		assertEquals(new Energy(3000), robot_onBoard_20_20_down_1000.getEnergy());
+		assertTrue(batt.isTerminated());
+		Battery batt2 = new Battery(new Energy(5000), new Weight(1));
+		Battery batt3 = new Battery(new Energy(5000), new Weight(1));
+		Battery batt4 = new Battery(new Energy(5000), new Weight(1));
+		Battery batt5 = new Battery(new Energy(5000), new Weight(1));
+		batt2.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
+		batt3.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
+		batt4.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
+		batt5.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
+		robot_onBoard_20_20_down_1000.pickUp(batt2);
+		robot_onBoard_20_20_down_1000.pickUp(batt3);
+		robot_onBoard_20_20_down_1000.pickUp(batt4);
+		robot_onBoard_20_20_down_1000.pickUp(batt5);
+		robot_onBoard_20_20_down_1000.use(batt2);
+		robot_onBoard_20_20_down_1000.use(batt3);
+		robot_onBoard_20_20_down_1000.use(batt4);
+		robot_onBoard_20_20_down_1000.use(batt5);
+		assertEquals(new Energy(20000), robot_onBoard_20_20_down_1000.getEnergy());
+		Battery batt6 = new Battery(new Energy(100), new Weight(1));
+		batt6.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
+		robot_onBoard_20_20_down_1000.pickUp(batt6);
+		robot_onBoard_20_20_down_1000.turnClockWise();
+		robot_onBoard_20_20_down_1000.use(batt6);
+		assertEquals(new Energy(20000), robot_onBoard_20_20_down_1000.getEnergy());
+		SurpriseBox box = new SurpriseBox(new Weight(1));
+		box.putOnBoard(board_20_20, robot_onBoard_20_20_down_10000.getPosition());
+		robot_onBoard_20_20_down_10000.pickUp(box);
+		robot_onBoard_20_20_down_10000.use(box);
+		assertTrue(box.isTerminated());
+		robot_onBoard_40_40_right_10000.shoot();
+		rk.putOnBoard(board_40_40, robot_onBoard_40_40_left_10000.getPosition());
+		robot_onBoard_40_40_left_10000.pickUp(rk);
+		robot_onBoard_40_40_left_10000.use(rk);
+		assertTrue(rk.isTerminated());
 	}
 
 	@Test
@@ -337,7 +375,19 @@ public class RobotTest {
 
 	@Test
 	public void testStepn() {
-		fail("Not yet implemented");
+		try {
+			robot_onBoard_20_20_down_1000.loadProgramFromFile("example.prog");
+		} catch (FileNotFoundException e) {
+			// Een testprogramma is nodig om deze methode te testen.
+			fail("Het testprogramma bestaat niet.");
+		}
+		robot_onBoard_20_20_down_1000.stepn(2);
+		assertEquals(Orientation.LEFT, robot_onBoard_20_20_down_1000.getOrientation());
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void testStepnIllegalStateException(){
+		robot_onBoard_20_20_down_1000.stepn(1);
 	}
 
 	@Test

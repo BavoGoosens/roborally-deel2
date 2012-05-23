@@ -609,7 +609,7 @@ public class Robot extends Entity{
 					batt.setEnergy(Energy.energyDifference(batt.getEnergy(), canRecharge));
 				}else if(Energy.energyDifference(canRecharge, batt.getEnergy()).getEnergy() > 0){
 					// De robot is niet volledig opgeladen en de batterij is leeg.
-					setEnergy(Energy.energyDifference(canRecharge, batt.getEnergy()));
+					recharge(batt.getEnergy());
 					getPossessions().remove(batt);
 					batt.destroy();
 				}else{
