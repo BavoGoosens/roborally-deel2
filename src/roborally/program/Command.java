@@ -31,7 +31,7 @@ public class Command {
 	protected Command getFirstCommand(String substr){
 		String eersteCommand = haalHaakskesWeg(substr);
 		String[] words = eersteCommand.split("[^a-z]");
-		if (eersteCommand.contains("while")){
+		if (words[0].contains("while")){
 			return new While(substr.substring(5, substr.length()));
 		} else if (words[0].contains("seq")){
 			return new Sequentie(substr.substring(4, substr.length()));
