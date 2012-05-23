@@ -507,9 +507,32 @@ public class Robot extends Entity{
 	}
 	
 	/**
+	 * Deze methode draagt alle voorwerpen die de robot draagt over naar een andere robot.
+	 * 
+	 * @param	other
+	 * 			De andere robot waarnaar overgedragen moet worden.
+	 * 
+	 * @post	Deze robot heeft geen voorwerpen meer.
+	 * 			|this.getPossessions.size() == 0
+	 */
+	public void transferPossessions(Robot other){
+		for(Item current: getPossessions())
+			other.getPossessions().add(current);
+		other.sortPossessions();
+		this.getPossessions().clear();
+	}
+	
+	/**
+	 * Deze methode sorteert de lijst van bezittingen van de robot.
+	 */
+	protected void sortPossessions(){
+		Collections.sort(possessions, new ItemComparator());
+	}
+	
+	/**
 	 * De lijst van voorwerpen die de robot bezit.
 	 * 
-	 * @note	Gebruik altijd Collections.sort met een ItemComparator() wanneer deze lijst gewijzigd wordt.
+	 * @note	Gebruik altijd sortPossessions() wanneer deze lijst gewijzigd wordt.
 	 */
 	private ArrayList<Item> possessions = new ArrayList<>();
 
@@ -543,7 +566,7 @@ public class Robot extends Entity{
 		}else{
 			item.removeFromBoard();
 			getPossessions().add(item);
-			Collections.sort(getPossessions(), new ItemComparator());
+			sortPossessions();
 		}
 	}
 
@@ -650,6 +673,7 @@ public class Robot extends Entity{
 				RepairKit kit = new RepairKit(new Energy(rand.nextInt((int)RepairKit.MAX_ENERGY.getEnergy()) + 1) ,item.getWeight());
 				getPossessions().add(kit);
 			}
+			sortPossessions();
 		}
 	}
 

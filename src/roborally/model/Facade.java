@@ -303,10 +303,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public void transferItems(Robot from, Robot to) {
-		ArrayList<Item> possessions = from.getPossessions();
-		for(Item current: possessions)
-			to.getPossessions().add(current);
-		from.getPossessions().clear();
+		from.transferPossessions(to);
 	}
 
 	@Override
