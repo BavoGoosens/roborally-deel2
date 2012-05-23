@@ -2,6 +2,13 @@ package roborally.program;
 
 import roborally.model.Robot;
 
+/**
+ * Een klasse speciale condities voor te stellen.
+ * 
+ * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
+ * 
+ * @version 1.0
+ */
 public class SpecialCondition extends Command {
 	
 	@Override

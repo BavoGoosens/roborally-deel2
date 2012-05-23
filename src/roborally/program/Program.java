@@ -7,8 +7,13 @@ import java.util.Scanner;
 
 import roborally.model.Robot;
 
-
-
+/**
+ * Een klasse om programmas voor te stellen.
+ * 
+ * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
+ * 
+ * @version 1.0
+ */
 public class Program {
 
 	private ArrayList<Command> program = new ArrayList<>();

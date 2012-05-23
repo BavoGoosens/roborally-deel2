@@ -3,6 +3,13 @@ package roborally.program;
 import java.util.ArrayList;
 import roborally.model.Robot;
 
+/**
+ * Een klasse om sequenties voor te stellen.
+ * 
+ * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
+ * 
+ * @version 1.0
+ */
 public class Sequence extends Command {
 
 	public boolean entered = false;

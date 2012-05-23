@@ -2,20 +2,48 @@ package roborally.program;
 
 import roborally.model.Robot;
 
+/**
+ * Een klasse om if constructies voor te stellen.
+ * 
+ * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
+ * 
+ * @version 1.0
+ */
 public class If extends Command{
 	
+	/**
+	 * Deze methode geeft een string terug die het object voorstelt.
+	 * 
+	 * @return 	String
+	 * 			De String die dit object voorstelt.
+	 */
 	@Override
 	public String toString() {
 		return "(if" + this.conditie.toString() + this.conditieSpeciaal.toString()+ this.getIf_clause().toString()+
 				this.getElse_clause().toString() + ")";
 	}
 
+	/**
+	 * Boolean die bijhoudt of deze if constructie al bezocht is.
+	 */
 	public boolean enterd = false;
 
+	/**
+	 * Constructor om een nieuwe if constructie aan te maken.
+	 * 
+	 * @param 	substring
+	 * 			De string met de conditie en de if en else clausule van deze if constructie.
+	 */
 	public If(String substring) {
 		extractCondition(substring);
 	}
 
+	/**
+	 * Methode om de conditie uit een string te isoleren.
+	 * 
+	 * @param 	substring
+	 * 			De substring die de conditie bevat.
+	 */
 	private void extractCondition(String substring) {
 		String sbstr = substring.trim();
 		sbstr = sbstr.substring(1);
@@ -56,6 +84,12 @@ public class If extends Command{
 		}
 	}
 
+	/**
+	 * Methode om de if en de else clausule uit een gegeven string te isoleren.
+	 * 
+	 * @param 	sbstr
+	 * 			De string die de if en else codeblokken bevat.
+	 */
 	private void getIfElseClause(String sbstr) {
 		String ifstring = haalHaakskesWeg(sbstr);
 		String rest = sbstr.substring(ifstring.length() + 2);
@@ -63,22 +97,52 @@ public class If extends Command{
 		setElseClause(getFirstCommand(rest));
 	}
 
+	/**
+	 * Deze methode stelt de else clausule in om een gegeven commando.
+	 * 
+	 * @param 	firstCommand
+	 * 			Het commando om het else veld mee in te stellen.
+	 */
 	private void setElseClause(Command firstCommand) {
 		this.setElse_clause(firstCommand);
 	}
 
+	/**
+	 * Deze methode stelt de if clausule in om een gegeven commando.
+	 * 
+	 * @param 	firstCommand
+	 * 			Het commando om het if veld mee in te stellen.
+	 */
 	private void setIfClause(Command firstCommand) {
 		this.setIf_clause(firstCommand);
 	}
 
+	/**
+	 * Methode om de conditie van deze if constructie terug te geven.
+	 * 	
+	 * @return	Condition 
+	 * 			De conditie van deze if constructie.
+	 */
 	private Condition getCondition() {
 		return this.conditie;
 	}
 
+	/**
+	 * Methode om de conditie van deze if constructie in te stellen.
+	 * 
+	 * @param	cnd
+	 * 			De Condition waarop de conditie van deze if constructie dient ingesteld te worden.
+	 */
 	private void setCondition(SpecialCondition cnd) {
 		this.setConditieSpeciaal(cnd);
 	}
 
+	/**
+	 * Methode om de conditie van deze if constructie in te stellen.
+	 * 
+	 * @param	cnd
+	 * 			De speciale Condition waarop de conditie van deze if constructie dient ingesteld te worden.
+	 */
 	private void setCondition(Condition conditie) {
 		this.conditie = conditie;		
 	}
