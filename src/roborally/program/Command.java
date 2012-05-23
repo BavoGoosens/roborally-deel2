@@ -3,8 +3,18 @@ package roborally.program;
 import roborally.model.Robot;
 
 
+/**
+ * 
+ * @author bavo
+ *
+ */
 public class Command {
 
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 */
 	public static String haalHaakskesWeg(String str){
 		String substr = str;
 		int openHaakskesCount = 0;
@@ -30,6 +40,11 @@ public class Command {
 		return str;
 	}
 
+	/**
+	 * 
+	 * @param substr
+	 * @return
+	 */
 	protected Command getFirstCommand(String substr){
 		String eersteCommand = haalHaakskesWeg(substr);
 		String[] words = eersteCommand.split("[^a-z]");
@@ -53,6 +68,11 @@ public class Command {
 		}
 	}
 
+	/**
+	 * 
+	 * @param sbstr
+	 * @return
+	 */
 	protected Condition[] getAndOrCond(String sbstr) {
 		String[] condIndeling = sbstr.split("\\) ");
 		Condition cond1 = getBasicConditie(condIndeling[0]);
@@ -63,6 +83,11 @@ public class Command {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param sbstr
+	 * @return
+	 */
 	@SuppressWarnings("boxing")
 	protected Double getAmountEnergy(String sbstr) {
 		int beginIdx = sbstr.indexOf(' ');
@@ -77,6 +102,11 @@ public class Command {
 		return cond1;
 	}
 
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 */
 	@SuppressWarnings("boxing")
 	public Condition getBasicConditie(String str) {
 		String sbstr = str.trim();
@@ -94,18 +124,36 @@ public class Command {
 		}
 	}
 
+	/**
+	 * 
+	 * @param robot
+	 */
 	public void executeNext(Robot robot){}
 
+	/**
+	 * 
+	 */
 	protected boolean executed = false;
 	
+	/**
+	 * 
+	 * @param ex
+	 */
 	public void setExecuted(boolean ex){
 		this.executed = ex;
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isExecuted() {
 		return this.executed;
 	}
 
+	/**
+	 * 
+	 */
 	public void resetExecuted() {
 		this.setExecuted(false);
 	}
