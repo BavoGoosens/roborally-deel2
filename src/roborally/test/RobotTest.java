@@ -40,8 +40,8 @@ public class RobotTest {
 	Robot robot_onBoard_40_40_left_1000;
 	Robot robot_onBoard_40_40_down_1000;
 	Board board_20_20 = new Board(20, 20);
-	Board board_40_40 = new Board(40, 40);
-	
+	Board board_40_40 = new Board(40, 40);	
+
 	@Before
 	public void setUp(){
 		robot_up_10000 = new Robot(Orientation.UP, new Energy(10000));
@@ -85,7 +85,112 @@ public class RobotTest {
 		robot_onBoard_40_40_left_1000.putOnBoard(board_40_40, new Position(7, 1));
 		robot_onBoard_40_40_down_1000.putOnBoard(board_40_40, new Position(8, 1));
 	}
-	
+
+	@Test
+	public void testIsValidRobotEnergyEnergyRobot() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testTurnClockWise() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testTurnCounterClockWise() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testMove() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetEnergyRequiredToReach() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testMoveNextTo() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testShoot() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testRecharge() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testMoveCost() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetPossessions() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testTransferPossessions() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testPickUp() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testUse() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testDrop() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testLoadProgramFromFile() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetProgram() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testSaveProgramToFile() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testStepn() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testSetPosition() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testPutOnBoard() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testRemoveFromBoard() {
+		fail("Not yet implemented");
+	}
+
 	@Test
 	public void testDestroy() {
 		assertFalse(robot_down_1000.isTerminated());
