@@ -159,6 +159,10 @@ public abstract class Entity {
 	 * @param	position
 	 * 			De plaats waar het object moet komen.
 	 * 
+	 * @throws 	IllegalStateException 
+	 * 			Het object bevindt zich reeds op een bord en kan maar op 1 bord tegelijk staan.
+	 * 			|isOnBoard()
+	 * 
 	 * @post	Het object staat nu op het gegeven bord.
 	 * 			|new.getBoard() == board
 	 * 
@@ -166,7 +170,9 @@ public abstract class Entity {
 	 * 			|new.getPosition().equals(position)
 	 */
 	@Raw
-	public void putOnBoard(Board board, Position position){
+	public void putOnBoard(Board board, Position position) throws IllegalStateException{
+		if(isOnBoard())
+			throw new IllegalStateException("Het object bevindt zich reeds op een bord.");
 		board.putEntity(position, this);
 		this.setBoard(board);
 		this.setPosition(position);
@@ -175,11 +181,17 @@ public abstract class Entity {
 	/**
 	 * Verwijdert het object van een bord en haalt de opgeslagen positie weg.
 	 * 
+	 * @throws 	EntityNotOnBoardException
+	 * 			Het object bevindt zich niet op een bord en kan er daarom niet van verwijderd worden.
+	 * 			|!isOnBoard()
+	 * 
 	 * @post	Het object bevindt zich niet langer op een bord.
 	 * 			|new.isOnBoard() == false
 	 */
 	@Raw
-	public void removeFromBoard(){
+	public void removeFromBoard() throws EntityNotOnBoardException{
+		if(!isOnBoard())
+			throw new EntityNotOnBoardException();
 		this.getBoard().removeEntity(this);
 		this.setBoard(null);
 		this.setPosition(null);
