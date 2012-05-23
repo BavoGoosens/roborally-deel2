@@ -414,8 +414,8 @@ public class Robot extends Entity{
 			HashSet<Entity> content = getBoard().getEntityOnPosition(beginpos);
 			if(content != null){
 				Random rndm = new Random();
-				Entity[] results = (Entity[]) content.toArray();
-				return results[rndm.nextInt(results.length)];
+				Object[] results = content.toArray();
+				return (Entity) results[rndm.nextInt(results.length)];
 			}
 		}
 		return null;
