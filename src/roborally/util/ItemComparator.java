@@ -2,7 +2,6 @@ package roborally.util;
 
 import java.util.Comparator;
 
-import roborally.model.Battery;
 import roborally.model.Item;
 
 /**
