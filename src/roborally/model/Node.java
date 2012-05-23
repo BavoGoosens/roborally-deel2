@@ -24,16 +24,7 @@ public class Node extends Entity{
 	private Orientation orientation;
 	private Node parent;
 
-	/**
-	 * Constructor om een nieuwe node aan te maken met gegeven position,board,gcost,hcost,orientatie en parent.
-	 * 
-	 * @param 	position
-	 * @param 	board
-	 * @param 	g
-	 * @param 	h
-	 * @param 	orientation
-	 * @param 	parent
-	 */
+	
 	public Node(Position position,Board board, Energy g, Energy h,Orientation orientation, Node parent){
 		this.setBoard(board);
 		this.setPosition(position);
@@ -43,13 +34,6 @@ public class Node extends Entity{
 		setParent(parent);
 	}
 
-	/**
-	 * Constructor om een nieuwe node aan te maken met gegeven position, orientation en board.
-	 * 
-	 * @param 	position
-	 * @param 	orientation
-	 * @param 	board
-	 */
 	public Node(Position position, Orientation orientation, Board board) {
 		setOrientation(orientation);
 		putOnBoard(board,position);

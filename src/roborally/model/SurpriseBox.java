@@ -3,7 +3,6 @@ package roborally.model;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import roborally.property.Energy;
 import roborally.property.Position;
 import roborally.property.Weight;
 
