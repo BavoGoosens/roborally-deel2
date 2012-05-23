@@ -42,26 +42,6 @@ public class Program {
 	}
 
 	private void extractBody(String prettyPrintLine) {
-		int openHaakskesCount = 0;
-		int closedHaakskesCount = 0;
-		int beginIdx = 0;
-		int eindIdx = 0;
-		for (int i = 0; i < prettyPrintLine.length(); i++){
-			char currChar = prettyPrintLine.charAt(i);
-			if (currChar == '(' && openHaakskesCount == 0){
-				beginIdx = i;
-				openHaakskesCount++;
-			} else if (currChar == '('){
-				openHaakskesCount++;
-			}else if (currChar == ')'){
-				closedHaakskesCount++;
-				if (openHaakskesCount == closedHaakskesCount){
-					eindIdx = i;
-					break;
-				}
-
-			}
-		}
 		String result = prettyPrintLine.substring(beginIdx + 1, eindIdx);
 		String[] words = result.split("[^a-z]");
 		if (words[0].equals("while")){
