@@ -92,8 +92,28 @@ public class Robot extends Entity{
 	 * 
 	 * @note	Wanneer deze gewijzigd wordt is het aangeraden om verifyEnergy() op te roepen.
 	 */
-	public void setMaxEnergy(Energy maxEnergy) {
+	private void setMaxEnergy(Energy maxEnergy) {
 		this.maxEnergy = maxEnergy;
+	}
+	
+	/**
+	 * Deze methode wijzigt de maximale energie van de robot en zorgt ervoor dat de huidige energie geldig blijft.
+	 * 
+	 * @param	maxEnergy
+	 * 			De energie die moet ingesteld worden als maximale energie.
+	 * 
+	 * @effect	De maximale energie wordt gewijzigd.
+	 * 			|setMaxEnergy(maxEnergy)
+	 * 
+	 * @effect	De huidige energie wordt mogelijks ook gewijzigd.
+	 * 			|if(getEnergy().getEnergy() > getMaxEnergy().getEnergy())
+	 * 			|	setEnergy(getMaxEnergy())
+	 * 			
+	 */
+	private void changeMaxEnergy(Energy maxEnergy){
+		setMaxEnergy(maxEnergy);
+		if(getEnergy().getEnergy() > getMaxEnergy().getEnergy())
+			setEnergy(getMaxEnergy());
 	}
 	
 	/**
@@ -103,7 +123,7 @@ public class Robot extends Entity{
 	 * 			|maxEnergy
 	 */
 	@Basic
-	public Energy getMaxEnergy() {
+	private Energy getMaxEnergy() {
 		return maxEnergy;
 	}
 	
@@ -426,15 +446,11 @@ public class Robot extends Entity{
 	 * 
 	 * @post	De maximale energie van de robot is gedaald met de hoeveelheid gedefinieerd in SHOOT_DAMAGE.
 	 * 			|new.getMaxEnergy().equals(Energy.energyDifference(this.getMaxEnergy(), SHOOT_DAMAGE))
-	 * 
-	 * @effect	De huidige energie wordt nagekeken en indien nodig verbeterd.
-	 * 			|verifyEnergy()
 	 */
 	@Override
 	protected void damage(){
 		if (getMaxEnergy().getEnergy() > SHOOT_DAMAGE.getEnergy()){
-			setMaxEnergy(Energy.energyDifference(getMaxEnergy(), SHOOT_DAMAGE));
-			verifyEnergy();
+			changeMaxEnergy(Energy.energyDifference(getMaxEnergy(), SHOOT_DAMAGE));
 		} else {
 			destroy();
 		}
@@ -443,18 +459,7 @@ public class Robot extends Entity{
 	/**
 	 * De energie die afgetrokken wordt van de maximale energie wanneer de robot geraakt wordt.
 	 */
-	public final static Energy SHOOT_DAMAGE = new Energy(4000);
-
-	/**
-	 * Deze methode kijkt na of de energie van de robot groter is dan de huidige maximale energie van de robot. Indien deze groter is dan wordt de energie van de robot ingesteld op zijn maximale energie.
-	 * 
-	 * @post	De energie van de robot is kleiner of gelijk aan zijn maximale energie.
-	 * 			|new.getEnergy().getEnergy() <= new.getMaxEnergy().getEnergy()
-	 */
-	public void verifyEnergy(){
-		if(getEnergy().getEnergy() > getMaxEnergy().getEnergy())
-			setEnergy(getMaxEnergy());
-	}
+	private final static Energy SHOOT_DAMAGE = new Energy(4000);
 
 	/**
 	 * Deze methode berekent de kost van 1 move.
@@ -488,7 +493,7 @@ public class Robot extends Entity{
 	 * 			|}
 	 * 			|new Weight(totalWeight)
 	 */
-	public Weight getTotalWeight(){
+	protected Weight getTotalWeight(){
 		int totalWeight = 0;
 		for(Item item: getPossessions()){
 			totalWeight += item.getWeight().getWeight();
@@ -622,16 +627,16 @@ public class Robot extends Entity{
 				Energy repKitIncrease = new Energy(repairKit.getEnergy().getEnergy() / 2);
 				if(Energy.energyDifference(repKitIncrease, canIncrease).getEnergy() > 0){
 					// Er blijft energie over in de repair kit en de robot zit aan zijn maximum energie.
-					setMaxEnergy(MAX_ENERGY);
+					changeMaxEnergy(MAX_ENERGY);
 					repairKit.setEnergy(new Energy(Energy.energyDifference(repKitIncrease, canIncrease).getEnergy() * 2));
 				}else if(Energy.energyDifference(canIncrease, repKitIncrease).getEnergy() > 0){
 					// De robot is niet volledig opgeladen en de repair kit is leeg.
-					setMaxEnergy(Energy.energyDifference(canIncrease, repKitIncrease));
+					changeMaxEnergy(Energy.energyDifference(canIncrease, repKitIncrease));
 					getPossessions().remove(repairKit);
 					repairKit.destroy();
 				}else{
 					// De robot is volledig opgeladen en de repair kit is leeg.
-					setMaxEnergy(MAX_ENERGY);
+					changeMaxEnergy(MAX_ENERGY);
 					getPossessions().remove(repairKit);
 					repairKit.destroy();
 				}
@@ -648,7 +653,7 @@ public class Robot extends Entity{
 	 * @post	De robot is geraakt door een explosie, de robot is geteleporteerd naar een willekeurige positie (de nieuwe positie kan gelijk zijn aan de positie die de robot had) of de robot draagt een nieuw voorwerp.
 	 * 			|new.getMaxEnergy().equals(new Energy(0)) || new.getMaxEnergy().getEnergy() < this.getMaxEnergy().getEnergy() || new.getPosessions.size() == this.getPossessions.size() + 1
 	 */
-	public void doSurpriseBoxAction(Item item){
+	private void doSurpriseBoxAction(Item item){
 		Random rand = new Random();
 		int choice = 1 + rand.nextInt(3);
 		if (choice == 1){
@@ -729,7 +734,7 @@ public class Robot extends Entity{
 	 * @note	Deze methode houdt enkel rekening met de minimale energie en niet met de positie.
 	 */
 	@Raw
-	public boolean canMove(){
+	private boolean canMove(){
 		return (this.getEnergy().getEnergy() - moveCost(this).getEnergy() >= 0);
 	}
 

@@ -103,6 +103,7 @@ public class RobotTest {
 	@Test
 	public void testToString() {
 		assertEquals("positie: 5, 1, energie: 1000.0 WS, maximale energie: 20000.0 WS, oriëntatie: UP, gewicht: 0 gr", robot_onBoard_20_20_up_1000.toString());
+		assertEquals("positie: staat niet op een bord, energie: 1000.0 WS, maximale energie: 20000.0 WS, oriëntatie: UP, gewicht: 0 gr", robot_up_1000.toString());
 	}
 
 	@Test
@@ -114,35 +115,9 @@ public class RobotTest {
 	}
 
 	@Test
-	public void testSetMaxEnergy() {
-		robot_up_1000.setMaxEnergy(new Energy(500));
-		assertEquals(new Energy(500), robot_up_1000.getMaxEnergy());
-	}
-
-	@Test
-	public void testGetMaxEnergy() {
-		robot_up_1000.setMaxEnergy(new Energy(5000));
-		assertEquals(new Energy(5000), robot_up_1000.getMaxEnergy());
-		assertEquals(Robot.MAX_ENERGY, robot_up_10000.getMaxEnergy());
-	}
-	
-	@Test
-	public void testVerifyEnergy(){
-		robot_up_1000.setMaxEnergy(new Energy(500));
-		robot_up_1000.verifyEnergy();
-		assertEquals(new Energy(500), robot_up_1000.getEnergy());
-		
-	}
-
-	@Test
 	public void testGetEnergy() {
 		assertEquals(new Energy(1000), robot_down_1000.getEnergy());
 		assertEquals(new Energy(10000), robot_down_10000.getEnergy());
-	}
-
-	@Test
-	public void testIsValidRobotEnergyEnergyRobot() {
-		fail("Not yet implemented");
 	}
 
 	@Test
@@ -245,25 +220,6 @@ public class RobotTest {
 		assertTrue(robot_down_1000.canTurn());
 		robot_down_1000.turnClockWise();
 		assertFalse(robot_down_1000.canTurn());
-	}
-
-	@Test
-	public void testCanMove() {
-		robot_down_1000.turnClockWise();
-		assertTrue(robot_down_1000.canMove());
-		robot_down_1000.turnClockWise();
-		robot_down_1000.turnClockWise();
-		robot_down_1000.turnClockWise();
-		robot_down_1000.turnClockWise();
-		robot_down_1000.turnClockWise();
-		robot_down_1000.turnClockWise();
-		robot_down_1000.turnClockWise();
-		assertFalse(robot_down_1000.canMove());
-		Battery batt = new Battery(new Energy(1), new Weight(Weight.MAXWEIGHT));
-		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
-		assertTrue(robot_onBoard_20_20_down_1000.canMove());
-		robot_onBoard_20_20_down_1000.pickUp(batt);
-		assertFalse(robot_onBoard_20_20_down_1000.canMove());
 	}
 
 	@Test
