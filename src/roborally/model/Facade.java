@@ -39,7 +39,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 	@Override
 	public void putBattery(Board board, long x, long y, Battery battery) {
 		try{
-		battery.putOnBoard(board, new Position(x, y));
+			battery.putOnBoard(board, new Position(x, y));
 		}catch(IllegalPositionException e){
 			System.err.println(e.getMessage());
 		}catch(IllegalStateException e){
@@ -59,12 +59,23 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public RepairKit createRepairKit(double repairAmount, int weight) {
+		if(repairAmount < 0)
+			return null;
+		Energy initialEn = new Energy(repairAmount);
+		if(!RepairKit.isValidRepairKitEnergy(initialEn))
+			return null;
 		return new RepairKit(new Energy(repairAmount), new Weight(weight));
 	}
 
 	@Override
 	public void putRepairKit(Board board, long x, long y, RepairKit repairKit) {
-		repairKit.putOnBoard(board, new Position(x, y));
+		try{
+			repairKit.putOnBoard(board, new Position(x, y));
+		}catch(IllegalPositionException e){
+			System.err.println(e.getMessage());
+		}catch(IllegalStateException e){
+			System.err.println(e.getMessage());
+		}
 	}
 
 	@Override
