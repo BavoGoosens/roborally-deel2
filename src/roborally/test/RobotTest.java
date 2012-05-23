@@ -2,6 +2,9 @@ package roborally.test;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -142,8 +145,8 @@ public class RobotTest {
 	@Test
 	public void testGetPossessions() {
 		assertEquals(0, robot_onBoard_20_20_down_1000.getPossessions().size());
-		Battery batt = new Battery(new Energy(1), new Weight(2000));
-		RepairKit rk = new RepairKit(new Energy(1), new Weight(2000));
+		Battery batt = new Battery(new Energy(10), new Weight(555));
+		RepairKit rk = new RepairKit(new Energy(10), new Weight(666));
 		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
 		rk.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
 		robot_onBoard_20_20_down_1000.pickUp(batt);
@@ -159,7 +162,15 @@ public class RobotTest {
 
 	@Test
 	public void testPickUp() {
-		fail("Not yet implemented");
+		assertEquals(0, robot_onBoard_20_20_down_1000.getPossessions().size());
+		Battery batt = new Battery(new Energy(1), new Weight(2000));
+		RepairKit rk = new RepairKit(new Energy(1), new Weight(2000));
+		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
+		rk.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
+		robot_onBoard_20_20_down_1000.pickUp(batt);
+		assertEquals(1, robot_onBoard_20_20_down_1000.getPossessions().size());
+		robot_onBoard_20_20_down_1000.pickUp(rk);
+		assertEquals(2, robot_onBoard_20_20_down_1000.getPossessions().size());
 	}
 
 	@Test
@@ -174,17 +185,48 @@ public class RobotTest {
 
 	@Test
 	public void testLoadProgramFromFile() {
-		fail("Not yet implemented");
+		assertNull(robot_onBoard_20_20_down_1000.getProgram());
+		try {
+			robot_onBoard_20_20_down_1000.loadProgramFromFile("example.prog");
+		} catch (FileNotFoundException e) {
+			fail("Test mislukt of testprogramma bestaat niet.");
+		}
+		assertNotNull(robot_onBoard_20_20_down_1000.getProgram());
 	}
 
 	@Test
 	public void testGetProgram() {
-		fail("Not yet implemented");
+		assertNull(robot_onBoard_20_20_down_1000.getProgram());
+		// Het is noodzakelijk om een correct programma op te geven.
+		try {
+			robot_onBoard_20_20_down_1000.loadProgramFromFile("example.prog");
+		} catch (FileNotFoundException e) {
+			fail("Opgegeven testprogramma ongeldig.");
+		}
+		assertNotNull(robot_onBoard_20_20_down_1000.getProgram());
 	}
 
 	@Test
+	/**
+	 * Deze test mislukt ook wanneer een ander voorbeeld dan example.prog wordt gebruikt om te testen.
+	 */
 	public void testSaveProgramToFile() {
-		fail("Not yet implemented");
+		// Het is noodzakelijk om een correct programma op te geven.
+		try {
+			robot_onBoard_20_20_down_1000.loadProgramFromFile("example.prog");
+		} catch (FileNotFoundException e) {
+			fail("Opgegeven testprogramma ongeldig.");
+		}
+		assertEquals(1, robot_onBoard_20_20_down_1000.saveProgramToFile("exampleCopy.prog"));
+		assertTrue((new File("exampleCopy.prog")).exists());
+		try {
+			robot_onBoard_20_20_down_10000.loadProgramFromFile("exampleCopy.prog");
+		} catch (FileNotFoundException e) {
+			fail("Inladen van nieuw programma lukt niet.");
+		}
+		robot_onBoard_20_20_down_10000.setPosition(new Position(3, 3));
+		robot_onBoard_20_20_down_10000.stepn(2);
+		assertEquals(Orientation.LEFT, robot_onBoard_20_20_down_10000.getOrientation());
 	}
 
 	@Test
@@ -225,7 +267,12 @@ public class RobotTest {
 		assertEquals(new Position(3, 3), robot_down_1000.getPosition());
 		assertEquals(board_20_20, robot_down_1000.getBoard());
 	}
-
+	
+	@Test(expected = IllegalStateException.class)
+	public void testPutOnBoardIllegalStateException(){
+		robot_onBoard_20_20_down_1000.putOnBoard(board_40_40, new Position(3, 3));
+	}
+	
 	@Test
 	public void testRemoveFromBoard() {
 		assertTrue(robot_onBoard_20_20_down_1000.isOnBoard());
@@ -233,6 +280,11 @@ public class RobotTest {
 		assertFalse(robot_onBoard_20_20_down_1000.isOnBoard());
 		assertNull(robot_onBoard_20_20_down_1000.getPosition());
 		assertNull(robot_onBoard_20_20_down_1000.getBoard());
+	}
+	
+	@Test(expected = EntityNotOnBoardException.class)
+	public void testRemoveFromBoardEntityNotOnBoardException(){
+		robot_down_1000.removeFromBoard();
 	}
 
 	@Test
