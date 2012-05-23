@@ -197,7 +197,10 @@ public class RobotTest {
 
 	@Test
 	public void testRecharge() {
-		fail("Not yet implemented");
+		robot_onBoard_20_20_down_1000.recharge(new Energy(1));
+		assertEquals(new Energy(1001), robot_onBoard_20_20_down_1000.getEnergy());
+		robot_onBoard_20_20_down_1000.recharge(new Energy(20000));
+		assertEquals(new Energy(20000), robot_onBoard_20_20_down_1000.getEnergy());
 	}
 
 	@Test
@@ -280,7 +283,12 @@ public class RobotTest {
 		robot_onBoard_20_20_down_1000.removeFromBoard();
 		robot_onBoard_20_20_down_1000.drop(batt);
 	}
-
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testDropIllegalArgumentException(){
+		robot_onBoard_20_20_down_1000.drop(batt);
+	}
+	
 	@Test
 	public void testLoadProgramFromFile() {
 		assertNull(robot_onBoard_20_20_down_1000.getProgram());

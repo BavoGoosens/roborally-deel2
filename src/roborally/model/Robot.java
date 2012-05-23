@@ -826,11 +826,24 @@ public class Robot extends Entity{
 	}
 	
 	/**
+	 * Deze methode voert n stappen uit van het geladen programma.
 	 * 
-	 * @param n
+	 * @param	n
+	 * 			Het aantal stappen dat moet uitgevoerd worden.
+	 * 
+	 * @throws	IllegalStateException 
+	 * 			Er is nog geen programma ingeladen.
+	 * 			|getProgram() == null
+	 * 
+	 * @effect	Er worden n stappen uitgevoerd.
+	 * 			|for(int i = 1; i <= n; i++)
+	 * 			|	getProgram().stepn()
 	 */
-	public void stepn(int n) {
-		this.getProgram().stepn();
+	public void stepn(int n) throws IllegalStateException{
+		if(getProgram() == null)
+			throw new IllegalStateException("Er is nog geen programma ingeladen.");
+		for(int i = 1; i <= n; i++)
+			getProgram().stepn();
 	}
 	
 	/*
