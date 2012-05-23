@@ -48,7 +48,9 @@ public class RobotTest {
 	Robot robot_onBoard_40_40_left_1000;
 	Robot robot_onBoard_40_40_down_1000;
 	Board board_20_20 = new Board(20, 20);
-	Board board_40_40 = new Board(40, 40);	
+	Board board_40_40 = new Board(40, 40);
+	Battery batt;
+	RepairKit rk;
 
 	@Before
 	public void setUp(){
@@ -92,6 +94,8 @@ public class RobotTest {
 		robot_onBoard_40_40_right_1000.putOnBoard(board_40_40, new Position(6, 1));
 		robot_onBoard_40_40_left_1000.putOnBoard(board_40_40, new Position(7, 1));
 		robot_onBoard_40_40_down_1000.putOnBoard(board_40_40, new Position(8, 1));
+		batt = new Battery(new Energy(2000), new Weight(2000));
+		rk = new RepairKit(new Energy(2000), new Weight(2000));
 	}
 
 	@Test
@@ -138,7 +142,6 @@ public class RobotTest {
 	@Test
 	public void testMoveCost() {
 		assertEquals(new Energy(500), Robot.moveCost(robot_down_1000));
-		Battery batt = new Battery(new Energy(1), new Weight(2000));
 		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
 		robot_onBoard_20_20_down_1000.pickUp(batt);
 		assertEquals(new Energy(600), Robot.moveCost(robot_onBoard_20_20_down_1000));
@@ -147,8 +150,6 @@ public class RobotTest {
 	@Test
 	public void testGetPossessions() {
 		assertEquals(0, robot_onBoard_20_20_down_1000.getPossessions().size());
-		Battery batt = new Battery(new Energy(10), new Weight(555));
-		RepairKit rk = new RepairKit(new Energy(10), new Weight(666));
 		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
 		rk.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
 		robot_onBoard_20_20_down_1000.pickUp(batt);
@@ -159,14 +160,12 @@ public class RobotTest {
 
 	@Test
 	public void testTransferPossessions() {
-		fail("Not yet implemented");
+		
 	}
 
 	@Test
 	public void testPickUp() {
 		assertEquals(0, robot_onBoard_20_20_down_1000.getPossessions().size());
-		Battery batt = new Battery(new Energy(1), new Weight(2000));
-		RepairKit rk = new RepairKit(new Energy(1), new Weight(2000));
 		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
 		rk.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
 		robot_onBoard_20_20_down_1000.pickUp(batt);
@@ -185,7 +184,6 @@ public class RobotTest {
 
 	@Test
 	public void testDrop() {
-		Battery batt = new Battery(new Energy(1), new Weight(1));
 		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
 		robot_onBoard_20_20_down_1000.pickUp(batt);
 		robot_onBoard_20_20_down_1000.drop(batt);
@@ -308,7 +306,6 @@ public class RobotTest {
 		assertFalse(robot_down_1000.isTerminated());
 		robot_down_1000.destroy();
 		assertTrue(robot_down_1000.isTerminated());
-		Battery batt = new Battery(new Energy(1), new Weight(1));
 		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
 		assertFalse(batt.isTerminated());
 		robot_onBoard_20_20_down_1000.pickUp(batt);

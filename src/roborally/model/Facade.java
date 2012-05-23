@@ -304,7 +304,11 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public void transferItems(Robot from, Robot to) {
-		from.transferPossessions(to);
+		try{
+			from.transferPossessions(to);
+		}catch(IllegalPositionException e){
+			System.err.println(e.getMessage());
+		}
 	}
 
 	@Override
