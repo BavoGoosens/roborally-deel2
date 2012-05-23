@@ -41,7 +41,7 @@ public class Board{
 	/**
 	 * Deze HashMap houdt een lijst van HashSets bij per Position met in elke HashSet alle objecten op die plaats.
 	 */
-	private final HashMap <Position, HashSet<Entity>> map;
+	protected final HashMap <Position, HashSet<Entity>> map;
 	/**
 	 * De maximale breedte die een bord kan hebben.
 	 */
@@ -323,27 +323,30 @@ public class Board{
 	 * 			Het bord dat moet samengevoegd worden met dit bord.
 	 * 
 	 * @post	Het 2de bord is getermineerd.
-	 * 			|(new board2).isTerminated() == true
+	 * 			|(new board2).isTerminated()
 	 */
-	//TODO: hier moeten we alles opnieuw doen aangezien ze nu naast elkaar moeten uitkomen.
-
 	public void merge(Board board2) {
-		/*
-		Set<String> b2PosStrings = board2.getMap().keySet();
-		for (String b2PosString : b2PosStrings){
-			Position b2Pos = Robot.getPositionFromString(b2PosString);
-			if(this.isValidPosition(b2Pos)){
-				HashSet<Entity> b2EntitiesOnPos = board2.getEntityOnPosition(b2Pos);
-				for(Entity ent: b2EntitiesOnPos){
-					if(this.isPlacableOnPosition(b2Pos, ent)){
-						ent.removeFromBoard();
-						ent.putOnBoard(this, b2Pos);
+		Set<Position> keys2 = board2.map.keySet();
+		for(Position pos2: keys2){
+			if(this.isValidPosition(pos2)){
+				HashSet<Entity> ents2 = board2.getEntityOnPosition(pos2);
+				for(Entity ent2: ents2){
+					if(isPlacableOnPosition(pos2, ent2)){
+						ent2.removeFromBoard();
+						ent2.putOnBoard(this, pos2);
+					}else{
+						for(Position neighbour: pos2.getNeighbours(this)){
+							if(isPlacableOnPosition(neighbour, ent2)){
+								ent2.removeFromBoard();
+								ent2.putOnBoard(this, neighbour);
+								break;
+							}
+						}
 					}
 				}
 			}
 		}
 		board2.terminate();
-		 */
 	}
 
 	/**
@@ -402,14 +405,20 @@ public class Board{
 	}
 	
 	/**
-	 * @param rng
-	 * @param n
-	 * @return
+	 * Deze methode geeft een willekeurige long terug op basis van een random en een bereik.
+	 * 
+	 * @param	rand
+	 * 			De random waarmee een willekeurige long gemaakt moet worden.
+	 * 
+	 * @param	n
+	 * 			De maximale waarde van het bereik waarin de long gegenereerd moet worden.
+	 * 
+	 * @see		java.util.Random#nextInt(java.lang.Integer)
 	 */
-	private static long nextLong(Random rng, long n) {
+	private static long nextLong(Random rand, long n) {
 		   long bits, val;
 		   do {
-		      bits = (rng.nextLong() << 1) >>> 1;
+		      bits = (rand.nextLong() << 1) >>> 1;
 		      val = bits % n;
 		   } while (bits-val+(n-1) < 0L);
 		   return val;
