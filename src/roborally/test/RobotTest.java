@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashSet;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import roborally.exception.EntityNotOnBoardException;
 import roborally.exception.IllegalPositionException;
 import roborally.model.Battery;
 import roborally.model.Board;
+import roborally.model.Entity;
 import roborally.model.RepairKit;
 import roborally.model.Robot;
 import roborally.property.Energy;
@@ -20,7 +22,7 @@ import roborally.property.Position;
 import roborally.property.Weight;
 
 public class RobotTest {
-	
+
 	Robot robot_up_10000;
 	Robot robot_right_10000;
 	Robot robot_left_10000;
@@ -150,9 +152,9 @@ public class RobotTest {
 		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
 		rk.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
 		robot_onBoard_20_20_down_1000.pickUp(batt);
-		assertEquals(1, robot_onBoard_20_20_down_1000.getPossessions().size());
+		assertTrue(robot_onBoard_20_20_down_1000.getPossessions().contains(batt));
 		robot_onBoard_20_20_down_1000.pickUp(rk);
-		assertEquals(2, robot_onBoard_20_20_down_1000.getPossessions().size());
+		assertTrue(robot_onBoard_20_20_down_1000.getPossessions().contains(rk));
 	}
 
 	@Test
@@ -171,6 +173,9 @@ public class RobotTest {
 		assertEquals(1, robot_onBoard_20_20_down_1000.getPossessions().size());
 		robot_onBoard_20_20_down_1000.pickUp(rk);
 		assertEquals(2, robot_onBoard_20_20_down_1000.getPossessions().size());
+		HashSet<Entity> place = board_20_20.getEntityOnPosition(robot_onBoard_20_20_down_1000.getPosition());
+		assertFalse(place.contains(batt));
+		assertFalse(place.contains(rk));
 	}
 
 	@Test
@@ -180,7 +185,13 @@ public class RobotTest {
 
 	@Test
 	public void testDrop() {
-		fail("Not yet implemented");
+		Battery batt = new Battery(new Energy(1), new Weight(1));
+		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
+		robot_onBoard_20_20_down_1000.pickUp(batt);
+		robot_onBoard_20_20_down_1000.drop(batt);
+		HashSet<Entity> place = board_20_20.getEntityOnPosition(robot_onBoard_20_20_down_1000.getPosition());
+		assertTrue(place.contains(batt));
+		assertFalse(robot_onBoard_20_20_down_1000.getPossessions().contains(batt));
 	}
 
 	@Test
@@ -217,7 +228,7 @@ public class RobotTest {
 		} catch (FileNotFoundException e) {
 			fail("Opgegeven testprogramma ongeldig.");
 		}
-		assertEquals(1, robot_onBoard_20_20_down_1000.saveProgramToFile("exampleCopy.prog"));
+		assertEquals(0, robot_onBoard_20_20_down_1000.saveProgramToFile("exampleCopy.prog"));
 		assertTrue((new File("exampleCopy.prog")).exists());
 		try {
 			robot_onBoard_20_20_down_10000.loadProgramFromFile("exampleCopy.prog");
@@ -242,18 +253,18 @@ public class RobotTest {
 		robot_down_1000.setPosition(new Position(6, 6));
 		assertEquals(new Position(6, 6), robot_down_1000.getPosition());
 	}
-	
+
 	@Test(expected = IllegalStateException.class)
 	public void testSetPositionIllegalStateException(){
 		robot_onBoard_20_20_down_1000.destroy();
 		robot_onBoard_20_20_down_1000.setPosition(new Position(0, 0));
 	}
-	
+
 	@Test(expected = EntityNotOnBoardException.class)
 	public void testSetPositionEntityNotOnBoardException(){
 		robot_down_1000.setPosition(new Position(0, 0));
 	}
-	
+
 	@Test(expected = IllegalPositionException.class)
 	public void testSetPositionIllegalPositionException(){
 		robot_onBoard_20_20_down_1000.setPosition(new Position(21, 0));
@@ -266,13 +277,15 @@ public class RobotTest {
 		assertTrue(robot_down_1000.isOnBoard());
 		assertEquals(new Position(3, 3), robot_down_1000.getPosition());
 		assertEquals(board_20_20, robot_down_1000.getBoard());
+		HashSet<Entity> place = board_20_20.getEntityOnPosition(new Position(3, 3));
+		assertTrue(place.contains(robot_onBoard_20_20_down_1000));
 	}
-	
+
 	@Test(expected = IllegalStateException.class)
 	public void testPutOnBoardIllegalStateException(){
 		robot_onBoard_20_20_down_1000.putOnBoard(board_40_40, new Position(3, 3));
 	}
-	
+
 	@Test
 	public void testRemoveFromBoard() {
 		assertTrue(robot_onBoard_20_20_down_1000.isOnBoard());
@@ -280,8 +293,11 @@ public class RobotTest {
 		assertFalse(robot_onBoard_20_20_down_1000.isOnBoard());
 		assertNull(robot_onBoard_20_20_down_1000.getPosition());
 		assertNull(robot_onBoard_20_20_down_1000.getBoard());
+		HashSet<Entity> place = board_20_20.getEntityOnPosition(robot_down_1000.getPosition());
+		if(place != null)
+			assertFalse(place.contains(robot_onBoard_20_20_down_1000));
 	}
-	
+
 	@Test(expected = EntityNotOnBoardException.class)
 	public void testRemoveFromBoardEntityNotOnBoardException(){
 		robot_down_1000.removeFromBoard();

@@ -1,5 +1,6 @@
 package roborally.model;
 
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -804,7 +805,7 @@ public class Robot extends Entity{
 	 * 
 	 * @return	Een integer die 0 is als de operatie geslaagd is en -1 indien deze mislukte.
 	 * 			|try{
-	 * 			|	PrintWriter out = new PrintWriter(new FileWriter(path))
+	 * 			|	BufferedWriter out = new BufferedWriter(new FileWriter(path))
 	 * 			|	1
 	 * 			|}catch(IOException e){
 	 * 			|	-1
@@ -813,10 +814,11 @@ public class Robot extends Entity{
 	public int saveProgramToFile(String path) {
 		try{
 			FileWriter outFile = new FileWriter(path);
-			PrintWriter out = new PrintWriter(outFile);
+			BufferedWriter out = new BufferedWriter(outFile);
 			for(String str: getProgram().getOriginal()){
-				out.print(str);
+				out.write(str);
 			}
+			out.close();
 			return 0;
 		}catch(IOException e){
 			return -1;
