@@ -10,7 +10,7 @@ public class If extends Command{
 		String sbstr = substring.trim();
 		sbstr = sbstr.substring(1);
 		String[] words = sbstr.split("[^a-z]");
-		if (words[0].equals("and")){
+		if (words[0].contains("and")){
 			sbstr = sbstr.substring(4);
 			sbstr = sbstr.trim();
 			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.AND, getAndOrCond(sbstr));
@@ -19,7 +19,7 @@ public class If extends Command{
 			sbstr = sbstr.substring(beginIdx);
 			sbstr = sbstr.substring(sbstr.indexOf('('));
 			getIfElseClause(sbstr);
-		}else if (words[0].equals("or")){
+		}else if (words[0].contains("or")){
 			sbstr = sbstr.substring(4);
 			sbstr = sbstr.trim();
 			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.OR, getAndOrCond(sbstr));
@@ -28,7 +28,7 @@ public class If extends Command{
 			sbstr = sbstr.substring(beginIdx);
 			sbstr = sbstr.substring(sbstr.indexOf('('));
 			getIfElseClause(sbstr);
-		}else if (words[0].equals("not")){
+		}else if (words[0].contains("not")){
 			sbstr = sbstr.substring(4);
 			sbstr = sbstr.trim();
 			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.NOT, getNotCond(sbstr));
@@ -54,11 +54,11 @@ public class If extends Command{
 	}
 
 	private void setElseClause(Command firstCommand) {
-		this.else_clause = firstCommand;
+		this.setElse_clause(firstCommand);
 	}
 
 	private void setIfClause(Command firstCommand) {
-		this.if_clause = firstCommand;
+		this.setIf_clause(firstCommand);
 	}
 
 	private Conditie getCondition() {
@@ -79,6 +79,22 @@ public class If extends Command{
 
 	public void setConditieSpeciaal(SpecialeConditie conditieSpeciaal) {
 		this.conditieSpeciaal = conditieSpeciaal;
+	}
+
+	public Command getIf_clause() {
+		return this.if_clause;
+	}
+
+	public void setIf_clause(Command if_clause) {
+		this.if_clause = if_clause;
+	}
+
+	public Command getElse_clause() {
+		return this.else_clause;
+	}
+
+	public void setElse_clause(Command else_clause) {
+		this.else_clause = else_clause;
 	}
 
 	private Conditie conditie;

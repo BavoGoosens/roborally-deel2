@@ -41,32 +41,7 @@ public class While extends Command {
 	private void makeBody(String sbstr) {
 		String substr =sbstr;
 		substr = substr.substring(sbstr.indexOf("("));
-		substr = haalHaakskesWeg(substr);
-		String[] words = substr.split("[^a-z]");
-		if (words[0].equals("while")){
-			Command whl = new While(substr.substring(5, substr.length()));
-			this.setBody(whl);
-		} else if (words[0].equals("seq")){
-			Sequentie seq = new Sequentie(substr.substring(3, substr.length()));
-			this.setBody(seq);
-		} else if (words[0].equals("if")){
-			If ifs = new If(substr.substring(2, substr.length()));
-			this.setBody(ifs);
-		} else {
-			if (words[0].equals("shoot")){
-				Basic bas = new Basic(BasicEnum.SHOOT);
-				this.setBody(bas);
-			}else if (words[0].equals("move")){
-				Basic bas = new Basic(BasicEnum.MOVE);
-				this.setBody(bas);
-			}else if (words[0].equals("turn")){
-				Basic bas = new Basic(BasicEnum.TURN);
-				this.setBody(bas);
-			}else{
-				Basic bas = new Basic(BasicEnum.PICK_UP_AND_USE);
-				this.setBody(bas);
-			}
-		}
+		setBody(getFirstCommand(substr));
 	}
 
 	private void setCondition(SpecialeConditie cnd) {

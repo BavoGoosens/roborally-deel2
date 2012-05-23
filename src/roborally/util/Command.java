@@ -30,20 +30,20 @@ public class Command {
 
 	protected Command getFirstCommand(String substr){
 		String eersteCommand = haalHaakskesWeg(substr);
-		String[] words = substr.split("[^a-z]");
-		if (words[0].equals("while")){
+		if (eersteCommand.contains("while")){
 			return new While(substr.substring(5, substr.length()));
-		} else if (words[0].equals("seq")){
+		} else if (eersteCommand.contains("seq")){
 			return new Sequentie(substr.substring(3, substr.length()));
-		} else if (words[0].equals("if")){
-			return new If(substr.substring(2, substr.length()));
+		} else if (eersteCommand.contains("if")){
+			return new If(substr.substring(3, substr.length()));
 		} else {
-			if (words[0].equals("shoot")){
+			if (eersteCommand.contains("shoot")){
 				return new Basic(BasicEnum.SHOOT);
-			}else if (words[0].equals("move")){
+			}else if (eersteCommand.contains("move")){
 				return new Basic(BasicEnum.MOVE);
-			}else if (words[0].equals("turn")){
-				return new Basic(BasicEnum.TURN);
+			}else if (eersteCommand.contains("turn")){
+				String[] words = eersteCommand.split(" ");
+				return new Basic(BasicEnum.TURN,words[1]);
 			}else{
 				return new Basic(BasicEnum.PICK_UP_AND_USE);
 			}
