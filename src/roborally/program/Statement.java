@@ -104,9 +104,10 @@ public class Statement extends Command {
 			if (getTurnDir() == 1){
 				robot.turnCounterClockWise();
 				setExecuted(true);
+			}else{			
+				robot.turnClockWise();
+				setExecuted(true);
 			}
-			robot.turnClockWise();
-			setExecuted(true);
 		}else{
 			if (!this.isExecuted()){
 				HashSet<Entity> ents = robot.getBoard().getEntityOnPosition(robot.getPosition());
