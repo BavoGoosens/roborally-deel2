@@ -115,12 +115,12 @@ public abstract class Entity {
 			}else if(!getBoard().isValidPosition(position)){
 				throw new IllegalPositionException(position);
 			}
-			this.getBoard().removeEntity(this);
-			this.getBoard().putEntity(position, this);
-			this.position = position;
-		}else{
-			this.position = position;
+			if(getPosition() != null){
+				this.getBoard().removeEntity(this);
+				this.getBoard().putEntity(position, this);
+			}	
 		}
+		this.position = position;
 	}
 
 	/**
@@ -233,7 +233,7 @@ public abstract class Entity {
 	protected void damage() {
 		//NOP
 	}
-	
+
 	/*
 	 * Deze methode zet het object om naar een String.
 	 * 
