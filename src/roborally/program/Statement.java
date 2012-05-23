@@ -12,8 +12,8 @@ public class Statement extends Command {
 	public String toString() {
 		if (getEnumOfThis() == StatementEnum.TURN){
 			if (this.turnDir == 1)
-				return "("+getEnumOfThis().name()+"counterclockwise)";
-			return "("+getEnumOfThis().name()+"clockwise)";
+				return "("+getEnumOfThis().name()+" counterclockwise)";
+			return "("+getEnumOfThis().name()+" clockwise)";
 		}
 		return "("+getEnumOfThis().name()+")";
 	}

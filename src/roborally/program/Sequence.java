@@ -13,9 +13,6 @@ public class Sequence extends Command {
 
 	private void makeBody(String substring) {
 		String cpysubstring = substring.trim();
-		cpysubstring = cpysubstring.trim();
-		cpysubstring = cpysubstring.substring(cpysubstring.indexOf('('));
-		cpysubstring = haalHaakskesWeg(cpysubstring);
 		while (cpysubstring.length() > 3){
 			cpysubstring = cpysubstring.trim();
 			cpysubstring = cpysubstring.substring(cpysubstring.indexOf('('));
