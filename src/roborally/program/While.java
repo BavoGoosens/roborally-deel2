@@ -5,7 +5,7 @@ import roborally.model.Robot;
 public class While extends Command {
 
 	public boolean enterd = false;
-	
+
 	public boolean isEnterd() {
 		return enterd;
 	}
@@ -81,9 +81,11 @@ public class While extends Command {
 					getBody().executeNext(robot);
 				}
 			}
-			if (this.conditieSpeciaal.evaluate(robot)){
-				setEnterd(true);
-				getBody().executeNext(robot);
+			if (this.getConditieSpeciaal()!= null){
+				if (this.conditieSpeciaal.evaluate(robot)){
+					setEnterd(true);
+					getBody().executeNext(robot);
+				}
 			}
 		}
 		this.getBody().executeNext(robot);
@@ -101,7 +103,7 @@ public class While extends Command {
 	public SpecialCondition getConditieSpeciaal() {
 		return this.conditieSpeciaal;
 	}
-	
+
 	private Command body;
 
 }

@@ -111,7 +111,7 @@ public class If extends Command{
 				}
 				setEntered(true);
 				getElse_clause().executeNext(robot);
-			}if (getConditieSpeciaal().evaluate(robot)){
+			}else if (getConditieSpeciaal().evaluate(robot)){
 				setEntered(true);
 				getIf_clause().executeNext(robot);
 			}

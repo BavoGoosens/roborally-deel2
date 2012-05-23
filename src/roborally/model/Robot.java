@@ -823,7 +823,7 @@ public class Robot extends Entity{
 	 * @param n
 	 */
 	public void stepn(int n) {
-		this.getProgram().stepn(n);
+		this.getProgram().stepn();
 	}
 	
 	/*

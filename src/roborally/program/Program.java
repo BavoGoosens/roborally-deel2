@@ -126,10 +126,10 @@ public class Program {
 
 	}
 
-	public void stepn(int n){
+	public void stepn(){
 		for (int i = 0; i < this.program.size(); i++){
 			Command comm = this.program.get(i);
-			int left = comm.execute(n, robot);
+			comm.executeNext(robot);
 		}
 	}
 }
