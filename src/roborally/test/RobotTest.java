@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import roborally.model.Battery;
 import roborally.model.Board;
+import roborally.model.RepairKit;
 import roborally.model.Robot;
 import roborally.property.Energy;
 import roborally.property.Orientation;
@@ -88,7 +89,8 @@ public class RobotTest {
 
 	@Test
 	public void testIsValidRobotEnergyEnergyRobot() {
-		fail("Not yet implemented");
+		assertTrue(Robot.isValidRobotEnergy(new Energy(1000), robot_down_1000));
+		assertFalse(Robot.isValidRobotEnergy(new Energy(20000.1), robot_down_1000));
 	}
 
 	@Test
@@ -128,12 +130,24 @@ public class RobotTest {
 
 	@Test
 	public void testMoveCost() {
-		fail("Not yet implemented");
+		assertEquals(new Energy(500), Robot.moveCost(robot_down_1000));
+		Battery batt = new Battery(new Energy(1), new Weight(2000));
+		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
+		robot_onBoard_20_20_down_1000.pickUp(batt);
+		assertEquals(new Energy(600), Robot.moveCost(robot_onBoard_20_20_down_1000));
 	}
 
 	@Test
 	public void testGetPossessions() {
-		fail("Not yet implemented");
+		assertEquals(0, robot_onBoard_20_20_down_1000.getPossessions().size());
+		Battery batt = new Battery(new Energy(1), new Weight(2000));
+		RepairKit rk = new RepairKit(new Energy(1), new Weight(2000));
+		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
+		rk.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
+		robot_onBoard_20_20_down_1000.pickUp(batt);
+		assertEquals(1, robot_onBoard_20_20_down_1000.getPossessions().size());
+		robot_onBoard_20_20_down_1000.pickUp(rk);
+		assertEquals(2, robot_onBoard_20_20_down_1000.getPossessions().size());
 	}
 
 	@Test
@@ -262,6 +276,9 @@ public class RobotTest {
 	@Test
 	public void testIsValidEntity() {
 		assertTrue(robot_down_1000.isValidEntity());
+		assertTrue(robot_onBoard_20_20_down_1000.isValidEntity());
+		robot_onBoard_20_20_down_1000.setPosition(null);
+		assertFalse(robot_onBoard_20_20_down_1000.isValidEntity());
 	}
 
 }
