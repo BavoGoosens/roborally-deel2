@@ -22,10 +22,31 @@ public class Program {
 	}
 
 	private ArrayList<String> original = new ArrayList<>();
-	
+
+
+	public ArrayList<String> getOriginal(){
+		return this.original;
+	}
+
 	private String prettyPrintLine;
 
-	public Program(String path) throws FileNotFoundException{
+
+	public String getPrettyPrint(){
+		return this.prettyPrintLine;
+	}
+
+	private Robot robot;
+
+	public Robot getRobot() {
+		return this.robot;
+	}
+
+	private void setRobot(Robot robot) {
+		this.robot = robot;
+	}
+
+	public Program(String path, Robot robot ) throws FileNotFoundException{
+		setRobot(robot);
 		File file = new File(path);
 		procesFile(file);
 	} 
@@ -39,7 +60,7 @@ public class Program {
 				result = result + str;
 				this.original.add(str);
 			}
-			
+
 			this.prettyPrintLine = result;
 			readProgram();
 		}catch (FileNotFoundException esc){
@@ -104,26 +125,11 @@ public class Program {
 		}
 
 	}
-	
-	private int stepCount:
-	
+
 	public void stepn(int n){
-		while
-	}
-
-	public ArrayList<String> getOriginal(){
-		return this.original;
-	}
-	
-	public String getPrettyPrint(){
-		return this.prettyPrintLine;
-	}
-
-	public void execute(Robot robot) {
 		for (int i = 0; i < this.program.size(); i++){
 			Command comm = this.program.get(i);
-			comm.execute(robot);
+			int left = comm.execute(n, robot);
 		}
-		
 	}
 }

@@ -35,7 +35,7 @@ public class While extends Command {
 			this.setCondition(cnd);
 			int beginIdx = sbstr.indexOf(cnd.toString())+cnd.toString().length();
 			makeBody(sbstr.substring(beginIdx));
-			}
+		}
 		else{
 			setCondition(getBasicConditie(sbstr));
 			makeBody(sbstr.substring(words[0].length()));
@@ -63,31 +63,36 @@ public class While extends Command {
 	public void setBody(Command body) {
 		this.body = body;
 	}
-	
+
 	@Override
-	public void execute(Robot robot) {
+	public int execute(int n , Robot robot) {
 		if (getConditie() != null){
 			while (getConditie().evaluate(robot)){
-				getBody().execute(robot);
+				return getBody().execute(n , robot);
+			}
+		}else {
+			while(getConditieSpeciaal().evaluate(robot)){
+
+				return getBody().execute(n , robot);
 			}
 		}
-		while(getConditieSpeciaal().evaluate(robot)){
-			getBody().execute(robot);
-		}
-	}
-	
-	private Condition conditie;
-	
-	public Condition getConditie() {
-		return conditie;
+		// niet voldaan aan de conditie
+		return 0;
 	}
 
-	public SpecialCondition getConditieSpeciaal() {
-		return conditieSpeciaal;
+	private Condition conditie;
+
+	public Condition getConditie() {
+		return this.conditie;
 	}
 
 	private SpecialCondition conditieSpeciaal;
 
+
+	public SpecialCondition getConditieSpeciaal() {
+		return this.conditieSpeciaal;
+	}
+	
 	private Command body;
 
 }

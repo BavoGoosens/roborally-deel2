@@ -94,5 +94,7 @@ public class Command {
 		}
 	}
 
-	public void execute(Robot robot) {}
+	public int execute(int n ,Robot robot){
+		return 0;
+	}
 }

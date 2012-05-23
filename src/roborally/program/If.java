@@ -102,19 +102,17 @@ public class If extends Command{
 	}
 	
 	@Override
-	public void execute(Robot robot){
+	public int execute(int n , Robot robot){
 		if (getCondition() != null){
 			if (getCondition().evaluate(robot)){
-				getIf_clause().execute(robot);
+				return getIf_clause().execute(n , robot);
 			}
-			getElse_clause().execute(robot);
+			return getElse_clause().execute(n, robot);
 		}
-		if (getConditieSpeciaal()!= null){
-			if (getConditieSpeciaal().evaluate(robot)){
-				getIf_clause().execute(robot);
-			}
-			getElse_clause().execute(robot);
+		if (getConditieSpeciaal().evaluate(robot)){
+			return getIf_clause().execute(n , robot);
 		}
+		return getElse_clause().execute(n , robot);
 	}
 
 	private Condition conditie;
