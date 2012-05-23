@@ -5,7 +5,6 @@ import roborally.model.Entity;
 import roborally.model.Robot;
 import roborally.model.Wall;
 import roborally.property.Energy;
-import roborally.property.Orientation;
 import roborally.property.Position;
 import roborally.util.AStarPath;
 

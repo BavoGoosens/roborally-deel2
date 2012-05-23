@@ -1,5 +1,7 @@
 package roborally.program;
 
+import roborally.model.Robot;
+
 public class If extends Command{
 
 	public If(String substring) {
@@ -96,6 +98,22 @@ public class If extends Command{
 	public void setElse_clause(Command else_clause) {
 		this.else_clause = else_clause;
 	}
+	
+	@Override
+	public void execute(Robot robot){
+		if (getCondition() != null){
+			if (getCondition().evaluate(robot)){
+				getIf_clause().execute(robot);
+			}
+			getElse_clause().execute(robot);
+		}
+		if (getConditieSpeciaal()!= null){
+			if (getConditieSpeciaal().evaluate(robot)){
+				getIf_clause().execute(robot);
+			}
+			getElse_clause().execute(robot);
+		}
+	}
 
 	private Conditie conditie;
 
@@ -104,7 +122,5 @@ public class If extends Command{
 	private Command if_clause;
 
 	private Command else_clause;
-
-
 
 }
