@@ -4,14 +4,19 @@ import roborally.model.Robot;
 
 public class While extends Command {
 
-	public boolean enterd = false;
+	@Override
+	public String toString() {
+		return "(while "+ this.conditie.toString() + this.conditieSpeciaal.toString()+ this.getBody().toString() + ")";
+	}
+
+	public boolean entered = false;
 
 	public boolean isEnterd() {
-		return enterd;
+		return this.entered;
 	}
 
 	public void setEnterd(boolean enterd) {
-		this.enterd = enterd;
+		this.entered = enterd;
 	}
 
 	public While(String substring) {
@@ -87,8 +92,9 @@ public class While extends Command {
 					getBody().executeNext(robot);
 				}
 			}
-		}
-		this.getBody().executeNext(robot);
+		}else{
+			this.getBody().executeNext(robot);
+			}
 	}
 
 	private Condition conditie;

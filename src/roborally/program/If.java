@@ -4,6 +4,12 @@ import roborally.model.Robot;
 
 public class If extends Command{
 	
+	@Override
+	public String toString() {
+		return "(if" + this.conditie.toString() + this.conditieSpeciaal.toString()+ this.getIf_clause().toString()+
+				this.getElse_clause().toString() + ")";
+	}
+
 	public boolean enterd = false;
 
 	public If(String substring) {

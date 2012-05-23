@@ -8,6 +8,16 @@ import roborally.model.Robot;
 
 public class Statement extends Command {
 
+	@Override
+	public String toString() {
+		if (getEnumOfThis() == StatementEnum.TURN){
+			if (this.turnDir == 1)
+				return "("+getEnumOfThis().name()+"counterclockwise)";
+			return "("+getEnumOfThis().name()+"clockwise)";
+		}
+		return "("+getEnumOfThis().name()+")";
+	}
+
 	private int turnDir;
 
 	public int getTurnDir() {

@@ -13,8 +13,8 @@ public class Condition extends Command {
 	@Override
 	public String toString() {
 		if (this.energyContained == null)
-			return this.conditie.toString();
-		return this.conditie.toString()+ " " + this.energyContained.getEnergy();
+			return "("+ this.conditie.toString()+")";
+		return "("+ this.conditie.toString()+ " " + this.energyContained.getEnergy()+")";
 	}
 
 	private ConditionEnum conditie; 

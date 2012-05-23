@@ -22,12 +22,12 @@ public class Command {
 				closedHaakskesCount++;
 				if (openHaakskesCount == closedHaakskesCount){
 					eindIdx = i;
-					break;
+					return substr = substr.substring(beginIdx + 1, eindIdx).trim();
 				}
 
 			}
 		}
-		return substr = substr.substring(beginIdx + 1, eindIdx).trim();
+		return str;
 	}
 
 	protected Command getFirstCommand(String substr){

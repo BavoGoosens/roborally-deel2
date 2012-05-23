@@ -5,7 +5,7 @@ import roborally.model.Robot;
 
 public class Sequence extends Command {
 
-	public boolean enterd = false;
+	public boolean entered = false;
 
 	public Sequence(String substring) {
 		makeBody(substring);
@@ -13,13 +13,26 @@ public class Sequence extends Command {
 
 	private void makeBody(String substring) {
 		String cpysubstring = substring.trim();
+		cpysubstring = cpysubstring.trim();
+		cpysubstring = cpysubstring.substring(cpysubstring.indexOf('('));
+		cpysubstring = haalHaakskesWeg(cpysubstring);
 		while (cpysubstring.length() > 3){
 			cpysubstring = cpysubstring.trim();
 			cpysubstring = cpysubstring.substring(cpysubstring.indexOf('('));
 			String cmd = haalHaakskesWeg(cpysubstring);
-			getBody().add(getFirstCommand(cpysubstring));
-			cpysubstring = cpysubstring.substring(cmd.length() + 3);
+			Command toBeAdded = getFirstCommand(cmd);
+			getBody().add(toBeAdded);
+			cpysubstring = cpysubstring.substring(toBeAdded.toString().length());
 		}
+	}
+
+	@Override
+	public String toString() {
+		String result = "";
+		for (Command cmd : getBody()){
+			result = result + cmd.toString();
+		}
+		return result;
 	}
 
 	@Override
