@@ -1,16 +1,26 @@
 package roborally.filter;
 
-public class EnergyFilter extends Filter {
+import roborally.property.Energy;
 
-	protected EnergyFilter(int filterMethod, Class property, Object value) {
-		super(filterMethod, property, value);
-		// TODO Auto-generated constructor stub
+public class EnergyFilter extends Filter {
+	
+	Energy base;
+	
+	public EnergyFilter(int filterMethod, Energy value) {
+		super(filterMethod, Energy.class, value);
+		base = (Energy) value;
 	}
 
 	@Override
 	public boolean evaluateObject(Object object) {
-		// TODO Auto-generated method stub
-		return super.evaluateObject(object);
+		Energy other = (Energy) object;
+		if(filterMethod < 0 && base.compareTo(other) < 0)
+			return true;
+		if(filterMethod == 0 && base.compareTo(other) == 0)
+			return true;
+		if(filterMethod > 0 && base.compareTo(other) > 0)
+			return true;
+		return false;		
 	}
 
 }

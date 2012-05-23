@@ -12,7 +12,11 @@ import be.kuleuven.cs.som.annotate.Immutable;
 
 import roborally.property.Position;
 import roborally.exception.IllegalPositionException;
+import roborally.filter.EnergyFilter;
 import roborally.filter.Filter;
+import roborally.filter.OrientationFilter;
+import roborally.filter.PositionFilter;
+import roborally.filter.WeightFilter;
 
 /**
  * Een klasse om een bord voor te stellen.
@@ -211,7 +215,7 @@ public class Board{
 			map.put(key, new HashSet<Entity>());
 		getEntityOnPosition(key).add(entity);
 	}
-	
+
 	/**
 	 * Deze methode geeft alle objecten van een bepaale klasse op het bord terug.
 	 * 
@@ -383,7 +387,7 @@ public class Board{
 		}
 		isTerminated = true;
 	}
-	
+
 	/**
 	 * Deze methode geeft een willekeurige positie terug die geldig is voor het bord van de robot.
 	 * 
@@ -403,7 +407,7 @@ public class Board{
 			return teleport;		
 		return getRandomPosition(robot);
 	}
-	
+
 	/**
 	 * Deze methode geeft een willekeurige long terug op basis van een random en een bereik.
 	 * 
@@ -416,16 +420,83 @@ public class Board{
 	 * @see		java.util.Random#nextInt(java.lang.Integer)
 	 */
 	private static long nextLong(Random rand, long n) {
-		   long bits, val;
-		   do {
-		      bits = (rand.nextLong() << 1) >>> 1;
-		      val = bits % n;
-		   } while (bits-val+(n-1) < 0L);
-		   return val;
+		long bits, val;
+		do {
+			bits = (rand.nextLong() << 1) >>> 1;
+			val = bits % n;
+		} while (bits-val+(n-1) < 0L);
+		return val;
 	}
-	
+
+	/**
+	 * Deze methode geeft een iterator terug met een bepaalde conditie (Filter).
+	 * 
+	 * @param	filter
+	 * 			Deze filter bepaalt de conditie voor de iterator. 
+	 * 
+	 * @return	Een nieuwe iterator met alle objecten op het bord die voldoen aan de gegeven filter.
+	 */
 	public Iterator getEntitiesWithFilter(Filter filter){
-		return null;
+
+		Collection<HashSet<Entity>> coll = map.values();
+		final Set<Entity> entities = new HashSet<Entity>();
+		for(HashSet<Entity> place: coll){
+			Iterator<Entity> itr = place.iterator();
+			while(itr.hasNext()){
+				Entity current = itr.next();
+				if(filter instanceof PositionFilter){
+					if(filter.evaluateObject(current.getPosition()))
+						entities.add(current);
+				}
+				if(filter instanceof OrientationFilter && current instanceof Robot){
+					if(filter.evaluateObject(((Robot) current).getEnergy()))
+						entities.add(current);
+				}
+				if(filter instanceof WeightFilter){
+					if(current instanceof Robot){						
+						if(filter.evaluateObject(((Robot) current).getTotalWeight()))
+							entities.add(current);
+					}
+					if(current instanceof Item){						
+						if(filter.evaluateObject(((Item) current).getWeight()))
+							entities.add(current);
+					}
+				}
+				if(filter instanceof EnergyFilter){
+					if(current instanceof Robot){
+						if(filter.evaluateObject(((Robot) current).getEnergy()))
+							entities.add(current);
+					}
+					if(current instanceof Battery){
+						if(filter.evaluateObject(((Battery) current).getEnergy()))
+							entities.add(current);
+					}
+					if(current instanceof RepairKit){
+						if(filter.evaluateObject(((RepairKit) current).getEnergy()))
+							entities.add(current);
+					}
+				}				
+			}
+		}
+
+		return new Iterator(){
+
+			@Override
+			public boolean hasNext() {
+				return entItr.hasNext();
+			}
+			@Override
+			public Object next() {
+				return entItr.next();
+			}
+			@Override
+			public void remove() {
+				((Entity) entItr.next()).removeFromBoard();
+			}
+			
+			Iterator entItr = entities.iterator();
+
+		};
 	}
-	
+
 }

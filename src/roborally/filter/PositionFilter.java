@@ -1,16 +1,26 @@
 package roborally.filter;
 
-public class PositionFilter extends Filter {
+import roborally.property.Position;
 
-	protected PositionFilter(int filterMethod, Class property, Object value) {
-		super(filterMethod, property, value);
-		// TODO Auto-generated constructor stub
+public class PositionFilter extends Filter {
+	
+	Position base;
+
+	public PositionFilter(int filterMethod, Position value) {
+		super(filterMethod, Position.class, value);
+		base = (Position) value;
 	}
 
 	@Override
 	public boolean evaluateObject(Object object) {
-		// TODO Auto-generated method stub
-		return super.evaluateObject(object);
+		Position other = (Position) object;
+		if(filterMethod < 0 && base.compareTo(other) < 0)
+			return true;
+		if(filterMethod == 0 && base.compareTo(other) == 0)
+			return true;
+		if(filterMethod > 0 && base.compareTo(other) > 0)
+			return true;
+		return false;	
 	}
-
+	
 }

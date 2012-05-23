@@ -1,15 +1,26 @@
 package roborally.filter;
 
-public class WeightFilter extends Filter {
+import roborally.property.Weight;
 
-	protected WeightFilter(int filterMethod, Class property, Object value) {
-		super(filterMethod, property, value);
-		// TODO Auto-generated constructor stub
+public class WeightFilter extends Filter {
+	
+	Weight base;
+
+	public WeightFilter(int filterMethod, Weight value) {
+		super(filterMethod, Weight.class, value);
+		base = (Weight) value;
 	}
 
 	@Override
 	public boolean evaluateObject(Object object) {
-		// TODO Auto-generated method stub
-		return super.evaluateObject(object);
+		Weight other = (Weight) object;
+		if(filterMethod < 0 && base.compareTo(other) < 0)
+			return true;
+		if(filterMethod == 0 && base.compareTo(other) == 0)
+			return true;
+		if(filterMethod > 0 && base.compareTo(other) > 0)
+			return true;
+		return false;	
 	}
+	
 }

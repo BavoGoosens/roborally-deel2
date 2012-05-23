@@ -1,16 +1,26 @@
 package roborally.filter;
 
-public class OrientationFilter extends Filter {
+import roborally.property.Orientation;
 
-	protected OrientationFilter(int filterMethod, Class property, Object value) {
-		super(filterMethod, property, value);
-		// TODO Auto-generated constructor stub
+public class OrientationFilter extends Filter {
+	
+	Orientation base;
+
+	public OrientationFilter(int filterMethod, Orientation value) {
+		super(filterMethod, Orientation.class, value);
+		base = (Orientation) value;
 	}
 
 	@Override
 	public boolean evaluateObject(Object object) {
-		// TODO Auto-generated method stub
-		return super.evaluateObject(object);
+		Orientation other = (Orientation) object;
+		if(filterMethod < 0 && base.compareTo(other) < 0)
+			return true;
+		if(filterMethod == 0 && base.compareTo(other) == 0)
+			return true;
+		if(filterMethod > 0 && base.compareTo(other) > 0)
+			return true;
+		return false;	
 	}
-
+	
 }
