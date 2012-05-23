@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 
 
@@ -26,8 +25,9 @@ public class Program {
 			String result = "";
 			Scanner scan = new Scanner(file);
 			while (scan.hasNextLine()) {
-				result = result + scan.nextLine();
-				original.add(scan.nextLine());
+				String str = scan.nextLine();
+				result = result + str;
+				original.add(str);
 			}
 			
 			this.prettyPrintLine = result;

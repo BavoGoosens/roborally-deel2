@@ -96,8 +96,9 @@ public class While extends Command {
 	}
 
 	private Conditie getNotCond(String sbstr) {
-		// TODO Auto-generated method stub
-		return null;
+		String[] condIndeling = sbstr.split("\\) ");
+		Conditie cond1 = getBasicConditie(condIndeling[0]);
+		return cond1;
 	}
 
 	private void setCondition(SpecialeConditie cnd) {

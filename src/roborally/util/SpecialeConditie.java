@@ -4,7 +4,10 @@ public class SpecialeConditie {
 	
 	@Override
 	public String toString() {
-		return cond1.toString()+cond2.toString();
+		if (this.conditie == ConditieEnum.NOT ){
+			return this.cond1.toString();
+		}
+		return this.cond1.toString()+this.cond2.toString();
 	}
 
 	private ConditieEnum conditie; 
