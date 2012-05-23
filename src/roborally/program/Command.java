@@ -4,9 +4,11 @@ import roborally.model.Robot;
 
 
 /**
+ * Een klasse om commandos voor te stellen.
  * 
- * @author bavo
- *
+ * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
+ * 
+ * @version 3.0
  */
 public class Command {
 

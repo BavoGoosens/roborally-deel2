@@ -63,8 +63,9 @@ public class Statement extends Command {
 		setEnumOfThis(turn);
 		if(string.contains("counterclockwise")){
 			this.turnDir = 1;
+		}else{
+			this.turnDir = 0;
 		}
-		this.turnDir = 0;
 	}
 
 	/**
