@@ -792,7 +792,7 @@ public class Robot extends Entity{
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + ", energie: " + getEnergy().toString() + ", oriëntatie: " + getOrientation().toString() + ", gewicht: " + getTotalWeight().toString();
+		return super.toString() + ", energie: " + getEnergy().toString() + ", maximale energie: " + getMaxEnergy().toString() + ", oriëntatie: " + getOrientation().toString() + ", gewicht: " + getTotalWeight().toString();
 	}
 	
 	

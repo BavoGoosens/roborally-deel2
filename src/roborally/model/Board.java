@@ -153,43 +153,35 @@ public class Board{
 	 * @return	Boolean die true is als de positie niet door een muur of een robot ingenomen is.
 	 * 			|if(!isValidPosition(pos))
 	 * 			|	false
-	 * 			|if(!map.containsKey(pos))
+	 * 			|if(getEntityOnPosition(pos) == null)
 	 * 			|	true
-	 * 			|if(map.get(pos).isEmpty())
+	 * 			|if(getEntityOnPosition(pos).isEmpty())
 	 * 			|	true
-	 * 			|if (getEntityOnPosition(pos).size() == 1){
-	 * 			|	if(getEntityOnPosition(pos).iterator().next() instanceof Wall || 
-	 * 			|											getEntityOnPosition(pos).iterator().next() instanceof Robot)
+	 * 			|Iterator<Entity> itr = place.iterator();
+	 * 			|while(itr.hasNext()){
+	 * 			|	Entity ent = itr.next();
+	 * 			|	if (ent instanceof Wall)
 	 * 			|		false
+	 * 			|	if(ent instanceof Robot && entity instanceof Robot)
+	 * 			|		false
+	 * 			|}
 	 * 			|true
-	 * 			
 	 */
 	public boolean isPlacableOnPosition(Position pos, Entity entity){
 		if (!isValidPosition(pos))
 			return false;
-		if (entity instanceof Wall){
-			try{
-				HashSet<Entity> place = getEntityOnPosition(pos);
-				if (place.isEmpty())
-					return true;
+		HashSet<Entity> place = getEntityOnPosition(pos);
+		if(place == null)
+			return true;
+		if (place.isEmpty())
+			return true;
+		Iterator<Entity> itr = place.iterator();
+		while(itr.hasNext()){
+			Entity ent = itr.next();
+			if (ent instanceof Wall)
 				return false;
-			}catch (NullPointerException esc){
-				return true;
-			}
-		}
-		if (entity instanceof Robot){
-			try {
-				HashSet<Entity> place = getEntityOnPosition(pos);
-				if(place.size() == 1){
-					Entity ent = place.iterator().next();
-					if (ent instanceof Robot || ent instanceof Wall)
-						return false;
-					return true;
-				}
-				return true;
-			}catch (NullPointerException esc){
-				return true;
-			}
+			if(ent instanceof Robot && entity instanceof Robot)
+				return false;
 		}
 		return true;
 	}
@@ -203,100 +195,54 @@ public class Board{
 	 * @param 	entity
 	 * 			Het object dat op het bord geplaatst moet worden.
 	 * 
-	 * @throws 	IllegalArgumentException
+	 * @throws 	IllegalPositionException
 	 * 			De plaats in het bord is niet beschikbaar.
-	 * 			|!isPlacableOnPosition(key)
+	 * 			|!isPlacableOnPosition(key, entity)
 	 * 
 	 * @post	Als de positie op het bord beschikbaar was staat het object op deze positie.
-	 * 			|if(isPlacableOnPosition(key))
-	 * 			|	new.get(key) == entity
+	 * 			|new.getEntityOnPosition.contains(entity)
 	 * 			
 	 */
-	public void putEntity(Position key, Entity entity) throws IllegalArgumentException{
-		if (isPlacableOnPosition(key, entity)){
-			if (entity instanceof Battery || entity instanceof Robot){
-				HashSet<Entity> set = map.get(key);
-				if (set == null){
-					HashSet<Entity> input = new HashSet<>();
-					input.add(entity);
-					map.put(key, input);
-				}else{
-					set.add(entity);
-					}
-			}else if(entity instanceof Wall){
-				HashSet<Entity> input = new HashSet<>();
-				input.add(entity);
-				map.put(key, input);
-			}
-		}else{
-			throw new IllegalArgumentException("Op deze plaats in het bord kan geen object meer geplaatst worden.");
-		}
+	public void putEntity(Position key, Entity entity) throws IllegalPositionException{
+		if (!isPlacableOnPosition(key, entity))
+			throw new IllegalPositionException(key);
+		if(getEntityOnPosition(key) == null)
+			map.put(key, new HashSet<Entity>());
+		getEntityOnPosition(key).add(entity);
 	}
-
+	
 	/**
-	 * Deze methode geeft alle robots terug die op dit bord staan.
+	 * Deze methode geeft alle objecten van een bepaale klasse op het bord terug.
 	 * 
-	 * @return	Set<Robot>
-	 * 			Voor iedere robot die een element is van map geldt dat deze op het einde van deze methode in de set zal zitten die teruggegeven wordt. Deze set is null als er geen robots op het bord staan.
-	 * 			
+	 * @param	type
+	 * 			De klasse waarvan objecten gezocht moeten worden.
+	 * 
+	 * @return	Een set met alle objecten van de gegeven klasse op het bord.
+	 * 			|Collection<HashSet<Entity>> coll = map.values();
+	 * 			|Set<Entity> result = new HashSet<Entity>();
+	 * 			|for(HashSet<Entity> place: coll){
+	 * 			|	Iterator<Entity> itr = place.iterator();
+	 * 			|	while(itr.hasNext()){
+	 * 			|		Entity current = itr.next();
+	 * 			|		if(current.getClass() == type)
+	 * 			|			result.add(current);
+	 * 			|	}
+	 * 			|}
+	 * 			|result
 	 */
-	public Set<Robot> getRobots() {
-		Collection<HashSet<Entity>> c = map.values();
-		HashSet<Robot> rob = new HashSet<>();
-		for (Set<Entity> values : c ){
-			Iterator<Entity> i = values.iterator();
-			while (i.hasNext()){
-				Entity obj = i.next();
-				if (obj instanceof Robot){
-					rob.add((Robot) obj);
-				}
+	public Set<Entity> getEntitiesOfType(Class type){
+		Collection<HashSet<Entity>> coll = map.values();
+		Set<Entity> result = new HashSet<Entity>();
+		for(HashSet<Entity> place: coll){
+			Iterator<Entity> itr = place.iterator();
+			while(itr.hasNext()){
+				Entity current = itr.next();
+				Class test = current.getClass().getSuperclass();
+				if(current.getClass() == type)
+					result.add(current);
 			}
 		}
-		return rob;
-	}
-
-	/**
-	 * Deze methode geeft alle batterijen terug die op dit bord staan.
-	 * 
-	 * @return	Set<Battery>
-	 * 			Voor iedere batterij die een element is van map geldt dat deze op het einde van deze methode in de set zal zitten die teruggegeven wordt. Deze set is null als er geen batterijen op het bord staan.
-	 * 			
-	 */
-	public Set<Battery> getBatteries() {
-		Collection<HashSet<Entity>> c = map.values();
-		HashSet<Battery> bat = new HashSet<>();
-		for (Set<Entity> values : c ){
-			Iterator<Entity> i = values.iterator();
-			while (i.hasNext()){
-				Entity obj = i.next();
-				if (obj instanceof Battery){
-					bat.add((Battery) obj);
-				}
-			}
-		}
-		return bat;
-	}
-
-	/**
-	 * Deze methode geeft alle muren terug die op dit bord staan.
-	 * 
-	 * @return	Set<Wall>
-	 * 			Voor iedere muur die een element is van map geldt dat deze op het einde van deze methode in de set zal zitten die teruggegeven wordt. Deze set is null als er geen muren op het bord staan.
-	 * 			
-	 */
-	public Set<Wall> getWalls() {
-		Collection<HashSet<Entity>> c = map.values();
-		HashSet<Wall> wall = new HashSet<>();
-		for (Set<Entity> values : c ){
-			Iterator<Entity> i = values.iterator();
-			while (i.hasNext()){
-				Entity obj = i.next();
-				if (obj instanceof Wall){
-					wall.add((Wall) obj);
-				}
-			}
-		}
-		return wall;
+		return result;
 	}
 
 	/**
@@ -306,8 +252,7 @@ public class Board{
 	 * 			De hoogte die nagekeken moet worden.
 	 * 	
 	 * @return	Boolean die true is wanneer de hoogte toegestaan is en in het andere geval false.
-	 * 			|if((height > Board.LOWER_BOUND_HEIGHT) && (height < Board.UPPER_BOUND_HEIGHT))
-	 * 			|	true
+	 * 			|(height > Board.LOWER_BOUND_HEIGHT) && (height < Board.UPPER_BOUND_HEIGHT)
 	 */
 	@Basic
 	public static boolean isValidHeight(long height){
@@ -321,8 +266,7 @@ public class Board{
 	 * 			De breedte die nagekeken moet worden.
 	 * 		
 	 * @return	Boolean die true is wanneer de breedte toegestaan is en in het andere geval false.
-	 * 			|if((width > Board.LOWER_BOUND_WIDTH) && (width < Board.UPPER_BOUND_WIDTH))
-	 * 			|	true
+	 * 			|(width > Board.LOWER_BOUND_WIDTH) && (width < Board.UPPER_BOUND_WIDTH)
 	 */
 	@Basic
 	public static boolean isValidWidth(long width){
@@ -358,6 +302,8 @@ public class Board{
 	 * 			De positie waarop nagekeken moet worden.
 	 * 
 	 * @return	Boolean die true is als de positie geldig is, false indien niet.
+	 * 			|if(position == null)
+	 * 			|	false
 	 * 			|if (position.getX() > getWidth() || position.getX() < LOWER_BOUND_WIDTH || position.getY() > getHeight() || position.getY() < LOWER_BOUND_HEIGHT)
 	 * 			|	false
 	 * 			|true
@@ -380,7 +326,7 @@ public class Board{
 	 * 			|(new board2).isTerminated() == true
 	 */
 	//TODO: hier moeten we alles opnieuw doen aangezien ze nu naast elkaar moeten uitkomen.
-	
+
 	public void merge(Board board2) {
 		/*
 		Set<String> b2PosStrings = board2.getMap().keySet();
@@ -397,7 +343,7 @@ public class Board{
 			}
 		}
 		board2.terminate();
-		*/
+		 */
 	}
 
 	/**
@@ -420,7 +366,6 @@ public class Board{
 	 * 			|new.map.values() == null
 	 */
 	public void terminate(){
-		isTerminated = true;
 		Collection<HashSet<Entity>> c = map.values();
 		if(c != null){
 			for (HashSet<Entity> ents : c){
@@ -433,77 +378,41 @@ public class Board{
 				}
 			}
 		}
-	}
-
-	public boolean containsWall(Position pos) {
-		try{
-			HashSet<Entity> ents = getEntityOnPosition(pos);
-			boolean containsRobotsOrWalls = false;
-			for (Entity ent : ents){
-				if (ent instanceof Robot || ent instanceof Wall)
-					containsRobotsOrWalls = true;
-			}
-			return containsRobotsOrWalls;
-		}catch (NullPointerException esc){
-			return false;
-		}
-	}
-
-	public Set<SurpriseBox> getSurpriseBoxes() {
-		Collection<HashSet<Entity>> c = map.values();
-		HashSet<SurpriseBox> surp = new HashSet<>();
-		for (Set<Entity> values : c ){
-			Iterator<Entity> i = values.iterator();
-			while (i.hasNext()){
-				Entity obj = i.next();
-				if (obj instanceof SurpriseBox){
-					surp.add((SurpriseBox)obj);
-				}
-			}
-		}
-		return surp;
-	}
-
-	public Set<RepairKit> getRepairkits() {
-		Collection<HashSet<Entity>> c = map.values();
-		HashSet<RepairKit> rep = new HashSet<>();
-		for (Set<Entity> values : c ){
-			Iterator<Entity> i = values.iterator();
-			while (i.hasNext()){
-				Entity obj = i.next();
-				if (obj instanceof RepairKit){
-					rep.add((RepairKit)obj);
-				}
-			}
-		}
-		return rep;
+		isTerminated = true;
 	}
 	
-	protected Position getRandomPosition(Robot robot) {
-		long height = getHeight();
-		long width = getHeight();
+	/**
+	 * Deze methode geeft een willekeurige positie terug die geldig is voor het bord van de robot.
+	 * 
+	 * @param	robot
+	 * 			De robot waarvoor een willekeurige positie moet teruggegeven worden.
+	 * 
+	 * @return	|Random rand = new Random();
+	 * 			|Position teleport = new Position(nextLong(rand, robot.getBoard().getWidth()), nextLong(rand, robot.getBoard().getHeight()));
+	 * 			|if (robot.getBoard().isPlacableOnPosition(teleport, robot))
+	 * 			|	teleport
+	 * 			|getRandomPosition(robot)
+	 */
+	protected static Position getRandomPosition(Robot robot) {
 		Random rand = new Random();
-		long randomX = 0;
-		long randomY = 0;
-		boolean xfound = false;
-		boolean yfound = false;		
-		while (!xfound){
-			randomX = rand.nextLong();
-			if (randomX >= 0 && randomX <= width){
-				xfound = true;
-			}
-		}
-		while (!yfound){
-			randomY = rand.nextLong();
-			if (randomY >= 0 && randomY <= height){
-				xfound = true;
-			}
-		}
-		Position teleport = new Position(randomX, randomY);
-		if (isPlacableOnPosition(teleport, robot)){
+		Position teleport = new Position(nextLong(rand, robot.getBoard().getWidth()), nextLong(rand, robot.getBoard().getHeight()));
+		if (robot.getBoard().isPlacableOnPosition(teleport, robot))
 			return teleport;		
-		}
 		return getRandomPosition(robot);
+	}
+	
+	/**
+	 * @param rng
+	 * @param n
+	 * @return
+	 */
+	private static long nextLong(Random rng, long n) {
+		   long bits, val;
+		   do {
+		      bits = (rng.nextLong() << 1) >>> 1;
+		      val = bits % n;
+		   } while (bits-val+(n-1) < 0L);
+		   return val;
 	}
 	
 }

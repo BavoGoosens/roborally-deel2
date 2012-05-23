@@ -3,6 +3,7 @@ package roborally.model;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.HashSet;
 import java.util.Set;
 
 import roborally.IFacade;
@@ -71,7 +72,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 	@Override
 	public void putSurpriseBox(Board board, long x, long y,
 			SurpriseBox surpriseBox) {
-		board.putEntity(new Position(x, y), surpriseBox);
+		surpriseBox.putOnBoard(board, new Position(x, y));
 	}
 
 	@Override
@@ -259,8 +260,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public int isMinimalCostToReach17Plus() {
-		// TODO: Aanpassen in de methode op mijn manier? via nieuwe exceptions zie heironder. Hoe hier implementeren? 
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -275,8 +275,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public int isMoveNextTo18Plus() {
-		// TODO: geen idee hoe we dees juist moeten impl.
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -318,27 +317,47 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public Set<Robot> getRobots(Board board) {
-		return board.getRobots();
+		Set<Entity> entities = board.getEntitiesOfType(Robot.class);
+		Set<Robot> result = new HashSet<Robot>();
+		for(Entity ent: entities)
+			result.add((Robot) ent);
+		return result;
 	}
 
 	@Override
 	public Set<Wall> getWalls(Board board) throws UnsupportedOperationException {
-		return board.getWalls();
+		Set<Entity> entities = board.getEntitiesOfType(Wall.class);
+		Set<Wall> result = new HashSet<Wall>();
+		for(Entity ent: entities)
+			result.add((Wall) ent);
+		return result;
 	}
 
 	@Override
 	public Set<RepairKit> getRepairKits(Board board) {
-		return board.getRepairkits();
+		Set<Entity> entities = board.getEntitiesOfType(RepairKit.class);
+		Set<RepairKit> result = new HashSet<RepairKit>();
+		for(Entity ent: entities)
+			result.add((RepairKit) ent);
+		return result;
 	}
 
 	@Override
 	public Set<SurpriseBox> getSurpriseBoxes(Board board) {
-		return board.getSurpriseBoxes();
+		Set<Entity> entities = board.getEntitiesOfType(SurpriseBox.class);
+		Set<SurpriseBox> result = new HashSet<SurpriseBox>();
+		for(Entity ent: entities)
+			result.add((SurpriseBox) ent);
+		return result;
 	}
 
 	@Override
 	public Set<Battery> getBatteries(Board board) {
-		return board.getBatteries();
+		Set<Entity> entities = board.getEntitiesOfType(Battery.class);
+		Set<Battery> result = new HashSet<Battery>();
+		for(Entity ent: entities)
+			result.add((Battery) ent);
+		return result;
 	}
 
 	@Override
