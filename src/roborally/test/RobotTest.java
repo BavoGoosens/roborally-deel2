@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import roborally.exception.EntityNotOnBoardException;
 import roborally.exception.IllegalPositionException;
+import roborally.exception.NotEnoughEnergyException;
 import roborally.model.Battery;
 import roborally.model.Board;
 import roborally.model.Entity;
@@ -120,6 +121,17 @@ public class RobotTest {
 		robot_onBoard_20_20_up_10000.move();
 		assertEquals(new Position(1, 0), robot_onBoard_20_20_up_10000.getPosition());
 		assertEquals(new Energy(9500), robot_onBoard_20_20_up_10000.getEnergy());
+	}
+	
+	@Test(expected = NotEnoughEnergyException.class)
+	public void testMoveNotEnoughEnergyException(){
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		robot_down_1000.move();
 	}
 
 	@Test

@@ -96,6 +96,14 @@ public abstract class Entity {
 	 * 
 	 * @post	De positie van dit object is nu gelijk aan de gegeven positie.
 	 * 			|new.getPosition() == position
+	 * 
+	 * @post	Het object heeft een nieuwe positie in het bord indien het op een bord staat.
+	 * 			|new.getBoard().getEntityOnPosition(position).contains(new)
+	 * 			|if(new.getBoard().getEntityOnPosition(this.getPosition()) == null){
+	 * 			|	true
+	 * 			|}else{
+	 * 			|	!new.getBoard().getEntityOnPosition(this.getPosition()).contains(new)
+	 * 			|}
 	 */
 	@Raw
 	public void setPosition(Position position) throws IllegalPositionException, IllegalStateException, EntityNotOnBoardException{
@@ -107,8 +115,12 @@ public abstract class Entity {
 			}else if(!getBoard().isValidPosition(position)){
 				throw new IllegalPositionException(position);
 			}
+			this.getBoard().removeEntity(this);
+			this.getBoard().putEntity(position, this);
+			this.position = position;
+		}else{
+			this.position = position;
 		}
-		this.position = position;
 	}
 
 	/**
