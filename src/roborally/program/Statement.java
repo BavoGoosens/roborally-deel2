@@ -42,13 +42,13 @@ public class Statement extends Command {
 
 	@Override
 	public void executeNext(Robot robot){
-		if (this.getEnumOfThis() == StatementEnum.MOVE){
+		if (this.getEnumOfThis() == StatementEnum.MOVE && !this.isExecuted()){
 			robot.move();
 			setExecuted(true);
-		}else if (this.getEnumOfThis() == StatementEnum.SHOOT){
+		}else if (this.getEnumOfThis() == StatementEnum.SHOOT && !this.isExecuted()){
 			robot.shoot();
 			setExecuted(true);
-		}else if (this.getEnumOfThis() == StatementEnum.TURN){
+		}else if (this.getEnumOfThis() == StatementEnum.TURN && !this.isExecuted()){
 			if (getTurnDir() == 1){
 				robot.turnCounterClockWise();
 				setExecuted(true);
@@ -56,12 +56,14 @@ public class Statement extends Command {
 			robot.turnClockWise();
 			setExecuted(true);
 		}else{
-			HashSet<Entity> ents = robot.getBoard().getEntityOnPosition(robot.getPosition());
-			for (Entity ent : ents){
-				if (ent instanceof Item){
-					robot.pickUp((Item) ent);
-					robot.use((Item) ent);
-					setExecuted(true);
+			if (!this.isExecuted()){
+				HashSet<Entity> ents = robot.getBoard().getEntityOnPosition(robot.getPosition());
+				for (Entity ent : ents){
+					if (ent instanceof Item){
+						robot.pickUp((Item) ent);
+						robot.use((Item) ent);
+						setExecuted(true);
+					}
 				}
 			}
 		}

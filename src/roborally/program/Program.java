@@ -120,7 +120,7 @@ public class Program {
 			}
 		}
 		if (prettyPrintLine.substring(eindIdx,prettyPrintLine.length()) != null && 
-				prettyPrintLine.substring(eindIdx,prettyPrintLine.length()).length() > 1){
+				prettyPrintLine.substring(eindIdx,prettyPrintLine.length()).length() > 3){
 			extractBody( prettyPrintLine.substring(eindIdx,prettyPrintLine.length()));
 		}
 
