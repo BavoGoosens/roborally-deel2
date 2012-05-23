@@ -108,12 +108,30 @@ public class RobotTest {
 
 	@Test
 	public void testTurnClockWise() {
-		fail("Not yet implemented");
+		robot_onBoard_20_20_down_10000.turnClockWise();
+		assertEquals(Orientation.LEFT, robot_onBoard_20_20_down_10000.getOrientation());
+		assertEquals(new Energy(9900), robot_onBoard_20_20_down_10000.getEnergy());
 	}
 
 	@Test
 	public void testTurnCounterClockWise() {
-		fail("Not yet implemented");
+		robot_onBoard_20_20_down_10000.turnCounterClockWise();
+		assertEquals(Orientation.RIGHT, robot_onBoard_20_20_down_10000.getOrientation());
+		assertEquals(new Energy(9900), robot_onBoard_20_20_down_10000.getEnergy());
+	}
+	
+	@Test(expected = NotEnoughEnergyException.class)
+	public void testTurnClockWiseNotEnoughEnergyException(){
+		robot_onBoard_20_20_down_1000.move();
+		robot_onBoard_20_20_down_1000.move();
+		robot_onBoard_20_20_down_1000.turnClockWise();
+	}
+	
+	@Test(expected = NotEnoughEnergyException.class)
+	public void testTurnCounterClockWiseNotEnoughEnergyException(){
+		robot_onBoard_20_20_down_1000.move();
+		robot_onBoard_20_20_down_1000.move();
+		robot_onBoard_20_20_down_1000.turnCounterClockWise();
 	}
 
 	@Test
@@ -132,6 +150,12 @@ public class RobotTest {
 		robot_down_1000.turnClockWise();
 		robot_down_1000.turnClockWise();
 		robot_down_1000.move();
+	}
+	
+	@Test(expected = IllegalPositionException.class)
+	public void testMoveIllegalPositionException(){
+		robot_onBoard_20_20_up_1000.setPosition(new Position(0, 0));
+		robot_onBoard_20_20_up_1000.move();
 	}
 
 	@Test
