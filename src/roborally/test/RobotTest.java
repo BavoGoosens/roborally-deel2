@@ -5,11 +5,13 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import roborally.model.Battery;
 import roborally.model.Board;
 import roborally.model.Robot;
 import roborally.property.Energy;
 import roborally.property.Orientation;
 import roborally.property.Position;
+import roborally.property.Weight;
 
 public class RobotTest {
 	
@@ -106,7 +108,6 @@ public class RobotTest {
 	public void testSetMaxEnergy() {
 		robot_up_1000.setMaxEnergy(new Energy(500));
 		assertEquals(new Energy(500), robot_up_1000.getMaxEnergy());
-		assertEquals(new Energy(500), robot_up_1000.getEnergy());
 	}
 
 	@Test
@@ -115,10 +116,19 @@ public class RobotTest {
 		assertEquals(new Energy(5000), robot_up_1000.getMaxEnergy());
 		assertEquals(Robot.MAX_ENERGY, robot_up_10000.getMaxEnergy());
 	}
+	
+	@Test
+	public void testVerifyEnergy(){
+		robot_up_1000.setMaxEnergy(new Energy(500));
+		robot_up_1000.verifyEnergy();
+		assertEquals(new Energy(500), robot_up_1000.getEnergy());
+		
+	}
 
 	@Test
 	public void testGetEnergy() {
-		fail("Not yet implemented");
+		assertEquals(new Energy(1000), robot_down_1000.getEnergy());
+		assertEquals(new Energy(10000), robot_down_10000.getEnergy());
 	}
 
 	@Test
@@ -128,12 +138,13 @@ public class RobotTest {
 
 	@Test
 	public void testIsValidRobotEnergyEnergy() {
-		fail("Not yet implemented");
+		assertTrue(Robot.isValidRobotEnergy(new Energy(1000)));
+		assertFalse(Robot.isValidRobotEnergy(new Energy(20000.1)));
 	}
 
 	@Test
 	public void testGetEnergyFraction() {
-		fail("Not yet implemented");
+		assertEquals(0.5,1, robot_down_10000.getEnergyFraction());
 	}
 
 	@Test
@@ -213,12 +224,37 @@ public class RobotTest {
 
 	@Test
 	public void testCanTurn() {
-		fail("Not yet implemented");
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		assertTrue(robot_down_1000.canTurn());
+		robot_down_1000.turnClockWise();
+		assertFalse(robot_down_1000.canTurn());
 	}
 
 	@Test
 	public void testCanMove() {
-		fail("Not yet implemented");
+		robot_down_1000.turnClockWise();
+		assertTrue(robot_down_1000.canMove());
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		robot_down_1000.turnClockWise();
+		assertFalse(robot_down_1000.canMove());
+		Battery batt = new Battery(new Energy(1), new Weight(Weight.MAXWEIGHT));
+		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
+		assertTrue(robot_onBoard_20_20_down_1000.canMove());
+		robot_onBoard_20_20_down_1000.pickUp(batt);
+		assertFalse(robot_onBoard_20_20_down_1000.canMove());
 	}
 
 	@Test
@@ -243,17 +279,18 @@ public class RobotTest {
 
 	@Test
 	public void testGetBoard() {
-		fail("Not yet implemented");
+		assertEquals(board_20_20, robot_onBoard_20_20_down_1000.getBoard());
 	}
 
 	@Test
 	public void testIsOnBoard() {
-		fail("Not yet implemented");
+		assertTrue(robot_onBoard_20_20_down_1000.isOnBoard());
+		assertFalse(robot_down_1000.isOnBoard());
 	}
 
 	@Test
 	public void testGetPosition() {
-		fail("Not yet implemented");
+		assertEquals(new Position(1, 1), robot_onBoard_20_20_up_10000.getPosition());
 	}
 
 	@Test
@@ -263,7 +300,9 @@ public class RobotTest {
 
 	@Test
 	public void testIsTerminated() {
-		fail("Not yet implemented");
+		assertFalse(robot_down_1000.isTerminated());
+		robot_down_1000.destroy();
+		assertTrue(robot_down_1000.isTerminated());
 	}
 
 	@Test
@@ -278,7 +317,7 @@ public class RobotTest {
 
 	@Test
 	public void testIsValidEntity() {
-		fail("Not yet implemented");
+		assertTrue(robot_down_1000.isValidEntity());
 	}
 
 }

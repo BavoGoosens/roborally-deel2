@@ -451,7 +451,7 @@ public class Robot extends Entity{
 	 * @post	De energie van de robot is kleiner of gelijk aan zijn maximale energie.
 	 * 			|new.getEnergy().getEnergy() <= new.getMaxEnergy().getEnergy()
 	 */
-	private void verifyEnergy(){
+	public void verifyEnergy(){
 		if(getEnergy().getEnergy() > getMaxEnergy().getEnergy())
 			setEnergy(getMaxEnergy());
 	}
