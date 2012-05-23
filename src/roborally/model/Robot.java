@@ -286,7 +286,7 @@ public class Robot extends Entity{
 		Position destination;
 		destination = AStarPath.getNextPosition(getPosition(), getOrientation());
 		if(destination == null)
-			throw new IllegalPositionException(destination);
+			throw new IllegalPositionException(getPosition());
 		if(getBoard().isPlacableOnPosition(destination,this)){
 			setPosition(destination);
 			setEnergy(Energy.energyDifference(getEnergy(), moveCost(this)));
