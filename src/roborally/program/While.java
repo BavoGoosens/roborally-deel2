@@ -65,11 +65,11 @@ public class While extends Command {
 	@Override
 	public void execute(Robot robot) {
 		if (getConditie() != null){
-			if (getConditie().evaluate(robot)){
+			while (getConditie().evaluate(robot)){
 				getBody().execute(robot);
 			}
 		}
-		if(getConditieSpeciaal().evaluate(robot)){
+		while(getConditieSpeciaal().evaluate(robot)){
 			getBody().execute(robot);
 		}
 	}
