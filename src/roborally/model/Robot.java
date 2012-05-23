@@ -135,7 +135,7 @@ public class Robot extends Entity{
 	/**
 	 * De maximale bovengrens van de energie van een robot.
 	 */
-	public final static Energy MAX_ENERGY = new Energy(20000);
+	private final static Energy MAX_ENERGY = new Energy(20000);
 	
 	/**
 	 * Deze methode wijzigt de energie van de robot.
@@ -389,7 +389,7 @@ public class Robot extends Entity{
 	/**
 	 * De kost van 1 schot met zijn laser.
 	 */
-	public final static Energy SHOOT_COST = new Energy(1000);
+	private final static Energy SHOOT_COST = new Energy(1000);
 
 	/**
 	 * Deze methode geeft het doelwit terug dat geraakt kan worden wanneer de robot schiet.
@@ -721,7 +721,7 @@ public class Robot extends Entity{
 	 * 			|(this.getEnergy().getEnergy() - TURN_COST.getEnergy() >= 0)
 	 */
 	@Raw
-	public boolean canTurn(){
+	private boolean canTurn(){
 		return (this.getEnergy().getEnergy() - TURN_COST.getEnergy() >= 0);
 	}
 

@@ -132,117 +132,6 @@ public class RobotTest {
 	}
 
 	@Test
-	public void testTurnClockWise() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testTurnCounterClockWise() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testMove() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetEnergyRequiredToReach() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testMoveNextTo() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testShoot() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testRecharge() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testMoveCost() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetTotalWeight() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetPossessions() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testTransferPossessions() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testPickUp() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testUse() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testDoSurpriseBoxAction() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testDrop() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCanTurn() {
-		robot_down_1000.turnClockWise();
-		robot_down_1000.turnClockWise();
-		robot_down_1000.turnClockWise();
-		robot_down_1000.turnClockWise();
-		robot_down_1000.turnClockWise();
-		robot_down_1000.turnClockWise();
-		robot_down_1000.turnClockWise();
-		robot_down_1000.turnClockWise();
-		robot_down_1000.turnClockWise();
-		assertTrue(robot_down_1000.canTurn());
-		robot_down_1000.turnClockWise();
-		assertFalse(robot_down_1000.canTurn());
-	}
-
-	@Test
-	public void testLoadProgramFromFile() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetProgram() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSaveProgramToFile() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testStepn() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetBoard() {
 		assertEquals(board_20_20, robot_onBoard_20_20_down_1000.getBoard());
 	}
@@ -259,25 +148,10 @@ public class RobotTest {
 	}
 
 	@Test
-	public void testSetPosition() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testIsTerminated() {
 		assertFalse(robot_down_1000.isTerminated());
 		robot_down_1000.destroy();
 		assertTrue(robot_down_1000.isTerminated());
-	}
-
-	@Test
-	public void testPutOnBoard() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testRemoveFromBoard() {
-		fail("Not yet implemented");
 	}
 
 	@Test
