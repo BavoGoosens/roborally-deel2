@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import roborally.exception.EntityNotOnBoardException;
+import roborally.exception.IllegalPositionException;
 import roborally.model.Battery;
 import roborally.model.Board;
 import roborally.model.RepairKit;
@@ -192,17 +194,45 @@ public class RobotTest {
 
 	@Test
 	public void testSetPosition() {
-		fail("Not yet implemented");
+		assertNull(robot_down_1000.getPosition());
+		robot_down_1000.putOnBoard(board_20_20, new Position(5, 5));
+		assertEquals(new Position(5, 5), robot_down_1000.getPosition());
+		robot_down_1000.setPosition(new Position(6, 6));
+		assertEquals(new Position(6, 6), robot_down_1000.getPosition());
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void testSetPositionIllegalStateException(){
+		robot_onBoard_20_20_down_1000.destroy();
+		robot_onBoard_20_20_down_1000.setPosition(new Position(0, 0));
+	}
+	
+	@Test(expected = EntityNotOnBoardException.class)
+	public void testSetPositionEntityNotOnBoardException(){
+		robot_down_1000.setPosition(new Position(0, 0));
+	}
+	
+	@Test(expected = IllegalPositionException.class)
+	public void testSetPositionIllegalPositionException(){
+		robot_onBoard_20_20_down_1000.setPosition(new Position(21, 0));
 	}
 
 	@Test
 	public void testPutOnBoard() {
-		fail("Not yet implemented");
+		assertFalse(robot_down_1000.isOnBoard());
+		robot_down_1000.putOnBoard(board_20_20, new Position(3, 3));
+		assertTrue(robot_down_1000.isOnBoard());
+		assertEquals(new Position(3, 3), robot_down_1000.getPosition());
+		assertEquals(board_20_20, robot_down_1000.getBoard());
 	}
 
 	@Test
 	public void testRemoveFromBoard() {
-		fail("Not yet implemented");
+		assertTrue(robot_onBoard_20_20_down_1000.isOnBoard());
+		robot_onBoard_20_20_down_1000.removeFromBoard();
+		assertFalse(robot_onBoard_20_20_down_1000.isOnBoard());
+		assertNull(robot_onBoard_20_20_down_1000.getPosition());
+		assertNull(robot_onBoard_20_20_down_1000.getBoard());
 	}
 
 	@Test
