@@ -1,7 +1,6 @@
 package roborally.program;
 
 import java.util.ArrayList;
-
 import roborally.model.Robot;
 
 public class Sequence extends Command {
@@ -13,32 +12,45 @@ public class Sequence extends Command {
 	}
 
 	private void makeBody(String substring) {
-		substring = substring.trim();
-		while (substring.length() > 3){
-			substring = substring.trim();
-			substring = substring.substring(substring.indexOf('('));
-			String cmd = haalHaakskesWeg(substring);
-			getBody().add(getFirstCommand(substring));
-			substring = substring.substring(cmd.length() + 3);
+		String cpysubstring = substring.trim();
+		while (cpysubstring.length() > 3){
+			cpysubstring = cpysubstring.trim();
+			cpysubstring = cpysubstring.substring(cpysubstring.indexOf('('));
+			String cmd = haalHaakskesWeg(cpysubstring);
+			getBody().add(getFirstCommand(cpysubstring));
+			cpysubstring = cpysubstring.substring(cmd.length() + 3);
 		}
 	}
 
 	@Override
-	public int execute( int n ,Robot robot){
-		if (n != 0){
-			//er ken ng command uitgevoerd worden.
-			for (int i = 0; i < getBody().size(); i++){
-				Command comm = getBody().get(i);
-				return comm.execute(n , robot);
+	public void executeNext(Robot robot){
+		if (!isDoneAll()){
+			for (int i = 0 ; i < getBody().size(); i ++ ){
+				Command cmd = getBody().get(i);
+				if (!cmd.isExecuted()){
+					cmd.executeNext(robot);
+					if (i == getBody().size()-1){
+						setDoneAll(true);
+					}
+					break;
+				}
 			}
 		}
-		//n heeft 0 bereikt en de stappen zijn allemaal overlopen.
-		return 0;
 	}
+	
+	private boolean doneAll;
 
 	private ArrayList<Command> body = new ArrayList<>();
 
 	public ArrayList<Command> getBody() {
 		return this.body;
+	}
+
+	public boolean isDoneAll() {
+		return this.doneAll;
+	}
+
+	public void setDoneAll(boolean doneAll) {
+		this.doneAll = doneAll;
 	}
 }

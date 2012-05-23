@@ -760,7 +760,7 @@ public class Robot extends Entity{
 	 * 			Het pad van het bestand verwijst niet naar een bestand.
 	 */
 	public void loadProgramFromFile(String path) throws FileNotFoundException {
-		this.setProgram(new Program(path));
+		this.setProgram(new Program(path,this));
 	}
 
 	/**
@@ -823,7 +823,7 @@ public class Robot extends Entity{
 	 * @param n
 	 */
 	public void stepn(int n) {
-		// TODO Auto-generated method stub
+		this.getProgram().stepn(n);
 	}
 	
 	/*

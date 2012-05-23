@@ -94,7 +94,15 @@ public class Command {
 		}
 	}
 
-	public int execute(int n ,Robot robot){
-		return 0;
+	public void executeNext(Robot robot){}
+
+	protected boolean executed = false;
+	
+	public void setExecuted(boolean ex){
+		this.executed = ex;
+	}
+	
+	public boolean isExecuted() {
+		return this.executed;
 	}
 }

@@ -102,17 +102,32 @@ public class If extends Command{
 	}
 	
 	@Override
-	public int execute(int n , Robot robot){
-		if (getCondition() != null){
-			if (getCondition().evaluate(robot)){
-				return getIf_clause().execute(n , robot);
+	public void executeNext(Robot robot){
+		if (!getEntered()){
+			if (getCondition() != null){
+				if (getCondition().evaluate(robot)){
+					setEntered(true);
+					getIf_clause().executeNext(robot);
+				}
+				setEntered(true);
+				getElse_clause().executeNext(robot);
+			}if (getConditieSpeciaal().evaluate(robot)){
+				setEntered(true);
+				getIf_clause().executeNext(robot);
 			}
-			return getElse_clause().execute(n, robot);
+			setEntered(true);
+			getElse_clause().executeNext(robot);
 		}
-		if (getConditieSpeciaal().evaluate(robot)){
-			return getIf_clause().execute(n , robot);
-		}
-		return getElse_clause().execute(n , robot);
+	}
+	
+	private boolean entered;
+
+	public boolean getEntered() {
+		return this.entered;
+	}
+
+	public void setEntered(boolean entered) {
+		this.entered = entered;
 	}
 
 	private Condition conditie;

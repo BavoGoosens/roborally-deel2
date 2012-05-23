@@ -5,6 +5,14 @@ import roborally.model.Robot;
 public class While extends Command {
 
 	public boolean enterd = false;
+	
+	public boolean isEnterd() {
+		return enterd;
+	}
+
+	public void setEnterd(boolean enterd) {
+		this.enterd = enterd;
+	}
 
 	public While(String substring) {
 		extractConditionBody(substring);		
@@ -65,19 +73,20 @@ public class While extends Command {
 	}
 
 	@Override
-	public int execute(int n , Robot robot) {
-		if (getConditie() != null){
-			while (getConditie().evaluate(robot)){
-				return getBody().execute(n , robot);
+	public void executeNext(Robot robot){
+		if (!isEnterd()){
+			if (this.getConditie() != null){
+				if (this.getConditie().evaluate(robot)){
+					setEnterd(true);
+					getBody().executeNext(robot);
+				}
 			}
-		}else {
-			while(getConditieSpeciaal().evaluate(robot)){
-
-				return getBody().execute(n , robot);
+			if (this.conditieSpeciaal.evaluate(robot)){
+				setEnterd(true);
+				getBody().executeNext(robot);
 			}
 		}
-		// niet voldaan aan de conditie
-		return 0;
+		this.getBody().executeNext(robot);
 	}
 
 	private Condition conditie;
