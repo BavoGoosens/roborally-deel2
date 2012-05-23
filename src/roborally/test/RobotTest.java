@@ -95,13 +95,11 @@ public class RobotTest {
 	}
 
 	@Test
-	public void testRobot() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetOrientation() {
-		fail("Not yet implemented");
+		assertEquals(Orientation.UP, robot_up_1000.getOrientation());
+		assertEquals(Orientation.DOWN, robot_down_1000.getOrientation());
+		assertEquals(Orientation.LEFT, robot_left_1000.getOrientation());
+		assertEquals(Orientation.RIGHT, robot_right_1000.getOrientation());
 	}
 
 	@Test
@@ -111,7 +109,9 @@ public class RobotTest {
 
 	@Test
 	public void testGetMaxEnergy() {
-		fail("Not yet implemented");
+		robot_up_1000.setMaxEnergy(new Energy(5000));
+		assertEquals(new Energy(5000), robot_up_1000.getMaxEnergy());
+		assertEquals(Robot.MAX_ENERGY, robot_up_10000.getMaxEnergy());
 	}
 
 	@Test
