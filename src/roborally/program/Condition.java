@@ -9,43 +9,98 @@ import roborally.property.Position;
 import roborally.util.AStarPath;
 
 public class Condition extends Command {
-	
-	@Override
-	public String toString() {
-		if (this.energyContained == null)
-			return "("+ this.conditie.toString()+")";
-		return "("+ this.conditie.toString()+ " " + this.energyContained.getEnergy()+")";
-	}
 
+	/**
+	 * De enum die deze condition omschrijft.
+	 */
 	private ConditionEnum conditie; 
 	
+	/**
+	 * De hoeveelheid energy die bij deze conditie hoort.
+	 * (enkel van toepassing bij energy-at-least)
+	 */
 	private Energy energyContained;
 
+	/**
+	 * Constructor om een nieuwe condition aan te maken.
+	 * 
+	 * @param 	cnd
+	 * 			De conditionEnum die het gedrag van de condition bepaalt.
+	 * 
+	 * @post	De conditie die bijgehouden wordt is de gegeven conditie.
+	 */
 	public Condition(ConditionEnum cnd) {
 		setConditie(cnd);
 	}
-
+	
+	/**
+	 * Er wordt een nieuwe conditie aangemaakt als energy-at-least met als minimale hoeveelheid energie amountEnergy.
+	 * 
+	 * @param	energyAtLeast
+	 * 			De conditie die aangemaakt wordt is energy-at-least.
+	 * 
+	 * @param	amountEnergy
+	 * 			De minimale hoeveelheid energie bij deze conditie.
+	 * 
+	 * @post	De conditie in dit object is energy-at-least.
+	 * 
+	 * @post	De minimale energie in dit object is amountEnergy.
+	 */
 	public Condition(ConditionEnum energyAtLeast, double amountEnergy) {
 		setConditie(energyAtLeast);
 		setEnergyContained(new Energy(amountEnergy));
 	}
-
+	
+	/**
+	 * Deze methode geeft de enum terug die de conditie in dit object voorstelt.
+	 * 
+	 * @return	De enum die de conditie in dit object voorstelt.
+	 */
 	public ConditionEnum getConditie() {
 		return this.conditie;
 	}
-
+	
+	/**
+	 * Deze methode stelt de enumeratie in die de conditie in dit object voorstelt.
+	 * 
+	 * @param	conditie
+	 * 			De enumeratie die de conditie voorstelt die moet ingesteld worden.
+	 * 
+	 * @post	De conditie voor dit object is ingesteld op de gegeven conditie.
+	 */
 	public void setConditie(ConditionEnum conditie) {
 		this.conditie = conditie;
 	}
-
+	
+	/**
+	 * Deze methode geeft de energie terug die bijgehouden wordt voor energy-at-least.
+	 * 
+	 * @return	De energie die bijgehouden wordt voor energy-at-least.
+	 */
 	public Energy getEnergyContained() {
 		return this.energyContained;
 	}
-
+	
+	/**
+	 * Deze methode stelt de energie in die bijgehouden wordt voor energy-at-least.
+	 * 
+	 * @param	energyContained
+	 * 			De energie die moet ingesteld worden.
+	 * 
+	 * @post	De energie in dit object is gelijk aan de gegeven energie.
+	 */
 	public void setEnergyContained(Energy energyContained) {
 		this.energyContained = energyContained;
 	}
 	
+	/**
+	 * Deze methode evalueert de conditie in het object voor een gegeven robot.
+	 * 
+	 * @param	robot
+	 * 			De robot waarvoor de conditie moet nagekeken worden.
+	 * 
+	 * @return	True indien aan de conditie voldoen wordt voor de gegeven robot, false indien niet.
+	 */
 	public boolean evaluate(Robot robot){
 		if (getConditie() == ConditionEnum.AT_ITEM){
 			if (robot.getBoard().getEntityOnPosition(robot.getPosition()).size() > 2 ){
@@ -85,5 +140,16 @@ public class Condition extends Command {
 		}else
 			return true;
 	}
-
+	
+	/**
+	 * Deze methode geeft een String terug die de conditie in dit object voorstelt.
+	 * 
+	 * @return	Een string die de conditie voorstelt die dit object bijhoudt.
+	 */
+	@Override
+	public String toString() {
+		if (this.energyContained == null)
+			return "("+ this.conditie.toString()+")";
+		return "("+ this.conditie.toString()+ " " + this.energyContained.getEnergy()+")";
+	}
 }
