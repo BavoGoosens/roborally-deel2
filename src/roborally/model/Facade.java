@@ -458,7 +458,13 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public void stepn(Robot robot, int n) {
-		robot.stepn(n);
+		try{
+			robot.stepn(n);
+		}catch(NotEnoughEnergyException e){
+			System.err.println(e.getMessage());
+		}catch(IllegalPositionException e){
+			System.err.println(e.getMessage());
+		}
 	}
 
 }
