@@ -12,6 +12,7 @@ import org.junit.Test;
 import roborally.exception.EntityNotOnBoardException;
 import roborally.exception.IllegalPositionException;
 import roborally.exception.NotEnoughEnergyException;
+import roborally.exception.TargetNotReachableException;
 import roborally.model.Battery;
 import roborally.model.Board;
 import roborally.model.Entity;
@@ -164,6 +165,11 @@ public class RobotTest {
 		wall.putOnBoard(board_20_20, new Position(1, 2));
 		assertEquals(new Energy(2300), robot_onBoard_20_20_up_10000.getEnergyRequiredToReach(new Position(1, 3)));
 	}
+	
+	@Test(expected = TargetNotReachableException.class)
+	public void testGetEnergyRequiredToReachTargetNotReachableException(){
+		robot_onBoard_40_40_up_1000.getEnergyRequiredToReach(new Position(40, 40));
+	}
 
 	@Test
 	public void testMoveNextTo() {
@@ -182,6 +188,11 @@ public class RobotTest {
 		robot_onBoard_20_20_right_10000.shoot();
 		robot_onBoard_20_20_right_10000.shoot();
 		assertTrue(robot_onBoard_20_20_left_10000.isTerminated());
+	}
+	
+	@Test(expected = EntityNotOnBoardException.class)
+	public void testShootEntityNotOnBoardException(){
+		robot_down_1000.shoot();
 	}
 
 	@Test
@@ -230,6 +241,22 @@ public class RobotTest {
 		assertFalse(place.contains(batt));
 		assertFalse(place.contains(rk));
 	}
+	
+	@Test(expected = EntityNotOnBoardException.class)
+	public void testPickUpEntityNotOnBoardException(){
+		robot_down_1000.pickUp(batt);
+	}
+	
+	@Test(expected = EntityNotOnBoardException.class)
+	public void testPickUpEntityNotOnBoardException2(){
+		robot_onBoard_20_20_down_1000.pickUp(batt);
+	}
+	
+	@Test(expected = IllegalPositionException.class)
+	public void testPickUpEntityIllegalPositionException(){
+		batt.putOnBoard(board_20_20, new Position(3, 3));
+		robot_onBoard_20_20_down_1000.pickUp(batt);
+	}
 
 	@Test
 	public void testUse() {
@@ -244,6 +271,14 @@ public class RobotTest {
 		HashSet<Entity> place = board_20_20.getEntityOnPosition(robot_onBoard_20_20_down_1000.getPosition());
 		assertTrue(place.contains(batt));
 		assertFalse(robot_onBoard_20_20_down_1000.getPossessions().contains(batt));
+	}
+	
+	@Test(expected = EntityNotOnBoardException.class)
+	public void testDropEntityNotOnBoardException(){
+		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
+		robot_onBoard_20_20_down_1000.pickUp(batt);
+		robot_onBoard_20_20_down_1000.removeFromBoard();
+		robot_onBoard_20_20_down_1000.drop(batt);
 	}
 
 	@Test
