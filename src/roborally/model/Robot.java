@@ -1,6 +1,8 @@
 package roborally.model;
 
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -710,16 +712,31 @@ public class Robot extends Entity{
 	 * 			Het bestandspad van het programma dat moet ingeladen worden.
 	 * 
 	 * @throws	FileNotFoundException
-	 * 			Het pad van 
+	 * 			Het pad van het bestand verwijst niet naar een bestand.
 	 */
 	public void loadProgramFromFile(String path) throws FileNotFoundException {
 		this.setProgram(new Program(path));
 	}
 
+	/**
+	 * Deze methode laadt een gegeven programma in.
+	 * 
+	 * @param	program
+	 * 			Het programma dat moet ingeladen worden.
+	 * 
+	 * @post	Het gegeven programma is ingeladen.
+	 * 			|new.getProgram() == program
+	 */
 	private void setProgram(Program program) {
 		this.program = program;
 	}
 
+	/**
+	 * Deze methode geeft het ingeladen programma terug.
+	 * 
+	 * @return	Het ingeladen programma.
+	 * 			|program
+	 */
 	public Program getProgram() {
 		return program;
 	}
@@ -729,11 +746,30 @@ public class Robot extends Entity{
 	 */
 	private Program program;
 	
+	/**
+	 * Deze methode slaat het ingeladen programma op in het gegeven pad.
+	 * 
+	 * @param	path
+	 * 			Het pad waar het programma opgeslagen moet worden.
+	 * 
+	 * @return	Een integer die 0 is als de operatie geslaagd is en -1 indien deze mislukte.
+	 * 			|
+	 */
 	public int saveProgramToFile(String path) {
-		// TODO Auto-generated method stub
-		return 0;
+		try{
+			FileWriter outFile = new FileWriter(path);
+			PrintWriter out = new PrintWriter(outFile);
+			
+		}
+		
+		
+		
 	}
-
+	
+	/**
+	 * 
+	 * @param n
+	 */
 	public void stepn(int n) {
 		// TODO Auto-generated method stub
 	}
