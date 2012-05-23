@@ -9,6 +9,7 @@ import java.util.Set;
 
 import roborally.IFacade;
 import roborally.property.*;
+import roborally.exception.EntityNotOnBoardException;
 import roborally.exception.IllegalPositionException;
 import roborally.exception.NotEnoughEnergyException;
 import roborally.exception.TargetNotReachableException;
@@ -211,9 +212,9 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 	public void pickUpBattery(Robot robot, Battery battery) {
 		try{
 			robot.pickUp(battery);
-		}catch(IllegalArgumentException esc){
+		}catch(IllegalPositionException esc){
 			System.err.println(esc.getMessage());
-		}catch(IllegalStateException esc){
+		}catch(EntityNotOnBoardException esc){
 			System.err.println(esc.getMessage());
 		}
 	}
@@ -233,7 +234,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 			robot.drop(battery);
 		}catch (IllegalArgumentException esc){
 			System.err.println(esc.getMessage());
-		}catch (IllegalStateException esc ){
+		}catch (EntityNotOnBoardException esc ){
 			System.err.println(esc.getMessage());
 		}
 	}
@@ -242,9 +243,9 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 	public void pickUpRepairKit(Robot robot, RepairKit repairKit) {
 		try{
 			robot.pickUp(repairKit);
-		}catch(IllegalArgumentException esc){
+		}catch(IllegalPositionException esc){
 			System.err.println(esc.getMessage());
-		}catch(IllegalStateException esc){
+		}catch(EntityNotOnBoardException esc){
 			System.err.println(esc.getMessage());
 		}
 	}
@@ -264,7 +265,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 			robot.drop(repairKit);
 		}catch (IllegalArgumentException esc){
 			System.err.println(esc.getMessage());
-		}catch (IllegalStateException esc ){
+		}catch (EntityNotOnBoardException esc ){
 			System.err.println(esc.getMessage());
 		}
 	}
@@ -273,9 +274,9 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 	public void pickUpSurpriseBox(Robot robot, SurpriseBox surpriseBox) {
 		try{
 			robot.pickUp(surpriseBox);
-		}catch(IllegalArgumentException esc){
+		}catch(IllegalPositionException esc){
 			System.err.println(esc.getMessage());
-		}catch(IllegalStateException esc){
+		}catch(EntityNotOnBoardException esc){
 			System.err.println(esc.getMessage());
 		}
 	}
@@ -295,7 +296,7 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 			robot.drop(surpriseBox);
 		}catch (IllegalArgumentException esc){
 			System.err.println(esc.getMessage());
-		}catch (IllegalStateException esc ){
+		}catch (EntityNotOnBoardException esc ){
 			System.err.println(esc.getMessage());
 		}
 	}
