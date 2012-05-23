@@ -105,8 +105,10 @@ public class Program {
 
 	}
 	
+	private int stepCount:
+	
 	public void stepn(int n){
-		
+		while
 	}
 
 	public ArrayList<String> getOriginal(){

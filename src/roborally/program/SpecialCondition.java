@@ -2,7 +2,7 @@ package roborally.program;
 
 import roborally.model.Robot;
 
-public class SpecialCondition {
+public class SpecialCondition extends Command {
 	
 	@Override
 	public String toString() {
