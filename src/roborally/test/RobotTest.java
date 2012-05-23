@@ -104,7 +104,9 @@ public class RobotTest {
 
 	@Test
 	public void testSetMaxEnergy() {
-		fail("Not yet implemented");
+		robot_up_1000.setMaxEnergy(new Energy(500));
+		assertEquals(new Energy(500), robot_up_1000.getMaxEnergy());
+		assertEquals(new Energy(500), robot_up_1000.getEnergy());
 	}
 
 	@Test
