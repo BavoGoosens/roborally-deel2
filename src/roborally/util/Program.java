@@ -12,6 +12,8 @@ public class Program {
 
 	private ArrayList<Command> program = new ArrayList<>();
 
+	private ArrayList<String> original = new ArrayList<>();
+	
 	private String prettyPrintLine;
 
 	public Program(String path) throws FileNotFoundException{
@@ -25,7 +27,9 @@ public class Program {
 			Scanner scan = new Scanner(file);
 			while (scan.hasNextLine()) {
 				result = result + scan.nextLine();
+				original.add(scan.nextLine());
 			}
+			
 			this.prettyPrintLine = result;
 			readProgram();
 		}catch (FileNotFoundException esc){
@@ -91,6 +95,10 @@ public class Program {
 
 	}
 
+	public ArrayList<String> getOriginal(){
+		return this.original;
+	}
+	
 	public String getPrettyPrint(){
 		return this.prettyPrintLine;
 	}

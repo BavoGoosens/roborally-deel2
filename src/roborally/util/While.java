@@ -1,7 +1,5 @@
 package roborally.util;
 
-import java.util.ArrayList;
-
 public class While extends Command {
 
 	public While(String substring) {
@@ -42,12 +40,16 @@ public class While extends Command {
 			sbstr = sbstr.trim();
 			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.OR, getAndOrCond(sbstr));
 			this.setCondition(cnd);
+			int beginIdx = sbstr.indexOf(cnd.toString())+cnd.toString().length();
+			makeBody(sbstr.substring(beginIdx));
 		}else if (words[0].equals("not")){
 			sbstr = sbstr.substring(4);
 			sbstr = sbstr.trim();
 			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.NOT, getNotCond(sbstr));
 			this.setCondition(cnd);
-		}
+			int beginIdx = sbstr.indexOf(cnd.toString())+cnd.toString().length();
+			makeBody(sbstr.substring(beginIdx));
+			}
 		else{
 			setCondition(getBasicConditie(sbstr));
 			makeBody(sbstr.substring(words[0].length()));
@@ -56,9 +58,8 @@ public class While extends Command {
 
 	private void makeBody(String sbstr) {
 		String substr =sbstr;
-		for (int i = 0;i <= substr.indexOf('('); i++){
-			
-		}
+		substr = substr.substring(sbstr.indexOf("("));
+		substr = haalHaakskesWeg(substr);
 		String[] words = substr.split("[^a-z]");
 		if (words[0].equals("while")){
 			While whl = new While(substr.substring(5, substr.length()));
