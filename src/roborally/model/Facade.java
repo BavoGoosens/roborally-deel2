@@ -7,8 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import roborally.IFacade;
+import roborally.exception.TargetNotReachableException;
 import roborally.property.*;
-import roborally.util.TargetNotReachableException;
 
 
 public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, SurpriseBox>{

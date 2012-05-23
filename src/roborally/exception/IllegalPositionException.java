@@ -1,4 +1,4 @@
-package roborally.util;
+package roborally.exception;
 
 import roborally.property.Position;
 

@@ -1,9 +1,9 @@
 package roborally.model;
 
+import roborally.exception.EntityNotOnBoardException;
+import roborally.exception.IllegalPositionException;
 import roborally.model.Board;
 import roborally.property.Position;
-import roborally.util.EntityNotOnBoardException;
-import roborally.util.IllegalPositionException;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
 

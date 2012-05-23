@@ -1,4 +1,4 @@
-package roborally.util;
+package roborally.program;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -68,7 +68,7 @@ public class Program {
 			Command cmd = new While(result.substring(5, result.length()));
 			this.program.add(cmd);
 		} else if (words[0].equals("seq")){
-			Sequentie seq = new Sequentie(result.substring(3, result.length()));
+			Sequentie seq = new Sequentie(result.substring(4, result.length()));
 			this.program.add(seq);
 		} else if (words[0].equals("if")){
 			If ifs = new If(result.substring(2, result.length()));

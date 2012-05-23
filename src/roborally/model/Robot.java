@@ -15,6 +15,11 @@ import java.util.Set;
 
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
+import roborally.exception.EntityNotOnBoardException;
+import roborally.exception.IllegalPositionException;
+import roborally.exception.NotEnoughEnergyException;
+import roborally.exception.TargetNotReachableException;
+import roborally.program.Program;
 import roborally.property.*;
 import roborally.util.*;
 

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import roborally.exception.IllegalPositionException;
 import roborally.model.Board;
 import roborally.model.Node;
 import roborally.model.Robot;

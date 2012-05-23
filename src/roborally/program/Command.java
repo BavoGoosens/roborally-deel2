@@ -1,4 +1,4 @@
-package roborally.util;
+package roborally.program;
 
 
 public class Command {
@@ -30,20 +30,21 @@ public class Command {
 
 	protected Command getFirstCommand(String substr){
 		String eersteCommand = haalHaakskesWeg(substr);
+		String[] words = eersteCommand.split("[^a-z]");
 		if (eersteCommand.contains("while")){
 			return new While(substr.substring(5, substr.length()));
-		} else if (eersteCommand.contains("seq")){
-			return new Sequentie(substr.substring(3, substr.length()));
-		} else if (eersteCommand.contains("if")){
+		} else if (words[0].contains("seq")){
+			return new Sequentie(substr.substring(4, substr.length()));
+		} else if (words[0].contains("if")){
 			return new If(substr.substring(3, substr.length()));
 		} else {
-			if (eersteCommand.contains("shoot")){
+			if (words[0].contains("shoot")){
 				return new Basic(BasicEnum.SHOOT);
-			}else if (eersteCommand.contains("move")){
+			}else if (words[0].contains("move")){
 				return new Basic(BasicEnum.MOVE);
-			}else if (eersteCommand.contains("turn")){
-				String[] words = eersteCommand.split(" ");
-				return new Basic(BasicEnum.TURN,words[1]);
+			}else if (words[0].contains("turn")){
+				String[] word = eersteCommand.split(" ");
+				return new Basic(BasicEnum.TURN,word[1]);
 			}else{
 				return new Basic(BasicEnum.PICK_UP_AND_USE);
 			}
@@ -79,13 +80,13 @@ public class Command {
 		String sbstr = str.trim();
 		sbstr = sbstr.substring(1);
 		String[] words = sbstr.split("[^a-z]");
-		if (words[0].equals("true")){
+		if (words[0].contains("true")){
 			return new Conditie(ConditieEnum.TRUE);
-		}else if (words[0].equals("at")){
+		}else if (words[0].contains("at")){
 			return  new Conditie(ConditieEnum.AT_ITEM);
-		}else if (words[0].equals("energy")){
+		}else if (words[0].contains("energy")){
 			return new Conditie(ConditieEnum.ENERGY_AT_LEAST, getAmountEnergy(sbstr));
-		}else if (words[0].equals("wall")){
+		}else if (words[0].contains("wall")){
 			return new Conditie(ConditieEnum.WALL);
 		}else{
 			return new Conditie(ConditieEnum.CAN_HIT_ROBOT);

@@ -6,8 +6,8 @@ import be.kuleuven.cs.som.annotate.Value;
 
 import java.util.ArrayList;
 
+import roborally.exception.IllegalPositionException;
 import roborally.model.Board;
-import roborally.util.IllegalPositionException;
 
 /**
  * Deze klasse houdt een positie bij. Deze bestaat uit een x- en een y-coördinaat.

@@ -1,4 +1,4 @@
-package roborally.util;
+package roborally.program;
 
 public class While extends Command {
 
