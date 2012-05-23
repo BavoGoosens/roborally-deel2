@@ -6,24 +6,6 @@ public class While extends Command {
 		extractConditionBody(substring);		
 	}
 
-	@SuppressWarnings("boxing")
-	public Conditie getBasicConditie(String str){
-		String sbstr = str.trim();
-		sbstr = sbstr.substring(1);
-		String[] words = sbstr.split("[^a-z]");
-		if (words[0].equals("true")){
-			return new Conditie(ConditieEnum.TRUE);
-		}else if (words[0].equals("at")){
-			return  new Conditie(ConditieEnum.AT_ITEM);
-		}else if (words[0].equals("energy")){
-			return new Conditie(ConditieEnum.ENERGY_AT_LEAST, getAmountEnergy(sbstr));
-		}else if (words[0].equals("wall")){
-			return new Conditie(ConditieEnum.WALL);
-		}else{
-			return new Conditie(ConditieEnum.CAN_HIT_ROBOT);
-			}
-	}
-
 	private void extractConditionBody(String substring) {
 		String sbstr = substring.trim();
 		sbstr = sbstr.substring(1);
@@ -62,7 +44,7 @@ public class While extends Command {
 		substr = haalHaakskesWeg(substr);
 		String[] words = substr.split("[^a-z]");
 		if (words[0].equals("while")){
-			While whl = new While(substr.substring(5, substr.length()));
+			Command whl = new While(substr.substring(5, substr.length()));
 			this.setBody(whl);
 		} else if (words[0].equals("seq")){
 			Sequentie seq = new Sequentie(substr.substring(3, substr.length()));
@@ -87,32 +69,8 @@ public class While extends Command {
 		}
 	}
 
-	@SuppressWarnings("boxing")
-	private Double getAmountEnergy(String sbstr) {
-		int beginIdx = sbstr.indexOf(' ');
-		int eindIdx = sbstr.indexOf(')');
-		String amount = sbstr.substring(beginIdx,eindIdx);
-		return Double.parseDouble(amount);
-	}
-
-	private Conditie getNotCond(String sbstr) {
-		String[] condIndeling = sbstr.split("\\) ");
-		Conditie cond1 = getBasicConditie(condIndeling[0]);
-		return cond1;
-	}
-
 	private void setCondition(SpecialeConditie cnd) {
 		this.conditieSpeciaal = cnd;
-	}
-
-	private Conditie[] getAndOrCond(String sbstr) {
-		String[] condIndeling = sbstr.split("\\) ");
-		Conditie cond1 = getBasicConditie(condIndeling[0]);
-		Conditie cond2 = getBasicConditie(condIndeling[1]);
-		Conditie [] result = new Conditie[2];
-		result[0] = cond1;
-		result[1] = cond2;
-		return result;
 	}
 
 	private void setCondition(Conditie cnd) {

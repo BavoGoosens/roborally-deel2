@@ -65,7 +65,7 @@ public class Program {
 		String result = prettyPrintLine.substring(beginIdx + 1, eindIdx);
 		String[] words = result.split("[^a-z]");
 		if (words[0].equals("while")){
-			While cmd = new While(result.substring(5, result.length()));
+			Command cmd = new While(result.substring(5, result.length()));
 			this.program.add(cmd);
 		} else if (words[0].equals("seq")){
 			Sequentie seq = new Sequentie(result.substring(3, result.length()));
