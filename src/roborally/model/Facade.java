@@ -318,6 +318,9 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 		}catch (TargetNotReachableException esc){
 			System.err.println(esc.getMessage());
 			return -1;
+		}catch(IllegalPositionException e){
+			System.err.println(e.getMessage());
+			return -1;
 		}
 	}
 
@@ -328,7 +331,11 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public void moveNextTo(Robot robot, Robot other) {
+		try{
 		robot.moveNextTo(other);
+		}catch(IllegalArgumentException e){
+			System.err.println(e.getMessage());
+		}
 	}
 
 	@Override
