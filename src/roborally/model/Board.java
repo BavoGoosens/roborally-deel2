@@ -155,6 +155,9 @@ public class Board{
 	 * @param	pos
 	 * 			De positie die moet nagekeken worden.
 	 * 
+	 * @param	entity
+	 * 			Het object waarvoor dit nagekeken moet worden.
+	 * 
 	 * @return	Boolean die true is als de positie niet door een muur of een robot ingenomen is.
 	 * 			|if(!isValidPosition(pos))
 	 * 			|	false
@@ -417,7 +420,7 @@ public class Board{
 	 * @param	n
 	 * 			De maximale waarde van het bereik waarin de long gegenereerd moet worden.
 	 * 
-	 * @see		java.util.Random#nextInt(java.lang.Integer)
+	 * @see		java.util.Random#nextInt(int n)
 	 */
 	private static long nextLong(Random rand, long n) {
 		long bits, val;
@@ -436,7 +439,7 @@ public class Board{
 	 * 
 	 * @return	Een nieuwe iterator met alle objecten op het bord die voldoen aan de gegeven filter.
 	 */
-	public Iterator getEntitiesWithFilter(Filter filter){
+	public Iterator<Entity> getEntitiesWithFilter(Filter filter){
 
 		Collection<HashSet<Entity>> coll = map.values();
 		final Set<Entity> entities = new HashSet<Entity>();
@@ -479,22 +482,22 @@ public class Board{
 			}
 		}
 
-		return new Iterator(){
+		return new Iterator<Entity>(){
 
 			@Override
 			public boolean hasNext() {
 				return entItr.hasNext();
 			}
 			@Override
-			public Object next() {
+			public Entity next() {
 				return entItr.next();
 			}
 			@Override
 			public void remove() {
-				((Entity) entItr.next()).removeFromBoard();
+				entItr.next().removeFromBoard();
 			}
 			
-			Iterator entItr = entities.iterator();
+			Iterator<Entity> entItr = entities.iterator();
 
 		};
 	}
