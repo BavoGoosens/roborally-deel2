@@ -12,6 +12,7 @@ import be.kuleuven.cs.som.annotate.Immutable;
 
 import roborally.property.Position;
 import roborally.exception.IllegalPositionException;
+import roborally.filter.Filter;
 
 /**
  * Een klasse om een bord voor te stellen.
@@ -421,6 +422,10 @@ public class Board{
 		      val = bits % n;
 		   } while (bits-val+(n-1) < 0L);
 		   return val;
+	}
+	
+	public Iterator getEntitiesWithFilter(Filter filter){
+		return null;
 	}
 	
 }
