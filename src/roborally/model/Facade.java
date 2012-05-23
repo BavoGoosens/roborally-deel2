@@ -3,7 +3,6 @@ package roborally.model;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
