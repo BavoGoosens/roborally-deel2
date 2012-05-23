@@ -88,7 +88,16 @@ public class RobotTest {
 	
 	@Test
 	public void testDestroy() {
-		fail("Not yet implemented");
+		assertFalse(robot_down_1000.isTerminated());
+		robot_down_1000.destroy();
+		assertTrue(robot_down_1000.isTerminated());
+		Battery batt = new Battery(new Energy(1), new Weight(1));
+		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
+		assertFalse(batt.isTerminated());
+		robot_onBoard_20_20_down_1000.pickUp(batt);
+		robot_onBoard_20_20_down_1000.destroy();
+		assertEquals(robot_onBoard_20_20_down_1000.getPossessions().size(), 0);
+		assertTrue(batt.isTerminated());
 	}
 
 	@Test
