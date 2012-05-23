@@ -13,6 +13,14 @@ public class Program {
 
 	private ArrayList<Command> program = new ArrayList<>();
 
+	public ArrayList<Command> getProgram() {
+		return this.program;
+	}
+
+	public void setProgram(ArrayList<Command> program) {
+		this.program = program;
+	}
+
 	private ArrayList<String> original = new ArrayList<>();
 	
 	private String prettyPrintLine;
@@ -29,7 +37,7 @@ public class Program {
 			while (scan.hasNextLine()) {
 				String str = scan.nextLine();
 				result = result + str;
-				original.add(str);
+				this.original.add(str);
 			}
 			
 			this.prettyPrintLine = result;

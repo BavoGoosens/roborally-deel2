@@ -55,7 +55,7 @@ public class While extends Command {
 	}
 
 	public Command getBody() {
-		return body;
+		return this.body;
 	}
 
 	public void setBody(Command body) {
