@@ -107,7 +107,7 @@ public class RepairKit extends Item{
 	/**
 	 * De energie die de repair kit bij krijgt wanneer hij geraakt wordt.
 	 */
-	public final static Energy HIT_ENERGY = new Energy(500);
+	private final static Energy HIT_ENERGY = new Energy(500);
 
 	/*
 	 * Deze methode zet het object om naar een String.

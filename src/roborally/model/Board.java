@@ -490,14 +490,16 @@ public class Board{
 			}
 			@Override
 			public Entity next() {
-				return entItr.next();
+				last = entItr.next();
+				return last;
 			}
 			@Override
 			public void remove() {
-				entItr.next().removeFromBoard();
+				last.removeFromBoard();
 			}
 			
-			Iterator<Entity> entItr = entities.iterator();
+			private Iterator<Entity> entItr = entities.iterator();
+			private Entity last;
 
 		};
 	}
