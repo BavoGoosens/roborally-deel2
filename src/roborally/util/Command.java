@@ -32,20 +32,20 @@ public class Command {
 		String eersteCommand = haalHaakskesWeg(substr);
 		String[] words = substr.split("[^a-z]");
 		if (words[0].equals("while")){
-			While whl = new While(substr.substring(5, substr.length()));
+			return new While(substr.substring(5, substr.length()));
 		} else if (words[0].equals("seq")){
-			Sequentie seq = new Sequentie(substr.substring(3, substr.length()));
+			return new Sequentie(substr.substring(3, substr.length()));
 		} else if (words[0].equals("if")){
-			If ifs = new If(substr.substring(2, substr.length()));
+			return new If(substr.substring(2, substr.length()));
 		} else {
 			if (words[0].equals("shoot")){
-				Basic bas = new Basic(BasicEnum.SHOOT);
+				return new Basic(BasicEnum.SHOOT);
 			}else if (words[0].equals("move")){
-				Basic bas = new Basic(BasicEnum.MOVE);
+				return new Basic(BasicEnum.MOVE);
 			}else if (words[0].equals("turn")){
-				Basic bas = new Basic(BasicEnum.TURN);
+				return new Basic(BasicEnum.TURN);
 			}else{
-				Basic bas = new Basic(BasicEnum.PICK_UP_AND_USE);
+				return new Basic(BasicEnum.PICK_UP_AND_USE);
 			}
 		}
 	}
