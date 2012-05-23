@@ -38,19 +38,34 @@ public class Sequence extends Command {
 	@Override
 	public void executeNext(Robot robot){
 		if (!isDoneAll()){
-			for (int i = 0 ; i < getBody().size(); i ++ ){
-				Command cmd = getBody().get(i);
-				if (!cmd.isExecuted()){
-					cmd.executeNext(robot);
-					if (i == getBody().size()-1){
-						setDoneAll(true);
-					}
-					break;
-				}
-			}
+			getNextCommand().executeNext(robot);
+			updateIsDoneAll();
 		}
 	}
+
+
+	private void updateIsDoneAll() {
+		int elementCount = this.getBody().size(); 
+		int executedCount = 0;
+		for (Command comm : getBody()){
+			if (comm.isExecuted())
+				executedCount += 1;
+		}
+		if (elementCount == executedCount)
+			setDoneAll(true);
+		
+	}
+
+	private Command getNextCommand() {
+		for (Command comm : getBody()){
+			if (!comm.isExecuted())
+				return comm;
+		}
+		return null;
+	}
+
 	
+
 	@Override
 	public void resetExecuted() {
 		setDoneAll(false);

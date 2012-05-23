@@ -98,10 +98,13 @@ public class While extends Command {
 				if (seq.isDoneAll()){
 					resetExecuted();
 					executeNext(robot);
+				}else{
+					getBody().executeNext(robot);
 				}
+			}else{
+				resetExecuted();
+				executeNext(robot);
 			}
-			resetExecuted();
-			executeNext(robot);
 		}
 	}
 
