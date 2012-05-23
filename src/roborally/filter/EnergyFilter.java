@@ -7,7 +7,7 @@ public class EnergyFilter extends Filter {
 	Energy base;
 	
 	public EnergyFilter(int filterMethod, Energy value) {
-		super(filterMethod, Energy.class, value);
+		super(filterMethod, value);
 		base = (Energy) value;
 	}
 

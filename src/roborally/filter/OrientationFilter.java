@@ -7,7 +7,7 @@ public class OrientationFilter extends Filter {
 	Orientation base;
 
 	public OrientationFilter(int filterMethod, Orientation value) {
-		super(filterMethod, Orientation.class, value);
+		super(filterMethod, value);
 		base = (Orientation) value;
 	}
 

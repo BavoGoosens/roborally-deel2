@@ -7,7 +7,7 @@ public class WeightFilter extends Filter {
 	Weight base;
 
 	public WeightFilter(int filterMethod, Weight value) {
-		super(filterMethod, Weight.class, value);
+		super(filterMethod, value);
 		base = (Weight) value;
 	}
 

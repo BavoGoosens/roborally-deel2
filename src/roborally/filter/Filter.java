@@ -14,10 +14,6 @@ public abstract class Filter {
 	 */
 	protected int filterMethod;
 	/**
-	 * De eigenschap die nagekeken moet worden. Deze wordt automatisch ingesteld in subklasses.
-	 */
-	private Class property;
-	/**
 	 * De standaardwaarde waarmee vergeleken moet worden.
 	 */
 	protected Object value;
@@ -28,19 +24,14 @@ public abstract class Filter {
 	 * @param	filterMethod
 	 * 			De manier waarop deze filter werkt.
 	 * 
-	 * @param	property
-	 * 			De eigenschap die moet nagekeken worden.
-	 * 
 	 * @param	value
 	 * 			De waarde waarmee vergeleken moet worden.
 	 * 
 	 * @post	|new.filterMethod == filterMethod
-	 * @post	|new.property == property
 	 * @post	|new.value == value
 	 */
-	protected Filter(int filterMethod, Class property, Object value){
+	protected Filter(int filterMethod, Object value){
 		this.filterMethod = filterMethod;
-		this.property = property;
 		this.value = value;
 	}
 	

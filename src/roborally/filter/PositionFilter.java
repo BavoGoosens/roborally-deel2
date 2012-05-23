@@ -7,7 +7,7 @@ public class PositionFilter extends Filter {
 	Position base;
 
 	public PositionFilter(int filterMethod, Position value) {
-		super(filterMethod, Position.class, value);
+		super(filterMethod, value);
 		base = (Position) value;
 	}
 

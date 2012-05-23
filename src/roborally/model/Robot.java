@@ -585,7 +585,7 @@ public class Robot extends Entity{
 	 * 			De robot bezit het voorwerp niet.
 	 * 			|getPossessions().contains(item)
 	 * 
-	 * @effect	Als het voorwerp een surprisebox is dan wordt doSurpriseBoxAction() aangeroepen en wordt de surprisebox getermineerd en uit de bezittingen verwijderd.
+	 * @effect	Als het voorwerp een SurpriseBox is dan wordt doSurpriseBoxAction() aangeroepen en wordt de SurpriseBox getermineerd en uit de bezittingen verwijderd.
 	 * 			|if(item instanceof SurpriseBox){
 	 * 			|	doSurpriseBoxAction(item)
 	 * 			|	getPossessions().remove(item)
@@ -674,7 +674,7 @@ public class Robot extends Entity{
 				Battery bat = new Battery(new Energy(rand.nextInt((int)Battery.MAX_ENERGY.getEnergy()) + 1),item.getWeight());
 				getPossessions().add(bat);
 			}else{
-				//Repairkit
+				//RepairKit
 				RepairKit kit = new RepairKit(new Energy(rand.nextInt((int)RepairKit.MAX_ENERGY.getEnergy()) + 1) ,item.getWeight());
 				getPossessions().add(kit);
 			}
