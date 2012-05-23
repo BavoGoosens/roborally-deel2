@@ -2,6 +2,7 @@ package roborally.model;
 
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -753,17 +754,24 @@ public class Robot extends Entity{
 	 * 			Het pad waar het programma opgeslagen moet worden.
 	 * 
 	 * @return	Een integer die 0 is als de operatie geslaagd is en -1 indien deze mislukte.
-	 * 			|
+	 * 			|try{
+	 * 			|	PrintWriter out = new PrintWriter(new FileWriter(path))
+	 * 			|	1
+	 * 			|}catch(IOException e){
+	 * 			|	-1
+	 * 			|}
 	 */
 	public int saveProgramToFile(String path) {
 		try{
 			FileWriter outFile = new FileWriter(path);
 			PrintWriter out = new PrintWriter(outFile);
-			
-		}
-		
-		
-		
+			for(String str: getProgram().getOriginal()){
+				out.print(str);
+			}
+			return 0;
+		}catch(IOException e){
+			return -1;
+		}		
 	}
 	
 	/**
