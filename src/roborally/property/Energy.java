@@ -7,8 +7,8 @@ import be.kuleuven.cs.som.annotate.Value;
 /**
  * Deze klasse stelt een hoeveelheid energie voor.
  * 
- * @invar	De energie mag niet negatief zijn.
- * 			|getEnergy() >= 0
+ * @invar	De energie moet een geldige hoeveelheid zijn.
+ * 			|isValidEnergyAmount(getEnergy())
  * 
  * @author 	Bavo Goosens (1e bachelor informatica, r0297884), Samuel Debruyn (1e bachelor informatica, r0305472)
  * 
@@ -43,8 +43,8 @@ public class Energy implements Comparable<Energy>{
 	 * @param	unit
 	 * 			De eenheid waarin de energie gegeven wordt.
 	 * 
-	 * @pre		De hoeveelheid mag niet negatief zijn.
-	 * 			|amount >= 0
+	 * @pre		De energie moet een geldige hoeveelheid zijn.
+	 * 			|isValidEnergyAmount(amount)
 	 * 
 	 * @post	De nieuwe hoeveelheid energie moet gelijk zijn aan de gegeven hoeveelheid energie.
 	 * 			|new.getEnergy(unit) == amount
@@ -99,6 +99,28 @@ public class Energy implements Comparable<Energy>{
 	public static Energy energySum(Energy e1, Energy e2){
 		return new Energy(e1.getEnergy() + e2.getEnergy());
 	}
+	
+	/**
+	 * Deze methode kijkt na of een hoeveelheid energie geldig is.
+	 * 
+	 * @param	amount
+	 * 			De hoeveelheid die moet nagekeken worden. De eenheid is de standaardeenheid.
+	 * 
+	 * @return	|(amount >= MIN_ENERGY && amount <= MAX_ENERGY)
+	 */
+	public static boolean isValidEnergyAmount(double amount){
+		return (amount >= MIN_ENERGY && amount <= MAX_ENERGY);
+	}
+	
+	/**
+	 * De minimale hoeveelheid energie die kan toegewezen worden.
+	 */
+	public final static double MIN_ENERGY = 0;
+	
+	/**
+	 * De maximale hoeveelheid energie die kan toegewezen worden.
+	 */
+	public final static double MAX_ENERGY = Double.MAX_VALUE;
 
 	/**
 	 * Deze methode geeft het verschil van 2 hoeveelheden energie.

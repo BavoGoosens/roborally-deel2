@@ -156,10 +156,31 @@ public class Robot extends Entity{
 	 * 			De robot waarvoor deze waarde nagekeken moet worden.
 	 *
 	 * @return	Boolean die weergeeft of de hoeveelheid energie geldig is.
+	 * 			|if(!Energy.isValidEnergyAmount(energy.getEnergy()))
+	 * 			|	false
 	 * 			|(energy.getEnergy() <= robot.getMaxEnergy().getEnergy())
 	 */
 	public static boolean isValidRobotEnergy(Energy energy, Robot robot){
+		if(!Energy.isValidEnergyAmount(energy.getEnergy()))
+			return false;
 		return (energy.getEnergy() <= robot.getMaxEnergy().getEnergy());
+	}
+	
+	/**
+	 * Methode die controleert of de opgegeven hoeveelheid energie een geldige hoeveelheid is.
+	 * 
+	 * @param 	energy
+	 * 			De hoeveelheid energie.
+	 *
+	 * @return	Boolean die weergeeft of de hoeveelheid energie geldig is.
+	 * 			|if(!Energy.isValidEnergyAmount(energy.getEnergy()))
+	 * 			|	false
+	 * 			|(energy.getEnergy() <= MAX_ENERGY.getEnergy())
+	 */
+	public static boolean isValidRobotEnergy(Energy energy){
+		if(!Energy.isValidEnergyAmount(energy.getEnergy()))
+			return false;
+		return (energy.getEnergy() <= MAX_ENERGY.getEnergy());
 	}
 
 	/**

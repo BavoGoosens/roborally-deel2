@@ -15,7 +15,7 @@ import roborally.property.Weight;
  * @version 1.1
  */
 public class RepairKit extends Item{
-	
+
 	/**
 	 * Deze constructor maakt een nieuwe repair kit aan met de gegeven energie en gewicht.
 	 * 
@@ -51,7 +51,7 @@ public class RepairKit extends Item{
 	public void setEnergy(Energy energy) {
 		this.energy = energy;
 	}
-	
+
 	/**
 	 * Geeft de energie van de repair kit.
 	 * 
@@ -62,12 +62,12 @@ public class RepairKit extends Item{
 	public Energy getEnergy() {
 		return energy;
 	}
-	
+
 	/**
 	 * Energie in de repair kit.
 	 */
 	private Energy energy;
-	
+
 	/**
 	 * Deze methode kijkt na of de gegeven energie geldig is voor een repair kit.
 	 * 
@@ -75,17 +75,21 @@ public class RepairKit extends Item{
 	 * 			De energie die nagekeken moet worden.
 	 * 
 	 * @return	Een boolean die true is als de energie geldig is.
+	 * 			|if(!Energy.isValidEnergyAmount(energy.getEnergy()))
+	 * 			|	false
 	 * 			|(energy.getEnergy() <= MAX_ENERGY.getEnergy())
 	 */
 	public static boolean isValidRepairKitEnergy(Energy energy){
+		if(!Energy.isValidEnergyAmount(energy.getEnergy()))
+			return false;
 		return (energy.getEnergy() <= MAX_ENERGY.getEnergy());
 	}
-	
+
 	/**
 	 * De maximale energie van een repair kit.
 	 */
 	public final static Energy MAX_ENERGY = new Energy(Double.MAX_VALUE);
-	
+
 	/**
 	 * Deze methode wordt opgeroepen wanneer de repair kit geraakt wordt door een laser of een surprise box.
 	 * 
@@ -99,7 +103,7 @@ public class RepairKit extends Item{
 			setEnergy(MAX_ENERGY);
 		setEnergy(newEnergy);
 	}
-	
+
 	/**
 	 * De energie die de repair kit bij krijgt wanneer hij geraakt wordt.
 	 */
@@ -117,5 +121,5 @@ public class RepairKit extends Item{
 	public String toString() {
 		return super.toString() + ", energie: " + getEnergy().toString();
 	}
-	
+
 }

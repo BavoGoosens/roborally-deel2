@@ -28,12 +28,14 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public Battery createBattery(double initialEnergy, int weight) {
-		if(initialEnergy < 0)
+		if(!Energy.isValidEnergyAmount(initialEnergy))
 			return null;
 		Energy initialEn = new Energy(initialEnergy);
 		if(!Battery.isValidBatteryEnergy(initialEn))
 			return null;
-		return new Battery(new Energy(initialEnergy),new Weight(weight));
+		if(weight < Weight.MINWEIGHT || weight > Weight.MAXWEIGHT)
+			return null;
+		return new Battery(initialEn ,new Weight(weight));
 	}
 
 	@Override
@@ -59,12 +61,14 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public RepairKit createRepairKit(double repairAmount, int weight) {
-		if(repairAmount < 0)
+		if(!Energy.isValidEnergyAmount(repairAmount))
 			return null;
 		Energy initialEn = new Energy(repairAmount);
 		if(!RepairKit.isValidRepairKitEnergy(initialEn))
 			return null;
-		return new RepairKit(new Energy(repairAmount), new Weight(weight));
+		if(weight < Weight.MINWEIGHT || weight > Weight.MAXWEIGHT)
+			return null;
+		return new RepairKit(initialEn, new Weight(weight));
 	}
 
 	@Override
@@ -90,13 +94,21 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public SurpriseBox createSurpriseBox(int weight) {
+		if(weight < Weight.MINWEIGHT || weight > Weight.MAXWEIGHT)
+			return null;
 		return new SurpriseBox(new Weight(weight));
 	}
 
 	@Override
 	public void putSurpriseBox(Board board, long x, long y,
 			SurpriseBox surpriseBox) {
-		surpriseBox.putOnBoard(board, new Position(x, y));
+		try{
+			surpriseBox.putOnBoard(board, new Position(x, y));
+		}catch(IllegalPositionException e){
+			System.err.println(e.getMessage());
+		}catch(IllegalStateException e){
+			System.err.println(e.getMessage());
+		}
 	}
 
 	@Override
@@ -136,6 +148,11 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public Robot createRobot(int orientation, double initialEnergy) {
+		if(!Energy.isValidEnergyAmount(initialEnergy))
+			return null;
+		Energy initialEn = new Energy(initialEnergy);
+		if(!Robot.isValidRobotEnergy(initialEn))
+			return null;
 		return new Robot (getOrientationEnum(orientation),new Energy(initialEnergy));
 	}
 

@@ -75,9 +75,13 @@ public class Battery extends Item{
 	 * 			De energie die nagekeken moet worden.
 	 * 
 	 * @return	Een boolean die true is als de energie geldig is.
+	 * 			|if(!Energy.isValidEnergyAmount(energy.getEnergy()))
+	 * 			|	false
 	 * 			|(energy.getEnergy() <= MAX_ENERGY.getEnergy())
 	 */
 	public static boolean isValidBatteryEnergy(Energy energy){
+		if(!Energy.isValidEnergyAmount(energy.getEnergy()))
+				return false;
 		return (energy.getEnergy() <= MAX_ENERGY.getEnergy());
 	}
 	
