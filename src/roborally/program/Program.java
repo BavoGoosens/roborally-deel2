@@ -78,23 +78,23 @@ public class Program {
 			Command cmd = new While(result.substring(5, result.length()));
 			this.program.add(cmd);
 		} else if (words[0].equals("seq")){
-			Sequentie seq = new Sequentie(result.substring(4, result.length()));
+			Sequence seq = new Sequence(result.substring(4, result.length()));
 			this.program.add(seq);
 		} else if (words[0].equals("if")){
 			If ifs = new If(result.substring(2, result.length()));
 			this.program.add(ifs);
 		} else {
 			if (words[0].equals("shoot")){
-				Basic bas = new Basic(BasicEnum.SHOOT);
+				Statement bas = new Statement(BasicEnum.SHOOT);
 				this.program.add(bas);
 			}else if (words[0].equals("move")){
-				Basic bas = new Basic(BasicEnum.MOVE);
+				Statement bas = new Statement(BasicEnum.MOVE);
 				this.program.add(bas);
 			}else if (words[0].equals("turn")){
-				Basic bas = new Basic(BasicEnum.TURN);
+				Statement bas = new Statement(BasicEnum.TURN);
 				this.program.add(bas);
 			}else{
-				Basic bas = new Basic(BasicEnum.PICK_UP_AND_USE);
+				Statement bas = new Statement(BasicEnum.PICK_UP_AND_USE);
 				this.program.add(bas);
 			}
 		}

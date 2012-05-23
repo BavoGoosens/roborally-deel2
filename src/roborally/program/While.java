@@ -4,6 +4,8 @@ import roborally.model.Robot;
 
 public class While extends Command {
 
+	public boolean enterd = false;
+
 	public While(String substring) {
 		extractConditionBody(substring);		
 	}
@@ -50,7 +52,7 @@ public class While extends Command {
 		this.conditieSpeciaal = cnd;
 	}
 
-	private void setCondition(Conditie cnd) {
+	private void setCondition(Condition cnd) {
 		this.conditie = cnd;	
 	}
 
@@ -74,9 +76,9 @@ public class While extends Command {
 		}
 	}
 	
-	private Conditie conditie;
+	private Condition conditie;
 	
-	public Conditie getConditie() {
+	public Condition getConditie() {
 		return conditie;
 	}
 

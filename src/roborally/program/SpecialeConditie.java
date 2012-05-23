@@ -14,17 +14,17 @@ public class SpecialeConditie {
 
 	private ConditieEnum conditie; 
 
-	private Conditie cond1;
+	private Condition cond1;
 	
-	private Conditie cond2;
+	private Condition cond2;
 
-	public SpecialeConditie(ConditieEnum or, Conditie[] c) {
+	public SpecialeConditie(ConditieEnum or, Condition[] c) {
 		setConditie(or);
 		setCond1(c[0]);
 		setCond2(c[1]);
 	}
 
-	public SpecialeConditie(ConditieEnum not, Conditie notCond) {
+	public SpecialeConditie(ConditieEnum not, Condition notCond) {
 		setConditie(not);
 		setCond1(notCond);
 	}
@@ -37,19 +37,19 @@ public class SpecialeConditie {
 		this.conditie = conditie;
 	}
 
-	public Conditie getCond1() {
+	public Condition getCond1() {
 		return this.cond1;
 	}
 
-	public void setCond1(Conditie cond1) {
+	public void setCond1(Condition cond1) {
 		this.cond1 = cond1;
 	}
 
-	public Conditie getCond2() {
+	public Condition getCond2() {
 		return this.cond2;
 	}
 
-	public void setCond2(Conditie cond2) {
+	public void setCond2(Condition cond2) {
 		this.cond2 = cond2;
 	}
 

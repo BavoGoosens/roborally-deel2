@@ -3,6 +3,8 @@ package roborally.program;
 import roborally.model.Robot;
 
 public class If extends Command{
+	
+	public boolean enterd = false;
 
 	public If(String substring) {
 		extractCondition(substring);
@@ -63,7 +65,7 @@ public class If extends Command{
 		this.setIf_clause(firstCommand);
 	}
 
-	private Conditie getCondition() {
+	private Condition getCondition() {
 		return this.conditie;
 	}
 
@@ -71,7 +73,7 @@ public class If extends Command{
 		this.setConditieSpeciaal(cnd);
 	}
 
-	private void setCondition(Conditie conditie) {
+	private void setCondition(Condition conditie) {
 		this.conditie = conditie;		
 	}
 
@@ -115,7 +117,7 @@ public class If extends Command{
 		}
 	}
 
-	private Conditie conditie;
+	private Condition conditie;
 
 	private SpecialeConditie conditieSpeciaal;
 
