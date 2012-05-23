@@ -1,6 +1,8 @@
 package roborally.test;
 
 import static org.junit.Assert.*;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import roborally.model.Board;
@@ -11,35 +13,270 @@ import roborally.property.Position;
 
 public class RobotTest {
 	
-	private Robot robot;
-	private Robot robot1;
-	private Robot robot2;
-	private Robot robot3;
-	private Robot robot1_0_0;
-	private Robot robot2_0_0;
-	private Robot robot7;
-	private Robot robot6;
-	private Robot robot5;
-	private Robot robot4;
-	private Board board1;
-	private Board board2;
+	Robot robot_up_10000;
+	Robot robot_right_10000;
+	Robot robot_left_10000;
+	Robot robot_down_10000;
+	Robot robot_up_1000;
+	Robot robot_right_1000;
+	Robot robot_left_1000;
+	Robot robot_down_1000;
+	Robot robot_onBoard_20_20_up_10000;
+	Robot robot_onBoard_20_20_right_10000;
+	Robot robot_onBoard_20_20_left_10000;
+	Robot robot_onBoard_20_20_down_10000;
+	Robot robot_onBoard_20_20_up_1000;
+	Robot robot_onBoard_20_20_right_1000;
+	Robot robot_onBoard_20_20_left_1000;
+	Robot robot_onBoard_20_20_down_1000;
+	Robot robot_onBoard_40_40_up_10000;
+	Robot robot_onBoard_40_40_right_10000;
+	Robot robot_onBoard_40_40_left_10000;
+	Robot robot_onBoard_40_40_down_10000;
+	Robot robot_onBoard_40_40_up_1000;
+	Robot robot_onBoard_40_40_right_1000;
+	Robot robot_onBoard_40_40_left_1000;
+	Robot robot_onBoard_40_40_down_1000;
+	Board board_20_20 = new Board(20, 20);
+	Board board_40_40 = new Board(40, 40);
 	
-	@org.junit.Before
-	public void setUp() {
-		this.board1 = new Board(200,400);
-		this.board2 = new Board(600,800);
-		this.robot = new Robot(Orientation.UP,new Energy(10000));
-		this.robot1 = new Robot(Orientation.RIGHT,new Energy(10000));
-		this.robot2 = new Robot(Orientation.DOWN,new Energy(10000));
-		this.robot3 = new Robot(Orientation.LEFT,new Energy(10000));
-		this.robot4= new Robot(Orientation.UP,new Energy(10000));
-		this.robot5 = new Robot(Orientation.RIGHT,new Energy(10000));
-		this.robot6 = new Robot(Orientation.DOWN,new Energy(10000));
-		this.robot7 = new Robot(Orientation.LEFT,new Energy(10000));
-		this.robot1_0_0 = new Robot(Orientation.UP,new Energy(10000));
-		this.robot2_0_0 = new Robot(Orientation.LEFT,new Energy(9456));
+	@Before
+	public void setUp(){
+		robot_up_10000 = new Robot(Orientation.UP, new Energy(10000));
+		robot_right_10000 = new Robot(Orientation.RIGHT, new Energy(10000));
+		robot_left_10000 = new Robot(Orientation.LEFT, new Energy(10000));
+		robot_down_10000 = new Robot(Orientation.DOWN, new Energy(10000));
+		robot_up_1000 = new Robot(Orientation.UP, new Energy(1000));
+		robot_right_1000 = new Robot(Orientation.RIGHT, new Energy(1000));
+		robot_left_1000 = new Robot(Orientation.LEFT, new Energy(1000));
+		robot_down_1000 = new Robot(Orientation.DOWN, new Energy(1000));
+		robot_onBoard_20_20_up_10000 = new Robot(Orientation.UP, new Energy(10000));
+		robot_onBoard_20_20_right_10000 = new Robot(Orientation.RIGHT, new Energy(10000));
+		robot_onBoard_20_20_left_10000 = new Robot(Orientation.LEFT, new Energy(10000));
+		robot_onBoard_20_20_down_10000 = new Robot(Orientation.DOWN, new Energy(10000));
+		robot_onBoard_20_20_up_1000 = new Robot(Orientation.UP, new Energy(1000));
+		robot_onBoard_20_20_right_1000 = new Robot(Orientation.RIGHT, new Energy(1000));
+		robot_onBoard_20_20_left_1000 = new Robot(Orientation.LEFT, new Energy(1000));
+		robot_onBoard_20_20_down_1000 = new Robot(Orientation.DOWN, new Energy(1000));
+		robot_onBoard_20_20_up_10000.putOnBoard(board_20_20, new Position(1, 1));
+		robot_onBoard_20_20_right_10000.putOnBoard(board_20_20, new Position(2, 1));
+		robot_onBoard_20_20_left_10000.putOnBoard(board_20_20, new Position(3, 1));
+		robot_onBoard_20_20_down_10000.putOnBoard(board_20_20, new Position(4, 1));
+		robot_onBoard_20_20_up_1000.putOnBoard(board_20_20, new Position(5, 1));
+		robot_onBoard_20_20_right_1000.putOnBoard(board_20_20, new Position(6, 1));
+		robot_onBoard_20_20_left_1000.putOnBoard(board_20_20, new Position(7, 1));
+		robot_onBoard_20_20_down_1000.putOnBoard(board_20_20, new Position(8, 1));
+		robot_onBoard_40_40_up_10000 = new Robot(Orientation.UP, new Energy(10000));
+		robot_onBoard_40_40_right_10000 = new Robot(Orientation.RIGHT, new Energy(10000));
+		robot_onBoard_40_40_left_10000 = new Robot(Orientation.LEFT, new Energy(10000));
+		robot_onBoard_40_40_down_10000 = new Robot(Orientation.DOWN, new Energy(10000));
+		robot_onBoard_40_40_up_1000 = new Robot(Orientation.UP, new Energy(1000));
+		robot_onBoard_40_40_right_1000 = new Robot(Orientation.RIGHT, new Energy(1000));
+		robot_onBoard_40_40_left_1000 = new Robot(Orientation.LEFT, new Energy(1000));
+		robot_onBoard_40_40_down_1000 = new Robot(Orientation.DOWN, new Energy(1000));
+		robot_onBoard_40_40_up_10000.putOnBoard(board_40_40, new Position(1, 1));
+		robot_onBoard_40_40_right_10000.putOnBoard(board_40_40, new Position(2, 1));
+		robot_onBoard_40_40_left_10000.putOnBoard(board_40_40, new Position(3, 1));
+		robot_onBoard_40_40_down_10000.putOnBoard(board_40_40, new Position(4, 1));
+		robot_onBoard_40_40_up_1000.putOnBoard(board_40_40, new Position(5, 1));
+		robot_onBoard_40_40_right_1000.putOnBoard(board_40_40, new Position(6, 1));
+		robot_onBoard_40_40_left_1000.putOnBoard(board_40_40, new Position(7, 1));
+		robot_onBoard_40_40_down_1000.putOnBoard(board_40_40, new Position(8, 1));
 	}
 	
-	
+	@Test
+	public void testDestroy() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testToString() {
+		assertEquals("positie: 5, 1, energie: 1000.0 WS, maximale energie: 20000.0 WS, oriëntatie: UP, gewicht: 0 gr", robot_onBoard_20_20_up_1000.toString());
+	}
+
+	@Test
+	public void testRobot() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetOrientation() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testSetMaxEnergy() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetMaxEnergy() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetEnergy() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testIsValidRobotEnergyEnergyRobot() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testIsValidRobotEnergyEnergy() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetEnergyFraction() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testTurnClockWise() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testTurnCounterClockWise() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testMove() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetEnergyRequiredToReach() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testMoveNextTo() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testShoot() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testRecharge() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testMoveCost() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetTotalWeight() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetPossessions() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testTransferPossessions() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testPickUp() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testUse() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testDoSurpriseBoxAction() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testDrop() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testCanTurn() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testCanMove() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testLoadProgramFromFile() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetProgram() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testSaveProgramToFile() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testStepn() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetBoard() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testIsOnBoard() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetPosition() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testSetPosition() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testIsTerminated() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testPutOnBoard() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testRemoveFromBoard() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testIsValidEntity() {
+		fail("Not yet implemented");
+	}
 
 }
