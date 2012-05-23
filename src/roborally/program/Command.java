@@ -1,5 +1,7 @@
 package roborally.program;
 
+import roborally.model.Robot;
+
 
 public class Command {
 
@@ -32,7 +34,7 @@ public class Command {
 		String eersteCommand = haalHaakskesWeg(substr);
 		String[] words = eersteCommand.split("[^a-z]");
 		if (words[0].contains("while")){
-			return new While(substr.substring(5, substr.length()));
+			return new While(substr.substring(6, substr.length()));
 		} else if (words[0].contains("seq")){
 			return new Sequentie(substr.substring(4, substr.length()));
 		} else if (words[0].contains("if")){
@@ -78,7 +80,6 @@ public class Command {
 	@SuppressWarnings("boxing")
 	public Conditie getBasicConditie(String str) {
 		String sbstr = str.trim();
-		sbstr = sbstr.substring(1);
 		String[] words = sbstr.split("[^a-z]");
 		if (words[0].contains("true")){
 			return new Conditie(ConditieEnum.TRUE);
@@ -92,4 +93,6 @@ public class Command {
 			return new Conditie(ConditieEnum.CAN_HIT_ROBOT);
 		}
 	}
+
+	public void execute(Robot robot) {}
 }

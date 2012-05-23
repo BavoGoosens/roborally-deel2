@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import roborally.model.Robot;
+
 
 
 public class Program {
@@ -101,5 +103,13 @@ public class Program {
 	
 	public String getPrettyPrint(){
 		return this.prettyPrintLine;
+	}
+
+	public void execute(Robot robot) {
+		for (int i = 0; i < program.size(); i++){
+			Command comm = program.get(i);
+			comm.execute(robot);
+		}
+		
 	}
 }

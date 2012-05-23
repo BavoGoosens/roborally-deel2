@@ -11,10 +11,11 @@ public class Sequentie extends Command {
 	private void makeBody(String substring) {
 		substring = substring.trim();
 		while (substring.length() > 3){
+			substring = substring.trim();
+			substring = substring.substring(substring.indexOf('('));
 			String cmd = haalHaakskesWeg(substring);
 			body.add(getFirstCommand(substring));
-			substring = substring.trim();
-			substring = substring.substring(cmd.length() + 2);
+			substring = substring.substring(cmd.length() + 3);
 		}
 	}
 

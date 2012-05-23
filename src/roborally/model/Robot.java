@@ -780,6 +780,12 @@ public class Robot extends Entity{
 	public void stepn(int n) {
 		// TODO Auto-generated method stub
 	}
+	
+	public void executeProgram(){
+		if (program != null){
+			this.getProgram().execute(this);
+		}
+	}
 
 	/*
 	 * Deze methode zet het object om naar een String.

@@ -1,5 +1,7 @@
 package roborally.program;
 
+import roborally.model.Robot;
+
 public class SpecialeConditie {
 	
 	@Override
@@ -49,6 +51,16 @@ public class SpecialeConditie {
 
 	public void setCond2(Conditie cond2) {
 		this.cond2 = cond2;
+	}
+
+	public boolean evaluate(Robot robot) {
+		if (getConditie() == ConditieEnum.AND){
+			return (getCond1().evaluate(robot) && getCond2().evaluate(robot));
+		}else if (getConditie() == ConditieEnum.OR){
+			return (getCond1().evaluate(robot) || getCond2().evaluate(robot));
+		}else{
+			return !getCond1().evaluate(robot);
+		}
 	}
 
 }

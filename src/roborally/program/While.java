@@ -1,5 +1,7 @@
 package roborally.program;
 
+import roborally.model.Robot;
+
 public class While extends Command {
 
 	public While(String substring) {
@@ -40,7 +42,7 @@ public class While extends Command {
 
 	private void makeBody(String sbstr) {
 		String substr =sbstr;
-		substr = substr.substring(sbstr.indexOf("("));
+		substr = substr.substring(sbstr.indexOf('('));
 		setBody(getFirstCommand(substr));
 	}
 
@@ -60,9 +62,28 @@ public class While extends Command {
 		this.body = body;
 	}
 	
+	@Override
+	public void execute(Robot robot) {
+		if (getConditie() != null){
+			if (getConditie().evaluate(robot)){
+				getBody().execute(robot);
+			}
+		}
+		if(getConditieSpeciaal().evaluate(robot)){
+			getBody().execute(robot);
+		}
+	}
 	
 	private Conditie conditie;
 	
+	public Conditie getConditie() {
+		return conditie;
+	}
+
+	public SpecialeConditie getConditieSpeciaal() {
+		return conditieSpeciaal;
+	}
+
 	private SpecialeConditie conditieSpeciaal;
 
 	private Command body;
