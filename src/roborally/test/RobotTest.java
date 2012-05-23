@@ -16,6 +16,7 @@ import roborally.model.Board;
 import roborally.model.Entity;
 import roborally.model.RepairKit;
 import roborally.model.Robot;
+import roborally.model.Wall;
 import roborally.property.Energy;
 import roborally.property.Orientation;
 import roborally.property.Position;
@@ -116,12 +117,16 @@ public class RobotTest {
 
 	@Test
 	public void testMove() {
-		fail("Not yet implemented");
+		robot_onBoard_20_20_up_10000.move();
+		assertEquals(new Position(1, 0), robot_onBoard_20_20_up_10000.getPosition());
+		assertEquals(new Energy(9500), robot_onBoard_20_20_up_10000.getEnergy());
 	}
 
 	@Test
 	public void testGetEnergyRequiredToReach() {
-		fail("Not yet implemented");
+		Wall wall = new Wall();
+		wall.putOnBoard(board_20_20, new Position(1, 2));
+		assertEquals(new Energy(2300), robot_onBoard_20_20_up_10000.getEnergyRequiredToReach(new Position(1, 3)));
 	}
 
 	@Test
@@ -131,7 +136,16 @@ public class RobotTest {
 
 	@Test
 	public void testShoot() {
-		fail("Not yet implemented");
+		robot_onBoard_20_20_right_10000.shoot();
+		assertEquals(new Energy(9000), robot_onBoard_20_20_right_10000.getEnergy());
+		robot_onBoard_20_20_right_10000.shoot();
+		robot_onBoard_20_20_right_10000.shoot();
+		robot_onBoard_20_20_right_10000.shoot();
+		robot_onBoard_20_20_right_10000.shoot();
+		robot_onBoard_20_20_right_10000.shoot();
+		robot_onBoard_20_20_right_10000.shoot();
+		robot_onBoard_20_20_right_10000.shoot();
+		assertTrue(robot_onBoard_20_20_left_10000.isTerminated());
 	}
 
 	@Test
@@ -161,7 +175,10 @@ public class RobotTest {
 	@Test
 	public void testTransferPossessions() {
 		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
-		
+		robot_onBoard_20_20_down_1000.pickUp(batt);
+		robot_onBoard_20_20_down_1000.transferPossessions(robot_onBoard_20_20_down_10000);
+		assertEquals(0, robot_onBoard_20_20_down_1000.getPossessions().size());
+		assertEquals(1, robot_onBoard_20_20_down_10000.getPossessions().size());
 	}
 
 	@Test
