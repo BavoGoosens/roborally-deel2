@@ -17,7 +17,7 @@ public class If extends Command{
 		if (words[0].contains("and")){
 			sbstr = sbstr.substring(4);
 			sbstr = sbstr.trim();
-			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.AND, getAndOrCond(sbstr));
+			SpecialCondition cnd = new SpecialCondition(ConditionEnum.AND, getAndOrCond(sbstr));
 			this.setCondition(cnd);
 			int beginIdx = sbstr.indexOf(cnd.toString())+cnd.toString().length();
 			sbstr = sbstr.substring(beginIdx);
@@ -26,7 +26,7 @@ public class If extends Command{
 		}else if (words[0].contains("or")){
 			sbstr = sbstr.substring(4);
 			sbstr = sbstr.trim();
-			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.OR, getAndOrCond(sbstr));
+			SpecialCondition cnd = new SpecialCondition(ConditionEnum.OR, getAndOrCond(sbstr));
 			this.setCondition(cnd);
 			int beginIdx = sbstr.indexOf(cnd.toString())+cnd.toString().length();
 			sbstr = sbstr.substring(beginIdx);
@@ -35,7 +35,7 @@ public class If extends Command{
 		}else if (words[0].contains("not")){
 			sbstr = sbstr.substring(4);
 			sbstr = sbstr.trim();
-			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.NOT, getNotCond(sbstr));
+			SpecialCondition cnd = new SpecialCondition(ConditionEnum.NOT, getNotCond(sbstr));
 			this.setCondition(cnd);
 			int beginIdx = sbstr.indexOf(cnd.toString())+cnd.toString().length();
 			sbstr = sbstr.substring(beginIdx);
@@ -69,7 +69,7 @@ public class If extends Command{
 		return this.conditie;
 	}
 
-	private void setCondition(SpecialeConditie cnd) {
+	private void setCondition(SpecialCondition cnd) {
 		this.setConditieSpeciaal(cnd);
 	}
 
@@ -77,11 +77,11 @@ public class If extends Command{
 		this.conditie = conditie;		
 	}
 
-	public SpecialeConditie getConditieSpeciaal() {
+	public SpecialCondition getConditieSpeciaal() {
 		return this.conditieSpeciaal;
 	}
 
-	public void setConditieSpeciaal(SpecialeConditie conditieSpeciaal) {
+	public void setConditieSpeciaal(SpecialCondition conditieSpeciaal) {
 		this.conditieSpeciaal = conditieSpeciaal;
 	}
 
@@ -119,7 +119,7 @@ public class If extends Command{
 
 	private Condition conditie;
 
-	private SpecialeConditie conditieSpeciaal;
+	private SpecialCondition conditieSpeciaal;
 
 	private Command if_clause;
 

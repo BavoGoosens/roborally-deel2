@@ -85,16 +85,16 @@ public class Program {
 			this.program.add(ifs);
 		} else {
 			if (words[0].equals("shoot")){
-				Statement bas = new Statement(BasicEnum.SHOOT);
+				Statement bas = new Statement(StatementEnum.SHOOT);
 				this.program.add(bas);
 			}else if (words[0].equals("move")){
-				Statement bas = new Statement(BasicEnum.MOVE);
+				Statement bas = new Statement(StatementEnum.MOVE);
 				this.program.add(bas);
 			}else if (words[0].equals("turn")){
-				Statement bas = new Statement(BasicEnum.TURN);
+				Statement bas = new Statement(StatementEnum.TURN);
 				this.program.add(bas);
 			}else{
-				Statement bas = new Statement(BasicEnum.PICK_UP_AND_USE);
+				Statement bas = new Statement(StatementEnum.PICK_UP_AND_USE);
 				this.program.add(bas);
 			}
 		}
@@ -103,6 +103,10 @@ public class Program {
 			extractBody( prettyPrintLine.substring(eindIdx,prettyPrintLine.length()));
 		}
 
+	}
+	
+	public void stepn(int n){
+		
 	}
 
 	public ArrayList<String> getOriginal(){
@@ -114,8 +118,8 @@ public class Program {
 	}
 
 	public void execute(Robot robot) {
-		for (int i = 0; i < program.size(); i++){
-			Command comm = program.get(i);
+		for (int i = 0; i < this.program.size(); i++){
+			Command comm = this.program.get(i);
 			comm.execute(robot);
 		}
 		

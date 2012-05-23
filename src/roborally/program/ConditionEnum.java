@@ -1,6 +1,6 @@
 package roborally.program;
 
-public enum ConditieEnum {
+public enum ConditionEnum {
 	
 	TRUE,
 	

@@ -17,21 +17,21 @@ public class While extends Command {
 		if (words[0].equals("and")){
 			sbstr = sbstr.substring(4);
 			sbstr = sbstr.trim();
-			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.AND, getAndOrCond(sbstr));
+			SpecialCondition cnd = new SpecialCondition(ConditionEnum.AND, getAndOrCond(sbstr));
 			this.setCondition(cnd);
 			int beginIdx = sbstr.indexOf(cnd.toString())+cnd.toString().length();
 			makeBody(sbstr.substring(beginIdx));
 		}else if (words[0].equals("or")){
 			sbstr = sbstr.substring(4);
 			sbstr = sbstr.trim();
-			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.OR, getAndOrCond(sbstr));
+			SpecialCondition cnd = new SpecialCondition(ConditionEnum.OR, getAndOrCond(sbstr));
 			this.setCondition(cnd);
 			int beginIdx = sbstr.indexOf(cnd.toString())+cnd.toString().length();
 			makeBody(sbstr.substring(beginIdx));
 		}else if (words[0].equals("not")){
 			sbstr = sbstr.substring(4);
 			sbstr = sbstr.trim();
-			SpecialeConditie cnd = new SpecialeConditie(ConditieEnum.NOT, getNotCond(sbstr));
+			SpecialCondition cnd = new SpecialCondition(ConditionEnum.NOT, getNotCond(sbstr));
 			this.setCondition(cnd);
 			int beginIdx = sbstr.indexOf(cnd.toString())+cnd.toString().length();
 			makeBody(sbstr.substring(beginIdx));
@@ -48,7 +48,7 @@ public class While extends Command {
 		setBody(getFirstCommand(substr));
 	}
 
-	private void setCondition(SpecialeConditie cnd) {
+	private void setCondition(SpecialCondition cnd) {
 		this.conditieSpeciaal = cnd;
 	}
 
@@ -82,11 +82,11 @@ public class While extends Command {
 		return conditie;
 	}
 
-	public SpecialeConditie getConditieSpeciaal() {
+	public SpecialCondition getConditieSpeciaal() {
 		return conditieSpeciaal;
 	}
 
-	private SpecialeConditie conditieSpeciaal;
+	private SpecialCondition conditieSpeciaal;
 
 	private Command body;
 

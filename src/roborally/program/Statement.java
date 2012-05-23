@@ -10,6 +10,14 @@ public class Statement extends Command {
 	
 	public boolean enterd = false;
 	
+	public boolean isEnterd() {
+		return this.enterd;
+	}
+
+	public void setEnterd(boolean enterd) {
+		this.enterd = enterd;
+	}
+
 	private int turnDir;
 
 	public int getTurnDir() {
@@ -20,11 +28,11 @@ public class Statement extends Command {
 		this.turnDir = turnDir;
 	}
 
-	public Statement(BasicEnum en) {
+	public Statement(StatementEnum en) {
 		setEnumOfThis(en);
 	}
 
-	public Statement(BasicEnum turn, String string) {
+	public Statement(StatementEnum turn, String string) {
 		setEnumOfThis(turn);
 		if(string.contains("counterclockwise")){
 			this.turnDir = 1;
@@ -32,33 +40,38 @@ public class Statement extends Command {
 		this.turnDir = 0;
 	}
 
-	private void setEnumOfThis(BasicEnum en) {
+	private void setEnumOfThis(StatementEnum en) {
 		this.enumOfThis = en;
 	}
 
-	private BasicEnum enumOfThis;
+	private StatementEnum enumOfThis;
 	
-	public BasicEnum getEnumOfThis() {
+	public StatementEnum getEnumOfThis() {
 		return this.enumOfThis;
 	}
 
 	@Override
 	public void execute(Robot robot){
-		if (this.getEnumOfThis() == BasicEnum.MOVE){
+		if (this.getEnumOfThis() == StatementEnum.MOVE){
 			robot.move();
-		}else if (this.getEnumOfThis() == BasicEnum.SHOOT){
+			this.setEnterd(true);
+		}else if (this.getEnumOfThis() == StatementEnum.SHOOT){
 			robot.shoot();
-		}else if (this.getEnumOfThis() == BasicEnum.TURN){
+			this.setEnterd(true);
+		}else if (this.getEnumOfThis() == StatementEnum.TURN){
 			if (getTurnDir() == 1){
 				robot.turnCounterClockWise();
+				this.setEnterd(true);
 			}
 			robot.turnClockWise();
+			this.setEnterd(true);
 		}else{
 			HashSet<Entity> ents = robot.getBoard().getEntityOnPosition(robot.getPosition());
 			for (Entity ent : ents){
 				if (ent instanceof Item){
 					robot.pickUp((Item) ent);
 					robot.use((Item) ent);
+					this.setEnterd(true);
 					break;
 				}
 			}

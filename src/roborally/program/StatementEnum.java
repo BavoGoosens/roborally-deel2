@@ -1,6 +1,6 @@
 package roborally.program;
 
-public enum BasicEnum {
+public enum StatementEnum {
 	
 	MOVE,
 	

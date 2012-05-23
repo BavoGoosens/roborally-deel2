@@ -17,24 +17,24 @@ public class Condition extends Command {
 		return this.conditie.toString()+ " " + this.energyContained.getEnergy();
 	}
 
-	private ConditieEnum conditie; 
+	private ConditionEnum conditie; 
 	
 	private Energy energyContained;
 
-	public Condition(ConditieEnum cnd) {
+	public Condition(ConditionEnum cnd) {
 		setConditie(cnd);
 	}
 
-	public Condition(ConditieEnum energyAtLeast, double amountEnergy) {
+	public Condition(ConditionEnum energyAtLeast, double amountEnergy) {
 		setConditie(energyAtLeast);
 		setEnergyContained(new Energy(amountEnergy));
 	}
 
-	public ConditieEnum getConditie() {
+	public ConditionEnum getConditie() {
 		return this.conditie;
 	}
 
-	public void setConditie(ConditieEnum conditie) {
+	public void setConditie(ConditionEnum conditie) {
 		this.conditie = conditie;
 	}
 
@@ -47,12 +47,12 @@ public class Condition extends Command {
 	}
 	
 	public boolean evaluate(Robot robot){
-		if (getConditie() == ConditieEnum.AT_ITEM){
+		if (getConditie() == ConditionEnum.AT_ITEM){
 			if (robot.getBoard().getEntityOnPosition(robot.getPosition()).size() > 2 ){
 				return true;
 			}
 			return false;
-		}else if (getConditie() == ConditieEnum.CAN_HIT_ROBOT){
+		}else if (getConditie() == ConditionEnum.CAN_HIT_ROBOT){
 			Position beginpos = robot.getPosition();
 			while(robot.getBoard().isValidPosition(AStarPath.getNextPosition(beginpos, robot.getOrientation()))){
 				beginpos = AStarPath.getNextPosition(beginpos, robot.getOrientation());
@@ -66,12 +66,12 @@ public class Condition extends Command {
 				}
 			}
 			return false;
-		}else if (getConditie() == ConditieEnum.ENERGY_AT_LEAST){
+		}else if (getConditie() == ConditionEnum.ENERGY_AT_LEAST){
 			if (robot.getEnergy().getEnergy() >= this.getEnergyContained().getEnergy()){
 				return true;
 			}
 			return false;
-		}else if (getConditie() == ConditieEnum.WALL){
+		}else if (getConditie() == ConditionEnum.WALL){
 			Position pos = AStarPath.getNextPosition(robot.getPosition(),robot.getOrientation().getClockwiseOrientation());
 			HashSet<Entity> content = robot.getBoard().getEntityOnPosition(pos);
 			if(content != null){

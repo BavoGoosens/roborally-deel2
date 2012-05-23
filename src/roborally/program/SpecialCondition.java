@@ -2,38 +2,38 @@ package roborally.program;
 
 import roborally.model.Robot;
 
-public class SpecialeConditie {
+public class SpecialCondition {
 	
 	@Override
 	public String toString() {
-		if (this.conditie == ConditieEnum.NOT ){
+		if (this.conditie == ConditionEnum.NOT ){
 			return this.cond1.toString();
 		}
 		return this.cond1.toString()+this.cond2.toString();
 	}
 
-	private ConditieEnum conditie; 
+	private ConditionEnum conditie; 
 
 	private Condition cond1;
 	
 	private Condition cond2;
 
-	public SpecialeConditie(ConditieEnum or, Condition[] c) {
+	public SpecialCondition(ConditionEnum or, Condition[] c) {
 		setConditie(or);
 		setCond1(c[0]);
 		setCond2(c[1]);
 	}
 
-	public SpecialeConditie(ConditieEnum not, Condition notCond) {
+	public SpecialCondition(ConditionEnum not, Condition notCond) {
 		setConditie(not);
 		setCond1(notCond);
 	}
 
-	public ConditieEnum getConditie() {
+	public ConditionEnum getConditie() {
 		return this.conditie;
 	}
 
-	public void setConditie(ConditieEnum conditie) {
+	public void setConditie(ConditionEnum conditie) {
 		this.conditie = conditie;
 	}
 
@@ -54,9 +54,9 @@ public class SpecialeConditie {
 	}
 
 	public boolean evaluate(Robot robot) {
-		if (getConditie() == ConditieEnum.AND){
+		if (getConditie() == ConditionEnum.AND){
 			return (getCond1().evaluate(robot) && getCond2().evaluate(robot));
-		}else if (getConditie() == ConditieEnum.OR){
+		}else if (getConditie() == ConditionEnum.OR){
 			return (getCond1().evaluate(robot) || getCond2().evaluate(robot));
 		}else{
 			return !getCond1().evaluate(robot);

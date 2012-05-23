@@ -41,14 +41,14 @@ public class Command {
 			return new If(substr.substring(3, substr.length()));
 		} else {
 			if (words[0].contains("shoot")){
-				return new Statement(BasicEnum.SHOOT);
+				return new Statement(StatementEnum.SHOOT);
 			}else if (words[0].contains("move")){
-				return new Statement(BasicEnum.MOVE);
+				return new Statement(StatementEnum.MOVE);
 			}else if (words[0].contains("turn")){
 				String[] word = eersteCommand.split(" ");
-				return new Statement(BasicEnum.TURN,word[1]);
+				return new Statement(StatementEnum.TURN,word[1]);
 			}else{
-				return new Statement(BasicEnum.PICK_UP_AND_USE);
+				return new Statement(StatementEnum.PICK_UP_AND_USE);
 			}
 		}
 	}
@@ -82,15 +82,15 @@ public class Command {
 		String sbstr = str.trim();
 		String[] words = sbstr.split("[^a-z]");
 		if (words[0].contains("true")){
-			return new Condition(ConditieEnum.TRUE);
+			return new Condition(ConditionEnum.TRUE);
 		}else if (words[0].contains("at")){
-			return  new Condition(ConditieEnum.AT_ITEM);
+			return  new Condition(ConditionEnum.AT_ITEM);
 		}else if (words[0].contains("energy")){
-			return new Condition(ConditieEnum.ENERGY_AT_LEAST, getAmountEnergy(sbstr));
+			return new Condition(ConditionEnum.ENERGY_AT_LEAST, getAmountEnergy(sbstr));
 		}else if (words[0].contains("wall")){
-			return new Condition(ConditieEnum.WALL);
+			return new Condition(ConditionEnum.WALL);
 		}else{
-			return new Condition(ConditieEnum.CAN_HIT_ROBOT);
+			return new Condition(ConditionEnum.CAN_HIT_ROBOT);
 		}
 	}
 
