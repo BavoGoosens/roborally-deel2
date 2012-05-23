@@ -52,9 +52,15 @@ public class Position implements Comparable<Position>{
 	 * 
 	 * @return 	x-waarde van deze positie
 	 * 			|x
+	 * 
+	 * @throws	IllegalStateException 
+	 * 			Er is nog geen positie gezet.
+	 * 			|this == null
 	 */
 	@Basic @Immutable
-	public long getX() {
+	public long getX() throws IllegalStateException{
+		if(this == null)
+			throw new IllegalStateException("Er is nog geen positie gezet. Bijgevolg nog geen x-coordinaat.");
 		return x;
 	}
 
@@ -63,9 +69,15 @@ public class Position implements Comparable<Position>{
 	 * 
 	 * @return 	y-waarde van deze positie
 	 * 			|y
+	 * 
+	 * @throws	IllegalStateException 
+	 * 			Er is nog geen positie gezet.
+	 * 			|this == null
 	 */
 	@Basic @Immutable
-	public long getY() {
+	public long getY() throws IllegalStateException {
+		if(this == null)
+			throw new IllegalStateException("Er is nog geen positie gezet. Bijgevolg nog geen y-coordinaat.");
 		return y;
 	}
 	

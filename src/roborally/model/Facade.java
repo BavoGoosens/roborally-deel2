@@ -9,6 +9,7 @@ import java.util.Set;
 
 import roborally.IFacade;
 import roborally.property.*;
+import roborally.exception.IllegalPositionException;
 import roborally.exception.TargetNotReachableException;
 
 
@@ -21,18 +22,29 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public void merge(Board board1, Board board2) {
-		// TODO: Methode afwerken en aanpassen aan de nieuwe normen 
+		board1.merge(board2);
 
 	}
 
 	@Override
 	public Battery createBattery(double initialEnergy, int weight) {
+		if(initialEnergy < 0)
+			return null;
+		Energy initialEn = new Energy(initialEnergy);
+		if(!Battery.isValidBatteryEnergy(initialEn))
+			return null;
 		return new Battery(new Energy(initialEnergy),new Weight(weight));
 	}
 
 	@Override
 	public void putBattery(Board board, long x, long y, Battery battery) {
+		try{
 		battery.putOnBoard(board, new Position(x, y));
+		}catch(IllegalPositionException e){
+			System.err.println(e.getMessage());
+		}catch(IllegalStateException e){
+			System.err.println(e.getMessage());
+		}
 	}
 
 	@Override
