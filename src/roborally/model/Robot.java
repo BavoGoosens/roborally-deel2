@@ -518,16 +518,10 @@ public class Robot extends Entity{
 	 * @param	other
 	 * 			De andere robot waarnaar overgedragen moet worden.
 	 * 
-	 * @throws	IllegalPositionException 
-	 * 			De positie van de andere robot is niet gelijk aan de positie van deze robot. Hetzelfde kan voor het bord gelden.
-	 * 			|getBoard() != other.getBoard() || !getPosition().equals(other.getPosition())
-	 * 
 	 * @post	Deze robot heeft geen voorwerpen meer.
 	 * 			|this.getPossessions.size() == 0
 	 */
-	public void transferPossessions(Robot other) throws IllegalPositionException{
-		if(getBoard() != other.getBoard() || !getPosition().equals(other.getPosition()))
-			throw new IllegalPositionException(other.getPosition());
+	public void transferPossessions(Robot other){
 		for(Item current: getPossessions())
 			other.getPossessions().add(current);
 		other.sortPossessions();

@@ -160,6 +160,7 @@ public class RobotTest {
 
 	@Test
 	public void testTransferPossessions() {
+		batt.putOnBoard(board_20_20, robot_onBoard_20_20_down_1000.getPosition());
 		
 	}
 
