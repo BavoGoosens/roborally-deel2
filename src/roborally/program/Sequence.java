@@ -51,6 +51,16 @@ public class Sequence extends Command {
 		}
 	}
 	
+	@Override
+	public void resetExecuted() {
+		setDoneAll(false);
+		for (Command comm : getBody()){
+			comm.resetExecuted();
+		}
+	}
+
+
+
 	private boolean doneAll;
 
 	private ArrayList<Command> body = new ArrayList<>();

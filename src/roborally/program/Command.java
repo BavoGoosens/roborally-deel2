@@ -105,4 +105,8 @@ public class Command {
 	public boolean isExecuted() {
 		return this.executed;
 	}
+
+	public void resetExecuted() {
+		this.setExecuted(false);
+	}
 }

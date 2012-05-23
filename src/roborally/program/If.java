@@ -126,6 +126,13 @@ public class If extends Command{
 		}
 	}
 	
+	@Override
+	public void resetExecuted() {
+		setEntered(false);
+		getIf_clause().resetExecuted();
+		getElse_clause().resetExecuted();
+	}
+
 	private boolean entered;
 
 	public boolean getEntered() {

@@ -93,8 +93,22 @@ public class While extends Command {
 				}
 			}
 		}else{
-			this.getBody().executeNext(robot);
+			if (this.getBody() instanceof Sequence){
+				Sequence seq = (Sequence)this.getBody();
+				if (seq.isDoneAll()){
+					resetExecuted();
+					executeNext(robot);
+				}
 			}
+			resetExecuted();
+			executeNext(robot);
+		}
+	}
+
+	@Override
+	public void resetExecuted() {
+		this.getBody().resetExecuted();
+		this.setEnterd(false);
 	}
 
 	private Condition conditie;
