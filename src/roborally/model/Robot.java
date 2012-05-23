@@ -5,23 +5,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Random;
-import java.util.Set;
 
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
-import roborally.exception.EntityNotOnBoardException;
-import roborally.exception.IllegalPositionException;
-import roborally.exception.NotEnoughEnergyException;
-import roborally.exception.TargetNotReachableException;
 import roborally.program.Program;
 import roborally.property.*;
 import roborally.util.*;
+import roborally.exception.*;
 
 /**
  * Een klasse om robots voor te stellen.
@@ -230,32 +223,33 @@ public class Robot extends Entity{
 	 * Deze methode beweegt de robot een stap vooruit indien mogelijk.
 	 * 
 	 * 
-	 * @throws 	IllegalStateException
-	 * 			De robot heeft onvoldoende energie om te bewegen of de positie waarnaar bewogen moet worden is ongeldig of reeds bezet.
-	 * 			|!canMove() || !Position.isValidPosition(getOrientation().getNextPosition(getPosition())) || !getBoard().isPlacableOnPosition(Calculator.getNextPosition(this.getPosition(), this.getOrientation()))
+	 * @throws 	IllegalPositionException
+	 * 			De positie waarnaar bewogen moet worden is ongeldig of reeds bezet.
+	 * 			|AStarPath.getNextPosition(getPosition(), getOrientation()) == null || !getBoard().isPlacableOnPosition(AStarPath.getNextPosition(getPosition(), getOrientation()),this)
+	 * 
+	 * @throws	NotEnoughEnergyException
+	 * 			De robot heeft onvoldoende energie om te bewegen.
+	 * 			|!canMove()
 	 * 
 	 * @post	De robot staat een plaats verder.
-	 * 			|new.getPosition().equals(getNextPosition(this.getPosition(), this.getOrientation())) == true
+	 * 			|new.getPosition().equals(getNextPosition(this.getPosition(), this.getOrientation()))
 	 * 
 	 * @post	De robot heeft energie verbruikt.
-	 * 			|new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), moveCost(this))) == true
+	 * 			|new.getEnergy().equals(Energy.energyDifference(this.getEnergy(), moveCost(this)))
 	 */
-	//TODO: Exceptions en doc.
-	public void move() throws IllegalStateException{
-		if(!this.canMove()){
-			throw new IllegalStateException("De robot heeft onvoldoende energie om te bewegen.");
+	public void move() throws NotEnoughEnergyException, IllegalPositionException{
+		if(!canMove()){
+			throw new NotEnoughEnergyException(getEnergy());
 		}
 		Position destination;
-		try{
-			destination = AStarPath.getNextPosition(this.getPosition(), this.getOrientation());
-		}catch (IllegalStateException e){
-			throw new IllegalStateException("De positie waarnaar bewogen moet worden is ongeldig.");
-		}
-		if(this.getBoard().isPlacableOnPosition(destination,this)){
-			this.setPosition(destination);
-			this.setEnergy(Energy.energyDifference(this.getEnergy(), moveCost(this)));
+		destination = AStarPath.getNextPosition(getPosition(), getOrientation());
+		if(destination == null)
+			throw new IllegalPositionException(destination);
+		if(getBoard().isPlacableOnPosition(destination,this)){
+			setPosition(destination);
+			setEnergy(Energy.energyDifference(getEnergy(), moveCost(this)));
 		}else{
-			throw new IllegalStateException("De positie is al bezet.");
+			throw new IllegalPositionException(destination);
 		}
 	}
 

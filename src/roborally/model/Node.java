@@ -12,7 +12,7 @@ import roborally.property.Position;
  * 
  * @version 1.0
  * 
- * @invar	TODO: informele doc (niet per se)
+ * @invar	
  * 			| isValidParent(this.getParent())
  */
 public class Node extends Entity{
@@ -201,4 +201,3 @@ public class Node extends Entity{
 		return ((node == null) || (node != this ));
 	}
 }
-

@@ -3,12 +3,13 @@ package roborally.model;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import roborally.IFacade;
-import roborally.exception.TargetNotReachableException;
 import roborally.property.*;
+import roborally.exception.TargetNotReachableException;
 
 
 public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, SurpriseBox>{
@@ -254,8 +255,10 @@ public class Facade implements IFacade<Board, Robot, Wall, Battery, RepairKit, S
 
 	@Override
 	public void transferItems(Robot from, Robot to) {
-		// TODO: nieuwe methode? moet nog voll gemaakt worden. limiet van gewicht?
-
+		ArrayList<Item> possessions = from.getPossessions();
+		for(Item current: possessions)
+			to.getPossessions().add(current);
+		from.getPossessions().clear();
 	}
 
 	@Override

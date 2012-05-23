@@ -237,7 +237,6 @@ public class Board{
 			Iterator<Entity> itr = place.iterator();
 			while(itr.hasNext()){
 				Entity current = itr.next();
-				Class test = current.getClass().getSuperclass();
 				if(current.getClass() == type)
 					result.add(current);
 			}
