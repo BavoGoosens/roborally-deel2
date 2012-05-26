@@ -536,7 +536,7 @@ public class Robot extends Entity{
 	 * 
 	 * @note	Gebruik altijd sortPossessions() wanneer deze lijst gewijzigd wordt.
 	 */
-	private ArrayList<Item> possessions = new ArrayList<>();
+	private ArrayList<Item> possessions = new ArrayList<Item>();
 
 	/**
 	 * Deze methode neemt een voorwerp op in de bezittingen van de robot.

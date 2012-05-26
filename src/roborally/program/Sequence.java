@@ -82,7 +82,7 @@ public class Sequence extends Command {
 
 	private boolean doneAll;
 
-	private ArrayList<Command> body = new ArrayList<>();
+	private ArrayList<Command> body = new ArrayList<Command>();
 
 	public ArrayList<Command> getBody() {
 		return this.body;
