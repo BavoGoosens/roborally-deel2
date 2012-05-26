@@ -33,15 +33,15 @@ public class Robot extends Entity{
 	 * Deze methode maakt een nieuwe robot aan.
 	 * 
 	 * @param	orientation
-	 * 			De initiële oriëntatie van de robot.
+	 * 			De initiï¿½le oriï¿½ntatie van de robot.
 	 * 
 	 * @param	energy
-	 * 			De initiële oriëntatie van de robot.
+	 * 			De initiï¿½le oriï¿½ntatie van de robot.
 	 * 
 	 * @post	De energie van de robot is gelijk aan de opgegeven energie.
 	 * 			|new.getEnergy().equals(energy)
 	 * 
-	 * @post	De oriëntatie van de robot is gelijk aan de opgegeven oriëntatie.
+	 * @post	De oriï¿½ntatie van de robot is gelijk aan de opgegeven oriï¿½ntatie.
 	 * 			|new.getOrientation().equals(orientation)
 	 * 
 	 * @post	De maximale energie van deze robot is gelijk aan het gedefinieerde maximum voor alle robots.
@@ -54,12 +54,12 @@ public class Robot extends Entity{
 	}
 	
 	/**
-	 * Methode om de oriëntatie van een robot te wijzigen.
+	 * Methode om de oriï¿½ntatie van een robot te wijzigen.
 	 *  
 	 * @param 	or
-	 * 			De oriëntatie die de robot moet krijgen.
+	 * 			De oriï¿½ntatie die de robot moet krijgen.
 	 * 
-	 * @post	De oriëntatie van de robot is gelijk aan de gegeven parameter.
+	 * @post	De oriï¿½ntatie van de robot is gelijk aan de gegeven parameter.
 	 * 			|new.getOrientation() == or
 	 */
 	private void setOrientation(Orientation or) {
@@ -67,9 +67,9 @@ public class Robot extends Entity{
 	}
 	
 	/**
-	 * Methode om de oriëntatie van de robot te verkrijgen.
+	 * Methode om de oriï¿½ntatie van de robot te verkrijgen.
 	 * 
-	 * @return 	De oriëntatie van de robot.
+	 * @return 	De oriï¿½ntatie van de robot.
 	 * 			|orientation 			
 	 */
 	@Basic
@@ -78,7 +78,7 @@ public class Robot extends Entity{
 	}
 	
 	/**
-	 * De oriëntatie van de robot.
+	 * De oriï¿½ntatie van de robot.
 	 */
 	private Orientation orientation;
 
@@ -221,7 +221,7 @@ public class Robot extends Entity{
 	 * 			De robot heeft onvoldoende energie om te bewegen.
 	 * 			|!canTurn()
 	 * 
-	 * @post	De nieuwe oriëntatie van de robot is gelijk aan de volgende oriëntatie in wijzerzin.
+	 * @post	De nieuwe oriï¿½ntatie van de robot is gelijk aan de volgende oriï¿½ntatie in wijzerzin.
 	 * 			|new.getOrientation() == this.getOrienation().getClockwiseOrientation()
 	 * 
 	 * @post	De energie van de robot is verminderd met benodigde energie voor een draai.
@@ -242,7 +242,7 @@ public class Robot extends Entity{
 	 * 			De robot heeft onvoldoende energie om te bewegen.
 	 * 			|!canTurn()
 	 * 
-	 * @post	De nieuwe oriëntatie van de robot is gelijk aan de volgende oriëntatie in wijzerzin.
+	 * @post	De nieuwe oriï¿½ntatie van de robot is gelijk aan de volgende oriï¿½ntatie in wijzerzin.
 	 * 			|new.getOrientation() == this.getOrienation().getCounterClockwiseOrientation()
 	 * 
 	 * @post	De energie van de robot is verminderd met benodigde energie voor een draai.
@@ -344,14 +344,10 @@ public class Robot extends Entity{
 		PositionPair thePair = PositionPair.getRobotsPositionpair(this, robot);
 		if(thePair != null){
 			if (!this.getPosition().equals(thePair.getPos1())){
-				this.getBoard().removeEntity(this);
-				this.getBoard().cleanBoardPosition(this.getPosition());
-				this.putOnBoard(this.getBoard(), thePair.getPos1());
+				this.setPosition(thePair.getPos1());
 			}
 			if (!robot.getPosition().equals(thePair.getPos2())){
-				robot.getBoard().removeEntity(robot);
-				robot.getBoard().cleanBoardPosition(robot.getPosition());
-				robot.putOnBoard(this.getBoard(), thePair.getPos2());
+				robot.setPosition(thePair.getPos2());
 			}
 			this.setOrientation(thePair.getOr1());
 			robot.setOrientation(thePair.getOr2());
@@ -850,13 +846,13 @@ public class Robot extends Entity{
 	 * Deze methode zet het object om naar een String.
 	 * 
 	 * @return	Een textuele representatie van dit object waarbij duidelijk wordt wat de eigenschappen van dit object zijn.
-	 * 			|super.toString() + ", energie: " + getEnergy().toString() + ", oriëntatie: " + getOrientation().toString() + ", gewicht: " + getTotalWeight().toString()
+	 * 			|super.toString() + ", energie: " + getEnergy().toString() + ", oriï¿½ntatie: " + getOrientation().toString() + ", gewicht: " + getTotalWeight().toString()
 	 * 
 	 * @see		roborally.model.Entity#toString()
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + ", energie: " + getEnergy().toString() + ", maximale energie: " + getMaxEnergy().toString() + ", oriëntatie: " + getOrientation().toString() + ", gewicht: " + getTotalWeight().toString();
+		return super.toString() + ", energie: " + getEnergy().toString() + ", maximale energie: " + getMaxEnergy().toString() + ", oriï¿½ntatie: " + getOrientation().toString() + ", gewicht: " + getTotalWeight().toString();
 	}
 	
 	
