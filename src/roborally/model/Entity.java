@@ -118,6 +118,7 @@ public abstract class Entity {
 			if(getPosition() != null){
 				this.getBoard().removeEntity(this);
 				this.getBoard().putEntity(position, this);
+				this.getBoard().cleanBoardPosition(getPosition());
 			}	
 		}
 		this.position = position;
